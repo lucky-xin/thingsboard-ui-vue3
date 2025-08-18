@@ -1,0 +1,10 @@
+node_modules
+.git
+.idea
+.vscode
+Dockerfile*
+dist
+*.log
+.cache
+.yarn
+**/.DS_Store

@@ -1,6 +1,12 @@
-import { defineConfig, UserConfig, presetTypography, presetIcons, transformerDirectives } from 'unocss';
+import { defineConfig, presetTypography, presetIcons, transformerDirectives } from 'unocss';
+import type { UserConfig } from 'unocss';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders';
 import { presetWind3 } from '@unocss/preset-wind3';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export default defineConfig({
   inspector: false,
@@ -35,7 +41,7 @@ export default defineConfig({
         'vertical-align': 'middle',
       },
       collections: {
-        svg: FileSystemIconLoader(__dirname + '/src/assets/icons'),
+        svg: FileSystemIconLoader(resolve(__dirname, 'src/assets/icons')),
       },
     }),
   ],

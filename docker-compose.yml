@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  thingsboard-ui:
+    image: gzv-reg.piston.ink/micros/tb-ui:v4.2.0
+    container_name: thingsboard-ui
+    ports:
+      - "3100:80"
+    env_file:
+      - docker.env
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - thingsboard-network
+
+networks:
+  thingsboard-network:
+    driver: bridge

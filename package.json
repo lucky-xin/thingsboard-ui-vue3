@@ -1,12 +1,14 @@
 {
   "name": "thingsboard-ui-vue",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "type": "module",
   "private": true,
   "scripts": {
     "bootstrap": "pnpm install",
     "serve": "npm run dev",
     "dev": "cross-env VITE_CJS_IGNORE_WARNING=true vite dev",
+    "dev:env": "cross-env VITE_CJS_IGNORE_WARNING=true vite dev --mode env",
+    "dev:custom": "cross-env VITE_CJS_IGNORE_WARNING=true vite dev --mode custom",
     "build": "vite build --mode production",
     "build:tomcat": "vite build --mode tomcat --emptyOutDir",
     "build:preview": "npm run build && npm run preview:dist",

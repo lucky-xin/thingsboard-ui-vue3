@@ -3,7 +3,8 @@ node_modules
 .idea
 .vscode
 Dockerfile*
-dist
+# keep dist for Dockerfile.dist build path
+# dist
 *.log
 .cache
 .yarn

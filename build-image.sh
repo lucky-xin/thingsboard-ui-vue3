@@ -8,7 +8,7 @@
 set -e
 
 # 默认配置
-DEFAULT_TAG="gzv-reg.piston.ink/micros/tb-ui:v4.2.0"
+DEFAULT_TAG="gzv-reg.piston.ink/micros/tb-ui-vue3:v4.2.0"
 DEFAULT_PLATFORM="linux/arm64"
 DEFAULT_BUILD_ARGS=""
 

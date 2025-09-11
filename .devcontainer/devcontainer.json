@@ -1,10 +1,14 @@
 {
   "name": "ThingsBoard UI Vue3",
-//  "dockerComposeFile": "docker-compose.yml",
-  "build": {
-    "dockerfile": "Dockerfile"
+  "image": "xin8/dev-env/node:20",
+  //  "build": {
+  //    "dockerfile": "Dockerfile"
+  //  },
+  "features": {
+
   },
   "workspaceFolder": "/workspace/tb-ui-vue3",
+  //  "remoteUser": "node",
   "forwardPorts": [3100, 8080, 80],
   "portsAttributes": {
     "3100": {
@@ -18,7 +22,21 @@
       "label": "Nginx Server"
     }
   },
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "4gb",
+    "storage": "32gb"
+  },
   "customizations": {
+    "jetbrains": {
+      "backend": "IntelliJ",
+      "debugging": {
+        "enabled": false
+      },
+      "extensions": [
+        "com.intellij.java"
+      ]
+    },
     "vscode": {
       "extensions": [
         "Vue.volar",
@@ -59,9 +77,21 @@
       }
     }
   },
-  "features": {
-
-  },
-  "postCreateCommand": "yarn -v",
-  "remoteUser": "node"
+  "mounts": [
+    // Mount local gitconfig to container
+    {
+      "source": "${localEnv:HOME}/.gitconfig",
+      "target": "/workspace/.gitconfig",
+      "type": "bind"
+    }
+    // Mount local git-credentials to container
+    //    {
+    //      "source": "${localEnv:HOME}/.git-credentials",
+    //      "target": "/workspace/.git-credentials",
+    //      "type": "bind"
+    //    }
+  ],
+  "postCreateCommand": "echo 'Dev container is ready for tb-ui-vue3 development' && mkdir -p /workspace/tb-ui-vue3/.idea/remote-dev/logs",
+  "initializeCommand": "echo 'Building dev container with .devcontainer/Dockerfile...'",
+  "postStartCommand": "echo 'Dev container is ready!' && find /workspace/tb-ui-vue3 -not -path '/workspace/tb-ui-vue3/.git/*' -not -path '/workspace/tb-ui-vue3/.git' -exec chmod 755 {} \\;"
 }

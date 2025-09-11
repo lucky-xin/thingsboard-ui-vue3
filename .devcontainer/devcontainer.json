@@ -1,7 +1,9 @@
 {
   "name": "ThingsBoard UI Vue3",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "app",
+//  "dockerComposeFile": "docker-compose.yml",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "workspaceFolder": "/workspace/tb-ui-vue3",
   "forwardPorts": [3100, 8080, 80],
   "portsAttributes": {
@@ -58,10 +60,8 @@
     }
   },
   "features": {
-    "ghcr.io/devcontainers/features/git:1": {
-      "version": "latest"
-    }
+
   },
-  "postCreateCommand": "yarn install",
+  "postCreateCommand": "yarn -v",
   "remoteUser": "node"
 }

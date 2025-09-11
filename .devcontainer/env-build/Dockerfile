@@ -21,7 +21,8 @@ ENV PATH="$JAVA_HOME/bin:${PATH}"
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     echo "Asia/Shanghai" > /etc/timezone && \
     npm config set registry https://registry.npmmirror.com && \
-    npm install yarn && \
+    corepack enable && \
+    corepack prepare yarn@stable --activate && \
     useradd -m -s /bin/bash developer
 
 # 设置工作目录

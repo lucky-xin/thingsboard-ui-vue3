@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-IMAGE_TAG="xin8/dev-env/node:20"
+IMAGE_TAG="xin8/devops/node:20"
 PLATFORM=linux/amd64,linux/arm64/v8
 
 docker buildx inspect --bootstrap >/dev/null

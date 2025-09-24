@@ -1,4 +1,4 @@
-# Multi-stage build: build with Node (yarn) and serve with Nginx (alpine)
+# Multi-stage build: build with Node (npm) and serve with Nginx (alpine)
 
 ARG NODE_IMAGE=node:20-alpine
 ARG NGINX_IMAGE=nginx:1.27-alpine
@@ -7,30 +7,21 @@ ARG NGINX_IMAGE=nginx:1.27-alpine
 FROM ${NODE_IMAGE} AS builder
 WORKDIR /app
 
-# Avoid interactive prompts from Corepack
-ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0 \
-    YARN_TIMEOUT=600000
+# npm configs
+ENV NPM_CONFIG_LOGLEVEL=info
 
 # Copy dependency manifests first for better caching
 COPY package.json ./
-# If lockfiles exist, copy them to leverage better caching/reproducibility
-COPY yarn.lock* ./
-COPY pnpm-lock.yaml* ./
 
-# Enable and pin Yarn 1.22.22
-RUN corepack enable && corepack prepare yarn@1.22.22 --activate
-
-# Install deps with cache mount (faster incremental builds)
-RUN --mount=type=cache,target=/root/.cache/yarn \
-  yarn config set registry https://registry.npmmirror.com \
-  && yarn config set network-concurrency 16 \
-  && yarn config set prefer-offline true \
-  && yarn config set cache-folder /root/.cache/yarn \
-  && yarn install --frozen-lockfile --network-timeout 600000 --prefer-offline
+# Install deps with npm
+RUN npm config set registry https://registry.npmmirror.com \
+  && npm config set prefer-offline true \
+  && npm config set cache /root/.npm \
+  && npm install --no-audit --no-fund
 
 # Copy the rest of the source and build
 COPY . .
-RUN yarn build
+RUN npm run build
 
 ## ---- Runtime ----
 FROM ${NGINX_IMAGE} AS runtime

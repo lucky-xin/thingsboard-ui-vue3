@@ -20,7 +20,7 @@
   import { tenantProfileInfoList, getTenantProfileInfoDefault } from '/@/api/tb/tenantProfile';
   import { isEmpty } from 'lodash-es';
   import { useCascaderAreaData } from '@vant/area-data';
-import { EntityType } from '/@/enums/entityTypeEnum';
+  import { EntityType } from '/@/enums/entityTypeEnum';
 
   const emit = defineEmits(['success', 'register']);
 

@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as authUtils from '/@/utils/auth/index';
 import { Persistent } from '/@/utils/cache/persistent';
 import { TOKEN_KEY, REFRESH_TOKEN_KEY } from '/@/enums/cacheEnum';
-import projectSetting from '/@/settings/projectSetting';
 
 // Mock the project setting
 vi.mock('/@/settings/projectSetting', () => ({
@@ -35,7 +34,7 @@ describe('utils/auth', () => {
 
       const token = authUtils.getToken();
 
-      expect(Persistent.getSession).toHaveBeenCalledWith(TOKEN_KEY);
+      expect(Persistent.getSession).toHaveBeenCalledWith(TOKEN_KEY as any);
       expect(token).toBe(mockToken);
     });
   });
@@ -57,18 +56,18 @@ describe('utils/auth', () => {
       const mockValue = 'test-value';
       vi.mocked(Persistent.getSession).mockReturnValue(mockValue);
 
-      const value = authUtils.getAuthCache('TOKEN_KEY');
+      const value = authUtils.getAuthCache(TOKEN_KEY);
 
-      expect(Persistent.getSession).toHaveBeenCalledWith('TOKEN_KEY');
+      expect(Persistent.getSession).toHaveBeenCalledWith(TOKEN_KEY);
       expect(value).toBe(mockValue);
     });
   });
 
   describe('setAuthCache', () => {
     it('should set value in session storage when permissionCacheType is SESSION', () => {
-      authUtils.setAuthCache('TOKEN_KEY', 'test-value');
+      authUtils.setAuthCache(TOKEN_KEY, 'test-value');
 
-      expect(Persistent.setSession).toHaveBeenCalledWith('TOKEN_KEY', 'test-value', true);
+      expect(Persistent.setSession).toHaveBeenCalledWith(TOKEN_KEY, 'test-value', true);
     });
   });
 

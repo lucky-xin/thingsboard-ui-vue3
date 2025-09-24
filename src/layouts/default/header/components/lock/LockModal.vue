@@ -115,6 +115,7 @@
 
       &-name {
         margin-top: 5px;
+
         p {
           margin-bottom: 1px;
         }

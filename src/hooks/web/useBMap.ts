@@ -11,10 +11,12 @@ export function useBMap(ak: string) {
       script = document.createElement('script');
       script.type = 'text/javascript';
 
-      window.onBmapCallback = function () {
-        bmapGL.value = BMapGL;
+      (window as any).onBmapCallback = function () {
+        // @ts-ignore
+        bmapGL.value = (window as any).BMapGL;
         success.value = true;
-        resolve(BMapGL);
+        // @ts-ignore
+        resolve((window as any).BMapGL);
       };
 
       script.onerror = function (err) {

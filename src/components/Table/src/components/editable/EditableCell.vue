@@ -197,7 +197,7 @@
 
   const getForceEditable = computed(() => {
     const { editComponent } = props.column || {};
-    return editComponent === 'Upload';
+    return String(editComponent) === 'Upload';
   });
 
   watchEffect(() => {

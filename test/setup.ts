@@ -1,6 +1,7 @@
 import { vi } from 'vitest';
-import { createPinia, setActivePinia } from 'pinia';
 import { config } from '@vue/test-utils';
+import { defineComponent } from 'vue';
+import { createPinia, setActivePinia } from 'pinia';
 
 // 优先级最高的核心 Mock，避免加载组件索引中的 withInstall 逻辑
 vi.mock('/@/components/Application', () => ({
@@ -120,30 +121,74 @@ if (!('getComputedStyle' in window)) {
 }
 
 // jsdom: stub canvas methods to remove Not implemented warnings
-// @ts-ignore
-HTMLCanvasElement.prototype.getContext = HTMLCanvasElement.prototype.getContext || (() => null);
-// @ts-ignore
-HTMLCanvasElement.prototype.toDataURL = HTMLCanvasElement.prototype.toDataURL || (() => 'data:image/png;base64,');
+try {
+  // @ts-ignore
+  if (!HTMLCanvasElement.prototype.getContext) {
+    Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+      value: vi.fn(() => null),
+      configurable: true,
+      writable: true,
+    });
+  }
+  // @ts-ignore
+  if (!HTMLCanvasElement.prototype.toDataURL) {
+    Object.defineProperty(HTMLCanvasElement.prototype, 'toDataURL', {
+      value: vi.fn(() => 'data:image/png;base64,'),
+      configurable: true,
+      writable: true,
+    });
+  }
+} catch {}
 
-// 全局 stubs：避免 antd 相关运行时告警
+// 精准 stub 部分 antd 组件，保证渲染与交互选择器可用
 config.global.stubs = {
-  'a-button': true,
-  'a-input': true,
-  'a-form': true,
-  'a-form-item': true,
+  'a-button': defineComponent({
+    name: 'AButtonStub',
+    props: {
+      loading: { type: Boolean, default: false },
+      type: { type: String, default: '' },
+      disabled: { type: Boolean, default: false },
+    },
+    template:
+      '<button class="ant-btn" :class="[{\'ant-btn-loading\': loading}, type ? `ant-btn-${type}` : null]" :disabled="disabled"><slot /></button>',
+  }),
+  'a-form': defineComponent({
+    name: 'AFormStub',
+    methods: {
+      async validate() {
+        return {};
+      },
+      async resetFields() {
+        return {};
+      },
+    },
+    template: '<form class="ant-form"><slot /></form>',
+  }),
+  'a-form-item': defineComponent({
+    name: 'AFormItemStub',
+    template: '<div class="ant-form-item"><slot /></div>',
+  }),
 };
 
 // 过滤已知的 vue warn 文本，降低测试噪音
 const originalWarn = console.warn;
 console.warn = (...args: any[]) => {
   const msg = String(args[0] ?? '');
-  if (
-    msg.includes('injection "prefixCls" not found') ||
-    msg.includes('Failed to resolve component: a-button') ||
-    msg.includes("onMounted is called when there is no active component instance") ||
-    msg.includes('getComputedStyle() method: with pseudo-elements')
-  ) {
+  if (msg.includes('injection "prefixCls" not found') ||
+      msg.includes("onMounted is called when there is no active component instance") ||
+      msg.includes('getComputedStyle() method: with pseudo-elements')) {
     return;
   }
   originalWarn.apply(console, args);
+};
+
+// 过滤 jsdom Canvas 未实现类错误输出（不影响断言）
+const originalError = console.error;
+console.error = (...args: any[]) => {
+  const msg = String(args[0] ?? '');
+  if (msg.includes("Not implemented: HTMLCanvasElement's getContext() method") ||
+      msg.includes("Not implemented: HTMLCanvasElement's toDataURL() method")) {
+    return;
+  }
+  originalError.apply(console, args);
 };

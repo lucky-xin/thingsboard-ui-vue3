@@ -49,13 +49,13 @@ export const useUserStore = defineStore('app-user', {
   }),
   getters: {
     getUserInfo(): UserInfo {
-      return this.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
+      return this.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || null;
     },
     getToken(): string {
       return this.token || getAuthCache<string>(TOKEN_KEY);
     },
     getRefreshToken(): string {
-      return this.token || getAuthCache<string>(REFRESH_TOKEN_KEY);
+      return this.refreshToken || getAuthCache<string>(REFRESH_TOKEN_KEY);
     },
     getAuthority(): Authority | string {
       return this.authority ?? getAuthCache<Authority | string>(AUTHORITY_KEY);

@@ -25,10 +25,18 @@
           </Space>
         </div>
         <div class="py-2">
-          <CodeEditor v-if="formState.scriptLang == 'TBEL'" v-model:value="formState.tbelScript" :mode="'tbelScript'"
-            class="border border-solid border-gray-400" />
-          <CodeEditor v-if="formState.scriptLang == 'JS'" v-model:value="formState.jsScript" :mode="MODE.JS"
-            class="border border-solid border-gray-400" />
+          <CodeEditor
+            v-if="formState.scriptLang == 'TBEL'"
+            v-model:value="formState.tbelScript"
+            :mode="'tbelScript'"
+            class="border border-solid border-gray-400"
+          />
+          <CodeEditor
+            v-if="formState.scriptLang == 'JS'"
+            v-model:value="formState.jsScript"
+            :mode="MODE.JS"
+            class="border border-solid border-gray-400"
+          />
         </div>
         <div class="text-gray-500">}</div>
       </div>
@@ -37,70 +45,62 @@
   </Form>
 </template>
 <script lang="ts">
-export default defineComponent({
-  name: "script",
-});
+  export default defineComponent({
+    name: 'script',
+  });
 </script>
 <script lang="ts" setup>
-import { ref, watch, defineComponent, reactive } from 'vue';
-import { Icon } from '/@/components/Icon';
-import { Form, Radio, Button, Tooltip, Space } from 'ant-design-vue';
-import { CodeEditor, MODE } from '/@/components/CodeEditor';
-import { FormInstance } from 'ant-design-vue/lib/form';
+  import { ref, watch, defineComponent, reactive } from 'vue';
+  import { Icon } from '/@/components/Icon';
+  import { Form, Radio, Button, Tooltip, Space } from 'ant-design-vue';
+  import { CodeEditor, MODE } from '/@/components/CodeEditor';
+  import { FormInstance } from 'ant-design-vue/lib/form';
 
-interface Configuration {
-  jsScript: string,
-  scriptLang: 'TBEL' | 'JS',
-  tbelScript: string,
-}
-
-const props = defineProps({
-  configuration: {
-    type: Object as PropType<Configuration>,
-    required: true,
-  },
-  ruleChainId: { type: String, default: '' }
-
-});
-
-const formRef = ref<FormInstance>();
-
-const formState = reactive<any>({
-  scriptLang: 'TBEL',
-  jsScript: 'return {msg: msg, metadata: metadata, msgType: msgType};',
-  tbelScript: 'return {msg: msg, metadata: metadata, msgType: msgType};',
-});
-
-watch(
-  () => props.configuration,
-  () => {
-    formState.scriptLang = props.configuration.scriptLang;
-    formState.jsScript = props.configuration.jsScript;
-    formState.tbelScript = props.configuration.tbelScript;
-  },
-  { immediate: true }
-)
-
-async function getConfiguration() {
-  try {
-    return await formRef.value?.validate();
-  } catch (error: any) {
-    throw error;
+  interface Configuration {
+    jsScript: string;
+    scriptLang: 'TBEL' | 'JS';
+    tbelScript: string;
   }
-}
 
-function handleFormatScript() {
+  const props = defineProps({
+    configuration: {
+      type: Object as PropType<Configuration>,
+      required: true,
+    },
+    ruleChainId: { type: String, default: '' },
+  });
 
-}
+  const formRef = ref<FormInstance>();
 
-function handleTestScript() {
+  const formState = reactive<any>({
+    scriptLang: 'TBEL',
+    jsScript: 'return {msg: msg, metadata: metadata, msgType: msgType};',
+    tbelScript: 'return {msg: msg, metadata: metadata, msgType: msgType};',
+  });
 
-}
+  watch(
+    () => props.configuration,
+    () => {
+      formState.scriptLang = props.configuration.scriptLang;
+      formState.jsScript = props.configuration.jsScript;
+      formState.tbelScript = props.configuration.tbelScript;
+    },
+    { immediate: true },
+  );
 
-function handleFullScreen() {
+  async function getConfiguration() {
+    try {
+      return await formRef.value?.validate();
+    } catch (error: any) {
+      throw error;
+    }
+  }
 
-}
+  function handleFormatScript() {}
 
-defineExpose({ getConfiguration })
+  function handleTestScript() {}
 
+  function handleFullScreen() {}
+
+  defineExpose({ getConfiguration });
 </script>

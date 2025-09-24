@@ -3,8 +3,8 @@
     <div class="ant-color-predefine__colors">
       <div
         v-for="(item, index) in rgbaColors"
-        :key="colors[index]"
-        :class="{ selected: item.selected, 'is-alpha': item._alpha < 100 }"
+        :key="String((colors as any[])[index])"
+        :class="{ selected: (item as any).selected, 'is-alpha': ((item as any)._alpha ?? 100) < 100 }"
         class="ant-color-predefine__color-selector"
         @click="handleSelect(index)"
       >
@@ -25,7 +25,7 @@
     name: 'PreDefine',
     props: {
       colors: {
-        type: Array,
+        type: Array as PropType<string[]>,
         required: true,
       },
       color: Object as PropType<Color>,
@@ -34,7 +34,7 @@
       const currentColor: any = useOptions()?.currentColor;
 
       // data
-      const rgbaColors = ref(parseColors(props.colors, props.color));
+      const rgbaColors = ref(parseColors(props.colors as any[], props.color as any));
 
       // watch
       watch(
@@ -53,16 +53,16 @@
       });
 
       // methods
-      function handleSelect(index) {
-        props.color.fromString(props.colors[index]);
+      function handleSelect(index: number) {
+        (props.color as any)?.fromString((props.colors as any[])[index] as any);
       }
-      function parseColors(colors, color) {
-        return colors.map((value) => {
+      function parseColors(colors: any[], color: any) {
+        return colors.map((value: any) => {
           const c = new Color();
           c.enableAlpha = true;
           c.format = 'rgba';
           c.fromString(value);
-          c.selected = c.value === color.value;
+          (c as any).selected = (c as any).value === color?.value;
           return c;
         });
       }

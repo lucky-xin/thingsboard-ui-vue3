@@ -9,68 +9,70 @@
         </Radio.Group>
       </div>
     </Form.Item>
-    <Form.Item label="keys" name="Keys" :rules="[{ required: true, validator: validatorKeys, message: 'key值不能为空!' }]">
-      <Select v-model:value="formState.keys" mode="tags">
-      </Select>
+    <Form.Item
+      label="keys"
+      name="Keys"
+      :rules="[{ required: true, validator: validatorKeys, message: 'key值不能为空!' }]"
+    >
+      <Select v-model:value="formState.keys" mode="tags" />
     </Form.Item>
   </Form>
 </template>
 <script lang="ts">
-export default defineComponent({
-  name: 'delete-key-value-pairs',
-});
+  export default defineComponent({
+    name: 'delete-key-value-pairs',
+  });
 </script>
 <script lang="ts" setup>
-import { ref, watch, defineComponent, reactive } from 'vue';
-import { Form, Select, Radio } from 'ant-design-vue';
-import { FormInstance } from 'ant-design-vue/lib/form';
-import { isEmpty } from 'lodash-es';
+  import { ref, watch, defineComponent, reactive } from 'vue';
+  import { Form, Select, Radio } from 'ant-design-vue';
+  import { FormInstance } from 'ant-design-vue/lib/form';
+  import { isEmpty } from 'lodash-es';
 
-interface Configuration {
-  deleteFrom: string;
-  keys: [];
-}
-
-const props = defineProps({
-  configuration: {
-    type: Object as PropType<Configuration>,
-    required: true,
-  },
-  ruleChainId: { type: String, default: '' }
-
-});
-
-const formRef = ref<FormInstance>();
-
-const formState = reactive<any>({
-  deleteFrom: 'DATA',
-  keys: [],
-});
-
-watch(
-  () => props.configuration,
-  () => {
-    formState.deleteFrom = props.configuration.deleteFrom;
-    formState.keys = props.configuration.keys;
-  },
-  { immediate: true },
-);
-
-async function getConfiguration() {
-  try {
-    return await formRef.value?.validate();
-  } catch (error: any) {
-    throw error;
+  interface Configuration {
+    deleteFrom: string;
+    keys: [];
   }
-}
 
-function validatorKeys() {
-  if (!isEmpty(formState.keys)) {
-    return Promise.resolve();
-  } else {
-    return Promise.reject('key必须填写一项！');
+  const props = defineProps({
+    configuration: {
+      type: Object as PropType<Configuration>,
+      required: true,
+    },
+    ruleChainId: { type: String, default: '' },
+  });
+
+  const formRef = ref<FormInstance>();
+
+  const formState = reactive<any>({
+    deleteFrom: 'DATA',
+    keys: [],
+  });
+
+  watch(
+    () => props.configuration,
+    () => {
+      formState.deleteFrom = props.configuration.deleteFrom;
+      formState.keys = props.configuration.keys;
+    },
+    { immediate: true },
+  );
+
+  async function getConfiguration() {
+    try {
+      return await formRef.value?.validate();
+    } catch (error: any) {
+      throw error;
+    }
   }
-}
 
-defineExpose({ getConfiguration });
+  function validatorKeys() {
+    if (!isEmpty(formState.keys)) {
+      return Promise.resolve();
+    } else {
+      return Promise.reject('key必须填写一项！');
+    }
+  }
+
+  defineExpose({ getConfiguration });
 </script>

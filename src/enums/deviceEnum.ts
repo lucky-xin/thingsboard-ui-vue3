@@ -28,7 +28,6 @@ export const TRANSPORT_TYPE_OPTIONS = [
   { value: TransportType.TCP, label: 'TCP' },
   { value: TransportType.LWM2M, label: 'LWM2M' },
   { value: TransportType.SNMP, label: 'SNMP' },
-
 ];
 
 export const PROVISION_TYPE_OPTIONS = [
@@ -36,5 +35,4 @@ export const PROVISION_TYPE_OPTIONS = [
   { value: ProvisionType.ALLOW_CREATE_NEW_DEVICES, label: '允许创建新设备' },
   { value: ProvisionType.CHECK_PRE_PROVISIONED_DEVICES, label: '检查与配置的设备' },
   { value: ProvisionType.X509_CERTIFICATE_CHAIN, label: 'X509证书链' },
-
 ];

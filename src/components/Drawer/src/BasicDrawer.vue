@@ -275,6 +275,7 @@
         background-color: var(--header-bg-color);
         padding: 10px 16px;
       }
+
       &-body {
         height: calc(100% - @header-height);
         padding: 0;

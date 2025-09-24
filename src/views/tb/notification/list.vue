@@ -45,7 +45,7 @@
 
       <template #firstColumn="{ record }">
         <a @click="handleDetail({ ...record })" :title="record.subject">
-          <span v-html="record.subject" />
+          <span v-html="record.subject"></span>
         </a>
       </template>
     </BasicTable>

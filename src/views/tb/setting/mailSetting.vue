@@ -138,7 +138,7 @@
   import { Space, Spin, Row, Col, Switch, Input, Form, Select, InputNumber, InputPassword } from 'ant-design-vue';
   import { ScrollContainer } from '/@/components/Container/index';
   import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
-import { EntityType } from '/@/enums/entityTypeEnum';
+  import { EntityType } from '/@/enums/entityTypeEnum';
 
   const { t } = useI18n('tb');
   const { showMessage } = useMessage();

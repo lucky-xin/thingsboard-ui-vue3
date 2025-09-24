@@ -83,8 +83,8 @@
         type: String,
       },
       predefine: {
-        type: Array,
-        default: () => [],
+        type: Array as PropType<string[]>,
+        default: () => [] as string[],
       },
       disabled: {
         type: Boolean,
@@ -282,7 +282,7 @@
     &.is-disabled {
       color: #c0c4cc;
       cursor: not-allowed;
-      background-color: #ffffff;
+      background-color: #fff;
     }
 
     .el-color-picker__color {
@@ -296,16 +296,13 @@
       text-align: center;
 
       &.is-alpha {
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==);
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==');
       }
     }
 
     .el-color-picker__color-inner {
       position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      bottom: 0;
+      inset: 0;
       font-size: 12px;
       line-height: 28px;
     }
@@ -326,7 +323,7 @@
 
   .ant-color-dropdown__value {
     font-size: 12px;
-    color: #000000;
+    color: #000;
   }
 
   .ant-cancel-button {

@@ -39,7 +39,7 @@
                 v-model:value="formState.entityType"
                 :options="entityTypeOptions"
                 @change="handleEntityTypeChange"
-              ></Select>
+              />
             </Form.Item>
           </Col>
           <Col :span="12" v-if="formState.entityType">
@@ -47,7 +47,7 @@
               :label="ENTITY_TYPE_OPTIONS.find((type) => type.value == formState.entityType)?.label"
               name="entityId"
             >
-              <Select v-model:value="formState.entityId" :options="entityIdOptions"></Select>
+              <Select v-model:value="formState.entityId" :options="entityIdOptions" />
             </Form.Item>
           </Col>
         </Row>

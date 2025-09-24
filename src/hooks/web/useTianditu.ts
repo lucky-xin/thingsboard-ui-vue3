@@ -26,9 +26,11 @@ export function useTianditu(tk: string) {
         reject(err);
       };
       script.onload = function () {
-        tianditu.value = T;
+        // @ts-ignore
+        tianditu.value = (window as any).T;
         success.value = true;
-        resolve(T);
+        // @ts-ignore
+        resolve((window as any).T);
       };
 
       script.src = `https://api.tianditu.gov.cn/api?v=4.0&tk=${tk}`;

@@ -21,9 +21,10 @@ describe('utils/propTypes', () => {
     expect(stringProp).toBeDefined();
 
     // Test the validator function if it exists
-    if (stringProp.validator) {
-      expect(stringProp.validator('test')).toBe(true);
-      expect(stringProp.validator(123)).toBe(false);
+    const validator = (stringProp as any).validator as ((v: unknown) => boolean) | undefined;
+    if (validator) {
+      expect(validator('test')).toBe(true);
+      expect(validator(123)).toBe(false);
     }
   });
 
@@ -32,9 +33,10 @@ describe('utils/propTypes', () => {
     expect(numberProp).toBeDefined();
 
     // Test the validator function if it exists
-    if (numberProp.validator) {
-      expect(numberProp.validator(123)).toBe(true);
-      expect(numberProp.validator('test')).toBe(false);
+    const validator = (numberProp as any).validator as ((v: unknown) => boolean) | undefined;
+    if (validator) {
+      expect(validator(123)).toBe(true);
+      expect(validator('test')).toBe(false);
     }
   });
 
@@ -43,10 +45,11 @@ describe('utils/propTypes', () => {
     expect(boolProp).toBeDefined();
 
     // Test the validator function if it exists
-    if (boolProp.validator) {
-      expect(boolProp.validator(true)).toBe(true);
-      expect(boolProp.validator(false)).toBe(true);
-      expect(boolProp.validator('true')).toBe(false);
+    const validator = (boolProp as any).validator as ((v: unknown) => boolean) | undefined;
+    if (validator) {
+      expect(validator(true)).toBe(true);
+      expect(validator(false)).toBe(true);
+      expect(validator('true')).toBe(false);
     }
   });
 });

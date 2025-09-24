@@ -54,9 +54,9 @@
   const getOptions = computed((): OptionsItem[] => {
     const options = unref(optionsRef);
     if (!options || options?.length === 0) return [];
-    const isStringArr = options.some((item) => isString(item));
+    const isStringArr = options.some((item) => typeof item === 'string');
     if (!isStringArr) return options as OptionsItem[];
-    return options.map((item) => ({ label: item, value: item })) as OptionsItem[];
+    return (options as string[]).map((item) => ({ label: item, value: item })) as OptionsItem[];
   });
 </script>
 <style lang="less">

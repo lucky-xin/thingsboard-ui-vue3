@@ -80,6 +80,7 @@
     .scada-svg-container {
       border-right: 1px solid red;
     }
+
     .scada-svg-info {
     }
   }

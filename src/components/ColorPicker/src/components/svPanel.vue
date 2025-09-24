@@ -122,18 +122,15 @@
     .ant-color-svpanel__white,
     .ant-color-svpanel__black {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      inset: 0;
     }
 
     .ant-color-svpanel__white {
-      background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+      background: linear-gradient(to right, #fff, rgb(255 255 255 / 0%));
     }
 
     .ant-color-svpanel__black {
-      background: linear-gradient(to top, #000, rgba(0, 0, 0, 0));
+      background: linear-gradient(to top, #000, rgb(0 0 0 / 0%));
     }
 
     .ant-color-svpanel__cursor {
@@ -144,8 +141,8 @@
         height: 4px;
         box-shadow:
           0 0 0 1.5px #fff,
-          inset 0 0 1px 1px rgba(0, 0, 0, 0.3),
-          0 0 1px 2px rgba(0, 0, 0, 0.4);
+          inset 0 0 1px 1px rgb(0 0 0 / 30%),
+          0 0 1px 2px rgb(0 0 0 / 40%);
         border-radius: 50%;
         transform: translate(-2px, -2px);
       }

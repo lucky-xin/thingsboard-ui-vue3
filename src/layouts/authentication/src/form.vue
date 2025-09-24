@@ -27,9 +27,10 @@
 <style lang="less">
   html[data-theme='dark'] {
     .auth-bg {
-      background-color: hsl(222.2 84% 4.9%);
+      background-color: hsl(222.2deg 84% 4.9%);
     }
   }
+
   .auth-bg {
     background-color: #fff;
   }

@@ -134,7 +134,7 @@
   import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
   import { isEmpty } from '/@/utils/is';
   import ImageUrlInput from '/@/views/tb/images/ImageUrlInput.vue';
-import { EntityType } from '/@/enums/entityTypeEnum';
+  import { EntityType } from '/@/enums/entityTypeEnum';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -346,29 +346,35 @@ import { EntityType } from '/@/enums/entityTypeEnum';
 <style lang="less">
   .product-form {
   }
+
   .profile-container {
     min-height: 400px;
     overflow-y: auto;
   }
+
   .resource-image-select {
     border: 1px solid @border-color-light;
     border-radius: @border-radius-base;
     padding: 2px 4px;
     height: 90px;
     display: flex;
+
     .resource-image {
       width: 90px;
       height: 100%;
       border: 1px solid @border-color-light;
       justify-items: center;
       align-content: center;
+
       image {
         width: 90px;
       }
     }
+
     .resource-info {
       flex: 1;
       display: flex;
+
       .resource-image-btn {
         border: 1px solid @border-color-light;
         margin: 6px;
@@ -379,6 +385,7 @@ import { EntityType } from '/@/enums/entityTypeEnum';
         cursor: pointer;
         flex: 1;
       }
+
       .resource-image-btn:hover {
         background-color: fade(@primary-color, 10);
         border-color: @primary-color;

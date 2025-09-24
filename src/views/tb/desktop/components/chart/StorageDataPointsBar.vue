@@ -144,9 +144,7 @@
 
   const timeFormat = computed(() => {
     if (timeseries.value.length > 2) {
-      const diff = Math.abs(
-        timeseries.value[0].ts - timeseries.value[timeseries.value.length - 1].ts,
-      );
+      const diff = Math.abs(timeseries.value[0].ts - timeseries.value[timeseries.value.length - 1].ts);
       if (diff < 3600 * 1000 * 24) {
         return 'HH:mm';
       }

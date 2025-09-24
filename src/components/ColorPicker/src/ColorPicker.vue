@@ -61,14 +61,17 @@
     .ant-input-group-addon {
       padding: 0 !important;
     }
+
     .ant3-color-picker {
       height: 31px;
       padding: 0;
       border: 0;
       display: block;
+
       .el-color-picker__color {
         border: 0;
       }
+
       .el-color-picker__color-inner {
         border: 0;
         border-radius: 0 6px 6px 0;

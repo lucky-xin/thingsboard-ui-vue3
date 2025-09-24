@@ -47,8 +47,7 @@
               placeholder="请选择目标设备"
               :options="entityIdOptions"
               :loading="selectFetchLoading"
-            >
-            </Select>
+            />
           </Form.Item>
           <Form.Item
             label="目标资产"
@@ -61,8 +60,7 @@
               placeholder="请选择目标资产"
               :options="entityIdOptions"
               :loading="selectFetchLoading"
-            >
-            </Select>
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -85,8 +83,7 @@
             @focus="fetchClientScopeAttribute"
             :allow-clear="true"
             placeholder="请选择客户端属性"
-          >
-          </Select>
+          />
         </Form.Item>
         <Form.Item label="共享属性" :name="['keys', 'attributes', 'sh']">
           <Select
@@ -97,8 +94,7 @@
             @focus="fetchSharedScopeAttribute"
             :allow-clear="true"
             placeholder="请选择共享属性"
-          >
-          </Select>
+          />
         </Form.Item>
         <Form.Item label="服务端属性" :name="['keys', 'attributes', 'ss']">
           <Select
@@ -109,8 +105,7 @@
             @focus="fetchServerScopeAttribute"
             :allow-clear="true"
             placeholder="请选择服务端属性"
-          >
-          </Select>
+          />
         </Form.Item>
       </CollapseContainer>
       <CollapseContainer title="时间序列数据" class="border border-solid border-neutral-300 mb-4">
@@ -128,8 +123,7 @@
             :allow-clear="true"
             @focus="fetchTimeseriesAttribute"
             placeholder="请选择遥测数据"
-          >
-          </Select>
+          />
         </Form.Item>
       </CollapseContainer>
       <Form.Item label="开始时间" :name="['startTimeMs']">
@@ -138,8 +132,7 @@
           :showTime="{ format: 'HH:mm' }"
           :format="'YYYY-MM-DD HH:mm'"
           placeholder="开始时间"
-        >
-        </DatePicker>
+        />
       </Form.Item>
       <Form.Item label="结束时间" :name="['endTimeMs']">
         <DatePicker
@@ -147,8 +140,7 @@
           :showTime="{ format: 'HH:mm' }"
           :format="'YYYY-MM-DD HH:mm'"
           placeholder="结束时间"
-        >
-        </DatePicker>
+        />
       </Form.Item>
 
       <Form.Item label="描述信息" :name="['additionalInfo', 'description']">

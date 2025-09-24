@@ -34,7 +34,7 @@
       // data
       const thumbLeft = ref<number>(0);
       const thumbTop = ref<number>(0);
-      const background = ref<Nullable<string>>(null);
+      const background = ref<string>('');
 
       // watch
       watch(
@@ -51,14 +51,14 @@
       );
 
       // methods
-      function handleClick(event: Event) {
-        const target = event.target;
+      function handleClick(event: MouseEvent) {
+        const target = event.target as HTMLElement | null;
 
         if (target !== thumb.value) {
           handleDrag(event);
         }
       }
-      function handleDrag(event) {
+      function handleDrag(event: MouseEvent) {
         const ele = instance?.vnode.el as HTMLElement;
         const rect = ele.getBoundingClientRect();
 
@@ -111,12 +111,12 @@
         if (!ele) return 0;
         return Math.round((alpha * (ele.offsetHeight - (thumb.value as HTMLElement).offsetHeight / 2)) / 100);
       }
-      function getBackground() {
+      function getBackground(): string {
         if (props.color && props.color.value) {
           const { r, g, b } = props.color.toRgb();
           return `linear-gradient(to right, rgba(${r}, ${g}, ${b}, 0) 0%, rgba(${r}, ${g}, ${b}, 1) 100%)`;
         }
-        return null;
+        return '';
       }
 
       onMounted(() => {
@@ -151,11 +151,11 @@
     position: relative;
     width: 280px;
     height: 12px;
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==);
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==');
 
     .ant-color-alpha-slider__bar {
       position: relative;
-      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+      background: linear-gradient(to right, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 100%) 100%);
       height: 100%;
     }
 
@@ -170,7 +170,7 @@
       border-radius: 1px;
       background: #fff;
       border: 1px solid #f0f0f0;
-      box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 2px rgb(0 0 0 / 60%);
       z-index: 1;
     }
 
@@ -179,7 +179,7 @@
       height: 180px;
 
       .ant-color-alpha-slider__bar {
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+        background: linear-gradient(to bottom, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 100%) 100%);
       }
 
       .ant-color-alpha__thumb {

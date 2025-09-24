@@ -124,11 +124,12 @@
 
   const getPagination = computed(() => {
     const { list, pageSize } = props;
-    if (pageSize > 0 && list && list.length > pageSize) {
+    const sizeNum = isNumber(pageSize) ? Number(pageSize) : 0;
+    if (sizeNum > 0 && list && list.length > sizeNum) {
       return {
         total: list.length,
-        pageSize,
-        size: 'small',
+        pageSize: sizeNum,
+        size: 'small' as const,
         current: unref(current),
         onChange(page) {
           current.value = page;
@@ -206,7 +207,7 @@
         float: right;
         font-size: 12px;
         font-weight: normal;
-        color: rgba(0, 0, 0, 0.45);
+        color: rgb(0 0 0 / 45%);
       }
     }
   }

@@ -267,7 +267,7 @@
           <Icon icon="i-fluent:add-12-filled" />添加队列
         </a-button>
       </CollapseContainer>
-      <div class="h-4" v-if="formState.isolatedTbRuleEngine == true" />
+      <div class="h-4" v-if="formState.isolatedTbRuleEngine == true"></div>
       <CollapseContainer title="配置设置" class="border border-solid border-neutral-300 mb-4">
         <Form.Item :name="['profileData', 'configuration', 'type']" v-show="false">
           <Input v-model:value="formState.profileData.configuration.type" :defaultValue="'DEFAULT'" />
@@ -346,7 +346,7 @@
             </Col>
           </Row>
         </Card>
-        <div class="h-4" />
+        <div class="h-4"></div>
         <Card size="small">
           <template #title>
             规则引擎
@@ -415,7 +415,7 @@
             </Col>
           </Row>
         </Card>
-        <div class="h-4" />
+        <div class="h-4"></div>
         <Card size="small">
           <template #title>
             TTL
@@ -472,7 +472,7 @@
             </Col>
           </Row>
         </Card>
-        <div class="h-4" />
+        <div class="h-4"></div>
         <Card size="small">
           <template #title>
             告警与通知
@@ -511,7 +511,7 @@
             </Col>
           </Row>
         </Card>
-        <div class="h-4" />
+        <div class="h-4"></div>
         <Card size="small">
           <template #title>
             OTA文件(字节)
@@ -544,7 +544,7 @@
             </Col>
           </Row>
         </Card>
-        <div class="h-4" />
+        <div class="h-4"></div>
         <Card size="small">
           <template #title>
             WebSocket
@@ -662,7 +662,7 @@
             </Col>
           </Row>
         </Card>
-        <div class="h-4" />
+        <div class="h-4"></div>
         <Card size="small">
           <template #title> 速率限制 </template>
           <Row :gutter="20">
@@ -812,7 +812,7 @@
         </Card>
       </CollapseContainer>
       <Form.Item label="描述信息" name="description">
-        <Textarea v-model:value="formState.description" placeholder="输入配置描述信息" :rows="3"></Textarea>
+        <Textarea v-model:value="formState.description" placeholder="输入配置描述信息" :rows="3" />
       </Form.Item>
     </Form>
   </BasicModal>

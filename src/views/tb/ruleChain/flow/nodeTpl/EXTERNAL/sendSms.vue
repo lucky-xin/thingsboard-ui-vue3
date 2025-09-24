@@ -22,11 +22,7 @@
       </Checkbox>
     </Form.Item>
     <template v-if="!formState.useSystemSmsSettings">
-      <Form.Item
-        label="短信服务商"
-        :name="['smsProviderConfiguration', 'type']"
-        :rules="[{ required: true }]"
-      >
+      <Form.Item label="短信服务商" :name="['smsProviderConfiguration', 'type']" :rules="[{ required: true }]">
         <Select v-model:value="formState.smsProviderConfiguration.type" :disabled="true">
           <Select.Option value="ALI_SMS">阿里云短信</Select.Option>
           <Select.Option value="AWS_SNS">亚马逊短信</Select.Option>
@@ -48,11 +44,7 @@
       >
         <InputPassword v-model:value="formState.smsProviderConfiguration.accessKeySecret" />
       </Form.Item>
-      <Form.Item
-        label="短信签名"
-        :name="['smsProviderConfiguration', 'signName']"
-        :rules="[{ required: true }]"
-      >
+      <Form.Item label="短信签名" :name="['smsProviderConfiguration', 'signName']" :rules="[{ required: true }]">
         <Input v-model:value="formState.smsProviderConfiguration.signName" />
       </Form.Item>
       <Form.Item

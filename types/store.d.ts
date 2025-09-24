@@ -66,3 +66,9 @@ export interface BeforeMiniState {
   menuMode?: MenuModeEnum;
   menuType?: MenuTypeEnum;
 }
+
+// Re-export for usage via "/#/store"
+export interface EntityId<T = any> {
+  entityType?: T;
+  id: string;
+}

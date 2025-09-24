@@ -1,6 +1,6 @@
 {
   "name": "ThingsBoard UI Vue3",
-  "image": "xin8/dev-env/node:20",
+  "image": "xin8/devops/node:20",
   //  "build": {
   //    "dockerfile": "Dockerfile"
   //  },

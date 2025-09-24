@@ -89,7 +89,7 @@
     return lang;
   });
 
-  const { ctxAdminPath } = useGlobSetting();
+  const { ctxAdminPath } = useGlobSetting() as any;
 
   function init() {
     const wrapEl = unref(wrapRef);

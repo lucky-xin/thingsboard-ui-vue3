@@ -158,7 +158,7 @@
               flex: 1;
               display: block;
               overflow: hidden;
-              color: rgba(0, 0, 0, 0.88);
+              color: rgb(0 0 0 / 88%);
               font-weight: 600;
               font-size: 16px;
               line-height: 1.5;
@@ -167,7 +167,7 @@
                 float: right;
                 font-size: 12px;
                 font-weight: normal;
-                color: rgba(0, 0, 0, 0.45);
+                color: rgb(0 0 0 / 45%);
               }
             }
 
@@ -176,7 +176,7 @@
               margin-block-start: 8px;
               flex-basis: 100%;
               max-width: calc(100% - 34px);
-              color: rgba(0, 0, 0, 0.88);
+              color: rgb(0 0 0 / 88%);
               font-size: 14px;
             }
           }
@@ -205,7 +205,7 @@
           position: absolute;
           top: 12px;
           right: 12px;
-          color: rgba(0, 0, 0, 0.45);
+          color: rgb(0 0 0 / 45%);
         }
       }
 

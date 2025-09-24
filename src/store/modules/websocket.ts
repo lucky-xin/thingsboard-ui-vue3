@@ -9,7 +9,7 @@ import { getToken } from '/@/utils/auth';
 
 interface WebsocketState {
   cmdId: number;
-  websocket: Nullable<UseWebSocketReturn<any>>;
+  websocket: Nullable<any>;
   callbackMap: Map<number, (data: any) => void>;
 }
 
@@ -41,8 +41,9 @@ export const useWebsocketStore = defineStore({
         this.initWebsocket();
       }
       if (this.websocket != null) {
-        if (this.websocket.status == 'CLOSED') {
-          this.websocket.open();
+        const status = (this.websocket as any).status?.value as any;
+        if (status === 'CLOSED') {
+          (this.websocket as any).open();
           await sleep(500);
         }
         if (callback) {
@@ -52,17 +53,18 @@ export const useWebsocketStore = defineStore({
             this.callbackMap.set(cmdId, callback);
           }
         }
-        return this.websocket.send(JSON.stringify(data));
+        return (this.websocket as any).send(JSON.stringify(data));
       }
       return false;
     },
     async unsubscribe(cmdId: number | Array<number>, data: any) {
       if (this.websocket != null) {
-        if (this.websocket.status == 'CLOSED') {
-          this.websocket.open();
+        const status = (this.websocket as any).status?.value as any;
+        if (status === 'CLOSED') {
+          (this.websocket as any).open();
           await sleep(250);
         }
-        this.websocket.send(JSON.stringify(data));
+        (this.websocket as any).send(JSON.stringify(data));
       }
       if (isArray(cmdId)) {
         cmdId.forEach((i) => this.callbackMap.delete(i));
@@ -81,7 +83,7 @@ export const useWebsocketStore = defineStore({
         },
       });
       this.websocket = useWebSocketReturn;
-      return this.websocket?.ws;
+      return (this.websocket as any).ws;
     },
     onMessage(ws: WebSocket, { data }: MessageEvent): any {
       const dataObj = JSON.parse(data);

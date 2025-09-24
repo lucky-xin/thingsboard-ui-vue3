@@ -37,7 +37,8 @@
       const thumbTop = ref(0);
 
       // computed
-      const hueValue = computed(() => props.color.get('hue'));
+      const colorValue = computed(() => props.color ?? { h: 0, s: 0, v: 0, a: 1 } as any);
+      const hueValue = computed(() => colorValue.value?.get('hue'));
 
       // watch
       watch(
@@ -48,14 +49,14 @@
       );
 
       // methods
-      function handleClick(event: Event) {
-        const target = event.target;
+      function handleClick(event: MouseEvent) {
+        const target = event.target as HTMLElement | null;
 
         if (target !== thumb.value) {
           handleDrag(event);
         }
       }
-      function handleDrag(event) {
+      function handleDrag(event: MouseEvent) {
         const ele = instance?.vnode.el as HTMLElement;
         const rect = ele.getBoundingClientRect();
         let hue;
@@ -81,24 +82,24 @@
               360,
           );
         }
-        props.color.set('hue', hue);
+        colorValue.value?.set('hue', hue);
       }
       function getThumbLeft(): number {
         const ele = instance?.vnode.el as HTMLElement;
 
         if (props.vertical) return 0;
-        const hue = props.color.get('hue');
+        const hue = colorValue.value?.get('hue') as number | undefined;
 
         if (!ele) return 0;
-        return Math.round((hue * (ele.offsetWidth - (thumb.value as HTMLElement).offsetWidth / 2)) / 360);
+        return Math.round(((hue || 0) * (ele.offsetWidth - (thumb.value as HTMLElement).offsetWidth / 2)) / 360);
       }
       function getThumbTop(): number {
         const ele = instance?.vnode.el as HTMLElement;
         if (!props.vertical) return 0;
-        const hue = props.color.get('hue');
+        const hue = colorValue.value?.get('hue') as number | undefined;
 
         if (!ele) return 0;
-        return Math.round((hue * (ele.offsetHeight - (thumb.value as HTMLElement).offsetHeight / 2)) / 360);
+        return Math.round(((hue || 0) * (ele.offsetHeight - (thumb.value as HTMLElement).offsetHeight / 2)) / 360);
       }
       function update() {
         thumbLeft.value = getThumbLeft();
@@ -173,7 +174,7 @@
       width: 4px;
       height: 100%;
       border-radius: 1px;
-      background-color: #ffffff;
+      background-color: #fff;
       border: 1px solid #f0f0f0;
       box-shadow: 0 0 2px #0009;
       cursor: pointer;

@@ -9,7 +9,7 @@
     <Row :gutter="20">
       <Col :span="8">
         <Form.Item label="实体类型" name="entityType" :rules="[{ required: true, message: '实体类型必填!' }]">
-          <Select v-model:value="formState.entityType" :options="entityTypeOptions"> </Select>
+          <Select v-model:value="formState.entityType" :options="entityTypeOptions" />
         </Form.Item>
       </Col>
       <template v-if="formState.entityType == EntityType.DEVICE || formState.entityType == EntityType.ASSET">

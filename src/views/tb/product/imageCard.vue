@@ -12,12 +12,7 @@
       </div>
       <template #actions>
         <Tooltip :title="'设为默认'">
-          <Icon
-            icon="i-ant-design:flag-outlined"
-            :size="16"
-            color="black"
-            @click="handleSetDefault"
-          />
+          <Icon icon="i-ant-design:flag-outlined" :size="16" color="black" @click="handleSetDefault" />
         </Tooltip>
         <Tooltip :title="'编辑产品'">
           <Icon icon="i-ant-design:edit-outlined" :size="16" color="green" @click="handleEdit" />
@@ -86,27 +81,32 @@
     border: 1px solid fade(@primary-color, 55);
     border-radius: 8px;
     background-color: fade(@primary-color, 5) !important;
+
     .ant-card-body {
       padding: 2px !important;
       cursor: default;
     }
+
     .ant-card-actions {
       background-color: fade(@primary-color, 5) !important;
     }
+
     .product-image-card-cover {
-      padding: 0 8px 0 8px;
+      padding: 0 8px;
       width: 100%;
       display: flex;
       justify-content: center;
-      background-image: radial-gradient(circle, rgba(203, 213, 225) 1px, #fff 1px);
+      background-image: radial-gradient(circle, rgb(203 213 225) 1px, #fff 1px);
       background-size: 10px 10px;
       background-position: center center;
       overflow: hidden;
       position: relative;
       cursor: pointer;
+
       img {
         height: 230px;
       }
+
       .default {
         width: 100px;
         height: 100px;
@@ -116,6 +116,7 @@
         right: -50px;
         transform: rotate(45deg);
         color: #fff;
+
         span {
           position: absolute;
           bottom: 0;
@@ -125,6 +126,7 @@
         }
       }
     }
+
     .product-image-card-info {
       background-color: fade(@primary-color, 5);
       padding: 16px 8px;

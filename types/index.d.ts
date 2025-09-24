@@ -5,3 +5,4 @@ export * from './global';
 export * from './store';
 export * from './utils';
 export * from './vue-router';
+export * from './compat';

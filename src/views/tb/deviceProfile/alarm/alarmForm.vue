@@ -23,7 +23,7 @@
         <div class="">
           <label class="float-right ml-4 mr-2">报警类型：</label>
         </div>
-        <Input class="flex-1" placeholder="请输入报警类型" v-model:value="alarm.alarmType"></Input>
+        <Input class="flex-1" placeholder="请输入报警类型" v-model:value="alarm.alarmType" />
       </div>
       <div class="ml-4 mb-4 flex items-center">
         <Checkbox v-model:checked="alarm.propagate">传播报警</Checkbox>
@@ -40,8 +40,7 @@
             mode="tags"
             :open="false"
             v-model:value="alarm.propagateRelationTypes"
-          >
-          </Select>
+          />
         </div>
         <span class="text-help ml-38">如果未选择传递关联类型，则将不按关联类型过滤而传递告警。</span>
       </div>
@@ -72,8 +71,7 @@
                     placeholder="报警等级"
                     v-model:value="item.severity"
                     :options="ALARM_SEVERITY_OPTIONS"
-                  >
-                  </Select>
+                  />
                 </div>
                 <div class="md:w-3/4 w-full pl-2">
                   <div class="flex items-center mb-4">
@@ -146,7 +144,7 @@
                 :allowClear="true"
                 v-model:value="alarm.clearRule.dashboardId.id"
                 :options="dashboardList"
-              ></Select>
+              />
             </div>
           </div>
           <div class="md:w-1/14">

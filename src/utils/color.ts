@@ -55,7 +55,7 @@ export function colorIsDark(color: string) {
     .replace(/(?:\(|\)|rgb|RGB)*/g, '')
     .split(',')
     .map((item) => Number(item));
-  return r * 0.299 + g * 0.578 + b * 0.114 < 192;
+  return r * 0.299 + g * 0.587 + b * 0.114 < 128;
 }
 
 /**
@@ -129,8 +129,12 @@ function contrast(rgb1: string[], rgb2: number[]) {
  * @param hexColor - Last selected color by the user
  */
 export function calculateBestTextColor(hexColor: string) {
-  const rgbColor = hexToRGB(hexColor.substring(1));
-  const contrastWithBlack = contrast(rgbColor.split(','), [0, 0, 0]);
+  const rgbColor = hexToRGB(hexColor);
+  const rgbValues = rgbColor
+    .replace(/(?:\(|\)|rgb|RGB)*/g, '')
+    .split(',')
+    .map((n) => Number(n));
+  const contrastWithBlack = contrast([String(rgbValues[0]), String(rgbValues[1]), String(rgbValues[2])], [0, 0, 0]);
 
   return contrastWithBlack >= 12 ? '#000000' : '#FFFFFF';
 }

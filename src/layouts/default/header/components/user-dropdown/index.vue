@@ -218,6 +218,7 @@
       font-size: 14px;
       line-height: 1.25rem;
     }
+
     &__name__tag {
       color: #fff;
       font-size: 10px;
@@ -232,6 +233,7 @@
       display: flex;
       align-items: center;
     }
+
     &__name__subTitle {
       font-size: 12px;
     }

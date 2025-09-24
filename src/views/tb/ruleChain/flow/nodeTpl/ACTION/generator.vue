@@ -1,21 +1,20 @@
 <template>
   <Form ref="formRef" :model="formState" layout="vertical">
     <Form.Item label="消息计数" name="msgCount" :rules="[{ required: true, message: '消息计数必填!' }]">
-      <InputNumber v-model:value="formState.msgCount" :min="0" :style="{ width: '100%' }"> </InputNumber>
+      <InputNumber v-model:value="formState.msgCount" :min="0" :style="{ width: '100%' }" />
     </Form.Item>
     <Form.Item label="周期（秒）" name="periodInSeconds" :rules="[{ required: true, message: '周期必填!' }]">
-      <InputNumber v-model:value="formState.periodInSeconds" :min="0" :style="{ width: '100%' }"> </InputNumber>
+      <InputNumber v-model:value="formState.periodInSeconds" :min="0" :style="{ width: '100%' }" />
     </Form.Item>
     <Row :gutter="20">
       <Col :span="8">
         <Form.Item label="发起" name="originatorType" :rules="[{ required: true }]">
-          <Select v-model:value="formState.originatorType" :options="entityTypeOptions" @change="onEntityTypeChange">
-          </Select>
+          <Select v-model:value="formState.originatorType" :options="entityTypeOptions" @change="onEntityTypeChange" />
         </Form.Item>
       </Col>
       <Col :span="16">
         <Form.Item label=" " name="originatorId" :rules="[{ required: true }]">
-          <Select v-model:value="formState.originatorId" :options="entityIdOptions"> </Select>
+          <Select v-model:value="formState.originatorId" :options="entityIdOptions" />
         </Form.Item>
       </Col>
     </Row>

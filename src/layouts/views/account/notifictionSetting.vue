@@ -55,6 +55,7 @@
       width: 100%;
       border: 1px solid @border-color-base;
       background-color: @border-color-dark;
+
       .notifiction-item {
         font-weight: bold;
         display: inline-block;
@@ -63,13 +64,16 @@
         align-content: center;
         padding-left: 16px;
       }
+
       .notifiction-title {
         width: 40%;
       }
+
       .notifiction-delivery {
         width: 20%;
       }
     }
+
     .notifiction-row {
       width: 100%;
       border: 1px solid @border-color-base;
@@ -81,9 +85,11 @@
         align-content: center;
         padding-left: 16px;
       }
+
       .notifiction-title {
         width: 40%;
       }
+
       .notifiction-delivery {
         width: 20%;
       }

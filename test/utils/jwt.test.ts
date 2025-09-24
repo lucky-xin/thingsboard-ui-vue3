@@ -14,7 +14,7 @@ describe('utils/jwt', () => {
   describe('decode', () => {
     it('should decode token correctly', () => {
       const mockDecoded = { sub: '1234567890', name: 'John Doe', iat: 1516239022 };
-      (jwtDecode as vi.Mock).mockReturnValue(mockDecoded);
+      (jwtDecode as unknown as any).mockReturnValue(mockDecoded);
 
       const result = decode(mockToken);
       expect(result).toEqual(mockDecoded);
@@ -35,14 +35,14 @@ describe('utils/jwt', () => {
       // Create a date that matches the precision of the jwt expiration date
       const expectedDate = new Date(unixTimestamp * 1000);
 
-      (jwtDecode as vi.Mock).mockReturnValue({ exp: unixTimestamp });
+      (jwtDecode as unknown as any).mockReturnValue({ exp: unixTimestamp });
 
       const result = getExpiration(mockToken);
       expect(result).toEqual(expectedDate);
     });
 
     it('should return undefined for token without exp', () => {
-      (jwtDecode as vi.Mock).mockReturnValue({ sub: '1234567890' });
+      (jwtDecode as unknown as any).mockReturnValue({ sub: '1234567890' });
 
       const result = getExpiration(mockToken);
       expect(result).toBeUndefined();
@@ -54,7 +54,7 @@ describe('utils/jwt', () => {
       const pastDate = new Date(Date.now() - 3600000); // 1 hour in the past
       const unixTimestamp = Math.floor(pastDate.getTime() / 1000);
 
-      (jwtDecode as vi.Mock).mockReturnValue({ exp: unixTimestamp });
+      (jwtDecode as unknown as any).mockReturnValue({ exp: unixTimestamp });
 
       const result = isExpired(mockToken);
       expect(result).toBe(true);
@@ -64,7 +64,7 @@ describe('utils/jwt', () => {
       const futureDate = new Date(Date.now() + 3600000); // 1 hour in the future
       const unixTimestamp = Math.floor(futureDate.getTime() / 1000);
 
-      (jwtDecode as vi.Mock).mockReturnValue({ exp: unixTimestamp });
+      (jwtDecode as unknown as any).mockReturnValue({ exp: unixTimestamp });
 
       const result = isExpired(mockToken);
       expect(result).toBe(false);
@@ -77,7 +77,7 @@ describe('utils/jwt', () => {
     });
 
     it('should return true for token without exp', () => {
-      (jwtDecode as vi.Mock).mockReturnValue({ sub: '1234567890' });
+      (jwtDecode as unknown as any).mockReturnValue({ sub: '1234567890' });
 
       const result = isExpired(mockToken);
       expect(result).toBe(true);

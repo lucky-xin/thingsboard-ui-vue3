@@ -141,6 +141,7 @@
     width: 100%;
     height: 90px;
     display: flex;
+
     .image-show-box {
       border: 1px solid @border-color-base;
       width: 110px;
@@ -148,19 +149,23 @@
       align-content: center;
       justify-items: center;
       padding: 2px;
+
       img {
         width: 100%;
         max-height: 90px;
       }
     }
+
     .image-info {
       width: 100%;
+
       .input-info-link {
         height: 100%;
         width: 100%;
         align-content: center;
         padding-left: 10px;
       }
+
       .input-info-resource {
         height: 100%;
         width: 100%;
@@ -168,10 +173,12 @@
         align-content: center;
         color: @text-color-secondary;
       }
+
       .show-btn {
         width: 100%;
         height: 100%;
         display: flex;
+
         .resource-image-btn {
           border: 1px solid @border-color-base;
           flex: 1;
@@ -182,6 +189,7 @@
           margin: 8px;
           color: @primary-color;
         }
+
         .resource-image-btn:hover {
           background-color: fade(@primary-color, 10);
           border-color: @primary-color;

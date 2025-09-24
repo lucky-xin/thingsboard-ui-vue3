@@ -74,8 +74,7 @@
                       mode="multiple"
                       :style="{ width: '100%' }"
                       :options="entityTypeOptions"
-                    >
-                    </Select>
+                    />
                   </td>
                   <td>
                     <Tooltip title="删除" class="pl-4">
@@ -371,7 +370,7 @@
     }
 
     .td {
-      padding: 2px 2px;
+      padding: 2px;
     }
   }
 </style>

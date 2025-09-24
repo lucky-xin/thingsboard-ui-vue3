@@ -20,10 +20,10 @@ export function createPermissionGuard(router: Router) {
     if (
       from.path === ROOT_PATH &&
       to.path === HOME_PATH &&
-      userStore.getUserInfo.additionalInfo?.homePath &&
-      userStore.getUserInfo.additionalInfo?.homePath !== HOME_PATH
+      userStore.getUserInfo?.additionalInfo?.homePath &&
+      userStore.getUserInfo?.additionalInfo?.homePath !== HOME_PATH
     ) {
-      next(userStore.getUserInfo.additionalInfo?.homePath);
+      next(userStore.getUserInfo?.additionalInfo?.homePath as string);
       return;
     }
 
@@ -89,10 +89,10 @@ export function createPermissionGuard(router: Router) {
     if (
       from.path === LOGIN_PATH &&
       to.name === PAGE_NOT_FOUND_ROUTE.name &&
-      to.fullPath !== (userStore.getUserInfo.additionalInfo?.homePath || HOME_PATH)
+      to.fullPath !== (userStore.getUserInfo?.additionalInfo?.homePath || HOME_PATH)
     ) {
       // 如果用户定义的 desktopUrl 是非法路径，就跳转到 404，防止无法进入系统
-      next('/404/' + (userStore.getUserInfo.additionalInfo?.homePath || HOME_PATH));
+      next('/404/' + (userStore.getUserInfo?.additionalInfo?.homePath || HOME_PATH));
       return;
     }
 
@@ -101,15 +101,6 @@ export function createPermissionGuard(router: Router) {
       try {
         await userStore.getUserInfoAction();
       } catch (error: any) {
-        // const err: string = error?.toString?.() ?? '';
-        // if (
-        //   from.fullPath === '/' &&
-        //   ((error?.code === 'ECONNABORTED' && err.indexOf('timeout of') !== -1) ||
-        //     err.indexOf('Network Error') !== -1)
-        // ) {
-        //   next(LOGIN_PATH);
-        //   return;
-        // }
         let path = LOGIN_PATH as string;
         if (to.path !== '/' && to.path !== LOGIN_PATH) {
           path = path + '?redirect=' + to.fullPath;

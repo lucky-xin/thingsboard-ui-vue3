@@ -8,7 +8,8 @@ export function decode(token: string | undefined | null) {
 }
 
 export function getExpiration(token: string) {
-  const unixTimestamp = jwtDecode(token).exp;
+  const decoded = jwtDecode(token);
+  const unixTimestamp = decoded.exp;
   if (unixTimestamp) {
     return new Date(unixTimestamp * 1000);
   }
@@ -17,7 +18,8 @@ export function getExpiration(token: string) {
 
 export function isExpired(token: string | undefined | null) {
   if (token) {
-    const unixTimestamp = jwtDecode(token).exp;
+    const decoded = jwtDecode(token);
+    const unixTimestamp = decoded.exp;
     if (unixTimestamp) {
       return unixTimestamp * 1000 < new Date().getTime();
     }

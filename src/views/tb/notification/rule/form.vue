@@ -36,16 +36,14 @@
                   :disabled="index == 0"
                   :options="escalationTimeOption"
                   style="width: 25%"
-                >
-                </Select>
+                />
                 <Select
                   v-model:value="escalationList[index].targets"
                   mode="multiple"
                   placeholder="请选择通知接收组"
                   style="width: 70%"
                   :options="recipientOptions"
-                >
-                </Select>
+                />
                 <Tooltip title="移除" v-if="index > 0">
                   <a-button type="text" shape="circle" @click="handleRemoveEscalation(index)">
                     <Icon icon="ant-design:close-outlined" :size="20" />
@@ -114,7 +112,7 @@
   import AlarmAssignment from './triggerConfig/alarmAssignment.vue';
   import AlarmComment from './triggerConfig/alarmComment.vue';
   import ruleEngineLifecycleEvent from './triggerConfig/ruleEngineLifecycleEvent.vue';
-import { EntityType } from '/@/enums/entityTypeEnum';
+  import { EntityType } from '/@/enums/entityTypeEnum';
 
   const emit = defineEmits(['success', 'register']);
 

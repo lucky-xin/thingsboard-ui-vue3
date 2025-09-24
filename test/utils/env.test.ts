@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import * as envUtils from '/@/utils/env';
-import { version } from '/Users/chaoxin.lu/IdeaProjects/thingsboard-ui-vue3/package.json';
+import { version } from '../../package.json';
 
 // Mock the log module
 vi.mock('/@/utils/log', () => ({
@@ -16,7 +16,7 @@ vi.mock('/@/utils/log', () => ({
 }));
 
 // Mock the getEnvConfigName function
-vi.mock('/Users/chaoxin.lu/IdeaProjects/thingsboard-ui-vue3/build/config/getEnvConfigName', () => ({
+vi.mock('../../build/config/getEnvConfigName', () => ({
   getEnvConfigName: () => 'TEST_CONFIG',
 }));
 

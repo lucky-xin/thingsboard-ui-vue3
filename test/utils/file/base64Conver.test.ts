@@ -151,7 +151,9 @@ describe('utils/file/base64Conver', () => {
       const promise = urlToBase64('https://example.com/invalid-image.png');
       
       // Simulate image error
-      mockImage.onerror();
+      if (mockImage.onerror) {
+        mockImage.onerror();
+      }
       
       // The promise should still be pending since we only handle onload
       // In a real implementation, you might want to add error handling

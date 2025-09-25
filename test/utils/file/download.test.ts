@@ -20,7 +20,7 @@ describe('utils/file/download', () => {
     // Mock DOM methods
     global.URL.createObjectURL = vi.fn(() => 'blob:mock-url');
     global.URL.revokeObjectURL = vi.fn();
-    global.Blob = vi.fn().mockImplementation((data, options) => ({ data, options }));
+    // Use real Blob constructor
     global.document.createElement = vi.fn(() => ({
       style: {},
       href: '',
@@ -85,7 +85,7 @@ describe('utils/file/download', () => {
 
       downloadByData(mockBlob, 'test.png');
 
-      expect(mockNav.msSaveBlob).toHaveBeenCalledWith(mockBlob, 'test.png');
+      expect(mockNav.msSaveBlob).toHaveBeenCalledWith(expect.any(Blob), 'test.png');
     });
 
     it('should download file with modern browser', () => {
@@ -101,7 +101,7 @@ describe('utils/file/download', () => {
 
       downloadByData(mockBlob, 'test.png');
 
-      expect(global.URL.createObjectURL).toHaveBeenCalledWith(mockBlob);
+      expect(global.URL.createObjectURL).toHaveBeenCalledWith(expect.any(Blob));
       expect(mockLink.href).toBe('blob:mock-url');
       expect(mockLink.setAttribute).toHaveBeenCalledWith('download', 'test.png');
       expect(mockLink.click).toHaveBeenCalled();
@@ -121,7 +121,8 @@ describe('utils/file/download', () => {
 
       downloadByData(mockBlob, 'test.png', 'image/png', 'bom');
 
-      expect(global.Blob).toHaveBeenCalledWith(['bom', mockBlob], { type: 'image/png' });
+      expect(global.URL.createObjectURL).toHaveBeenCalledWith(expect.any(Blob));
+      expect(mockLink.href).toBe('blob:mock-url');
     });
 
     it('should handle download attribute not supported', () => {

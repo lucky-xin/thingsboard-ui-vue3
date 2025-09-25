@@ -146,7 +146,7 @@
           .t-list-item {
             background-color: var(--td-error-color-1);
 
-            :deep(.t-list-item__meta-title) {
+            ::v-deep(.t-list-item__meta-title) {
               margin-bottom: 0;
             }
           }

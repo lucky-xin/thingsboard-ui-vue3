@@ -19,7 +19,7 @@ function asyncImportRoute(
 ) {
   if (!routes) return;
   routes.forEach((item) => {
-    item.meta = item.meta || {};
+    item.meta = item.meta || { title: '' };
     if (!item.meta.icon) {
       item.meta.icon = 'bx:bx-circle';
     }
@@ -85,7 +85,7 @@ export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModul
     }
     item.path = '';
     item.name = `${item.name}Parent`;
-    item.meta = item.meta || {};
+    item.meta = item.meta || { title: '' };
     item.meta.single = true;
     item.meta.affix = false;
     item.children && asyncImportRoute(item.children, item, item);

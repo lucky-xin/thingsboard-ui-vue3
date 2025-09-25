@@ -10,7 +10,13 @@
   >
     <!-- addonAfter suffix -->
     <template #suffix>
-      <img :src="getValidCodeImg" @click="refreshValidCodeImg" class="cursor-pointer" width="100" />
+      <img
+        :src="getValidCodeImg"
+        @click="refreshValidCodeImg"
+        class="cursor-pointer"
+        width="100"
+        alt="Verification Code"
+      />
     </template>
   </a-input>
 </template>

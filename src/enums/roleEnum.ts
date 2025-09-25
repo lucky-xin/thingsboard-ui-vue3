@@ -5,4 +5,3 @@ export enum RoleEnum {
 }
 
 export default RoleEnum;
-

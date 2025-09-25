@@ -122,7 +122,7 @@
                     {() => btnText}
                   </Button>
                 ),
-              icon: () => (icon ? <img src={icon} /> : null),
+              icon: () => (icon ? <img src={icon} alt="Exception Icon" /> : null),
             }}
           </Result>
         );

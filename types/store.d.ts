@@ -41,6 +41,9 @@ export interface UserInfo {
   lastName: string;
   phone: string;
   authority: Authority;
+  loginCode?: string;
+  result?: any;
+  homePath?: string;
   additionalInfo: {
     [key: string]: any;
     defaultDashboardFullscreen?: boolean;

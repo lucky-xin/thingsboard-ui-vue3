@@ -47,9 +47,10 @@ vi.mock('/@/components/Application', () => ({
   },
 }));
 
+import App from '/@/App.vue';
+
 describe('App', () => {
-  it('renders correctly', async () => {
-    const App = (await import('/@/App.vue')).default as any;
+  it('renders correctly', () => {
     const wrapper = shallowMount(App, {
       global: {
         stubs: {
@@ -64,8 +65,7 @@ describe('App', () => {
     expect(wrapper.exists()).toBe(true);
   }, 15000);
 
-  it('uses correct prefixCls for AppProvider', async () => {
-    const App = (await import('/@/App.vue')).default as any;
+  it('uses correct prefixCls for AppProvider', () => {
     const wrapper = mount(App, {
       global: {
         stubs: {

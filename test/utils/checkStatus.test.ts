@@ -6,9 +6,9 @@ vi.mock('/@/hooks/web/useI18n', () => ({
 }));
 
 // mock message（避免 hoist 问题，在工厂内声明并挂到全局便于断言）
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 let showMessage: any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 let showMessageModal: any;
 vi.mock('/@/hooks/web/useMessage', () => {
   showMessage = vi.fn();
@@ -61,10 +61,12 @@ describe('utils/http/axios/checkStatus', () => {
   ];
 
   it('should emit message for common error status', () => {
-    statusWithKey.filter(([code]) => code !== 400).forEach(([code]) => {
-      checkStatus(code, '');
-      expect(showMessage).toHaveBeenCalled();
-    });
+    statusWithKey
+      .filter(([code]) => code !== 400)
+      .forEach(([code]) => {
+        checkStatus(code, '');
+        expect(showMessage).toHaveBeenCalled();
+      });
   });
 
   it('should show modal when mode is modal', () => {
@@ -84,5 +86,3 @@ describe('utils/http/axios/checkStatus', () => {
     expect(lastCall?.content).toBe('Bad Request');
   });
 });
-
-

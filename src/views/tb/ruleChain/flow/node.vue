@@ -29,6 +29,7 @@
         <img
           v-else-if="descriptor?.configurationDescriptor?.nodeDefinition.iconUrl"
           :src="descriptor.configurationDescriptor.nodeDefinition.iconUrl"
+          alt="Node Icon"
         />
         <Icon v-else :icon="defaultIcon" />
         <div class="title">

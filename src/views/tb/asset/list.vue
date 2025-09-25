@@ -302,7 +302,3 @@
     openDetailDrawer(true, record);
   }
 </script>
-<style lang="less">
-  .asset-list {
-  }
-</style>

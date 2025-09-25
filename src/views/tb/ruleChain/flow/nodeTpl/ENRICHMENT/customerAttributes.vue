@@ -15,7 +15,7 @@
         name="dataMapping"
         :rules="[{ validator: validatorDataMapping }]"
       >
-        <Table class="mapping-table">
+        <Table class="mapping-table" aria-label="客户属性映射表格">
           <tr class="header">
             <th>原属性</th>
             <th>目标属性</th>
@@ -158,7 +158,7 @@
 
   .mapping-table {
     width: 100%;
-    align: 'center';
+    text-align: center;
     border: 1px solid @border-color-base;
     border-radius: 4px;
 

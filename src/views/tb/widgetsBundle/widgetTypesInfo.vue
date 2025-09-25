@@ -22,7 +22,7 @@
               </div>
             </template>
             <template #avatar>
-              <img :src="item.base64" width="100" />
+              <img :src="item.base64" width="100" alt="Widget Type Icon" />
             </template>
           </List.Item.Meta>
         </List.Item>

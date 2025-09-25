@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach} from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ref } from 'vue';
 
 // 先声明，再进行模块 mock，避免 hoist 导致的 TDZ 问题

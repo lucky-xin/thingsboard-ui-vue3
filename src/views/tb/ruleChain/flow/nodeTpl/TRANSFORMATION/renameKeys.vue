@@ -14,7 +14,7 @@
         name="renameKeysMapping"
         :rules="[{ validator: validatorDataMapping }]"
       >
-        <Table class="mapping-table">
+        <Table class="mapping-table" aria-label="键重命名映射表格">
           <tr class="header">
             <th>当前key</th>
             <th>名命key</th>

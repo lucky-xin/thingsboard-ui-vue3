@@ -74,7 +74,7 @@
   });
 
   const embedVueCode = computed(() => {
-    return '<img [src]="\'' + record.value.link + '\' | image | async" />';
+    return '<img [src]="\'' + record.value.link + '\' | image | async" alt="' + encodeHtml(record.value.title) + '" />';
   });
 
   async function handleChangePublic(value: boolean) {

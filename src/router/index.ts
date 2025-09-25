@@ -14,11 +14,15 @@ import { encryptByMd5 } from '/@/utils/cipher';
 
 // 白名单应该包含基本静态路由
 const WHITE_NAME_LIST: string[] = [];
-const getRouteNames = (array: any[]) =>
+const getRouteNames = (array: any[]) => {
+  if (!array || !Array.isArray(array)) {
+    return;
+  }
   array.forEach((item) => {
     WHITE_NAME_LIST.push(item.name);
     getRouteNames(item.children || []);
   });
+};
 getRouteNames(basicRoutes);
 
 // app router

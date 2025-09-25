@@ -1,7 +1,7 @@
 <template>
   <div class="image-url-Input">
     <div class="image-show-box">
-      <img :src="currentVale" alt="" v-if="currentVale" />
+      <img :src="currentVale" alt="Selected Image" v-if="currentVale" />
       <div v-else>未选择图片</div>
     </div>
     <div class="image-info">

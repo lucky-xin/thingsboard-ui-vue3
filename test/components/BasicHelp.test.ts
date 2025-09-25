@@ -1,0 +1,367 @@
+import { describe, it, expect, vi } from 'vitest';
+import { mount } from '@vue/test-utils';
+import BasicHelp from '/@/components/Basic/src/BasicHelp.vue';
+
+// Mock the useDesign hook
+vi.mock('/@/hooks/web/useDesign', () => ({
+  useDesign: vi.fn(() => ({
+    prefixCls: 'jeesite-basic-help',
+  })),
+}));
+
+// Mock the Icon component
+vi.mock('/@/components/Icon', () => ({
+  Icon: {
+    name: 'Icon',
+    template: '<span class="mock-icon">?</span>',
+  },
+}));
+
+// Mock the getSlot utility
+vi.mock('/@/utils/helper/tsxHelper', () => ({
+  getSlot: vi.fn((slots, name, data) => {
+    if (slots && slots[name]) {
+      return slots[name](data);
+    }
+    return null;
+  }),
+}));
+
+// Mock the utils functions
+vi.mock('/@/utils', () => ({
+  getPopupContainer: vi.fn(() => document.body),
+}));
+
+vi.mock('/@/utils/is', () => ({
+  isString: vi.fn((val) => typeof val === 'string'),
+  isArray: vi.fn((val) => Array.isArray(val)),
+}));
+
+describe('BasicHelp', () => {
+  it('should render with default props', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: 'This is help text',
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip" :title="title"><slot /></div>',
+            props: ['title', 'placement', 'overlayStyle', 'overlayClassName', 'autoAdjustOverflow', 'getPopupContainer'],
+          },
+          Icon: {
+            template: '<span class="mock-icon">?</span>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.find('.jeesite-basic-help').exists()).toBe(true);
+    expect(wrapper.props('maxWidth')).toBe('600px');
+    expect(wrapper.props('color')).toBe('#ffffff');
+    expect(wrapper.props('fontSize')).toBe('14px');
+    expect(wrapper.props('placement')).toBe('right');
+  });
+
+  it('should render with string text', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: 'Single help text',
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip" :title="title"><slot /></div>',
+            props: ['title', 'placement', 'overlayStyle', 'overlayClassName', 'autoAdjustOverflow', 'getPopupContainer'],
+          },
+          Icon: {
+            template: '<span class="mock-icon">?</span>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.props('text' as any)).toBe('Single help text');
+    expect(wrapper.find('.jeesite-basic-help').exists()).toBe(true);
+  });
+
+  it('should render with array text', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: ['First help text', 'Second help text'],
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip"><slot /></div>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.props('text' as any)).toEqual(['First help text', 'Second help text']);
+  });
+
+  it('should render with custom maxWidth', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: 'Help text',
+        maxWidth: '800px',
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip"><slot /></div>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.props('maxWidth' as any)).toBe('800px');
+  });
+
+  it('should render with showIndex when text is array', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: ['First text', 'Second text'],
+        showIndex: true,
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip"><slot /></div>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.props('showIndex' as any)).toBe(true);
+  });
+
+  it('should render with custom color', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: 'Help text',
+        color: '#ff0000',
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip"><slot /></div>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.props('color' as any)).toBe('#ff0000');
+  });
+
+  it('should render with custom fontSize', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: 'Help text',
+        fontSize: '16px',
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip"><slot /></div>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.props('fontSize' as any)).toBe('16px');
+  });
+
+  it('should render with custom placement', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: 'Help text',
+        placement: 'top',
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip"><slot /></div>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.props('placement' as any)).toBe('top');
+  });
+
+  it('should render with slot content', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: 'Help text',
+      },
+      slots: {
+        default: '<span class="custom-help">Custom help</span>',
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip"><slot /></div>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+    // 验证组件能够接受slot内容，即使mock可能影响渲染
+    expect(wrapper.vm.$slots.default).toBeDefined();
+  });
+
+  it('should handle empty text array', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: [],
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip"><slot /></div>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.props('text' as any)).toEqual([]);
+  });
+
+  it('should handle null text', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: null,
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip"><slot /></div>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.props('text' as any)).toBeNull();
+  });
+
+  it('should handle undefined text', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {},
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip"><slot /></div>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should use default props correctly', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: 'Test text',
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip"><slot /></div>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.props('maxWidth' as any)).toBe('600px');
+    expect(wrapper.props('color' as any)).toBe('#ffffff');
+    expect(wrapper.props('fontSize' as any)).toBe('14px');
+    expect(wrapper.props('placement' as any)).toBe('right');
+    // showIndex 默认为 false，因为它是 Boolean 类型
+    expect(wrapper.props('showIndex' as any)).toBe(false);
+  });
+
+  it('should render with proper class name', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: 'Test text',
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip"><slot /></div>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.find('.jeesite-basic-help').exists()).toBe(true);
+  });
+
+  it('should handle component lifecycle', async () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: 'Test text',
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip" :title="title"><slot /></div>',
+            props: ['title', 'placement', 'overlayStyle', 'overlayClassName', 'autoAdjustOverflow', 'getPopupContainer'],
+          },
+          Icon: {
+            template: '<span class="mock-icon">?</span>',
+          },
+        },
+      },
+    });
+
+    // 测试组件更新
+    await wrapper.setProps({ text: 'Updated text' });
+    expect(wrapper.props('text' as any)).toBe('Updated text');
+
+    // 测试组件卸载
+    await wrapper.unmount();
+    // 在 Vue 3 中，unmount 后 wrapper.vm 可能不为 null
+    expect(wrapper.exists()).toBe(false);
+  });
+
+  it('should render with showIndex when text is array', () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: ['First text', 'Second text'],
+        showIndex: true,
+      },
+      global: {
+        stubs: {
+          'a-tooltip': {
+            template: '<div class="mock-tooltip" :title="title"><slot /></div>',
+            props: ['title', 'placement', 'overlayStyle', 'overlayClassName', 'autoAdjustOverflow', 'getPopupContainer'],
+          },
+          Icon: {
+            template: '<span class="mock-icon">?</span>',
+          },
+        },
+      },
+    });
+
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.props('showIndex' as any)).toBe(true);
+    expect(wrapper.find('.jeesite-basic-help').exists()).toBe(true);
+  });
+});

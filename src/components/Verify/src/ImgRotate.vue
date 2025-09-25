@@ -132,11 +132,11 @@
                 onLoad={handleImgOnLoad}
                 width={parseInt(props.width as string)}
                 class={imgCls}
+                alt="Image to rotate"
                 style={state.imgStyle}
                 onClick={() => {
                   resume();
                 }}
-                alt="verify"
               />
               {state.showTip && (
                 <span class={[`ir-dv-img__tip`, state.isPassing ? 'success' : 'error']}>

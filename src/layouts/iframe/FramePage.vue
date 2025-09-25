@@ -12,6 +12,7 @@
           :class="`${prefixCls}__main ${props.frame?.name}`"
           ref="frameRef"
           @load="hideLoading"
+          :title="props.frame?.meta?.title || 'Embedded Content'"
         ></iframe>
       </div>
     </Spin>

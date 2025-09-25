@@ -26,7 +26,7 @@
         message="在名称/值字段中，使用${metadataKey}表示元数据中的值，使用$[messageKey]表示消息正文中的值"
       />
 
-      <Table class="message-attribute-table">
+      <Table class="message-attribute-table" aria-label="消息属性表格">
         <tr class="header">
           <th>Key</th>
           <th>Value</th>
@@ -172,7 +172,7 @@
 
   .message-attribute-table {
     width: 100%;
-    align: 'center';
+    text-align: center;
     border: 1px solid @border-color-base;
     border-radius: 4px;
 

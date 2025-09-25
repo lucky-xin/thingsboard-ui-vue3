@@ -106,7 +106,7 @@ export const usePermissionStore = defineStore('app-permission', {
         const authorityList: string[] = Array.isArray(raw) ? (raw as string[]) : [];
         if (!authorityList || isEmpty(authorityList)) return true;
         const cur = (currentAuthority ?? '') as string;
-        return authorityList.includes(cur) || authorityList.includes('*');
+        return (authorityList as string[]).includes(cur) || (authorityList as string[]).includes('*');
       };
 
       const routeRemoveIgnoreFilter = (route: AppRouteRecordRaw) => {

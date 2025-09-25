@@ -342,19 +342,19 @@
         return (
           <div class={`${prefixCls}__controller`}>
             <div class={`${prefixCls}__controller-item`} onClick={() => scaleFunc(-getScaleStep.value)}>
-              <img src={unScaleSvg} />
+              <img src={unScaleSvg} alt="Zoom Out" />
             </div>
             <div class={`${prefixCls}__controller-item`} onClick={() => scaleFunc(getScaleStep.value)}>
-              <img src={scaleSvg} />
+              <img src={scaleSvg} alt="Zoom In" />
             </div>
             <div class={`${prefixCls}__controller-item`} onClick={resume}>
-              <img src={resumeSvg} />
+              <img src={resumeSvg} alt="Reset" />
             </div>
             <div class={`${prefixCls}__controller-item`} onClick={() => rotateFunc(-90)}>
-              <img src={unRotateSvg} />
+              <img src={unRotateSvg} alt="Rotate Left" />
             </div>
             <div class={`${prefixCls}__controller-item`} onClick={() => rotateFunc(90)}>
-              <img src={rotateSvg} />
+              <img src={rotateSvg} alt="Rotate Right" />
             </div>
           </div>
         );
@@ -391,6 +391,7 @@
                   class={[`${prefixCls}-image`, imgState.status === StatueEnum.DONE ? '' : 'hidden']}
                   ref={imgElRef}
                   src={imgState.currentUrl}
+                  alt="Preview Image"
                   onMousedown={handleAddMoveListener}
                 />
                 {renderClose()}

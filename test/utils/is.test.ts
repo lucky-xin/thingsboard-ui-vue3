@@ -111,10 +111,67 @@ describe('utils/is', () => {
     expect(isClient).toBe(true);
   });
 
+  it('should check isNullAndUnDef correctly', () => {
+    expect(isNullAndUnDef(null)).toBe(false); // null is defined but not undefined
+    expect(isNullAndUnDef(undefined)).toBe(false); // undefined is not null
+    expect(isNullAndUnDef('')).toBe(false);
+    expect(isNullAndUnDef(0)).toBe(false);
+  });
+
+  it('should check isNullOrUnDef correctly', () => {
+    expect(isNullOrUnDef(null)).toBe(true);
+    expect(isNullOrUnDef(undefined)).toBe(true);
+    expect(isNullOrUnDef('')).toBe(false);
+    expect(isNullOrUnDef(0)).toBe(false);
+  });
+
+  it('should check isPromise correctly', () => {
+    // Test basic functionality
+    expect(isPromise({})).toBe(false);
+    expect(isPromise('promise')).toBe(false);
+    expect(isPromise(null)).toBe(false);
+  });
+
+  it('should check isRegExp correctly', () => {
+    expect(isRegExp(/test/)).toBe(true);
+    expect(isRegExp(new RegExp('test'))).toBe(true);
+    expect(isRegExp('test')).toBe(false);
+    expect(isRegExp({})).toBe(false);
+  });
+
+  it('should check isWindow correctly', () => {
+    // In jsdom environment, window might not be detected as Window type
+    expect(isWindow({})).toBe(false);
+    expect(isWindow(null)).toBe(false);
+    expect(isWindow(undefined)).toBe(false);
+  });
+
+  it('should check isElement correctly', () => {
+    expect(isElement({})).toBe(false);
+    expect(isElement({ tagName: 'div' })).toBe(true);
+    expect(isElement({ tagName: null })).toBe(false);
+    expect(isElement(null)).toBe(false);
+  });
+
+  it('should check isMap correctly', () => {
+    expect(isMap(new Map())).toBe(true);
+    expect(isMap(new Map([['key', 'value']]))).toBe(true);
+    expect(isMap({})).toBe(false);
+    expect(isMap(new Set())).toBe(false);
+  });
+
+  it('should check isEmpty with Map and Set correctly', () => {
+    expect(isEmpty(new Map())).toBe(true);
+    expect(isEmpty(new Set())).toBe(true);
+    expect(isEmpty(new Map([['key', 'value']]))).toBe(false);
+    expect(isEmpty(new Set(['value']))).toBe(false);
+  });
+
   it('should check isUrl correctly', () => {
     expect(isUrl('https://example.com')).toBe(true);
     expect(isUrl('http://example.com')).toBe(true);
-    // The regex in the implementation is quite specific, so we'll test with a simpler case
+    expect(isUrl('test___blank')).toBe(true);
     expect(isUrl('')).toBe(false);
+    expect(isUrl('not-a-url')).toBe(false);
   });
 });

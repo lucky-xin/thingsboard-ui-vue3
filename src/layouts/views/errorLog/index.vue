@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-for="src in imgList" :key="src">
-      <img :src="src" v-show="false" />
+      <img :src="src" v-show="false" alt="Error Log Image" />
     </template>
     <BasicTable @register="register" class="error-handle-table" @row-click="handleDetail">
       <template #toolbar>

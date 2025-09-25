@@ -1,0 +1,55 @@
+import { describe, it, expect, vi } from 'vitest';
+import { ref, nextTick, onMounted, defineComponent } from 'vue';
+import { mount } from '@vue/test-utils';
+import { useEventListener } from '/@/hooks/event/useEventListener';
+
+describe('hooks/event/useEventListener more', () => {
+  it('should cleanup listener on component unmount (autoRemove default)', async () => {
+    const addSpy = vi.spyOn(Element.prototype, 'addEventListener');
+    const removeSpy = vi.spyOn(Element.prototype, 'removeEventListener');
+
+    const el = document.createElement('div');
+    const listener = vi.fn();
+
+    const Comp = defineComponent({
+      setup() {
+        const target = ref<HTMLElement>(el);
+        useEventListener({ el: target, name: 'click', listener, isDebounce: true, wait: 0 });
+        onMounted(() => {
+          target.value!.dispatchEvent(new Event('click'));
+        });
+        return () => null;
+      },
+    });
+
+    const wrapper = mount(Comp);
+    await nextTick();
+    wrapper.unmount();
+
+    expect(addSpy).toHaveBeenCalled();
+    expect(removeSpy).toHaveBeenCalled();
+    addSpy.mockRestore();
+    removeSpy.mockRestore();
+  });
+
+  it('should support passive and capture options', async () => {
+    const el = document.createElement('div');
+    const listener = vi.fn();
+
+    const { removeEvent } = useEventListener({
+      el,
+      name: 'scroll',
+      listener,
+      options: { passive: true, capture: true },
+      isDebounce: false,
+      wait: 0,
+    });
+
+    el.dispatchEvent(new Event('scroll', { bubbles: true, cancelable: true }));
+    await nextTick();
+    expect(listener).toHaveBeenCalledTimes(1);
+    removeEvent();
+  });
+});
+
+

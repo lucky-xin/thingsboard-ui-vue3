@@ -1,7 +1,7 @@
 <template>
   <div v-if="props.sidebar" :class="`${prefixCls}-sidebar md:hidden lg:block think gem`">
     <span :class="[prefixCls, `${prefixCls}--${props.theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatarUrl" />
+      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatarUrl" alt="User Avatar" />
       <span :class="`${prefixCls}__info`">
         <span :class="`${prefixCls}__name`" class="truncate">
           {{ getUserInfo.firstName || '未命名' }}
@@ -17,7 +17,7 @@
   </div>
   <Dropdown v-else placement="bottom" :overlayClassName="`${prefixCls}-dropdown-overlay`">
     <span :class="[prefixCls, `${prefixCls}--${props.theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatarUrl" />
+      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatarUrl" alt="User Avatar" />
       <span :class="`${prefixCls}__info  hidden md:block`">
         <span :class="`${prefixCls}__name`" class="truncate flex flex-col">
           <span :class="`${prefixCls}__name__title`">

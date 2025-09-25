@@ -23,6 +23,8 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:xunit": "vitest run --reporter=junit --outputFile=reports/xunit.xml",
+    "test:mocha-junit": "vitest run --reporter=junit --outputFile=reports/xunit.xml",
     "reinstall:force": "rimraf pnpm-lock.yaml node_modules && pnpm store prune && pnpm i --force && pnpm run dev --force",
     "reinstall": "rimraf pnpm-lock.yaml node_modules && npm run bootstrap",
     "update": "ncu -u -x codemirror,pinia,cropperjs && npm run reinstall"
@@ -83,6 +85,8 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.27.0",
+    "@babel/plugin-proposal-decorators": "^7.28.0",
+    "@babel/preset-env": "^7.28.3",
     "@iconify/json": "2.2.323",
     "@iconify/utils": "2.3.0",
     "@stylistic/stylelint-plugin": "3.1.2",
@@ -121,6 +125,7 @@
     "jsdom": "^27.0.0",
     "less": "4.2.2",
     "lint-staged": "15.5.0",
+    "mocha-junit-reporter": "^2.2.1",
     "npm-run-all": "4.1.5",
     "picocolors": "1.1.1",
     "pkg-types": "2.1.0",

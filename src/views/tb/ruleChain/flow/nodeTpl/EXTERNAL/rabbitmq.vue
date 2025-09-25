@@ -80,7 +80,7 @@
       </Col>
     </Row>
     <Form.Item label="Client Properties" name="clientProperties" :rules="[{ validator: validatorClientProperties }]">
-      <Table class="header-table">
+      <Table class="header-table" aria-label="客户端属性表格">
         <tr class="header">
           <th>Key</th>
           <th>Value</th>

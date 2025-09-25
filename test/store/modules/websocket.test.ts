@@ -117,7 +117,7 @@ describe('store/modules/websocket', () => {
       const callback = vi.fn();
       store.callbackMap.set(1, callback);
 
-      const ws = ({} as unknown) as WebSocket;
+      const ws = {} as unknown as WebSocket;
       const messageEvent = new MessageEvent('message', {
         data: JSON.stringify({ cmdId: 1, result: 'success' }),
       });

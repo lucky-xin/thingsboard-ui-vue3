@@ -9,7 +9,7 @@
       <Input v-model:value="formState.tableName" />
     </Form.Item>
     <Form.Item label="属性映射" name="fieldsMapping" :rules="[{ validator: validatorFieldsMapping }]">
-      <Table class="mapping-table">
+      <Table class="mapping-table" aria-label="属性映射表格">
         <tr class="header">
           <th>Message FileId</th>
           <th>Table column</th>
@@ -131,7 +131,7 @@
 
   .mapping-table {
     width: 100%;
-    align: 'center';
+    text-align: center;
     border: 1px solid @border-color-base;
     border-radius: 4px;
 

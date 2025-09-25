@@ -41,7 +41,7 @@
             :rules="[{ validator: validatorRelationsQueryFilters }]"
           >
             <div class="p-2">
-              <Table class="mapping-table">
+              <Table class="mapping-table" aria-label="关联类型筛选表格">
                 <tr class="header">
                   <th>关联类型</th>
                   <th>实体类型</th>
@@ -117,7 +117,7 @@
               <span v-else-if="formState.dataToFetch == 'LATEST_TELEMETRY'">遥测数据映射</span>
               <span v-else>属性映射</span>
             </template>
-            <Table class="mapping-table">
+            <Table class="mapping-table" aria-label="属性映射表格">
               <tr class="header">
                 <th>原属性</th>
                 <th>目标属性</th>
@@ -355,7 +355,7 @@
 
   .mapping-table {
     width: 100%;
-    align: 'center';
+    text-align: center;
     border: 1px solid @border-color-base;
     border-radius: 4px;
 

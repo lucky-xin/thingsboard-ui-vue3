@@ -335,7 +335,4 @@
   .password-from-container {
     border-right: 1px solid #d9d9d9;
   }
-
-  .password-policy-container {
-  }
 </style>

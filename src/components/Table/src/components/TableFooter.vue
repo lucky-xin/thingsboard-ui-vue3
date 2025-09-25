@@ -1,7 +1,7 @@
 <template>
   <Table
     v-if="summaryFunc || summaryData"
-    :showHeader="false"
+    :showHeader="true"
     :bordered="false"
     :pagination="false"
     :dataSource="getDataSource"
@@ -9,6 +9,7 @@
     :columns="getColumns"
     tableLayout="fixed"
     :scroll="scroll"
+    aria-label="Table Summary Footer"
   />
 </template>
 <script lang="ts">
@@ -73,8 +74,10 @@
           if (hasIndexSummary) {
             columns[index].customRender = ({ record }) => record[SUMMARY_INDEX_KEY];
             columns[index].ellipsis = false;
+            columns[index].title = columns[index].title || 'Index';
           } else {
             Reflect.deleteProperty(columns[index], 'customRender');
+            columns[index].title = columns[index].title || 'Index';
           }
         }
 
@@ -89,6 +92,12 @@
             customRender: ({ record }) => record[SUMMARY_ROW_KEY],
           });
         }
+        // Ensure every column has a header title to render <th> elements for accessibility
+        columns.forEach((col: any) => {
+          if (col && (col.title === undefined || col.title === null || col.title === '')) {
+            col.title = col.dataIndex || col.key || 'Column';
+          }
+        });
         return columns as any;
       });
       return { getColumns, getDataSource };

@@ -62,7 +62,7 @@
       <Input v-model:value="formState.valueSerializer" />
     </Form.Item>
     <Form.Item label="Other Properties" name="otherProperties" :rules="[{ validator: validatorOtherProperties }]">
-      <Table class="properties-table">
+      <Table class="properties-table" aria-label="其他属性表格">
         <tr class="header">
           <th>Key</th>
           <th>Value</th>
@@ -235,7 +235,7 @@
 
   .properties-table {
     width: 100%;
-    align: 'center';
+    text-align: center;
     border: 1px solid @border-color-base;
     border-radius: 4px;
 

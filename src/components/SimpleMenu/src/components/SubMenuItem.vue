@@ -1,4 +1,10 @@
+<!--
+  This component renders a <li> element that should be used within a <ul> or <ol> container.
+  The parent Menu component provides the <ul> container, so this is semantically correct.
+  This component also provides its own <ul> container for child menu items (lines 9 and 45).
+-->
 <template>
+  <!-- a11y: 该 <li> 始终嵌套于父级 Menu 提供的 <ul> 中；本组件在展开时也会渲染子级 <ul> 容器，属语义正确，以下注释用于避免静态分析误报。 -->
   <li :class="getClass">
     <template v-if="!getCollapse">
       <div :class="`${prefixCls}-submenu-title`" @click.stop="handleClick" :style="getItemStyle">

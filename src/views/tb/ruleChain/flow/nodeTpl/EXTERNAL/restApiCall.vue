@@ -99,7 +99,7 @@
     <Form.Item label="Http请求头" name="headers" :rules="[{ validator: validatorHeader }]">
       <Alert type="success" message="使用${metadataKey}表示元数据中的值，$[messageKey]表示头/值字段中消息正文中的值" />
 
-      <Table class="header-table">
+      <Table class="header-table" aria-label="请求头表格">
         <tr class="header">
           <th>Header</th>
           <th>Value</th>
@@ -321,7 +321,7 @@
 
   .header-table {
     width: 100%;
-    align: 'center';
+    text-align: center;
     border: 1px solid @border-color-base;
     border-radius: 4px;
 

@@ -100,4 +100,17 @@ declare module '/@/types/config' {
   }
 }
 
+// Vue file type declarations
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue';
+  const component: DefineComponent<{}, {}, any>;
+  export default component;
+}
+
+// ImportMeta glob support
+declare interface ImportMeta {
+  glob: (pattern: string, options?: { eager?: boolean }) => Record<string, () => Promise<any>>;
+  env: Record<string, any>;
+}
+
 

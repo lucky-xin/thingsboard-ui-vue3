@@ -37,7 +37,7 @@
       const thumbTop = ref(0);
 
       // computed
-      const colorValue = computed(() => props.color ?? { h: 0, s: 0, v: 0, a: 1 } as any);
+      const colorValue = computed(() => props.color ?? ({ h: 0, s: 0, v: 0, a: 1 } as any));
       const hueValue = computed(() => colorValue.value?.get('hue'));
 
       // watch

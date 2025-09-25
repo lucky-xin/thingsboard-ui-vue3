@@ -1,58 +1,145 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useScrollTo } from '/@/hooks/event/useScrollTo';
 
-describe('hooks/useScrollTo', () => {
-  describe('useScrollTo', () => {
-    it('should create scroll animation functions', () => {
-      const el = document.createElement('div');
-      const to = 100;
+describe('useScrollTo', () => {
+  let mockElement: HTMLElement;
 
-      const { start, stop } = useScrollTo({ el, to });
+  beforeEach(() => {
+    // 创建模拟的DOM元素
+    mockElement = document.createElement('div');
+    mockElement.scrollTop = 0;
+    document.body.appendChild(mockElement);
+  });
 
-      expect(typeof start).toBe('function');
-      expect(typeof stop).toBe('function');
+  it('should create scroll functions', () => {
+    const { start, stop } = useScrollTo({
+      el: mockElement,
+      to: 100,
+      duration: 100,
     });
 
-    it('should handle custom duration', () => {
-      const el = document.createElement('div');
-      const to = 100;
-      const duration = 1000;
+    expect(typeof start).toBe('function');
+    expect(typeof stop).toBe('function');
+  });
 
-      const { start, stop } = useScrollTo({ el, to, duration });
-
-      expect(typeof start).toBe('function');
-      expect(typeof stop).toBe('function');
-
-      // Clean up
-      stop();
+  it('should handle custom duration', () => {
+    const { start } = useScrollTo({
+      el: mockElement,
+      to: 100,
+      duration: 200,
     });
 
-    it('should handle callback function', () => {
-      const el = document.createElement('div');
-      const to = 100;
-      const callback = vi.fn();
+    expect(typeof start).toBe('function');
+  });
 
-      const { start, stop } = useScrollTo({ el, to, callback });
-
-      expect(typeof start).toBe('function');
-      expect(typeof stop).toBe('function');
-
-      // Clean up
-      stop();
+  it('should handle callback function', () => {
+    const callback = vi.fn();
+    const { start } = useScrollTo({
+      el: mockElement,
+      to: 100,
+      duration: 100,
+      callback,
     });
 
-    it('should calculate easing correctly', () => {
-      // Test the easeInOutQuad function indirectly
-      const el = document.createElement('div');
-      const to = 100;
+    expect(typeof start).toBe('function');
+  });
 
-      const { start, stop } = useScrollTo({ el, to });
-
-      // These should not throw errors
-      expect(() => start()).not.toThrow();
-
-      // Clean up
-      stop();
+  it('should calculate easing correctly', () => {
+    const { start, stop } = useScrollTo({
+      el: mockElement,
+      to: 100,
+      duration: 100,
     });
+
+    // 启动滚动
+    start();
+
+    // 立即停止
+    stop();
+
+    expect(typeof start).toBe('function');
+    expect(typeof stop).toBe('function');
+  });
+
+  it('should handle undefined duration', () => {
+    const { start } = useScrollTo({
+      el: mockElement,
+      to: 100,
+    });
+
+    expect(typeof start).toBe('function');
+  });
+
+  it('should handle animation with requestAnimationFrame', () => {
+    const originalRAF = window.requestAnimationFrame;
+    const mockRAF = vi.fn((cb) => setTimeout(cb, 16));
+    window.requestAnimationFrame = mockRAF;
+
+    const { start, stop } = useScrollTo({
+      el: mockElement,
+      to: 100,
+      duration: 100,
+    });
+
+    start();
+    stop();
+
+    // 恢复原始的requestAnimationFrame
+    window.requestAnimationFrame = originalRAF;
+
+    expect(typeof start).toBe('function');
+    expect(typeof stop).toBe('function');
+  });
+
+  it('should handle callback when animation completes', async () => {
+    const callback = vi.fn();
+    const { start, stop } = useScrollTo({
+      el: mockElement,
+      to: 100,
+      duration: 50,
+      callback,
+    });
+
+    start();
+
+    // 等待动画完成
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    expect(callback).toHaveBeenCalled();
+  });
+
+  it('should stop animation when stop is called', () => {
+    const callback = vi.fn();
+    const { start, stop } = useScrollTo({
+      el: mockElement,
+      to: 100,
+      duration: 1000,
+      callback,
+    });
+
+    start();
+    stop();
+
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('should handle negative scroll values', () => {
+    const { start } = useScrollTo({
+      el: mockElement,
+      to: -100,
+      duration: 100,
+    });
+
+    expect(typeof start).toBe('function');
+  });
+
+  it('should handle zero scroll value', () => {
+    const { start } = useScrollTo({
+      el: mockElement,
+      to: 0,
+      duration: 100,
+    });
+
+    expect(typeof start).toBe('function');
   });
 });

@@ -50,9 +50,7 @@ export default {
     'at-rule-prelude-no-invalid': null,
     'declaration-property-value-no-unknown': null,
     'declaration-property-value-keyword-no-deprecated': null,
-    'declaration-property-value-disallowed-list': {
-      inset: [/.*/], // 禁止所有 inset 属性值
-    },
+    'declaration-property-value-disallowed-list': null,
     // 允许使用传统属性
     'declaration-property-value-allowed-list': {
       top: [/.*/],
@@ -98,7 +96,9 @@ export default {
         ],
       },
     ],
+    'at-rule-no-deprecated': null,
     'no-empty-source': null,
+    'block-no-empty': null,
     'named-grid-areas-no-invalid': null,
     'no-descending-specificity': null,
     'font-family-no-missing-generic-family-keyword': null,

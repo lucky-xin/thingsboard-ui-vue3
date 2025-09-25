@@ -1,4 +1,9 @@
+<!--
+  This component renders a <li> element that should be used within a <ul> or <ol> container.
+  The parent Menu component provides the <ul> container, so this is semantically correct.
+-->
 <template>
+  <!-- a11y: 该 <li> 始终作为父级 Menu 提供的 <ul> 的子元素渲染。为避免误报，保留此注释说明。 -->
   <li :class="getClass" @click.stop="handleClickItem" :style="getCollapse ? {} : getItemStyle">
     <Tooltip placement="right" v-if="showTooptip">
       <template #title>

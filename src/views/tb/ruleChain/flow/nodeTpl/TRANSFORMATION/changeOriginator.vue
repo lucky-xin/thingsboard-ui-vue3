@@ -33,7 +33,7 @@
       </div>
       <div class="border border-solid border-neutral-300 rounded-md py-2 px-3 mb-4">
         <Form.Item label="关联筛选器" name="relationsQuery">
-          <Table class="mapping-table">
+          <Table class="mapping-table" aria-label="关联筛选器表格">
             <tr class="header">
               <th>关联类型</th>
               <th>实体类型</th>

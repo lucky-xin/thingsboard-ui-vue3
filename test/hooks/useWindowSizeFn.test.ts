@@ -1,55 +1,50 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
 
-describe('hooks/useWindowSizeFn', () => {
-  describe('useWindowSizeFn', () => {
-    it('should create start and stop functions', () => {
-      const fn = vi.fn();
+describe('hooks/event/useWindowSizeFn', () => {
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
 
-      const [start, stop] = useWindowSizeFn(fn);
+  beforeEach(() => {
+    addEventListenerSpy.mockClear();
+    removeEventListenerSpy.mockClear();
+  });
 
-      expect(typeof start).toBe('function');
-      expect(typeof stop).toBe('function');
-    });
+  afterEach(() => {
+    // cleanup any pending listeners
+    // Note: spies are cleared in beforeEach
+  });
 
-    it('should handle custom wait time', () => {
-      const fn = vi.fn();
-      const wait = 100;
+  it('should register resize listener on start and remove on stop', () => {
+    const fn = vi.fn();
+    const [start, stop] = useWindowSizeFn(fn, 0);
+    start();
+    expect(addEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
+    stop();
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
+  });
 
-      const [start, stop] = useWindowSizeFn(fn, wait);
+  it('should call handler immediately when immediate option is true', () => {
+    const fn = vi.fn();
+    const [start] = useWindowSizeFn(fn, 0, { immediate: true });
+    start();
+    expect(fn).toHaveBeenCalled();
+  });
 
-      expect(typeof start).toBe('function');
-      expect(typeof stop).toBe('function');
+  it('should debounce calls but respond to resize event', async () => {
+    vi.useFakeTimers();
+    const fn = vi.fn();
+    const [start] = useWindowSizeFn(fn, 50);
+    start();
 
-      // Clean up
-      stop();
-    });
+    // trigger resize
+    window.dispatchEvent(new Event('resize'));
+    // advance timers to flush debounce
+    vi.advanceTimersByTime(60);
 
-    it('should handle options', () => {
-      const fn = vi.fn();
-      const options = { immediate: true };
-
-      const [start, stop] = useWindowSizeFn(fn, 150, options);
-
-      expect(typeof start).toBe('function');
-      expect(typeof stop).toBe('function');
-
-      // Clean up
-      stop();
-    });
-
-    it('should add and remove event listener', () => {
-      const fn = vi.fn();
-      const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
-      const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
-
-      const [start, stop] = useWindowSizeFn(fn);
-
-      start();
-      expect(addEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
-
-      stop();
-      expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
-    });
+    expect(fn).toHaveBeenCalledTimes(1);
+    vi.useRealTimers();
   });
 });
+
+

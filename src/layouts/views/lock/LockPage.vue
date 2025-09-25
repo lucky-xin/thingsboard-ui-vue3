@@ -25,7 +25,11 @@
       <div :class="`${prefixCls}-entry`" v-show="!showDate">
         <div :class="`${prefixCls}-entry-content`">
           <div :class="`${prefixCls}-entry__header enter-x`">
-            <img :src="userinfo.additionalInfo.avatarUrl || headerImg" :class="`${prefixCls}-entry__header-img`" />
+            <img
+              :src="userinfo.additionalInfo.avatarUrl || headerImg"
+              :class="`${prefixCls}-entry__header-img`"
+              alt="User Avatar"
+            />
             <p :class="`${prefixCls}-entry__header-name`">
               {{ userinfo.firstName || userinfo.email || userinfo.lastName }}
             </p>

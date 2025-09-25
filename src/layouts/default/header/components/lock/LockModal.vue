@@ -8,7 +8,7 @@
   >
     <div :class="`${prefixCls}__entry`">
       <div :class="`${prefixCls}__header`">
-        <img :src="avatar" :class="`${prefixCls}__header-img`" />
+        <img :src="avatar" :class="`${prefixCls}__header-img`" alt="User Avatar" />
         <div :class="`${prefixCls}__header-name`">
           <p>{{ firstName }}</p>
           <p>{{ email }}</p>

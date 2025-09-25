@@ -12,11 +12,19 @@ describe('useContext', () => {
 
     const key = Symbol('test');
 
-    // Create context
-    const { state } = createContext(testContext, key);
+    // Create a test component to provide context
+    const TestComponent = defineComponent({
+      setup() {
+        const { state } = createContext(testContext, key);
+        return { state };
+      },
+      template: '<div></div>',
+    });
 
-    expect(state).toBeDefined();
-    expect(state.name).toBe('test');
+    const wrapper = mount(TestComponent);
+
+    expect(wrapper.vm.state).toBeDefined();
+    expect(wrapper.vm.state.name).toBe('test');
   });
 
   it('should create readonly context when readonly option is true', () => {
@@ -27,11 +35,19 @@ describe('useContext', () => {
 
     const key = Symbol('test');
 
-    // Create readonly context
-    const { state } = createContext(testContext, key, { readonly: true });
+    // Create a test component to provide readonly context
+    const TestComponent = defineComponent({
+      setup() {
+        const { state } = createContext(testContext, key, { readonly: true });
+        return { state };
+      },
+      template: '<div></div>',
+    });
 
-    expect(state).toBeDefined();
-    expect(state.name).toBe('test');
+    const wrapper = mount(TestComponent);
+
+    expect(wrapper.vm.state).toBeDefined();
+    expect(wrapper.vm.state.name).toBe('test');
   });
 
   it('should create mutable context when readonly option is false', () => {
@@ -42,19 +58,27 @@ describe('useContext', () => {
 
     const key = Symbol('test');
 
-    // Create mutable context
-    const { state } = createContext(testContext, key, { readonly: false });
+    // Create a test component to provide mutable context
+    const TestComponent = defineComponent({
+      setup() {
+        const { state } = createContext(testContext, key, { readonly: false });
+        return { state };
+      },
+      template: '<div></div>',
+    });
 
-    expect(state).toBeDefined();
-    expect(state.name).toBe('test');
-    expect(state.value).toBe(42);
+    const wrapper = mount(TestComponent);
+
+    expect(wrapper.vm.state).toBeDefined();
+    expect(wrapper.vm.state.name).toBe('test');
+    expect(wrapper.vm.state.value).toBe(42);
 
     // Should be able to modify
-    state.name = 'modified';
-    state.value = 100;
+    wrapper.vm.state.name = 'modified';
+    wrapper.vm.state.value = 100;
 
-    expect(state.name).toBe('modified');
-    expect(state.value).toBe(100);
+    expect(wrapper.vm.state.name).toBe('modified');
+    expect(wrapper.vm.state.value).toBe(100);
   });
 
   it('should handle native context option', () => {
@@ -64,10 +88,18 @@ describe('useContext', () => {
 
     const key = Symbol('test');
 
-    // Create context with native option
-    const { state } = createContext(testContext, key, { native: true });
+    // Create a test component to provide context with native option
+    const TestComponent = defineComponent({
+      setup() {
+        const { state } = createContext(testContext, key, { native: true });
+        return { state };
+      },
+      template: '<div></div>',
+    });
 
-    expect(state).toBeDefined();
-    expect(state.name).toBe('test');
+    const wrapper = mount(TestComponent);
+
+    expect(wrapper.vm.state).toBeDefined();
+    expect(wrapper.vm.state.name).toBe('test');
   });
 });

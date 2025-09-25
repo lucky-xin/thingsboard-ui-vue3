@@ -80,5 +80,3 @@ describe('utils/cache/memory', () => {
     expect(Object.keys(memory.getCache).length).toBe(0);
   });
 });
-
-

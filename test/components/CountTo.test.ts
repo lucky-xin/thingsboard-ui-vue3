@@ -1,3 +1,44 @@
+import { describe, it, expect, vi } from 'vitest';
+import { mount } from '@vue/test-utils';
+
+describe('components/CountTo/src/CountTo.vue', () => {
+  it('should render with defaults and format number', async () => {
+    const wrapper = mount(CountTo, {
+      props: { startVal: 0, endVal: 12345, autoplay: false, decimals: 2, prefix: '$', suffix: 'USD' },
+    });
+    // call start -> triggers formatting path
+    await (wrapper.vm as any).start();
+    // value is computed string, ensure it exists
+    expect(wrapper.text()).toContain('$');
+  });
+
+  it('should emit events onStarted/onFinished when running', async () => {
+    vi.resetModules();
+    vi.doMock('@vueuse/core', async () => {
+      const mod = await vi.importActual<any>('@vueuse/core');
+      return {
+        ...mod,
+        useTransition: (src: any, opts: any = {}) => {
+          opts.onStarted?.();
+          opts.onFinished?.();
+          return src;
+        },
+      };
+    });
+    const { default: CountTo } = await import('/@/components/CountTo/src/CountTo.vue');
+    const wrapper = mount(CountTo as any, { props: { startVal: 0, endVal: 10, duration: 1 } });
+    const onStarted = vi.fn();
+    const onFinished = vi.fn();
+    wrapper.vm.$.emit = vi.fn((evt: string) => {
+      if (evt === 'onStarted') onStarted();
+      if (evt === 'onFinished') onFinished();
+    }) as any;
+    await (wrapper.vm as any).start();
+    expect(onStarted).toHaveBeenCalled();
+    expect(onFinished).toHaveBeenCalled();
+  });
+});
+
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';

@@ -50,6 +50,15 @@ describe('hooks/event/useEventListener more', () => {
     expect(listener).toHaveBeenCalledTimes(1);
     removeEvent();
   });
+
+  it('should support Ref<Element> and autoRemove=false', async () => {
+    const el = ref<HTMLElement | null>(document.createElement('div'));
+    const listener = vi.fn();
+    const { removeEvent } = useEventListener({ el: el as any, name: 'click', listener, autoRemove: false, wait: 0 });
+    el.value!.dispatchEvent(new Event('click'));
+    expect(listener).toHaveBeenCalled();
+    removeEvent();
+  });
 });
 
 

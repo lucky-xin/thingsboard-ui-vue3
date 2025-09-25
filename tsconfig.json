@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "strict": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

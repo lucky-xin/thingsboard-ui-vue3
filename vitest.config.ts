@@ -21,11 +21,7 @@ export default defineConfig({
       },
       include: [
         'src/components/**/*.{ts,vue}',
-        'src/directives/**/*.{ts,vue}',
-        'src/enums/**/*.{ts,vue}',
         'src/hooks/**/*.{ts,vue}',
-        'src/layouts/**/*.{ts,vue}',
-        'src/locales/**/*.{ts,vue}',
         'src/logics/**/*.{ts,vue}',
         'src/router/**/*.{ts,vue}',
         'src/settings/**/*.{ts,vue}',

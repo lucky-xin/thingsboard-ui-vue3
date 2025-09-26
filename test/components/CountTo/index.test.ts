@@ -1,8 +1,56 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
+// Mock withInstall utility
+vi.mock('/@/utils', () => ({
+  withInstall: vi.fn((component) => ({
+    ...component,
+    install: vi.fn(),
+  })),
+}));
+
+// Test CountTo component index exports
 describe('CountTo/index', () => {
-  it('should export CountTo component', async () => {
-    const { CountTo } = await import('/@/components/CountTo/index');
+  it('should export CountTo component with withInstall', async () => {
+    const { CountTo } = await import('/@/components/CountTo');
+    
     expect(CountTo).toBeDefined();
+    expect(CountTo.install).toBeDefined();
+  });
+
+  it('should have install method for CountTo', async () => {
+    const { CountTo } = await import('/@/components/CountTo');
+    
+    expect(CountTo.install).toBeDefined();
+    expect(typeof CountTo.install).toBe('function');
+  });
+
+  it('should install component correctly', async () => {
+    const { CountTo } = await import('/@/components/CountTo');
+    const mockApp = {
+      component: vi.fn(),
+    };
+    
+    CountTo.install(mockApp as any);
+    expect(mockApp.component).toHaveBeenCalled();
+  });
+
+  it('should have correct component name', async () => {
+    const { CountTo } = await import('/@/components/CountTo');
+    
+    expect(CountTo).toHaveProperty('__name');
+  });
+
+  it('should export only CountTo', async () => {
+    const exports = await import('/@/components/CountTo');
+    const exportKeys = Object.keys(exports);
+    
+    expect(exportKeys).toEqual(['CountTo']);
+  });
+
+  it('should be valid Vue component', async () => {
+    const { CountTo } = await import('/@/components/CountTo');
+    
+    expect(CountTo).toBeDefined();
+    expect(typeof CountTo).toBe('object');
   });
 });

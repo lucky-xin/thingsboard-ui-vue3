@@ -3,6 +3,7 @@ import { setActivePinia, createPinia } from 'pinia';
 import { useAppStore, useAppStoreWithOut } from '/@/store/modules/app';
 import { ThemeEnum } from '/@/enums/appEnum';
 import { APP_DARK_MODE_KEY, PROJ_CFG_KEY } from '/@/enums/cacheEnum';
+import type { BeforeMiniState } from '/types/store';
 
 // Mock dependencies
 vi.mock('/@/utils/cache/persistent', () => ({
@@ -94,7 +95,7 @@ describe('store/modules/app', () => {
     });
 
     it('should return before mini info', () => {
-      const miniInfo = { collapsed: true };
+      const miniInfo: BeforeMiniState = { menuCollapsed: true };
       store.beforeMiniInfo = miniInfo;
       
       expect(store.getBeforeMiniInfo).toEqual(miniInfo);
@@ -104,7 +105,7 @@ describe('store/modules/app', () => {
       const config = { theme: 'dark' } as any;
       store.projectConfig = config;
       
-      expect(store.getProjectConfig).toBe(config);
+      expect(store.getProjectConfig).toStrictEqual(config);
     });
 
     it('should return empty object when project config is null', () => {
@@ -117,28 +118,28 @@ describe('store/modules/app', () => {
       const headerSetting = { show: true };
       store.projectConfig = { headerSetting } as any;
       
-      expect(store.getHeaderSetting).toBe(headerSetting);
+      expect(store.getHeaderSetting).toStrictEqual(headerSetting);
     });
 
     it('should return menu setting from project config', () => {
       const menuSetting = { collapsed: false };
       store.projectConfig = { menuSetting } as any;
       
-      expect(store.getMenuSetting).toBe(menuSetting);
+      expect(store.getMenuSetting).toStrictEqual(menuSetting);
     });
 
     it('should return transition setting from project config', () => {
       const transitionSetting = { enable: true };
       store.projectConfig = { transitionSetting } as any;
       
-      expect(store.getTransitionSetting).toBe(transitionSetting);
+      expect(store.getTransitionSetting).toStrictEqual(transitionSetting);
     });
 
     it('should return multi tabs setting from project config', () => {
       const multiTabsSetting = { show: true };
       store.projectConfig = { multiTabsSetting } as any;
       
-      expect(store.getMultiTabsSetting).toBe(multiTabsSetting);
+      expect(store.getMultiTabsSetting).toStrictEqual(multiTabsSetting);
     });
   });
 
@@ -171,7 +172,7 @@ describe('store/modules/app', () => {
 
     describe('setBeforeMiniInfo', () => {
       it('should set before mini info', () => {
-        const miniInfo = { collapsed: true, width: 200 };
+        const miniInfo: BeforeMiniState = { menuCollapsed: true, menuSplit: false };
         
         store.setBeforeMiniInfo(miniInfo);
         

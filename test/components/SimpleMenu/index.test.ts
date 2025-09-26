@@ -1,21 +1,33 @@
-import { describe, it, expect, vi } from 'vitest';
-
-// 避免真实加载复杂子组件导致超时，最小化替身
-vi.mock('/@/components/SimpleMenu/src/SimpleMenu.vue', () => ({
-  default: { name: 'MockSimpleMenu', render() { return null; } },
-}));
-vi.mock('/@/components/SimpleMenu/src/SimpleMenuTag.vue', () => ({
-  default: { name: 'MockSimpleMenuTag', render() { return null; } },
-}));
+import { describe, it, expect } from 'vitest';
 
 describe('SimpleMenu/index', () => {
   it('should export SimpleMenu component', async () => {
-    const { SimpleMenu } = await import('/@/components/SimpleMenu/index');
-    expect(SimpleMenu).toBeDefined();
+    const module = await import('/@/components/SimpleMenu/index');
+    
+    expect(module).toBeDefined();
+    expect(module.SimpleMenu).toBeDefined();
   });
 
   it('should export SimpleMenuTag component', async () => {
-    const { SimpleMenuTag } = await import('/@/components/SimpleMenu/index');
-    expect(SimpleMenuTag).toBeDefined();
+    const module = await import('/@/components/SimpleMenu/index');
+    
+    expect(module.SimpleMenuTag).toBeDefined();
+  });
+
+  it('should be valid Vue components', async () => {
+    const module = await import('/@/components/SimpleMenu/index');
+    const { SimpleMenu, SimpleMenuTag } = module;
+    
+    expect(typeof SimpleMenu).toBe('object');
+    expect(typeof SimpleMenuTag).toBe('object');
+  });
+
+  it('should have correct exports', async () => {
+    const module = await import('/@/components/SimpleMenu/index');
+    const exports = Object.keys(module);
+    
+    expect(exports).toContain('SimpleMenu');
+    expect(exports).toContain('SimpleMenuTag');
+    expect(exports.length).toBe(2);
   });
 });

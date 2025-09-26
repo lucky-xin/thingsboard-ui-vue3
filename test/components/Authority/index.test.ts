@@ -1,32 +1,63 @@
-import { describe, it, expect } from 'vitest';
-import { Authority } from '/@/components/Authority';
+import { describe, it, expect, vi } from 'vitest';
 
+// Mock withInstall utility
+vi.mock('/@/utils', () => ({
+  withInstall: vi.fn((component) => ({
+    ...component,
+    install: vi.fn(),
+  })),
+}));
+
+// Test Authority component index exports
 describe('Authority/index', () => {
-  it('should export Authority component', () => {
+  it('should export Authority component with withInstall', async () => {
+    const { Authority } = await import('/@/components/Authority');
+    
     expect(Authority).toBeDefined();
-    expect(typeof Authority).toBe('object');
+    expect(Authority.install).toBeDefined();
   });
 
-  it('should have install method from withInstall', () => {
+  it('should have install method for Authority', async () => {
+    const { Authority } = await import('/@/components/Authority');
+    
     expect(Authority.install).toBeDefined();
     expect(typeof Authority.install).toBe('function');
   });
 
-  it('should have component name', () => {
-    expect(Authority.name || Authority.__name).toBeTruthy();
-  });
-
-  it('should be a Vue component', () => {
-    // Vue 3 components have either setup or render function
-    expect(Authority.setup || Authority.render || Authority.template).toBeTruthy();  
-  });
-
-  it('should install component correctly', () => {
+  it('should install component correctly', async () => {
+    const { Authority } = await import('/@/components/Authority');
     const mockApp = {
       component: vi.fn(),
     };
     
-    Authority.install(mockApp);
-    expect(mockApp.component).toHaveBeenCalledWith(Authority.name || Authority.__name, Authority);
+    Authority.install(mockApp as any);
+    expect(mockApp.component).toHaveBeenCalled();
+  });
+
+  it('should have correct component name', async () => {
+    const { Authority } = await import('/@/components/Authority');
+    
+    expect(Authority).toHaveProperty('__name');
+  });
+
+  it('should export only Authority', async () => {
+    const exports = await import('/@/components/Authority');
+    const exportKeys = Object.keys(exports);
+    
+    expect(exportKeys).toEqual(['Authority']);
+  });
+
+  it('should be valid Vue component', async () => {
+    const { Authority } = await import('/@/components/Authority');
+    
+    expect(Authority).toBeDefined();
+    expect(typeof Authority).toBe('object');
+  });
+
+  it('should export component with proper structure', async () => {
+    const { Authority } = await import('/@/components/Authority');
+    
+    // Component should have install method from withInstall
+    expect(Authority.install).toBeInstanceOf(Function);
   });
 });

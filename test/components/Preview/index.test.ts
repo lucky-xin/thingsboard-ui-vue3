@@ -1,21 +1,33 @@
-import { describe, it, expect, vi } from 'vitest';
-
-// 最小 mock 其内部复杂依赖，避免导入超时
-vi.mock('/@/components/Preview/src/Preview.vue', () => ({
-  default: { name: 'MockImagePreview', render() { return null; } },
-}));
-vi.mock('/@/components/Preview/src/functional', () => ({
-  createImgPreview: vi.fn(() => ({ destroy: () => {} })),
-}));
+import { describe, it, expect } from 'vitest';
 
 describe('Preview/index', () => {
   it('should export ImagePreview component', async () => {
-    const { ImagePreview } = await import('/@/components/Preview/index');
-    expect(ImagePreview).toBeDefined();
+    const module = await import('/@/components/Preview/index');
+    
+    expect(module).toBeDefined();
+    expect(module.ImagePreview).toBeDefined();
   });
 
   it('should export createImgPreview function', async () => {
-    const { createImgPreview } = await import('/@/components/Preview/index');
-    expect(createImgPreview).toBeDefined();
+    const module = await import('/@/components/Preview/index');
+    
+    expect(module.createImgPreview).toBeDefined();
+    expect(typeof module.createImgPreview).toBe('function');
+  });
+
+  it('should be valid Vue component', async () => {
+    const module = await import('/@/components/Preview/index');
+    const { ImagePreview } = module;
+    
+    expect(typeof ImagePreview).toBe('object');
+  });
+
+  it('should have correct exports', async () => {
+    const module = await import('/@/components/Preview/index');
+    const exports = Object.keys(module);
+    
+    expect(exports).toContain('ImagePreview');
+    expect(exports).toContain('createImgPreview');
+    expect(exports.length).toBe(2);
   });
 });

@@ -1,30 +1,38 @@
-import { describe, it, expect, vi } from 'vitest';
-
-vi.mock('/@/components/Excel/index', () => ({
-  ImpExcel: { name: 'MockImpExcel' },
-  ExpExcelModal: { name: 'MockExpExcelModal' },
-  jsonToSheetXlsx: () => ({}),
-  aoaToSheetXlsx: () => ({}),
-}));
+import { describe, it, expect } from 'vitest';
 
 describe('Excel/index', () => {
-  it('should export ImpExcel component', async () => {
-    const { ImpExcel } = await import('/@/components/Excel/index');
-    expect(ImpExcel).toBeDefined();
+  it('should export ImpExcel and ExpExcelModal components', async () => {
+    const module = await import('/@/components/Excel/index');
+    
+    expect(module).toBeDefined();
+    expect(module.ImpExcel).toBeDefined();
+    expect(module.ExpExcelModal).toBeDefined();
   });
 
-  it('should export ExpExcelModal component', async () => {
-    const { ExpExcelModal } = await import('/@/components/Excel/index');
-    expect(ExpExcelModal).toBeDefined();
+  it('should export Excel utility functions', async () => {
+    const module = await import('/@/components/Excel/index');
+    
+    expect(module.jsonToSheetXlsx).toBeDefined();
+    expect(module.aoaToSheetXlsx).toBeDefined();
+    expect(typeof module.jsonToSheetXlsx).toBe('function');
+    expect(typeof module.aoaToSheetXlsx).toBe('function');
   });
 
-  it('should export jsonToSheetXlsx function', async () => {
-    const { jsonToSheetXlsx } = await import('/@/components/Excel/index');
-    expect(jsonToSheetXlsx).toBeDefined();
+  it('should be valid Vue components', async () => {
+    const module = await import('/@/components/Excel/index');
+    const { ImpExcel, ExpExcelModal } = module;
+    
+    expect(typeof ImpExcel).toBe('object');
+    expect(typeof ExpExcelModal).toBe('object');
   });
 
-  it('should export aoaToSheetXlsx function', async () => {
-    const { aoaToSheetXlsx } = await import('/@/components/Excel/index');
-    expect(aoaToSheetXlsx).toBeDefined();
+  it('should have correct exports', async () => {
+    const module = await import('/@/components/Excel/index');
+    const exports = Object.keys(module);
+    
+    expect(exports).toContain('ImpExcel');
+    expect(exports).toContain('ExpExcelModal');
+    expect(exports).toContain('jsonToSheetXlsx');
+    expect(exports).toContain('aoaToSheetXlsx');
   });
 });

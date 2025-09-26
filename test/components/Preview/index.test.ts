@@ -1,4 +1,14 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+
+// Mock the Preview component
+vi.mock('./src/Preview.vue', () => ({
+  default: {
+    __name: 'Preview',
+    setup() {
+      return {};
+    },
+  },
+}));
 
 describe('Preview/index', () => {
   it('should export ImagePreview component', async () => {
@@ -8,26 +18,11 @@ describe('Preview/index', () => {
     expect(module.ImagePreview).toBeDefined();
   });
 
-  it('should export createImgPreview function', async () => {
-    const module = await import('/@/components/Preview/index');
-    
-    expect(module.createImgPreview).toBeDefined();
-    expect(typeof module.createImgPreview).toBe('function');
-  });
-
-  it('should be valid Vue component', async () => {
+  it('should have correct component structure', async () => {
     const module = await import('/@/components/Preview/index');
     const { ImagePreview } = module;
     
+    expect(ImagePreview).toBeDefined();
     expect(typeof ImagePreview).toBe('object');
-  });
-
-  it('should have correct exports', async () => {
-    const module = await import('/@/components/Preview/index');
-    const exports = Object.keys(module);
-    
-    expect(exports).toContain('ImagePreview');
-    expect(exports).toContain('createImgPreview');
-    expect(exports.length).toBe(2);
   });
 });

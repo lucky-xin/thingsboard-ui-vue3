@@ -11,6 +11,21 @@ vi.mock('/@/directives/loading', () => ({
 }));
 
 describe('directives/index', () => {
+  it('should export setupGlobDirectives function', async () => {
+    const module = await import('/@/directives/index');
+    
+    expect(module).toBeDefined();
+    expect(module.setupGlobDirectives).toBeDefined();
+    expect(typeof module.setupGlobDirectives).toBe('function');
+  });
+
+  it('should be a valid module', async () => {
+    const module = await import('/@/directives/index');
+    
+    expect(module).toBeDefined();
+    expect(typeof module).toBe('object');
+  });
+
   let mockApp: any;
 
   beforeEach(() => {

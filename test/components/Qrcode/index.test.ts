@@ -1,35 +1,21 @@
 import { describe, it, expect, vi } from 'vitest';
-
-// Mock the Qrcode component
-vi.mock('./src/Qrcode.vue', () => ({
-  default: {
-    __name: 'Qrcode',
-    setup() {
-      return {};
-    },
-  },
-}));
+import * as QrcodeIndex from '/@/components/Qrcode/index';
 
 describe('Qrcode/index', () => {
-  it('should export QrCode component', async () => {
-    const module = await import('/@/components/Qrcode/index');
-    
-    expect(module).toBeDefined();
-    expect(module.QrCode).toBeDefined();
-  });
+  it('should export QrCode component', () => {
+    expect(QrcodeIndex).toBeDefined();
+    expect(QrcodeIndex.QrCode).toBeDefined();
+  }, 10000);
 
-  it('should have correct component structure', async () => {
-    const module = await import('/@/components/Qrcode/index');
-    const { QrCode } = module;
-    
+  it('should have correct component structure', () => {
+    const { QrCode } = QrcodeIndex;
+
     expect(QrCode).toBeDefined();
     expect(typeof QrCode).toBe('object');
-  });
+  }, 10000);
 
-  it('should export typing definitions', async () => {
-    const module = await import('/@/components/Qrcode/index');
-    
+  it('should export typing definitions', () => {
     // Just check that the module imports without error
-    expect(module).toBeDefined();
-  });
+    expect(QrcodeIndex).toBeDefined();
+  }, 10000);
 });

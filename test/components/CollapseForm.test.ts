@@ -64,12 +64,10 @@ vi.mock('ant-design-vue', () => ({
     name: 'Collapse',
     template: '<div data-testid="collapse"><slot /></div>',
     props: ['class', 'defaultActiveKey'],
-    components: {
-      Panel: {
-        name: 'CollapsePanel',
-        template: '<div data-testid="collapse-panel"><slot name="header" /><slot /></div>',
-        props: ['key', 'header'],
-      },
+    Panel: {
+      name: 'CollapsePanel',
+      template: '<div data-testid="collapse-panel"><slot name="header" /><slot /></div>',
+      props: ['key', 'header'],
     },
   },
 }));
@@ -82,6 +80,14 @@ vi.mock('/@/directives/loading', () => ({
 vi.mock('/@/directives/permission', () => ({
   vAuth: {},
 }));
+
+// Register directives
+import { config } from '@vue/test-utils';
+
+config.global.directives = {
+  loading: {},
+  auth: {},
+};
 
 describe('CollapseForm', () => {
   it('should render with default props', () => {

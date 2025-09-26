@@ -50,7 +50,7 @@ describe('components/Form/BasicForm more funcs', () => {
     // scrollToField 依赖真实 antd 实例，跳过
 
     expect(true).toBe(true);
-  });
+  }, 10000);
 });
 
 

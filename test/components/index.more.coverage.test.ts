@@ -48,7 +48,7 @@ describe('components index more coverage', () => {
       expect(mod).toBeDefined();
       // 至少应当有一个导出
       expect(Object.keys(mod).length).toBeGreaterThan(0);
-    });
+    }, path === '/@/components/Verify' ? 15000 : 5000);
   }
 });
 

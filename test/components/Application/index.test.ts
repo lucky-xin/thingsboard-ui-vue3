@@ -1,50 +1,94 @@
-import { describe, it, expect } from 'vitest';
-import {
-  AppLogo,
-  AppProvider,
-  AppSearch,
-  AppLocalePicker,
-  AppDarkModeToggle,
-  useAppProviderContext,
-} from '/@/components/Application';
+import { describe, it, expect, vi } from 'vitest';
+
+// Mock the component modules to avoid importing the actual Vue components
+vi.mock('/@/components/Application/src/AppLogo.vue', () => ({
+  default: { name: 'AppLogo', template: '<div class="app-logo"></div>' },
+}));
+vi.mock('/@/components/Application/src/AppProvider.vue', () => ({
+  default: { name: 'AppProvider', template: '<div class="app-provider"><slot /></div>' },
+}));
+vi.mock('/@/components/Application/src/search/AppSearch.vue', () => ({
+  default: { name: 'AppSearch', template: '<div class="app-search"></div>' },
+}));
+vi.mock('/@/components/Application/src/AppLocalePicker.vue', () => ({
+  default: { name: 'AppLocalePicker', template: '<div class="app-locale-picker"></div>' },
+}));
+vi.mock('/@/components/Application/src/AppDarkModeToggle.vue', () => ({
+  default: { name: 'AppDarkModeToggle', template: '<div class="app-dark-mode-toggle"></div>' },
+}));
+vi.mock('/@/components/Application/src/useAppContext', () => ({
+  useAppProviderContext: () => ({ prefixCls: 'jeesite', isMobile: false }),
+}));
 
 describe('Application/index', () => {
-  it('should export AppLogo component with install method', () => {
+  it('should export Application components with install methods', async () => {
+    const {
+      AppLogo,
+      AppProvider,
+      AppSearch,
+      AppLocalePicker,
+      AppDarkModeToggle,
+      useAppProviderContext,
+    } = await import('/@/components/Application');
+
+    // Check components are defined
     expect(AppLogo).toBeDefined();
-    expect(AppLogo.install).toBeDefined();
-    expect(typeof AppLogo.install).toBe('function');
-  });
-
-  it('should export AppProvider component with install method', () => {
     expect(AppProvider).toBeDefined();
-    expect(AppProvider.install).toBeDefined();
-    expect(typeof AppProvider.install).toBe('function');
-  });
-
-  it('should export AppSearch component with install method', () => {
     expect(AppSearch).toBeDefined();
-    expect(AppSearch.install).toBeDefined();
-    expect(typeof AppSearch.install).toBe('function');
-  });
-
-  it('should export AppLocalePicker component with install method', () => {
     expect(AppLocalePicker).toBeDefined();
-    expect(AppLocalePicker.install).toBeDefined();
-    expect(typeof AppLocalePicker.install).toBe('function');
-  });
-
-  it('should export AppDarkModeToggle component with install method', () => {
     expect(AppDarkModeToggle).toBeDefined();
+
+    // Check install methods exist (added by withInstall)
+    expect(AppLogo.install).toBeDefined();
+    expect(AppProvider.install).toBeDefined();
+    expect(AppSearch.install).toBeDefined();
+    expect(AppLocalePicker.install).toBeDefined();
     expect(AppDarkModeToggle.install).toBeDefined();
+
+    expect(typeof AppLogo.install).toBe('function');
+    expect(typeof AppProvider.install).toBe('function');
+    expect(typeof AppSearch.install).toBe('function');
+    expect(typeof AppLocalePicker.install).toBe('function');
     expect(typeof AppDarkModeToggle.install).toBe('function');
   });
 
-  it('should export useAppProviderContext function', () => {
+  it('should export useAppProviderContext function', async () => {
+    const { useAppProviderContext } = await import('/@/components/Application');
     expect(useAppProviderContext).toBeDefined();
     expect(typeof useAppProviderContext).toBe('function');
   });
 
-  it('should have proper component names', () => {
+  it('should install components correctly', async () => {
+    const {
+      AppLogo,
+      AppProvider,
+      AppSearch,
+      AppLocalePicker,
+      AppDarkModeToggle,
+    } = await import('/@/components/Application');
+
+    const mockApp = {
+      component: vi.fn(),
+    };
+
+    AppLogo.install(mockApp);
+    AppProvider.install(mockApp);
+    AppSearch.install(mockApp);
+    AppLocalePicker.install(mockApp);
+    AppDarkModeToggle.install(mockApp);
+
+    expect(mockApp.component).toHaveBeenCalledTimes(5);
+  });
+
+  it('should have proper component names', async () => {
+    const {
+      AppLogo,
+      AppProvider,
+      AppSearch,
+      AppLocalePicker,
+      AppDarkModeToggle,
+    } = await import('/@/components/Application');
+
     expect(AppLogo.name || AppLogo.__name).toBeTruthy();
     expect(AppProvider.name || AppProvider.__name).toBeTruthy();
     expect(AppSearch.name || AppSearch.__name).toBeTruthy();

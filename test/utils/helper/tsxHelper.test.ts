@@ -11,9 +11,13 @@ vi.mock('/@/utils/is', () => ({
 const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
 describe('utils/helper/tsxHelper', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks();
     consoleSpy.mockClear();
+    
+    // Ensure isFunction mock is reset to default behavior
+    const { isFunction } = await import('/@/utils/is');
+    (isFunction as any).mockImplementation((fn) => typeof fn === 'function');
   });
 
   describe('getSlot', () => {

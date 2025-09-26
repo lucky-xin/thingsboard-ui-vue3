@@ -11,7 +11,7 @@
           :class="item.value"
           :default-active-key="configList.filter((i) => i.open || true).map((i) => i.value)"
         >
-          <Collapse.Panel :key="item.value" :header="item.label">
+          <Collapse.Panel :header="item.label" :forceRender="true">
             <slot :name="item.value"></slot>
           </Collapse.Panel>
         </Collapse>

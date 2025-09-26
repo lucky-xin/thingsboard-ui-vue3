@@ -24,10 +24,13 @@ export function useCopyToClipboard(initial?: string) {
 }
 
 export function copyTextToClipboard(input: string, { target = document.body }: Options = {}) {
+  // Convert to string to handle null/undefined gracefully
+  const textValue = String(input || '');
+  
   const element = document.createElement('textarea');
   const previouslyFocusedElement = document.activeElement;
 
-  element.value = input;
+  element.value = textValue;
 
   element.setAttribute('readonly', '');
 
@@ -46,12 +49,24 @@ export function copyTextToClipboard(input: string, { target = document.body }: O
   element.select();
 
   element.selectionStart = 0;
-  element.selectionEnd = input.length;
+  element.selectionEnd = textValue.length;
 
   let isSuccess = false;
   try {
     isSuccess = document.execCommand('copy');
   } catch (e: any) {
+    // Clean up before re-throwing
+    element.remove();
+    
+    if (originalRange && selection) {
+      selection.removeAllRanges();
+      selection.addRange(originalRange);
+    }
+    
+    if (previouslyFocusedElement) {
+      (previouslyFocusedElement as HTMLElement).focus();
+    }
+    
     throw new Error(e);
   }
 

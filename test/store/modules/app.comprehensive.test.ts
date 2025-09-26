@@ -3,9 +3,17 @@ import { setActivePinia, createPinia } from 'pinia';
 import { useAppStore, useAppStoreWithOut } from '/@/store/modules/app';
 import { ThemeEnum } from '/@/enums/appEnum';
 import { APP_DARK_MODE_KEY, PROJ_CFG_KEY } from '/@/enums/cacheEnum';
-import type { BeforeMiniState } from '/types/store';
+import type { BeforeMiniState } from '/#/store';
 
 // Mock dependencies
+vi.mock('/@/store', () => {
+  const pinia = createPinia();
+  setActivePinia(pinia);
+  return {
+    store: pinia,
+  };
+});
+
 vi.mock('/@/utils/cache/persistent', () => ({
   Persistent: {
     getLocal: vi.fn(() => null),
@@ -37,8 +45,14 @@ describe('store/modules/app', () => {
     setActivePinia(createPinia());
     vi.clearAllMocks();
     
-    // Clear localStorage
-    localStorage.clear();
+    // Mock localStorage more comprehensively
+    const localStorageMock = {
+      getItem: vi.fn(),
+      setItem: vi.fn(),
+      removeItem: vi.fn(),
+      clear: vi.fn(),
+    };
+    Object.defineProperty(window, 'localStorage', { value: localStorageMock });
     
     store = useAppStore();
   });
@@ -81,7 +95,7 @@ describe('store/modules/app', () => {
     });
 
     it('should return dark mode from localStorage when state is undefined', () => {
-      localStorage.setItem(APP_DARK_MODE_KEY, ThemeEnum.DARK);
+      vi.mocked(localStorage.getItem).mockReturnValue(ThemeEnum.DARK);
       store.darkMode = undefined;
       
       expect(store.getDarkMode).toBe(ThemeEnum.DARK);
@@ -89,7 +103,7 @@ describe('store/modules/app', () => {
 
     it('should return default dark mode when neither state nor localStorage', () => {
       store.darkMode = undefined;
-      localStorage.removeItem(APP_DARK_MODE_KEY);
+      vi.mocked(localStorage.getItem).mockReturnValue(null);
       
       expect(store.getDarkMode).toBe('light'); // from designSetting mock
     });
@@ -159,14 +173,14 @@ describe('store/modules/app', () => {
         store.setDarkMode(ThemeEnum.DARK);
         
         expect(store.darkMode).toBe(ThemeEnum.DARK);
-        expect(localStorage.getItem(APP_DARK_MODE_KEY)).toBe(ThemeEnum.DARK);
+        expect(localStorage.setItem).toHaveBeenCalledWith(APP_DARK_MODE_KEY, ThemeEnum.DARK);
       });
 
       it('should set light mode and save to localStorage', () => {
         store.setDarkMode(ThemeEnum.LIGHT);
         
         expect(store.darkMode).toBe(ThemeEnum.LIGHT);
-        expect(localStorage.getItem(APP_DARK_MODE_KEY)).toBe(ThemeEnum.LIGHT);
+        expect(localStorage.setItem).toHaveBeenCalledWith(APP_DARK_MODE_KEY, ThemeEnum.LIGHT);
       });
     });
 
@@ -279,6 +293,11 @@ describe('store/modules/app', () => {
 
   describe('useAppStoreWithOut', () => {
     it('should return app store instance', () => {
+      // Mock the store module to avoid pinia issues
+      vi.mock('/@/store', () => ({
+        store: createPinia(),
+      }));
+      
       const storeInstance = useAppStoreWithOut();
       
       expect(storeInstance).toBeDefined();

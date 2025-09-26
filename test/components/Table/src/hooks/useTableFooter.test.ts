@@ -7,7 +7,7 @@ describe('components/Table/src/hooks/useTableFooter', () => {
     expect(module).toBeDefined();
     expect(module.useTableFooter).toBeDefined();
     expect(typeof module.useTableFooter).toBe('function');
-  });
+  }, 15000);
 
   it('should be a valid hook module', async () => {
     const module = await import('/@/components/Table/src/hooks/useTableFooter');

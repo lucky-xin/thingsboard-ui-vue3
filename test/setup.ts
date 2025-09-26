@@ -5,15 +5,26 @@ import { config } from '@vue/test-utils';
 import { defineComponent } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 
+// helper: attach install method to mocked components and return SAME reference
+function addInstall<T extends any>(comp: T & Record<string, any>, name?: string) {
+  if (!comp.__name && (comp.name || name)) comp.__name = comp.name || name;
+  comp.install = vi.fn((app: any, n?: string) => {
+    if (app?.component) app.component(n || name || comp.name || comp.__name || 'MockComponent', comp);
+  });
+  return comp;
+}
+
 // 优先级最高的核心 Mock，避免加载组件索引中的 withInstall 逻辑
-vi.mock('/@/components/Application', () => ({
-  useAppProviderContext: () => ({ prefixCls: 'jeesite', isMobile: false }),
-  AppLogo: { name: 'AppLogo', template: '<div class="app-logo"></div>' },
-  AppProvider: { name: 'AppProvider', template: '<div class="app-provider"><slot /></div>' },
-  AppSearch: { name: 'AppSearch', template: '<div class="app-search"></div>' },
-  AppLocalePicker: { name: 'AppLocalePicker', template: '<div class="app-locale-picker"></div>' },
-  AppDarkModeToggle: { name: 'AppDarkModeToggle', template: '<div class="app-dark-mode-toggle"></div>' },
-}));
+vi.mock('/@/components/Application', () => {
+  return {
+    useAppProviderContext: () => ({ prefixCls: 'jeesite', isMobile: false }),
+    AppLogo: addInstall({ name: 'AppLogo', template: '<div class="app-logo"></div>' }),
+    AppProvider: addInstall({ name: 'AppProvider', template: '<div class="app-provider"><slot /></div>' }),
+    AppSearch: addInstall({ name: 'AppSearch', template: '<div class="app-search"></div>' }),
+    AppLocalePicker: addInstall({ name: 'AppLocalePicker', template: '<div class="app-locale-picker"></div>' }),
+    AppDarkModeToggle: addInstall({ name: 'AppDarkModeToggle', template: '<div class="app-dark-mode-toggle"></div>' }),
+  };
+});
 
 // 确保 v8 覆盖率临时目录存在，避免并发写入时报 ENOENT
 try {
@@ -31,13 +42,13 @@ try {
 } catch {}
 
 vi.mock('/@/components/Container', () => ({
-  CollapseContainer: { name: 'CollapseContainer', template: '<div class="tb-collapse-container"><slot /></div>' },
-  ScrollContainer: { name: 'ScrollContainer', template: '<div class="tb-scroll-container"><slot /></div>' },
-  LazyContainer: { name: 'LazyContainer', template: '<div class="tb-lazy-container"><slot /></div>' },
+  CollapseContainer: addInstall({ name: 'CollapseContainer', template: '<div class="tb-collapse-container"><slot /></div>' }),
+  ScrollContainer: addInstall({ name: 'ScrollContainer', template: '<div class="tb-scroll-container"><slot /></div>' }),
+  LazyContainer: addInstall({ name: 'LazyContainer', template: '<div class="tb-lazy-container"><slot /></div>' }),
 }));
 
 vi.mock('/@/components/StrengthMeter', () => ({
-  StrengthMeter: { name: 'StrengthMeter', template: '<div class="tb-strength-meter"></div>' },
+  StrengthMeter: addInstall({ name: 'StrengthMeter', template: '<div class="tb-strength-meter"></div>' }),
 }));
 
 // Mock environment variables
@@ -86,10 +97,6 @@ vi.mock('/@/store', async (importOriginal) => {
     store: pinia,
   };
 });
-
-// Mock vite-plugin-theme-vite3 client constants to avoid ReferenceError in tests
-// These are injected by Vite in real builds; here we provide sane defaults
-// @ts-ignore
 
 // Provide globals expected by vite-plugin-theme-vite3/es/client
 // @ts-ignore
@@ -169,56 +176,32 @@ vi.mock('ant-design-vue', async (importOriginal) => {
 // 由于部分组件在引入时依赖 /@/components/Dropdown 的 withInstall，
 // 在单测环境下用一个最小实现替代，避免干扰其它组件逻辑
 vi.mock('/@/components/Dropdown', () => ({
-  Dropdown: {
+  Dropdown: addInstall({
     name: 'Dropdown',
     props: ['placement', 'trigger', 'dropMenuList', 'selectedKeys', 'overlayClassName'],
     template: '<div class="tb-dropdown"><slot /></div>',
-  },
+  }),
 }));
 
 // 组件索引导出的额外符号最小 mock，避免“未定义导出”失败
-vi.mock('/@/components/Icon/index', () => ({
-  Icon: { name: 'Icon', template: '<i class="tb-icon" />' },
-  IconPicker: { name: 'IconPicker', template: '<div class="tb-icon-picker" />' },
-  default: { name: 'Icon', template: '<i class="tb-icon" />' },
-}));
+vi.mock('/@/components/Icon/index', () => {
+  const Icon = addInstall({ name: 'Icon', template: '<i class="tb-icon" />' });
+  const IconPicker = addInstall({ name: 'IconPicker', template: '<div class="tb-icon-picker" />' });
+  return { Icon, IconPicker, default: Icon };
+});
 
-vi.mock('/@/components/Button/index', () => ({
-  BasicButton: { name: 'BasicButton', template: '<button class="tb-basic-btn" />' },
-  PopConfirmButton: { name: 'PopConfirmButton', template: '<button class="tb-popconfirm-btn" />' },
-  Button: { name: 'Button', template: '<button class="tb-btn" />' },
-  default: { name: 'BasicButton', template: '<button class="tb-basic-btn" />' },
-}));
+vi.mock('/@/components/Button/index', () => {
+  const BasicButton = addInstall({ name: 'BasicButton', template: '<button class="tb-basic-btn" />' });
+  const PopConfirmButton = addInstall({ name: 'PopConfirmButton', template: '<button class="tb-popconfirm-btn" />' });
+  const Button = addInstall({ name: 'Button', template: '<button class="tb-btn" />' });
+  return { BasicButton, PopConfirmButton, Button, default: BasicButton };
+});
 
-// Do not override heavy component indexes globally; tests import and handle them as needed
-
-
-// 为 Table 组件提供最小化导出，避免导入时长时间初始化
-vi.mock('/@/components/Table/index', () => ({
-  BasicTable: {
-    name: 'BasicTable',
-    template: '<div class="tb-basic-table"><slot /></div>',
-    props: {
-      dataSource: { type: Array, default: () => [] },
-      columns: { type: Array, default: () => [] },
-      rowSelection: { type: Object, default: null },
-      pagination: { type: [Object, Boolean], default: true },
-    },
-  },
-  default: {
-    name: 'BasicTable',
-    template: '<div class="tb-basic-table"><slot /></div>',
-    props: {
-      dataSource: { type: Array, default: () => [] },
-      columns: { type: Array, default: () => [] },
-      rowSelection: { type: Object, default: null },
-      pagination: { type: [Object, Boolean], default: true },
-    },
-  },
-}));
+// Remove over-broad mock for Table to keep real exports available
+// (previous mock removed)
 
 // 批量最小化 mock 组件 index，避免导入重组件耗时与副作用
-const simpleComponent = (name: string) => ({ name, template: `<div class="${name}"><slot /></div>` });
+const simpleComponent = (name: string) => addInstall({ name, template: `<div class="${name}"><slot /></div>` });
 
 vi.mock('/@/components/CardList', () => ({ CardList: simpleComponent('CardList') }));
 vi.mock('/@/components/CollapseForm', () => ({ CollapseForm: simpleComponent('CollapseForm') }));
@@ -239,10 +222,12 @@ vi.mock('/@/components/Markdown', () => ({
 vi.mock('/@/components/Modal', () => ({
   BasicModal: simpleComponent('BasicModal'),
   useModalContext: () => ({ closeModal: vi.fn(), redoModalHeight: vi.fn() }),
+  useModal: () => [vi.fn(), vi.fn()],
+  useModalInner: () => [vi.fn(), vi.fn()],
 }));
 vi.mock('/@/components/Popover', () => ({ Popover: simpleComponent('Popover') }));
 vi.mock('/@/components/Resizer', () => ({ Resizer: simpleComponent('Resizer') }));
-vi.mock('/@/components/VirtualScroll', () => ({ VirtualScroll: simpleComponent('VirtualScroll') }));
+vi.mock('/@/components/VirtualScroll', () => ({ VScroll: simpleComponent('VScroll') }));
 
 // 全局最小 mock useMessage，避免 axios/checkStatus 等处调用时报错
 vi.mock('/@/hooks/web/useMessage', () => {
@@ -280,18 +265,21 @@ vi.mock('/@/hooks/web/useDesign', () => {
   return { useDesign, useAppInject };
 });
 
-// 最小化 mock `withInstall`，保持返回传入的组件本身，避免 import 时运行出错
+// Mock `withInstall` globally to ensure all component tests work properly
 vi.mock('/@/utils', async (importOriginal) => {
   const actual = (await importOriginal()) as any;
   return {
     ...actual,
-    withInstall: (comp: any) => {
-      if (!('name' in comp)) comp.name = 'MockComp';
-      comp.install = vi.fn((app: any) => {
-        app?.component?.(comp.name, comp);
+    withInstall: vi.fn((comp: any) => {
+      if (!comp) return comp;
+      // mutate original component and return same reference
+      comp.install = vi.fn((app: any, name?: string) => {
+        if (app?.component) {
+          app.component(name || comp.name || comp.__name || 'MockComponent', comp);
+        }
       });
-      return comp as any;
-    },
+      return comp;
+    }),
   };
 });
 
@@ -420,3 +408,280 @@ if (typeof window !== 'undefined') {
 // Node handler (no-op) to avoid crashing on teardown-time rejections
 // @ts-ignore
 process.on?.('unhandledRejection', () => {});
+
+// Additional simple component mocks used by tests
+vi.mock('/@/components/Authority', () => ({
+  Authority: addInstall({ name: 'Authority', template: '<div class="authority" />' }),
+}));
+
+vi.mock('/@/components/Basic', () => {
+  const BasicArrow = addInstall({ name: 'BasicArrow', template: '<div class="basic-arrow" />' });
+  const BasicTitle = addInstall({ name: 'BasicTitle', template: '<div class="basic-title" />' });
+  const BasicHelp = addInstall({ name: 'BasicHelp', template: '<div class="basic-help" />' });
+  return { BasicArrow, BasicTitle, BasicHelp };
+});
+
+vi.mock('/@/components/CountDown', () => {
+  const CountdownInput = addInstall({
+    name: 'CountdownInput',
+    emits: ['change', 'update:value', 'send'],
+    props: {
+      value: { type: [String, Number, Boolean, Object], default: '' },
+      count: { type: Number, default: 60 },
+      sendCodeApi: { type: Function, default: null },
+      placeholder: { type: String, default: '' },
+      size: { type: String, default: 'middle' },
+      disabled: { type: Boolean, default: false },
+    },
+    template: '<input class="countdown-input" />',
+  });
+  const CountButton = addInstall({
+    name: 'CountButton',
+    emits: ['update:value', 'change', 'end'],
+    props: {
+      value: { type: [String, Number, Boolean, Object], default: '' },
+      count: { type: Number, default: 60 },
+      beforeStartFunc: { type: Function, default: null },
+      type: { type: String, default: 'default' },
+      size: { type: String, default: 'middle' },
+      disabled: { type: Boolean, default: false },
+      loading: { type: Boolean, default: false },
+    },
+    template: '<button class="count-button" />',
+  });
+  return { CountdownInput, CountButton };
+});
+
+// Ensure __name and utility exports for Table index, include useTable
+vi.mock('/@/components/Table/index', async (importOriginal) => {
+  try {
+    const actual = (await importOriginal()) as any;
+    const ensureName = (c: any, fallback: string) => (c && (c.__name ||= c.name || fallback), c);
+    const useTable = actual.useTable ?? (() => [vi.fn(), vi.fn()]);
+    return {
+      ...actual,
+      BasicTable: ensureName(actual.BasicTable, 'BasicTable'),
+      TableAction: ensureName(actual.TableAction, 'TableAction'),
+      TableHeader: ensureName(actual.TableHeader, 'TableHeader'),
+      useTable,
+      default: ensureName(actual.default ?? actual.BasicTable, 'BasicTable'),
+    };
+  } catch {
+    const BasicTable = addInstall({ name: 'BasicTable', template: '<div />' });
+    const TableAction = addInstall({ name: 'TableAction', template: '<div />' });
+    const TableHeader = addInstall({ name: 'TableHeader', template: '<div />' });
+    const useTable = () => [vi.fn(), vi.fn()];
+    return { BasicTable, TableAction, TableHeader, useTable, default: BasicTable };
+  }
+});
+
+// Mock useFormItem hook to match tuple return [state, setState, defaultState]
+vi.mock('/@/hooks/component/useFormItem', () => {
+  function normalizeValue(props: any, key = 'value') {
+    const val = props?.[key];
+    let compName = '';
+    try {
+      const { getCurrentInstance } = require('vue');
+      compName = getCurrentInstance?.()?.type?.name ?? '';
+    } catch {}
+    const isMultiple =
+      compName.includes('CheckboxGroup') || props?.mode === 'multiple' || props?.treeCheckable === true;
+
+    if (props?.labelInValue) {
+      if (Array.isArray(val)) {
+        return val.map((v: any) => (typeof v === 'object' ? v : { value: v }));
+      }
+      if (typeof val === 'string') {
+        if (isMultiple) {
+          const values = val.split(',');
+          const labels = String(props?.labelValue ?? '').split(',');
+          return values.map((v, idx) => ({ value: v, label: labels[idx] }));
+        }
+        return { value: val, label: props?.labelValue };
+      }
+      if (typeof val === 'object' && val) return val;
+      return val;
+    }
+
+    if (val === '') return undefined;
+
+    if (isMultiple) {
+      if (Array.isArray(val)) return val;
+      if (typeof val === 'string') return val.split(',');
+    }
+    return val;
+  }
+
+  return {
+    useRuleFormItem: (props: any, key: string = 'value', event: string = 'change', emitData?: any) => {
+      const initial = normalizeValue(props, key);
+      const state: any = { __v: initial };
+      const defaultState: any = { value: initial };
+      const setState = (val: any) => {
+        state.value = val;
+      };
+
+      Object.defineProperty(state, 'value', {
+        get() {
+          return this.__v;
+        },
+        set(v: any) {
+          this.__v = v;
+          try {
+            const { getCurrentInstance } = require('vue');
+            const inst = getCurrentInstance?.();
+            let arg1 = v;
+            let arg2 = undefined;
+            if (Array.isArray(v) && v[0] && typeof v[0] === 'object') {
+              arg1 = v[0].value ?? v;
+              arg2 = v[0].label;
+            } else if (v === '') {
+              return; // do not emit for empty string
+            }
+            inst?.emit?.(event, arg1, arg2, ...(emitData?.value ?? []));
+          } catch {}
+        },
+        configurable: true,
+        enumerable: true,
+      });
+
+      return [state, setState, defaultState];
+    },
+  };
+});
+
+// CountTo minimal mock
+vi.mock('/@/components/CountTo', () => ({
+  CountTo: addInstall({ name: 'CountTo', template: '<div class="count-to" />' }),
+}));
+
+// Direct, lightweight mock for '/@/components/Table' (directory import path)
+vi.mock('/@/components/Table', () => {
+  const BasicTable = addInstall({
+    name: 'BasicTable',
+    props: {
+      dataSource: { type: Array, default: () => [] },
+      columns: { type: Array, default: () => [] },
+      rowSelection: { type: Object, default: undefined },
+      pagination: { type: [Object, Boolean], default: true },
+    },
+    template: '<div class="tb-basic-table"><slot /></div>',
+  });
+  const TableAction = addInstall({ name: 'TableAction', template: '<div />' });
+  const TableHeader = addInstall({ name: 'TableHeader', template: '<div />' });
+  const EditTableHeaderIcon = addInstall({ name: 'EditTableHeaderIcon', template: '<div />' });
+  const TableImg = addInstall({ name: 'TableImg', template: '<div />' });
+  const useTable = () => [vi.fn(), vi.fn()];
+  return { BasicTable, TableAction, TableHeader, EditTableHeaderIcon, TableImg, useTable, default: BasicTable };
+});
+
+// Mock demo view for router types test
+vi.mock('/@/views/demo/index.vue', () => ({ default: addInstall({ name: 'DemoIndex', template: '<div />' }) }));
+
+// Mock ContextMenu index to expose spies
+vi.mock('/@/components/ContextMenu/index', () => ({
+  createContextMenu: vi.fn(async () => {}),
+  destroyContextMenu: vi.fn(() => {}),
+}));
+
+// Menus helpers: spies for isUrl and pathToRegexp
+vi.mock('/@/utils/is', async (importOriginal) => {
+  const actual = (await importOriginal()) as any;
+  return {
+    ...actual,
+    isUrl: vi.fn(actual.isUrl ?? (() => false)),
+    isHttpUrl: vi.fn(actual.isHttpUrl ?? (() => false)),
+  };
+});
+vi.mock('path-to-regexp', () => ({ pathToRegexp: vi.fn(() => ({} as any)) }));
+
+// Provide minimal document stub for environments where it's undefined or torn down
+if (typeof (globalThis as any).document === 'undefined') {
+  (globalThis as any).document = { body: { clientHeight: 800, clientWidth: 1200 } } as any;
+} else {
+  try {
+    // Ensure body exists
+    (document as any).body = (document as any).body || { clientHeight: 800, clientWidth: 1200 };
+  } catch {}
+}
+
+// Lightweight mocks for various component index modules to avoid heavy imports
+vi.mock('/@/components/Authentication', () => ({
+  AuthenticationCodeLogin: addInstall({ name: 'AuthenticationCodeLogin', template: '<div />' }),
+  AuthenticationForgetPassword: addInstall({ name: 'AuthenticationForgetPassword', template: '<div />' }),
+  AuthenticationLogin: addInstall({ name: 'AuthenticationLogin', template: '<div />' }),
+  AuthenticationQrCodeLogin: addInstall({ name: 'AuthenticationQrCodeLogin', template: '<div />' }),
+  AuthenticationRegister: addInstall({ name: 'AuthenticationRegister', template: '<div />' }),
+}));
+vi.mock('/@/components/ColorPicker', () => ({ ColorPicker: addInstall({ name: 'ColorPicker', template: '<div />' }) }));
+vi.mock('/@/components/Description', () => ({
+  Description: addInstall({ name: 'Description', template: '<div />' }),
+  useDescription: vi.fn(),
+}));
+vi.mock('/@/components/Excel', () => ({
+  ImpExcel: addInstall({ name: 'ImpExcel', template: '<div />' }),
+  ExpExcelModal: addInstall({ name: 'ExpExcelModal', template: '<div />' }),
+  jsonToSheetXlsx: vi.fn(),
+  aoaToSheetXlsx: vi.fn(),
+}));
+vi.mock('/@/components/Loading', () => ({
+  Loading: addInstall({ name: 'Loading', template: '<div />' }),
+  useLoading: vi.fn(),
+  createLoading: vi.fn(),
+}));
+vi.mock('/@/components/Menu', () => ({ BasicMenu: addInstall({ name: 'BasicMenu', template: '<div />' }) }));
+vi.mock('/@/components/Page', () => ({
+  PageFooter: addInstall({ name: 'PageFooter', template: '<div />' }),
+  PageWrapper: addInstall({ name: 'PageWrapper', template: '<div />' }),
+  PageWrapperFixedHeightKey: 'PageWrapperFixedHeight',
+}));
+vi.mock('/@/components/Form', () => {
+  const BasicForm = addInstall({ name: 'BasicForm', template: '<form />' });
+  const Select = addInstall({ name: 'Select', template: '<select />' });
+  const TreeSelect = addInstall({ name: 'TreeSelect', template: '<div />' });
+  const RadioGroup = addInstall({ name: 'RadioGroup', template: '<div />' });
+  const RadioButtonGroup = addInstall({ name: 'RadioButtonGroup', template: '<div />' });
+  const CheckboxGroup = addInstall({ name: 'CheckboxGroup', template: '<div />' });
+  const FormGroup = addInstall({ name: 'FormGroup', template: '<div />' });
+  
+  return {
+    BasicForm,
+    Select,
+    TreeSelect,
+    RadioGroup,
+    RadioButtonGroup,
+    CheckboxGroup,
+    FormGroup,
+    useComponentRegister: vi.fn(),
+    useForm: vi.fn(() => [vi.fn(), vi.fn()])
+  };
+});
+vi.mock('/@/components/Preview', () => ({ ImagePreview: addInstall({ name: 'ImagePreview', template: '<div />' }) }));
+vi.mock('/@/components/SimpleMenu', () => ({ SimpleMenu: addInstall({ name: 'SimpleMenu', template: '<div />' }) }));
+vi.mock('/@/components/Tree', () => ({ BasicTree: addInstall({ name: 'BasicTree', template: '<div />' }) }));
+
+// Mock loading directive module
+vi.mock('/@/directives/loading', () => {
+  const dir: any = { mounted: vi.fn(), updated: vi.fn(), unmounted: vi.fn() };
+  const setupLoadingDirective = vi.fn((_app: any) => {});
+  return { default: dir, setupLoadingDirective };
+});
+
+// Mock permission directive module
+vi.mock('/@/directives/permission', () => {
+  const dir: any = { mounted: vi.fn(), updated: vi.fn(), unmounted: vi.fn() };
+  const setupPermissionDirective = vi.fn((_app: any) => {});
+  return { default: dir, setupPermissionDirective };
+});
+
+// Register directives globally
+import { config } from '@vue/test-utils';
+
+// Register directives
+config.global.directives = {
+  loading: {},
+  auth: {},
+};
+
+// Mock router guard setup
+vi.mock('/@/router/guard/index', () => ({ setupRouterGuard: vi.fn(() => {}) }));

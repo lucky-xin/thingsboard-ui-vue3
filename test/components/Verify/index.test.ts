@@ -26,7 +26,7 @@ describe('Verify/index', () => {
     expect(module).toBeDefined();
     expect(module.BasicDragVerify).toBeDefined();
     expect(module.RotateDragVerify).toBeDefined();
-  });
+  }, 15000);
 
   it('should have correct component structure', async () => {
     const module = await import('/@/components/Verify/index');

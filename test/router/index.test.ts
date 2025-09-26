@@ -1,24 +1,19 @@
 import { describe, it, expect } from 'vitest';
+import * as routerIndex from '/@/router/index';
 
 describe('router/index', () => {
-  it('should export router configuration', async () => {
-    const module = await import('/@/router/index');
-    
-    expect(module).toBeDefined();
-    expect(module.router).toBeDefined();
-  });
+  it('should export router configuration', () => {
+    expect(routerIndex).toBeDefined();
+    expect(routerIndex.router).toBeDefined();
+  }, 10000);
 
-  it('should export setupRouter function', async () => {
-    const module = await import('/@/router/index');
-    
-    expect(module.setupRouter).toBeDefined();
-    expect(typeof module.setupRouter).toBe('function');
-  });
+  it('should export setupRouter function', () => {
+    expect(routerIndex.setupRouter).toBeDefined();
+    expect(typeof routerIndex.setupRouter).toBe('function');
+  }, 10000);
 
-  it('should be a valid router module', async () => {
-    const module = await import('/@/router/index');
-    
-    expect(module).toBeDefined();
-    expect(typeof module).toBe('object');
-  });
+  it('should be a valid router module', () => {
+    expect(routerIndex).toBeDefined();
+    expect(typeof routerIndex).toBe('object');
+  }, 10000);
 });

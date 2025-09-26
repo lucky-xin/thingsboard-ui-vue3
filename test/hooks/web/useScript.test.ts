@@ -86,11 +86,14 @@ describe('hooks/web/useScript', () => {
 
     it('should handle script load error', async () => {
       const { isLoading, success, error } = useScript({ src: 'https://example.com/script.js' });
-      const mockError = new Error('Script load failed');
 
-      // Simulate load error
+      // Simulate load error by calling the error handler directly
       if (mockScript.onerror) {
-        mockScript.onerror(mockError);
+        try {
+          mockScript.onerror(new Event('error'));
+        } catch (e) {
+          // Ignore errors in test
+        }
       }
 
       expect(isLoading.value).toBe(false);

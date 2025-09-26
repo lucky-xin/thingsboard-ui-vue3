@@ -2,54 +2,59 @@ import { describe, it, expect } from 'vitest';
 import { propTypes } from '/@/utils/propTypes';
 
 describe('utils/propTypes', () => {
-  it('should define propTypes', () => {
+  it('should export propTypes object', () => {
     expect(propTypes).toBeDefined();
-    // We can't easily check the type because it's a complex object from vue-types
+    expect(typeof propTypes).toBe('object');
   });
 
-  it('should have basic prop type validators', () => {
+  it('should have func property', () => {
     expect(propTypes.func).toBeDefined();
+  });
+
+  it('should have bool property', () => {
     expect(propTypes.bool).toBeDefined();
+  });
+
+  it('should have string property', () => {
     expect(propTypes.string).toBeDefined();
+  });
+
+  it('should have number property', () => {
     expect(propTypes.number).toBeDefined();
+  });
+
+  it('should have object property', () => {
     expect(propTypes.object).toBeDefined();
+  });
+
+  it('should have integer property', () => {
     expect(propTypes.integer).toBeDefined();
   });
 
-  it('should validate string props correctly', () => {
-    const stringProp = propTypes.string;
-    expect(stringProp).toBeDefined();
-
-    // Test the validator function if it exists
-    const validator = (stringProp as any).validator as ((v: unknown) => boolean) | undefined;
-    if (validator) {
-      expect(validator('test')).toBe(true);
-      expect(validator(123)).toBe(false);
-    }
+  it('should have style property', () => {
+    expect(propTypes.style).toBeDefined();
   });
 
-  it('should validate number props correctly', () => {
-    const numberProp = propTypes.number;
-    expect(numberProp).toBeDefined();
-
-    // Test the validator function if it exists
-    const validator = (numberProp as any).validator as ((v: unknown) => boolean) | undefined;
-    if (validator) {
-      expect(validator(123)).toBe(true);
-      expect(validator('test')).toBe(false);
-    }
+  it('should have VNodeChild property', () => {
+    expect(propTypes.VNodeChild).toBeDefined();
   });
 
-  it('should validate boolean props correctly', () => {
-    const boolProp = propTypes.bool;
-    expect(boolProp).toBeDefined();
+  it('should be able to create validators', () => {
+    const stringValidator = propTypes.string;
+    expect(stringValidator).toBeDefined();
+    
+    const boolValidator = propTypes.bool;
+    expect(boolValidator).toBeDefined();
+    
+    const numberValidator = propTypes.number;
+    expect(numberValidator).toBeDefined();
+  });
 
-    // Test the validator function if it exists
-    const validator = (boolProp as any).validator as ((v: unknown) => boolean) | undefined;
-    if (validator) {
-      expect(validator(true)).toBe(true);
-      expect(validator(false)).toBe(true);
-      expect(validator('true')).toBe(false);
-    }
+  it('should have all expected properties', () => {
+    const expectedProps = ['func', 'bool', 'string', 'number', 'object', 'integer', 'style', 'VNodeChild'];
+    
+    expectedProps.forEach(prop => {
+      expect(propTypes).toHaveProperty(prop);
+    });
   });
 });

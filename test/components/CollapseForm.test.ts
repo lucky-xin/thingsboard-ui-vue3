@@ -67,7 +67,7 @@ vi.mock('ant-design-vue', () => ({
     Panel: {
       name: 'CollapsePanel',
       template: '<div data-testid="collapse-panel"><slot name="header" /><slot /></div>',
-      props: ['key', 'header'],
+      props: ['header'],
     },
   },
 }));

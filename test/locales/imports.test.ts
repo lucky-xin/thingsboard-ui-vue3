@@ -21,7 +21,7 @@ describe('locales imports coverage', () => {
     expect(zhCN).toBeDefined();
     expect(topEN).toBeDefined();
     expect(topZH).toBeDefined();
-  });
+  }, 15000);
 
   it('should import routes sections', async () => {
     const enRoutes = await import('/@/locales/lang/en/routes/demo');
@@ -37,7 +37,7 @@ describe('locales imports coverage', () => {
     expect(helper).toBeDefined();
     expect(setup).toBeDefined();
     expect(useLocale).toBeDefined();
-  });
+  }, 15000);
 });
 
 

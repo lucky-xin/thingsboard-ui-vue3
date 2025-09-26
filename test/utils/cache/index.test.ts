@@ -8,7 +8,7 @@ vi.mock('/@/utils/env', () => ({
 
 vi.mock('/@/settings/encryptionSetting', () => ({
   enableStorageEncryption: false,
-  DEFAULT_CACHE_TIME: 7 * 24 * 60 * 60 * 1000, // 7 days
+  DEFAULT_CACHE_TIME: 7 * 24 * 60 * 60, // 7 days
   cacheCipher: {
     key: '_11111000001111@',
     iv: '@11111000001111_',

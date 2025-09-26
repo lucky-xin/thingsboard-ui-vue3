@@ -1,200 +1,185 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { nextTick } from 'vue';
 import { useTimeoutFn, useTimeoutRef } from '/@/hooks/core/useTimeout';
 
-// Mock Vue functions
-vi.mock('vue', () => ({
-  ref: vi.fn((value) => ({ value })),
-  watch: vi.fn(),
-}));
-
-// Mock VueUse
+// Mock @vueuse/core
 vi.mock('@vueuse/core', () => ({
-  tryOnUnmounted: vi.fn(),
+  tryOnUnmounted: vi.fn((fn) => fn),
 }));
 
-// Mock utils
+// Mock isFunction
 vi.mock('/@/utils/is', () => ({
   isFunction: vi.fn((fn) => typeof fn === 'function'),
 }));
 
-import { ref, watch } from 'vue';
-import { tryOnUnmounted } from '@vueuse/core';
-import { isFunction } from '/@/utils/is';
-
 describe('hooks/core/useTimeout', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   describe('useTimeoutRef', () => {
-    it('should return readyRef, stop, and start functions', () => {
-      const mockRef = { value: false };
-      (ref as any).mockReturnValue(mockRef);
-
-      const result = useTimeoutRef(1000);
-
-      expect(result).toHaveProperty('readyRef');
-      expect(result).toHaveProperty('stop');
-      expect(result).toHaveProperty('start');
-      expect(typeof result.stop).toBe('function');
-      expect(typeof result.start).toBe('function');
+    it('should start timer immediately', () => {
+      const { readyRef, stop, start } = useTimeoutRef(1000);
+      
+      expect(readyRef.value).toBe(false);
+      
+      // Fast-forward time
+      vi.advanceTimersByTime(1000);
+      
+      expect(readyRef.value).toBe(true);
     });
 
-    it('should initialize with false readyRef', () => {
-      const mockRef = { value: false };
-      (ref as any).mockReturnValue(mockRef);
-
-      const { readyRef } = useTimeoutRef(1000);
-
-      expect(ref).toHaveBeenCalledWith(false);
+    it('should stop timer', () => {
+      const { readyRef, stop } = useTimeoutRef(1000);
+      
+      expect(readyRef.value).toBe(false);
+      
+      stop();
+      
+      // Fast-forward time
+      vi.advanceTimersByTime(1000);
+      
       expect(readyRef.value).toBe(false);
     });
 
-    it('should set readyRef to false when stop is called', () => {
-      const mockRef = { value: true };
-      (ref as any).mockReturnValue(mockRef);
-
-      const { stop } = useTimeoutRef(1000);
-
+    it('should restart timer when start is called', () => {
+      const { readyRef, stop, start } = useTimeoutRef(1000);
+      
+      expect(readyRef.value).toBe(false);
+      
+      // Stop and restart
       stop();
-
-      expect(mockRef.value).toBe(false);
+      start();
+      
+      expect(readyRef.value).toBe(false);
+      
+      // Fast-forward time
+      vi.advanceTimersByTime(1000);
+      
+      expect(readyRef.value).toBe(true);
     });
 
-    it('should register cleanup on unmount', () => {
-      useTimeoutRef(1000);
-
-      expect(tryOnUnmounted).toHaveBeenCalledTimes(1);
-      expect(typeof (tryOnUnmounted as any).mock.calls[0][0]).toBe('function');
-    });
-
-    it('should handle different timeout values', () => {
-      const mockRef = { value: false };
-      (ref as any).mockReturnValue(mockRef);
-
-      const result1 = useTimeoutRef(500);
-      const result2 = useTimeoutRef(2000);
-
-      expect(result1.readyRef).toBe(mockRef);
-      expect(result2.readyRef).toBe(mockRef);
-      expect(typeof result1.start).toBe('function');
-      expect(typeof result2.start).toBe('function');
-    });
-
-    it('should provide working stop and start functions', () => {
-      const mockRef = { value: false };
-      (ref as any).mockReturnValue(mockRef);
-
-      const { stop, start } = useTimeoutRef(1000);
-
-      expect(() => stop()).not.toThrow();
-      expect(() => start()).not.toThrow();
+    it('should handle multiple start calls', () => {
+      const { readyRef, stop, start } = useTimeoutRef(1000);
+      
+      expect(readyRef.value).toBe(false);
+      
+      // Call start multiple times
+      start();
+      start();
+      
+      expect(readyRef.value).toBe(false);
+      
+      // Fast-forward time
+      vi.advanceTimersByTime(1000);
+      
+      expect(readyRef.value).toBe(true);
     });
   });
 
   describe('useTimeoutFn', () => {
-    it('should throw error if handle is not a function', () => {
-      (isFunction as any).mockReturnValue(false);
-
-      expect(() => useTimeoutFn('not a function' as any, 1000)).toThrow('handle is not Function!');
-    });
-
-    it('should return readyRef, stop, and start functions', () => {
-      const mockRef = { value: false };
-      (ref as any).mockReturnValue(mockRef);
-      (isFunction as any).mockReturnValue(true);
-
-      const handle = vi.fn();
-      const result = useTimeoutFn(handle, 1000);
-
-      expect(result).toHaveProperty('readyRef');
-      expect(result).toHaveProperty('stop');
-      expect(result).toHaveProperty('start');
-    });
-
-    it('should call handle immediately when native is true', () => {
-      const mockRef = { value: false };
-      (ref as any).mockReturnValue(mockRef);
-      (isFunction as any).mockReturnValue(true);
-
-      const handle = vi.fn();
-      useTimeoutFn(handle, 1000, true);
-
-      expect(handle).toHaveBeenCalledTimes(1);
-    });
-
-    it('should setup watcher when native is false', () => {
-      const mockRef = { value: false };
-      (ref as any).mockReturnValue(mockRef);
-      (isFunction as any).mockReturnValue(true);
-
-      const handle = vi.fn();
-      useTimeoutFn(handle, 1000, false);
-
-      expect(watch).toHaveBeenCalledTimes(1);
-      expect(watch).toHaveBeenCalledWith(
-        mockRef,
-        expect.any(Function),
-        { immediate: false }
-      );
-    });
-
-    it('should call handle when readyRef becomes true (via watcher)', () => {
-      const mockRef = { value: false };
-      (ref as any).mockReturnValue(mockRef);
-      (isFunction as any).mockReturnValue(true);
-
-      const handle = vi.fn();
-      useTimeoutFn(handle, 1000);
-
-      // Get the watcher callback
-      const watcherCallback = (watch as any).mock.calls[0][1];
+    it('should call function after timeout', async () => {
+      const mockFn = vi.fn();
       
-      // Simulate readyRef becoming true
-      watcherCallback(true);
-
-      expect(handle).toHaveBeenCalledTimes(1);
+      useTimeoutFn(mockFn, 1000);
+      
+      expect(mockFn).not.toHaveBeenCalled();
+      
+      // Fast-forward time
+      vi.advanceTimersByTime(1000);
+      await nextTick();
+      
+      expect(mockFn).toHaveBeenCalledTimes(1);
     });
 
-    it('should not call handle when readyRef becomes false (via watcher)', () => {
-      const mockRef = { value: false };
-      (ref as any).mockReturnValue(mockRef);
-      (isFunction as any).mockReturnValue(true);
-
-      const handle = vi.fn();
-      useTimeoutFn(handle, 1000);
-
-      // Get the watcher callback
-      const watcherCallback = (watch as any).mock.calls[0][1];
+    it('should call function immediately when native is true', () => {
+      const mockFn = vi.fn();
       
-      // Simulate readyRef becoming false
-      watcherCallback(false);
-
-      expect(handle).not.toHaveBeenCalled();
+      useTimeoutFn(mockFn, 1000, true);
+      
+      expect(mockFn).toHaveBeenCalledTimes(1);
     });
 
-    it('should work with different timeout values', () => {
-      const mockRef = { value: false };
-      (ref as any).mockReturnValue(mockRef);
-      (isFunction as any).mockReturnValue(true);
-
-      const handle1 = vi.fn();
-      const handle2 = vi.fn();
-      
-      const result1 = useTimeoutFn(handle1, 500);
-      const result2 = useTimeoutFn(handle2, 2000);
-
-      expect(result1.readyRef).toBe(mockRef);
-      expect(result2.readyRef).toBe(mockRef);
+    it('should throw error when handle is not a function', () => {
+      expect(() => {
+        useTimeoutFn('not a function' as any, 1000);
+      }).toThrow('handle is not Function!');
     });
 
-    it('should validate function parameter', () => {
-      (isFunction as any).mockReturnValue(true);
+    it('should provide stop and start methods', () => {
+      const mockFn = vi.fn();
+      const { readyRef, stop, start } = useTimeoutFn(mockFn, 1000);
       
-      const handle = vi.fn();
-      expect(() => useTimeoutFn(handle, 1000)).not.toThrow();
+      expect(typeof stop).toBe('function');
+      expect(typeof start).toBe('function');
+      expect(readyRef.value).toBe(false);
+    });
+
+    it('should stop timer when stop is called', async () => {
+      const mockFn = vi.fn();
+      const { stop } = useTimeoutFn(mockFn, 1000);
       
-      expect(isFunction).toHaveBeenCalledWith(handle);
+      stop();
+      
+      // Fast-forward time
+      vi.advanceTimersByTime(1000);
+      await nextTick();
+      
+      expect(mockFn).not.toHaveBeenCalled();
+    });
+
+    it('should restart timer when start is called', async () => {
+      const mockFn = vi.fn();
+      const { stop, start } = useTimeoutFn(mockFn, 1000);
+      
+      stop();
+      start();
+      
+      // Fast-forward time
+      vi.advanceTimersByTime(1000);
+      await nextTick();
+      
+      expect(mockFn).toHaveBeenCalledTimes(1);
+    });
+
+    it('should handle multiple start calls', async () => {
+      const mockFn = vi.fn();
+      const { start } = useTimeoutFn(mockFn, 1000);
+      
+      start();
+      start();
+      
+      // Fast-forward time
+      vi.advanceTimersByTime(1000);
+      await nextTick();
+      
+      expect(mockFn).toHaveBeenCalledTimes(1);
+    });
+
+    it('should work with different wait times', async () => {
+      const mockFn1 = vi.fn();
+      const mockFn2 = vi.fn();
+      
+      useTimeoutFn(mockFn1, 500);
+      useTimeoutFn(mockFn2, 1000);
+      
+      // Fast-forward 500ms
+      vi.advanceTimersByTime(500);
+      await nextTick();
+      
+      expect(mockFn1).toHaveBeenCalledTimes(1);
+      expect(mockFn2).not.toHaveBeenCalled();
+      
+      // Fast-forward another 500ms
+      vi.advanceTimersByTime(500);
+      await nextTick();
+      
+      expect(mockFn1).toHaveBeenCalledTimes(1);
+      expect(mockFn2).toHaveBeenCalledTimes(1);
     });
   });
 });

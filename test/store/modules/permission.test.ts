@@ -187,9 +187,16 @@ describe('store/modules/permission', () => {
       const loginApiMock = await import('/@/api/tb/login');
       loginApiMock.userInfoApi.mockRejectedValue(new Error('API Error'));
 
+      // Spy on console.error to verify the error is logged
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
       // Should not throw an error (the method should catch it)
       await store.changePermissionCode();
       expect(loginApiMock.userInfoApi).toHaveBeenCalled();
+      expect(consoleSpy).toHaveBeenCalledWith('Failed to change permission code:', expect.any(Error));
+
+      // Clean up
+      consoleSpy.mockRestore();
     });
 
     it('should build routes action', async () => {

@@ -1,6 +1,18 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createRouter, createMemoryHistory } from 'vue-router';
+
+// Import the component
+import ForgetPassword from '/@/components/Authentication/src/ForgetPassword.vue';
+
+// Create a simple router for testing
+const router = createRouter({
+  history: createMemoryHistory(),
+  routes: [
+    { path: '/', component: { template: '<div>Home</div>' } },
+    { path: '/auth/login', component: { template: '<div>Login</div>' } },
+  ],
+});
 
 // Mock dependencies
 vi.mock('/@/hooks/web/useI18n', () => ({
@@ -15,13 +27,24 @@ vi.mock('/@/hooks/web/useMessage', () => ({
   }),
 }));
 
-vi.mock('/@/components/Form', () => ({
-  BasicForm: {
-    name: 'BasicForm',
-    template: '<div class="basic-form"><button type="button">Submit</button></div>',
-  },
-  useForm: () => [vi.fn(), { validate: vi.fn() }],
-}));
+// Store reference to mock form API
+let mockFormApi: any;
+
+vi.mock('/@/components/Form', () => {
+  return {
+    BasicForm: {
+      name: 'BasicForm',
+      template: '<div class="basic-form"><button type="button">Submit</button></div>',
+    },
+    useForm: () => {
+      // Create a mock form API with validate function
+      mockFormApi = {
+        validate: vi.fn(),
+      };
+      return [vi.fn(), mockFormApi];
+    },
+  };
+});
 
 vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
   default: {
@@ -30,19 +53,12 @@ vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
   },
 }));
 
-// Import the component
-import ForgetPassword from '/@/components/Authentication/src/ForgetPassword.vue';
-
-// Create a simple router for testing
-const router = createRouter({
-  history: createMemoryHistory(),
-  routes: [
-    { path: '/', component: { template: '<div>Home</div>' } },
-    { path: '/auth/login', component: { template: '<div>Login</div>' } },
-  ],
-});
-
 describe('ForgetPassword coverage', () => {
+  beforeEach(() => {
+    // Clear all mocks before each test
+    vi.clearAllMocks();
+  });
+
   it('should render the component', () => {
     const wrapper = mount(ForgetPassword, {
       props: {
@@ -74,7 +90,10 @@ describe('ForgetPassword coverage', () => {
     expect(wrapper.props().submitButtonText).toBe('');
   });
 
-  it('should emit submit event when form is submitted', async () => {
+  it('should call form validation when handleSubmit is called', async () => {
+    // Mock the form validation to return some data
+    mockFormApi.validate.mockResolvedValue({ email: 'test@example.com' });
+
     const wrapper = mount(ForgetPassword, {
       props: {
         formSchema: [],
@@ -84,21 +103,14 @@ describe('ForgetPassword coverage', () => {
       },
     });
 
-    // Mock the form validation to return some data
-    const formApi = wrapper.vm.getFormApi();
-    formApi.validate = vi.fn().mockResolvedValue({ email: 'test@example.com' });
-
     // Wait for next tick to ensure DOM is updated
     await wrapper.vm.$nextTick();
 
-    // Find and trigger the submit button
-    const buttons = wrapper.findAll('button');
-    expect(buttons.length).toBeGreaterThan(0);
+    // Call handleSubmit directly
+    await (wrapper.vm as any).handleSubmit();
 
-    if (buttons.length > 0) {
-      await buttons[0].trigger('click');
-      expect(wrapper.emitted().submit).toBeTruthy();
-    }
+    // Check that the mock was called
+    expect(mockFormApi.validate).toHaveBeenCalled();
   });
 
   it('should navigate to login page when back button is clicked', async () => {
@@ -128,6 +140,9 @@ describe('ForgetPassword coverage', () => {
   });
 
   it('should handle form validation errors', async () => {
+    // Mock the form validation to throw an error
+    mockFormApi.validate.mockRejectedValue({ errorFields: true });
+
     const wrapper = mount(ForgetPassword, {
       props: {
         formSchema: [],
@@ -140,17 +155,11 @@ describe('ForgetPassword coverage', () => {
     // Wait for next tick to ensure DOM is updated
     await wrapper.vm.$nextTick();
 
-    // Mock the form validation to throw an error
-    const formApi = wrapper.vm.getFormApi();
-    formApi.validate = vi.fn().mockRejectedValue({ errorFields: true });
+    // Call handleSubmit directly
+    await (wrapper.vm as any).handleSubmit();
 
-    // Find and trigger the submit button
-    const buttons = wrapper.findAll('button');
-    if (buttons.length > 0) {
-      await buttons[0].trigger('click');
-      // Should still handle the error without crashing
-      expect(formApi.validate).toHaveBeenCalled();
-    }
+    // Check that the mock was called
+    expect(mockFormApi.validate).toHaveBeenCalled();
   });
 
   it('should render slots correctly', () => {

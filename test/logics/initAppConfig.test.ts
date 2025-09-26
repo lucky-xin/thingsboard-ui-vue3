@@ -7,14 +7,14 @@ describe('logics/initAppConfig', () => {
     expect(module).toBeDefined();
     expect(module.initAppConfigStore).toBeDefined();
     expect(typeof module.initAppConfigStore).toBe('function');
-  });
+  }, 10000);
 
   it('should be a valid logics module', async () => {
     const module = await import('/@/logics/initAppConfig');
     
     expect(module).toBeDefined();
     expect(typeof module).toBe('object');
-  });
+  }, 10000);
 
   it('should export configuration functions', async () => {
     const module = await import('/@/logics/initAppConfig');

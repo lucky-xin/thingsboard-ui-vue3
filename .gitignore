@@ -29,3 +29,5 @@ vite.config.ts.timestamp*
 *.sln
 *.sw?
 *.iml
+coverage
+reports

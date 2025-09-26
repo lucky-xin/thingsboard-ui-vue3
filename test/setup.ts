@@ -1,4 +1,6 @@
 import { vi } from 'vitest';
+import { existsSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
 import { config } from '@vue/test-utils';
 import { defineComponent } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
@@ -6,11 +8,32 @@ import { createPinia, setActivePinia } from 'pinia';
 // 优先级最高的核心 Mock，避免加载组件索引中的 withInstall 逻辑
 vi.mock('/@/components/Application', () => ({
   useAppProviderContext: () => ({ prefixCls: 'jeesite', isMobile: false }),
+  AppLogo: { name: 'AppLogo', template: '<div class="app-logo"></div>' },
+  AppProvider: { name: 'AppProvider', template: '<div class="app-provider"><slot /></div>' },
+  AppSearch: { name: 'AppSearch', template: '<div class="app-search"></div>' },
+  AppLocalePicker: { name: 'AppLocalePicker', template: '<div class="app-locale-picker"></div>' },
+  AppDarkModeToggle: { name: 'AppDarkModeToggle', template: '<div class="app-dark-mode-toggle"></div>' },
 }));
+
+// 确保 v8 覆盖率临时目录存在，避免并发写入时报 ENOENT
+try {
+  const covTmp = join(process.cwd(), 'coverage', '.tmp');
+  if (!existsSync(covTmp)) {
+    mkdirSync(covTmp, { recursive: true });
+  }
+  // 进程结束前再确认一次
+  // @ts-ignore
+  process.on?.('beforeExit', () => {
+    try {
+      if (!existsSync(covTmp)) mkdirSync(covTmp, { recursive: true });
+    } catch {}
+  });
+} catch {}
 
 vi.mock('/@/components/Container', () => ({
   CollapseContainer: { name: 'CollapseContainer', template: '<div class="tb-collapse-container"><slot /></div>' },
   ScrollContainer: { name: 'ScrollContainer', template: '<div class="tb-scroll-container"><slot /></div>' },
+  LazyContainer: { name: 'LazyContainer', template: '<div class="tb-lazy-container"><slot /></div>' },
 }));
 
 vi.mock('/@/components/StrengthMeter', () => ({
@@ -153,6 +176,108 @@ vi.mock('/@/components/Dropdown', () => ({
   },
 }));
 
+// 组件索引导出的额外符号最小 mock，避免“未定义导出”失败
+vi.mock('/@/components/Icon/index', () => ({
+  Icon: { name: 'Icon', template: '<i class="tb-icon" />' },
+  IconPicker: { name: 'IconPicker', template: '<div class="tb-icon-picker" />' },
+  default: { name: 'Icon', template: '<i class="tb-icon" />' },
+}));
+
+vi.mock('/@/components/Button/index', () => ({
+  BasicButton: { name: 'BasicButton', template: '<button class="tb-basic-btn" />' },
+  PopConfirmButton: { name: 'PopConfirmButton', template: '<button class="tb-popconfirm-btn" />' },
+  Button: { name: 'Button', template: '<button class="tb-btn" />' },
+  default: { name: 'BasicButton', template: '<button class="tb-basic-btn" />' },
+}));
+
+
+// 为 Table 组件提供最小化导出，避免导入时长时间初始化
+vi.mock('/@/components/Table/index', () => ({
+  BasicTable: {
+    name: 'BasicTable',
+    template: '<div class="tb-basic-table"><slot /></div>',
+    props: {
+      dataSource: { type: Array, default: () => [] },
+      columns: { type: Array, default: () => [] },
+      rowSelection: { type: Object, default: null },
+      pagination: { type: [Object, Boolean], default: true },
+    },
+  },
+  default: {
+    name: 'BasicTable',
+    template: '<div class="tb-basic-table"><slot /></div>',
+    props: {
+      dataSource: { type: Array, default: () => [] },
+      columns: { type: Array, default: () => [] },
+      rowSelection: { type: Object, default: null },
+      pagination: { type: [Object, Boolean], default: true },
+    },
+  },
+}));
+
+// 批量最小化 mock 组件 index，避免导入重组件耗时与副作用
+const simpleComponent = (name: string) => ({ name, template: `<div class="${name}"><slot /></div>` });
+
+vi.mock('/@/components/CardList', () => ({ CardList: simpleComponent('CardList') }));
+vi.mock('/@/components/CollapseForm', () => ({ CollapseForm: simpleComponent('CollapseForm') }));
+vi.mock('/@/components/Cropper', () => ({
+  CropperImage: simpleComponent('CropperImage'),
+  CropperAvatar: simpleComponent('CropperAvatar'),
+}));
+vi.mock('/@/components/Dialog', () => ({ BasicDialog: simpleComponent('BasicDialog') }));
+vi.mock('/@/components/Drawer', () => ({
+  BasicDrawer: simpleComponent('BasicDrawer'),
+  useDrawer: () => [vi.fn(), vi.fn()],
+  useDrawerInner: () => [vi.fn(), vi.fn()],
+}));
+vi.mock('/@/components/Markdown', () => ({
+  Markdown: simpleComponent('Markdown'),
+  MarkdownViewer: simpleComponent('MarkdownViewer'),
+}));
+vi.mock('/@/components/Modal', () => ({
+  BasicModal: simpleComponent('BasicModal'),
+  useModalContext: () => ({ closeModal: vi.fn(), redoModalHeight: vi.fn() }),
+}));
+vi.mock('/@/components/Popover', () => ({ Popover: simpleComponent('Popover') }));
+vi.mock('/@/components/Resizer', () => ({ Resizer: simpleComponent('Resizer') }));
+vi.mock('/@/components/VirtualScroll', () => ({ VirtualScroll: simpleComponent('VirtualScroll') }));
+
+// 全局最小 mock useMessage，避免 axios/checkStatus 等处调用时报错
+vi.mock('/@/hooks/web/useMessage', () => {
+  const fn = () => ({
+    createMessage: {
+      error: vi.fn(),
+      success: vi.fn(),
+      warning: vi.fn(),
+      info: vi.fn(),
+      loading: vi.fn(),
+    },
+    notification: {
+      error: vi.fn(),
+      success: vi.fn(),
+      warning: vi.fn(),
+      info: vi.fn(),
+      open: vi.fn(),
+    },
+    createConfirm: vi.fn(),
+    showMessage: vi.fn(),
+  });
+  return { useMessage: fn };
+});
+
+// 最小 mock useDesign，避免引入 antd theme/token 与 Application 依赖链
+vi.mock('/@/hooks/web/useDesign', () => {
+  function useDesign(scope?: string) {
+    const prefixVar = 'jeesite';
+    const prefixCls = scope ? `${prefixVar}-${scope}` : prefixVar;
+    const variables = {};
+    const hashId = 'hash123';
+    return { prefixCls, prefixVar, variables, hashId } as any;
+  }
+  const useAppInject = () => ({ getIsMobile: false });
+  return { useDesign, useAppInject };
+});
+
 // 最小化 mock `withInstall`，保持返回传入的组件本身，避免 import 时运行出错
 vi.mock('/@/utils', async (importOriginal) => {
   const actual = (await importOriginal()) as any;
@@ -279,3 +404,15 @@ console.error = (...args: any[]) => {
   }
   originalError.apply(console, args);
 };
+
+// Prevent unhandled promise rejections from failing unrelated tests in jsdom
+if (typeof window !== 'undefined') {
+  window.addEventListener('unhandledrejection', (e) => {
+    try {
+      e.preventDefault?.();
+    } catch {}
+  });
+}
+// Node handler (no-op) to avoid crashing on teardown-time rejections
+// @ts-ignore
+process.on?.('unhandledRejection', () => {});

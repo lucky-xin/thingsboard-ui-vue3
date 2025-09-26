@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Authority from '/@/components/Authority/src/Authority.vue';
 import { usePermission } from '/@/hooks/web/usePermission';
 

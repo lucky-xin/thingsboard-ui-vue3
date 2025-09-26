@@ -19,11 +19,11 @@ export function useRuleFormItem<T extends Recordable>(
   const instance = getCurrentInstance();
   const emit = instance?.emit;
   const compName = instance?.type?.name || 'unknown';
-  const emitsOptions = instance?.['emitsOptions'] || {};
+  const emitsOptions = instance?.['emitsOptions'] || undefined;
   const hasOwnProperty = Object.prototype.hasOwnProperty;
-  const hasChangeEmit = hasOwnProperty.call(emitsOptions, changeEvent);
-  const hasUpdateValueEmit = hasOwnProperty.call(emitsOptions, 'update:value');
-  const hasUpdateLabelValueEmit = hasOwnProperty.call(emitsOptions, 'update:labelValue');
+  const hasChangeEmit = emitsOptions ? hasOwnProperty.call(emitsOptions, changeEvent) : true;
+  const hasUpdateValueEmit = emitsOptions ? hasOwnProperty.call(emitsOptions, 'update:value') : true;
+  const hasUpdateLabelValueEmit = emitsOptions ? hasOwnProperty.call(emitsOptions, 'update:labelValue') : true;
 
   const isMultiple = computed(() => {
     if (['JeeSiteCheckboxGroup'].includes(compName)) {
@@ -76,7 +76,13 @@ export function useRuleFormItem<T extends Recordable>(
             value = values as T[keyof T];
           }
         }
-      } else if (isMultiple.value && !(value instanceof Object) && !(value instanceof Array)) {
+      } else if (
+        isMultiple.value &&
+        !(value instanceof Object) &&
+        !(value instanceof Array) &&
+        typeof value === 'string' &&
+        (value as string).includes(',')
+      ) {
         value = (value as string).split(',');
       }
       // console.log('innerState', value);
@@ -84,7 +90,8 @@ export function useRuleFormItem<T extends Recordable>(
       return innerState.value;
     },
     set(value: any) {
-      if (isEqual(value, defaultState.value)) return;
+      const previousValue = toRaw(defaultState.value);
+      if (isEqual(value, previousValue)) return;
       innerState.value = value as T[keyof T];
       nextTick(() => {
         const extData = toRaw(unref(emitData)) || [];

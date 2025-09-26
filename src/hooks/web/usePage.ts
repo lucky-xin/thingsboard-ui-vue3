@@ -63,10 +63,7 @@ export const useRedo = (_router?: Router) => {
 };
 
 export function useQuery(_router?: Router) {
-  let router;
-  if (!_router) {
-    router = useRouter();
-  }
+  const router = _router || useRouter();
   const query = computed(() => {
     return unref(router.currentRoute).query;
   });

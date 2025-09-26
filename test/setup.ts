@@ -190,6 +190,8 @@ vi.mock('/@/components/Button/index', () => ({
   default: { name: 'BasicButton', template: '<button class="tb-basic-btn" />' },
 }));
 
+// Do not override heavy component indexes globally; tests import and handle them as needed
+
 
 // 为 Table 组件提供最小化导出，避免导入时长时间初始化
 vi.mock('/@/components/Table/index', () => ({
@@ -283,7 +285,13 @@ vi.mock('/@/utils', async (importOriginal) => {
   const actual = (await importOriginal()) as any;
   return {
     ...actual,
-    withInstall: <T>(comp: T) => comp,
+    withInstall: (comp: any) => {
+      if (!('name' in comp)) comp.name = 'MockComp';
+      comp.install = vi.fn((app: any) => {
+        app?.component?.(comp.name, comp);
+      });
+      return comp as any;
+    },
   };
 });
 
@@ -312,14 +320,10 @@ if (!('getComputedStyle' in window)) {
   // @ts-ignore
   window.getComputedStyle = (element: Element, pseudoElement?: string) => {
     if (pseudoElement) {
-      // Return a mock object for pseudo-elements
+      // Return a minimal mock for pseudo-elements
       return {
         getPropertyValue: () => '',
-        position: 'static',
-        display: 'block',
-        width: '0px',
-        height: '0px',
-      } as CSSStyleDeclaration;
+      } as any as CSSStyleDeclaration;
     }
     return originalGetComputedStyle(element);
   };

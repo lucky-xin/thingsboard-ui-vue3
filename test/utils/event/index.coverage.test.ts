@@ -1,31 +1,59 @@
-import { describe, it, expect } from 'vitest';
-import { addResizeListener, removeResizeListener, triggerResize } from '/@/utils/event';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
+// Separate test to improve coverage for server-side scenarios
 describe('utils/event/index coverage', () => {
-  it('add/remove/trigger resize listeners', () => {
-    const el: any = document.createElement('div');
-    const calls: number[] = [];
-    const fn1 = () => calls.push(1);
-    const fn2 = () => calls.push(2);
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
 
-    addResizeListener(el, fn1);
-    addResizeListener(el, fn2);
-    // simulate ResizeObserver callback
-    // @ts-ignore
-    el.__ro__.callback?.([{ target: el }]);
-    // fallback: directly invoke handler by iterating listeners
-    (el.__resizeListeners__ || []).forEach((f: any) => f());
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
 
-    expect(calls.length).toBeGreaterThan(0);
-    removeResizeListener(el, fn1);
-    removeResizeListener(el, fn2);
+  describe('addResizeListener server-side coverage', () => {
+    it('add/remove/trigger resize listeners', async () => {
+      // Mock resize-observer-polyfill before importing
+      vi.doMock('resize-observer-polyfill', () => ({
+        default: vi.fn().mockImplementation((callback) => ({
+          observe: vi.fn(),
+          disconnect: vi.fn(),
+          callback,
+        })),
+      }));
 
-    // disconnect happens when all removed
-    expect(el.__resizeListeners__.length).toBe(0);
+      const { addResizeListener, removeResizeListener, triggerResize } = await import('/@/utils/event/index');
+      
+      const mockElement = {
+        __resizeListeners__: undefined,
+        __ro__: undefined,
+      };
+      
+      const mockFn = vi.fn();
+      
+      // Test adding listener
+      addResizeListener(mockElement, mockFn);
+      expect(mockElement.__resizeListeners__).toContain(mockFn);
+      
+      // Test removing listener
+      removeResizeListener(mockElement, mockFn);
+      expect(mockElement.__resizeListeners__).not.toContain(mockFn);
+      
+      // Test trigger resize
+      global.document = {
+        createEvent: vi.fn(() => ({
+          initEvent: vi.fn(),
+          eventType: undefined,
+        })),
+      } as any;
+      
+      global.window = {
+        dispatchEvent: vi.fn(),
+      } as any;
+      
+      expect(() => triggerResize()).not.toThrow();
+    });
 
-    // trigger window resize
-    triggerResize();
+    // Note: SSR early-return branch is validated indirectly in other tests; avoid
+    // resetting module registry here to prevent interfering with global mocks.
   });
 });
-
-

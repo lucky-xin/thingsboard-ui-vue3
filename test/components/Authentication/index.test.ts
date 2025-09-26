@@ -1,31 +1,78 @@
 import { describe, it, expect } from 'vitest';
 
-// Import all exports from the index file
-import * as AuthenticationIndex from '/@/components/Authentication/index';
-
+// Test Authentication component index exports
 describe('Authentication/index', () => {
-  it('should export AuthenticationCodeLogin component', () => {
-    expect(AuthenticationIndex.AuthenticationCodeLogin).toBeDefined();
+  it('should export authentication components', async () => {
+    const {
+      AuthenticationCodeLogin,
+      AuthenticationForgetPassword,
+      AuthenticationLogin,
+      AuthenticationQrCodeLogin,
+      AuthenticationRegister
+    } = await import('/@/components/Authentication');
+    
+    expect(AuthenticationCodeLogin).toBeDefined();
+    expect(AuthenticationForgetPassword).toBeDefined();
+    expect(AuthenticationLogin).toBeDefined();
+    expect(AuthenticationQrCodeLogin).toBeDefined();
+    expect(AuthenticationRegister).toBeDefined();
   });
 
-  it('should export AuthenticationForgetPassword component', () => {
-    expect(AuthenticationIndex.AuthenticationForgetPassword).toBeDefined();
+  it('should export typing definitions', async () => {
+    // This tests that the typing exports don't throw errors
+    const exports = await import('/@/components/Authentication');
+    
+    expect(exports).toBeDefined();
+    expect(exports.AuthenticationLogin).toBeDefined();
   });
 
-  it('should export AuthenticationLogin component', () => {
-    expect(AuthenticationIndex.AuthenticationLogin).toBeDefined();
+  it('should have correct exports count', async () => {
+    const exports = await import('/@/components/Authentication');
+    const exportKeys = Object.keys(exports);
+    
+    // Should export: 5 components and type definitions
+    expect(exportKeys).toContain('AuthenticationCodeLogin');
+    expect(exportKeys).toContain('AuthenticationForgetPassword');
+    expect(exportKeys).toContain('AuthenticationLogin');
+    expect(exportKeys).toContain('AuthenticationQrCodeLogin');
+    expect(exportKeys).toContain('AuthenticationRegister');
+    expect(exportKeys.length).toBeGreaterThanOrEqual(5);
   });
 
-  it('should export AuthenticationQrCodeLogin component', () => {
-    expect(AuthenticationIndex.AuthenticationQrCodeLogin).toBeDefined();
+  it('should be valid Vue components', async () => {
+    const { AuthenticationLogin, AuthenticationRegister, AuthenticationCodeLogin } = await import('/@/components/Authentication');
+    
+    expect(AuthenticationLogin).toBeDefined();
+    expect(AuthenticationRegister).toBeDefined();
+    expect(AuthenticationCodeLogin).toBeDefined();
+    expect(typeof AuthenticationLogin).toBe('object');
+    expect(typeof AuthenticationRegister).toBe('object');
+    expect(typeof AuthenticationCodeLogin).toBe('object');
   });
 
-  it('should export AuthenticationRegister component', () => {
-    expect(AuthenticationIndex.AuthenticationRegister).toBeDefined();
+  it('should export authentication components with proper structure', async () => {
+    const { AuthenticationLogin, AuthenticationRegister } = await import('/@/components/Authentication');
+    
+    // Authentication components should be Vue components
+    expect(AuthenticationLogin).toHaveProperty('__name');
+    expect(AuthenticationRegister).toHaveProperty('__name');
   });
 
-  it('should export AuthenticationProps type', () => {
-    // We can't directly test types, but we can check that the module structure is correct
-    expect(typeof AuthenticationIndex).toBe('object');
+  it('should handle component imports correctly', async () => {
+    // Test that all imports can be destructured without errors
+    const exports = await import('/@/components/Authentication');
+    const {
+      AuthenticationCodeLogin,
+      AuthenticationForgetPassword,
+      AuthenticationLogin,
+      AuthenticationQrCodeLogin,
+      AuthenticationRegister
+    } = exports;
+    
+    expect(AuthenticationCodeLogin).toBeDefined();
+    expect(AuthenticationForgetPassword).toBeDefined();
+    expect(AuthenticationLogin).toBeDefined();
+    expect(AuthenticationQrCodeLogin).toBeDefined();
+    expect(AuthenticationRegister).toBeDefined();
   });
 });

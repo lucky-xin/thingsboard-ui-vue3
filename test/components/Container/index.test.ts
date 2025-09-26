@@ -4,9 +4,11 @@ import { App } from 'vue';
 // Mock the withInstall utility
 vi.mock('/@/utils', () => ({
   withInstall: vi.fn((component) => {
-    const wrappedComponent = component;
-    wrappedComponent.install = vi.fn((app: App) => {
-      app.component(component.name || 'MockComponent', component);
+    // Create a new component object to avoid mutating the original
+    const wrappedComponent = Object.assign({}, component, {
+      install: vi.fn((app: App) => {
+        app.component(component.name || 'MockComponent', component);
+      })
     });
     return wrappedComponent;
   }),

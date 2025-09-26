@@ -6,6 +6,7 @@ vi.mock('/@/utils', () => ({
     ...component,
     install: vi.fn(),
   })),
+  deepMerge: vi.fn((target, source) => ({ ...target, ...source })),
 }));
 
 // Test Authority component index exports

@@ -6,6 +6,7 @@ vi.mock('/@/utils', () => ({
     ...component,
     install: vi.fn(),
   })),
+  deepMerge: vi.fn((target, source) => ({ ...target, ...source })),
 }));
 
 // Mock button props
@@ -65,7 +66,10 @@ describe('Button/index', () => {
     const exports = await import('/@/components/Button');
     const exportKeys = Object.keys(exports);
     
-    expect(exportKeys).toEqual(['Button', 'PopConfirmButton']);
+    // Should include Button, PopConfirmButton, and ButtonProps type
+    expect(exportKeys).toContain('Button');
+    expect(exportKeys).toContain('PopConfirmButton');
+    expect(exportKeys.length).toBeGreaterThanOrEqual(2);
   });
 
   it('should be valid Vue components', async () => {

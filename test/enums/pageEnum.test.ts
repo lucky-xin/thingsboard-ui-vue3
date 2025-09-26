@@ -2,48 +2,75 @@ import { describe, it, expect } from 'vitest';
 import { PageEnum } from '/@/enums/pageEnum';
 
 describe('enums/pageEnum', () => {
-  describe('PageEnum', () => {
-    it('should have correct BASE_LOGIN value', () => {
-      expect(PageEnum.BASE_LOGIN).toBe('/auth/login');
-    });
+  it('should export PageEnum', () => {
+    expect(PageEnum).toBeDefined();
+    expect(typeof PageEnum).toBe('object');
+  });
 
-    it('should have correct BASE_HOME value', () => {
-      expect(PageEnum.BASE_HOME).toBe('/desktop');
-    });
+  it('should have BASE_LOGIN path', () => {
+    expect(PageEnum.BASE_LOGIN).toBe('/auth/login');
+  });
 
-    it('should have correct ERROR_PAGE value', () => {
-      expect(PageEnum.ERROR_PAGE).toBe('/exception');
-    });
+  it('should have BASE_HOME path', () => {
+    expect(PageEnum.BASE_HOME).toBe('/desktop');
+  });
 
-    it('should have correct ERROR_LOG_PAGE value', () => {
-      expect(PageEnum.ERROR_LOG_PAGE).toBe('/errorLog/list');
-    });
+  it('should have ERROR_PAGE path', () => {
+    expect(PageEnum.ERROR_PAGE).toBe('/exception');
+  });
 
-    it('should have correct MOD_PWD_PAGE value', () => {
-      expect(PageEnum.MOD_PWD_PAGE).toBe('/modPwd');
-    });
+  it('should have ERROR_LOG_PAGE path', () => {
+    expect(PageEnum.ERROR_LOG_PAGE).toBe('/errorLog/list');
+  });
 
-    it('should have all expected values', () => {
-      const values = Object.values(PageEnum);
-      expect(values).toContain('/auth/login');
-      expect(values).toContain('/desktop');
-      expect(values).toContain('/exception');
-      expect(values).toContain('/errorLog/list');
-      expect(values).toContain('/modPwd');
-      expect(values).toHaveLength(5);
-    });
+  it('should have MOD_PWD_PAGE path', () => {
+    expect(PageEnum.MOD_PWD_PAGE).toBe('/modPwd');
+  });
 
-    it('should have valid URL paths', () => {
-      const values = Object.values(PageEnum);
-      values.forEach(value => {
-        expect(value).toMatch(/^\/[a-zA-Z]/);
-      });
-    });
+  it('should contain all expected enum values', () => {
+    const expectedValues = {
+      BASE_LOGIN: '/auth/login',
+      BASE_HOME: '/desktop',
+      ERROR_PAGE: '/exception',
+      ERROR_LOG_PAGE: '/errorLog/list',
+      MOD_PWD_PAGE: '/modPwd',
+    };
 
-    it('should provide common application routes', () => {
-      expect(PageEnum.BASE_LOGIN).toMatch(/\/auth\/login/);
-      expect(PageEnum.BASE_HOME).toMatch(/\/desktop/);
-      expect(PageEnum.ERROR_PAGE).toMatch(/\/exception/);
+    Object.entries(expectedValues).forEach(([key, value]) => {
+      expect(PageEnum[key as keyof typeof PageEnum]).toBe(value);
     });
+  });
+
+  it('should have all paths starting with forward slash', () => {
+    Object.values(PageEnum).forEach(path => {
+      expect(path).toMatch(/^\/.*$/);
+    });
+  });
+
+  it('should have unique values', () => {
+    const values = Object.values(PageEnum);
+    const uniqueValues = [...new Set(values)];
+    expect(values).toHaveLength(uniqueValues.length);
+  });
+
+  it('should have valid path formats', () => {
+    Object.values(PageEnum).forEach(path => {
+      // Should be string and start with /
+      expect(typeof path).toBe('string');
+      expect(path.startsWith('/')).toBe(true);
+      
+      // Should not end with / (except root)
+      if (path.length > 1) {
+        expect(path.endsWith('/')).toBe(false);
+      }
+      
+      // Should not contain spaces
+      expect(path).not.toMatch(/\s/);
+    });
+  });
+
+  it('should have consistent enum keys and values mapping', () => {
+    expect(Object.keys(PageEnum)).toHaveLength(5);
+    expect(Object.values(PageEnum)).toHaveLength(5);
   });
 });

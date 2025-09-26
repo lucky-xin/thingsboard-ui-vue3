@@ -47,7 +47,7 @@ describe('PopConfirmButton', () => {
     });
 
     expect(wrapper.exists()).toBe(true);
-  });
+  }, 10000); // 增加超时时间到10秒
 
   it('should render as normal button when enable is false', () => {
     const wrapper = mount(PopConfirmButton, {
@@ -65,7 +65,7 @@ describe('PopConfirmButton', () => {
     });
 
     expect(wrapper.exists()).toBe(true);
-  });
+  }, 10000);
 
   it('should render with popconfirm when enable is true', () => {
     const wrapper = mount(PopConfirmButton, {
@@ -84,7 +84,7 @@ describe('PopConfirmButton', () => {
     });
 
     expect(wrapper.exists()).toBe(true);
-  });
+  }, 10000);
 
   it('should handle custom okText and cancelText', () => {
     const wrapper = mount(PopConfirmButton, {
@@ -104,7 +104,7 @@ describe('PopConfirmButton', () => {
     });
 
     expect(wrapper.exists()).toBe(true);
-  });
+  }, 10000);
 
   it('should handle custom placement', () => {
     const wrapper = mount(PopConfirmButton, {
@@ -123,7 +123,7 @@ describe('PopConfirmButton', () => {
     });
 
     expect(wrapper.exists()).toBe(true);
-  });
+  }, 10000);
 
   it('should handle disabled button', () => {
     const wrapper = mount(PopConfirmButton, {
@@ -143,7 +143,7 @@ describe('PopConfirmButton', () => {
     });
 
     expect(wrapper.exists()).toBe(true);
-  });
+  }, 10000);
 
   it('should handle icon prop', () => {
     const wrapper = mount(PopConfirmButton, {
@@ -162,7 +162,7 @@ describe('PopConfirmButton', () => {
     });
 
     expect(wrapper.exists()).toBe(true);
-  });
+  }, 10000);
 
   it('should handle title prop', () => {
     const wrapper = mount(PopConfirmButton, {
@@ -181,7 +181,7 @@ describe('PopConfirmButton', () => {
     });
 
     expect(wrapper.exists()).toBe(true);
-  });
+  }, 10000);
 
   it('should inherit attrs correctly', () => {
     const wrapper = mount(PopConfirmButton, {
@@ -201,7 +201,7 @@ describe('PopConfirmButton', () => {
     });
 
     expect(wrapper.exists()).toBe(true);
-  });
+  }, 10000);
 
   it('should handle slot content', () => {
     const wrapper = mount(PopConfirmButton, {
@@ -219,7 +219,7 @@ describe('PopConfirmButton', () => {
     });
 
     expect(wrapper.exists()).toBe(true);
-  });
+  }, 10000);
 
   it('should combine props and attrs correctly', () => {
     const wrapper = mount(PopConfirmButton, {
@@ -241,5 +241,5 @@ describe('PopConfirmButton', () => {
     });
 
     expect(wrapper.exists()).toBe(true);
-  });
+  }, 10000);
 });

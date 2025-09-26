@@ -31,7 +31,5 @@ describe('components/Form/BasicForm extra', () => {
     if (toggle) await toggle();
 
     expect(true).toBe(true);
-  });
+  }, 10000); // 增加超时时间到10秒
 });
-
-

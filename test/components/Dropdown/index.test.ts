@@ -6,26 +6,72 @@ describe('Dropdown/index', () => {
     
     expect(module).toBeDefined();
     expect(module.Dropdown).toBeDefined();
+    expect(typeof module.Dropdown).toBe('object');
   });
 
   it('should export typing definitions', async () => {
     const module = await import('/@/components/Dropdown/index');
     
-    // Just check that the module imports without error
+    // Check that the module imports without error and has exports
     expect(module).toBeDefined();
-  });
-
-  it('should export only Dropdown', async () => {
-    const module = await import('/@/components/Dropdown/index');
     const exports = Object.keys(module);
-    
-    expect(exports).toContain('Dropdown');
+    expect(exports.length).toBeGreaterThan(0);
   });
 
-  it('should be a valid Vue component', async () => {
+  it('should have Dropdown component with correct structure', async () => {
     const module = await import('/@/components/Dropdown/index');
     const { Dropdown } = module;
     
+    expect(Dropdown).toBeDefined();
     expect(typeof Dropdown).toBe('object');
+    // Component should have some Vue component properties
+    expect(Dropdown).toHaveProperty('name');
+  });
+
+  it('should export both component and types', async () => {
+    const module = await import('/@/components/Dropdown/index');
+    const exports = Object.keys(module);
+    
+    // Should contain at least the Dropdown component
+    expect(exports).toContain('Dropdown');
+    expect(exports.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it('should be a Vue component ready for installation', async () => {
+    const module = await import('/@/components/Dropdown/index');
+    const { Dropdown } = module;
+    
+    // The withInstall wrapper should add install method
+    expect(Dropdown).toBeDefined();
+    expect(typeof Dropdown).toBe('object');
+    
+    // Basic Vue component structure
+    expect(Dropdown.name || Dropdown.__name).toBeTruthy();
+  });
+
+  it('should maintain component integrity after withInstall', async () => {
+    const module = await import('/@/components/Dropdown/index');
+    const { Dropdown } = module;
+    
+    // Component should still be a valid object
+    expect(typeof Dropdown).toBe('object');
+    expect(Dropdown).not.toBeNull();
+    expect(Dropdown).not.toBeUndefined();
+  });
+
+  it('should handle module imports without errors', async () => {
+    // Test that all imports work correctly
+    expect(async () => {
+      await import('/@/components/Dropdown/index');
+    }).not.toThrow();
+  });
+
+  it('should export correct number of items', async () => {
+    const module = await import('/@/components/Dropdown/index');
+    const exports = Object.keys(module);
+    
+    // Should have at least the Dropdown component plus any type exports
+    expect(exports.length).toBeGreaterThanOrEqual(1);
+    expect(exports).toContain('Dropdown');
   });
 });

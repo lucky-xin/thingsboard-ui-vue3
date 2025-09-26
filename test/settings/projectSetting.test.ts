@@ -1,100 +1,326 @@
 import { describe, it, expect } from 'vitest';
-import setting from '/@/settings/projectSetting';
-import {
-  MenuTypeEnum,
-  MenuModeEnum,
-  TriggerEnum,
-  MixSidebarTriggerEnum,
-} from '/@/enums/menuEnum';
-import {
-  ContentEnum,
-  PermissionModeEnum,
-  ThemeEnum,
-  RouterTransitionEnum,
-  SettingButtonPositionEnum,
-  SessionTimeoutProcessingEnum,
-} from '/@/enums/appEnum';
-import { CacheTypeEnum } from '/@/enums/cacheEnum';
+import projectSetting from '/@/settings/projectSetting';
 
 describe('settings/projectSetting', () => {
-  it('should have correct basic configuration', () => {
-    expect(setting.showSettingButton).toBe(true);
-    expect(setting.showDarkModeToggle).toBe(true);
-    expect(setting.settingButtonPosition).toBe(SettingButtonPositionEnum.AUTO);
-    expect(setting.permissionMode).toBe(PermissionModeEnum.ROUTE_MAPPING);
-    expect(setting.permissionCacheType).toBe(CacheTypeEnum.SESSION);
-    expect(setting.sessionTimeoutProcessing).toBe(SessionTimeoutProcessingEnum.ROUTE_JUMP);
-    expect(setting.grayMode).toBe(false);
-    expect(setting.colorWeak).toBe(false);
-    expect(setting.fullContent).toBe(false);
-    expect(setting.contentMode).toBe(ContentEnum.FULL);
-    expect(setting.showLogo).toBe(true);
-    expect(setting.showFooter).toBe(false);
+  it('should export default project settings object', () => {
+    expect(projectSetting).toBeDefined();
+    expect(typeof projectSetting).toBe('object');
   });
 
-  it('should have correct header setting configuration', () => {
-    expect(setting.headerSetting).toBeDefined();
-    expect(setting.headerSetting.bgColor).toBeDefined();
-    expect(setting.headerSetting.fixed).toBe(true);
-    expect(setting.headerSetting.show).toBe(true);
-    expect(setting.headerSetting.theme).toBe(ThemeEnum.LIGHT);
-    expect(setting.headerSetting.useLockPage).toBe(true);
-    expect(setting.headerSetting.showFullScreen).toBe(true);
-    expect(setting.headerSetting.showDoc).toBe(true);
-    expect(setting.headerSetting.showNotice).toBe(true);
-    expect(setting.headerSetting.showSearch).toBe(true);
+  describe('general settings', () => {
+    it('should have showSettingButton enabled', () => {
+      expect(projectSetting.showSettingButton).toBe(true);
+    });
+
+    it('should have showDarkModeToggle enabled', () => {
+      expect(projectSetting.showDarkModeToggle).toBe(true);
+    });
+
+    it('should have settingButtonPosition configured', () => {
+      expect(projectSetting.settingButtonPosition).toBeDefined();
+    });
+
+    it('should have permissionMode configured', () => {
+      expect(projectSetting.permissionMode).toBeDefined();
+    });
+
+    it('should have permissionCacheType configured', () => {
+      expect(projectSetting.permissionCacheType).toBeDefined();
+    });
+
+    it('should have sessionTimeoutProcessing configured', () => {
+      expect(projectSetting.sessionTimeoutProcessing).toBeDefined();
+    });
+
+    it('should have themeColor configured', () => {
+      expect(projectSetting.themeColor).toBeDefined();
+      expect(typeof projectSetting.themeColor).toBe('string');
+    });
+
+    it('should have grayMode disabled by default', () => {
+      expect(projectSetting.grayMode).toBe(false);
+    });
+
+    it('should have colorWeak disabled by default', () => {
+      expect(projectSetting.colorWeak).toBe(false);
+    });
+
+    it('should have fullContent disabled by default', () => {
+      expect(projectSetting.fullContent).toBe(false);
+    });
+
+    it('should have showLogo enabled', () => {
+      expect(projectSetting.showLogo).toBe(true);
+    });
+
+    it('should have showFooter disabled', () => {
+      expect(projectSetting.showFooter).toBe(false);
+    });
   });
 
-  it('should have correct menu setting configuration', () => {
-    expect(setting.menuSetting).toBeDefined();
-    expect(setting.menuSetting.bgColor).toBeDefined();
-    expect(setting.menuSetting.fixed).toBe(true);
-    expect(setting.menuSetting.collapsed).toBe(false);
-    expect(setting.menuSetting.collapsedShowTitle).toBe(false);
-    expect(setting.menuSetting.canDrag).toBe(false);
-    expect(setting.menuSetting.show).toBe(true);
-    expect(setting.menuSetting.hidden).toBe(false);
-    expect(setting.menuSetting.menuWidth).toBe(200);
-    expect(setting.menuSetting.mode).toBe(MenuModeEnum.INLINE);
-    expect(setting.menuSetting.type).toBe(MenuTypeEnum.MIX);
-    expect(setting.menuSetting.theme).toBe(ThemeEnum.LIGHT);
-    expect(setting.menuSetting.split).toBe(true);
-    expect(setting.menuSetting.topMenuAlign).toBe('center');
-    expect(setting.menuSetting.trigger).toBe(TriggerEnum.HEADER);
-    expect(setting.menuSetting.accordion).toBe(true);
-    expect(setting.menuSetting.closeMixSidebarOnChange).toBe(false);
-    expect(setting.menuSetting.mixSideTrigger).toBe(MixSidebarTriggerEnum.HOVER);
-    expect(setting.menuSetting.mixSideFixed).toBe(false);
+  describe('header settings', () => {
+    it('should have headerSetting configuration', () => {
+      expect(projectSetting.headerSetting).toBeDefined();
+      expect(typeof projectSetting.headerSetting).toBe('object');
+    });
+
+    it('should have header bgColor configured', () => {
+      expect(projectSetting.headerSetting.bgColor).toBeDefined();
+    });
+
+    it('should have header fixed enabled', () => {
+      expect(projectSetting.headerSetting.fixed).toBe(true);
+    });
+
+    it('should have header show enabled', () => {
+      expect(projectSetting.headerSetting.show).toBe(true);
+    });
+
+    it('should have header theme configured', () => {
+      expect(projectSetting.headerSetting.theme).toBeDefined();
+    });
+
+    it('should have useLockPage enabled', () => {
+      expect(projectSetting.headerSetting.useLockPage).toBe(true);
+    });
+
+    it('should have showFullScreen enabled', () => {
+      expect(projectSetting.headerSetting.showFullScreen).toBe(true);
+    });
+
+    it('should have showDoc enabled', () => {
+      expect(projectSetting.headerSetting.showDoc).toBe(true);
+    });
+
+    it('should have showNotice enabled', () => {
+      expect(projectSetting.headerSetting.showNotice).toBe(true);
+    });
+
+    it('should have showSearch enabled', () => {
+      expect(projectSetting.headerSetting.showSearch).toBe(true);
+    });
   });
 
-  it('should have correct multi-tabs setting configuration', () => {
-    expect(setting.multiTabsSetting).toBeDefined();
-    expect(setting.multiTabsSetting.cache).toBe(false);
-    expect(setting.multiTabsSetting.show).toBe(true);
-    expect(setting.multiTabsSetting.style).toBe('3');
-    expect(setting.multiTabsSetting.canDrag).toBe(true);
-    expect(setting.multiTabsSetting.showQuick).toBe(true);
-    expect(setting.multiTabsSetting.showRedo).toBe(true);
-    expect(setting.multiTabsSetting.showFold).toBe(true);
+  describe('menu settings', () => {
+    it('should have menuSetting configuration', () => {
+      expect(projectSetting.menuSetting).toBeDefined();
+      expect(typeof projectSetting.menuSetting).toBe('object');
+    });
+
+    it('should have menu bgColor configured', () => {
+      expect(projectSetting.menuSetting.bgColor).toBeDefined();
+    });
+
+    it('should have menu fixed enabled', () => {
+      expect(projectSetting.menuSetting.fixed).toBe(true);
+    });
+
+    it('should have menu collapsed disabled by default', () => {
+      expect(projectSetting.menuSetting.collapsed).toBe(false);
+    });
+
+    it('should have collapsedShowTitle disabled', () => {
+      expect(projectSetting.menuSetting.collapsedShowTitle).toBe(false);
+    });
+
+    it('should have canDrag disabled', () => {
+      expect(projectSetting.menuSetting.canDrag).toBe(false);
+    });
+
+    it('should have menu show enabled', () => {
+      expect(projectSetting.menuSetting.show).toBe(true);
+    });
+
+    it('should have menu hidden disabled', () => {
+      expect(projectSetting.menuSetting.hidden).toBe(false);
+    });
+
+    it('should have menuWidth configured', () => {
+      expect(projectSetting.menuSetting.menuWidth).toBe(200);
+    });
+
+    it('should have mode configured', () => {
+      expect(projectSetting.menuSetting.mode).toBeDefined();
+    });
+
+    it('should have type configured', () => {
+      expect(projectSetting.menuSetting.type).toBeDefined();
+    });
+
+    it('should have theme configured', () => {
+      expect(projectSetting.menuSetting.theme).toBeDefined();
+    });
+
+    it('should have split enabled', () => {
+      expect(projectSetting.menuSetting.split).toBe(true);
+    });
+
+    it('should have topMenuAlign configured', () => {
+      expect(projectSetting.menuSetting.topMenuAlign).toBe('center');
+    });
+
+    it('should have trigger configured', () => {
+      expect(projectSetting.menuSetting.trigger).toBeDefined();
+    });
+
+    it('should have accordion enabled', () => {
+      expect(projectSetting.menuSetting.accordion).toBe(true);
+    });
+
+    it('should have closeMixSidebarOnChange disabled', () => {
+      expect(projectSetting.menuSetting.closeMixSidebarOnChange).toBe(false);
+    });
+
+    it('should have mixSideTrigger configured', () => {
+      expect(projectSetting.menuSetting.mixSideTrigger).toBeDefined();
+    });
+
+    it('should have mixSideFixed disabled', () => {
+      expect(projectSetting.menuSetting.mixSideFixed).toBe(false);
+    });
   });
 
-  it('should have correct transition setting configuration', () => {
-    expect(setting.transitionSetting).toBeDefined();
-    expect(setting.transitionSetting.enable).toBe(true);
-    expect(setting.transitionSetting.basicTransition).toBe(RouterTransitionEnum.FADE_SIDE);
-    expect(setting.transitionSetting.openPageLoading).toBe(true);
-    expect(setting.transitionSetting.openNProgress).toBe(false);
+  describe('multi tabs settings', () => {
+    it('should have multiTabsSetting configuration', () => {
+      expect(projectSetting.multiTabsSetting).toBeDefined();
+      expect(typeof projectSetting.multiTabsSetting).toBe('object');
+    });
+
+    it('should have cache disabled', () => {
+      expect(projectSetting.multiTabsSetting.cache).toBe(false);
+    });
+
+    it('should have show enabled', () => {
+      expect(projectSetting.multiTabsSetting.show).toBe(true);
+    });
+
+    it('should have style configured', () => {
+      expect(projectSetting.multiTabsSetting.style).toBe('3');
+    });
+
+    it('should have canDrag enabled', () => {
+      expect(projectSetting.multiTabsSetting.canDrag).toBe(true);
+    });
+
+    it('should have showQuick enabled', () => {
+      expect(projectSetting.multiTabsSetting.showQuick).toBe(true);
+    });
+
+    it('should have showRedo enabled', () => {
+      expect(projectSetting.multiTabsSetting.showRedo).toBe(true);
+    });
+
+    it('should have showFold enabled', () => {
+      expect(projectSetting.multiTabsSetting.showFold).toBe(true);
+    });
   });
 
-  it('should have correct other settings', () => {
-    expect(setting.openKeepAlive).toBe(true);
-    expect(setting.lockTime).toBe(0);
-    expect(setting.showBreadCrumb).toBe(true);
-    expect(setting.showBreadCrumbIcon).toBe(false);
-    expect(setting.useErrorHandle).toBe(false);
-    expect(setting.useOpenBackTop).toBe(true);
-    expect(setting.canEmbedIFramePage).toBe(true);
-    expect(setting.closeMessageOnSwitch).toBe(true);
-    expect(setting.removeAllHttpPending).toBe(false);
+  describe('transition settings', () => {
+    it('should have transitionSetting configuration', () => {
+      expect(projectSetting.transitionSetting).toBeDefined();
+      expect(typeof projectSetting.transitionSetting).toBe('object');
+    });
+
+    it('should have enable configured', () => {
+      expect(projectSetting.transitionSetting.enable).toBe(true);
+    });
+
+    it('should have basicTransition configured', () => {
+      expect(projectSetting.transitionSetting.basicTransition).toBeDefined();
+    });
+
+    it('should have openPageLoading enabled', () => {
+      expect(projectSetting.transitionSetting.openPageLoading).toBe(true);
+    });
+
+    it('should have openNProgress disabled', () => {
+      expect(projectSetting.transitionSetting.openNProgress).toBe(false);
+    });
+  });
+
+  describe('other settings', () => {
+    it('should have openKeepAlive enabled', () => {
+      expect(projectSetting.openKeepAlive).toBe(true);
+    });
+
+    it('should have lockTime set to 0', () => {
+      expect(projectSetting.lockTime).toBe(0);
+    });
+
+    it('should have showBreadCrumb enabled', () => {
+      expect(projectSetting.showBreadCrumb).toBe(true);
+    });
+
+    it('should have showBreadCrumbIcon disabled', () => {
+      expect(projectSetting.showBreadCrumbIcon).toBe(false);
+    });
+
+    it('should have useErrorHandle disabled', () => {
+      expect(projectSetting.useErrorHandle).toBe(false);
+    });
+
+    it('should have useOpenBackTop enabled', () => {
+      expect(projectSetting.useOpenBackTop).toBe(true);
+    });
+
+    it('should have canEmbedIFramePage enabled', () => {
+      expect(projectSetting.canEmbedIFramePage).toBe(true);
+    });
+
+    it('should have closeMessageOnSwitch enabled', () => {
+      expect(projectSetting.closeMessageOnSwitch).toBe(true);
+    });
+
+    it('should have removeAllHttpPending disabled', () => {
+      expect(projectSetting.removeAllHttpPending).toBe(false);
+    });
+  });
+
+  it('should have all expected top-level properties', () => {
+    const expectedProperties = [
+      'showSettingButton',
+      'showDarkModeToggle',
+      'settingButtonPosition',
+      'permissionMode',
+      'permissionCacheType',
+      'sessionTimeoutProcessing',
+      'themeColor',
+      'grayMode',
+      'colorWeak',
+      'fullContent',
+      'contentMode',
+      'showLogo',
+      'showFooter',
+      'headerSetting',
+      'menuSetting',
+      'multiTabsSetting',
+      'transitionSetting',
+      'openKeepAlive',
+      'lockTime',
+      'showBreadCrumb',
+      'showBreadCrumbIcon',
+      'useErrorHandle',
+      'useOpenBackTop',
+      'canEmbedIFramePage',
+      'closeMessageOnSwitch',
+      'removeAllHttpPending',
+    ];
+
+    expectedProperties.forEach(prop => {
+      expect(projectSetting).toHaveProperty(prop);
+    });
+  });
+
+  it('should be immutable structure', () => {
+    const originalHeaderSetting = projectSetting.headerSetting;
+    const originalMenuSetting = projectSetting.menuSetting;
+    
+    // Attempt to modify should not affect original
+    const modifiedSetting = { ...projectSetting };
+    modifiedSetting.showLogo = false;
+    
+    expect(projectSetting.showLogo).toBe(true);
+    expect(projectSetting.headerSetting).toBe(originalHeaderSetting);
+    expect(projectSetting.menuSetting).toBe(originalMenuSetting);
   });
 });

@@ -47,22 +47,24 @@ describe('hooks/setting/useMenuSetting', () => {
 
     expect(result.getMenuBgColor).toBeDefined();
     expect(result.getMenuFixed).toBeDefined();
-    expect(result.getMenuCollapsed).toBeDefined();
-    expect(result.getMenuCanDrag).toBeDefined();
-    expect(result.getMenuShow).toBeDefined();
+    expect(result.getCollapsed).toBeDefined();
+    expect(result.getCanDrag).toBeDefined();
+    expect(result.getShowMenu).toBeDefined();
     expect(result.getMenuHidden).toBeDefined();
-    expect(result.getMenuSplit).toBeDefined();
+    expect(result.getSplit).toBeDefined();
     expect(result.getMenuWidth).toBeDefined();
     expect(result.getMenuMode).toBeDefined();
     expect(result.getMenuType).toBeDefined();
     expect(result.getMenuTheme).toBeDefined();
-    expect(result.getMenuTopAlign).toBeDefined();
-    expect(result.getMenuTrigger).toBeDefined();
-    expect(result.getMenuAccordion).toBeDefined();
-    expect(result.getMenuCloseMixSidebarOnChange).toBeDefined();
-    expect(result.getMenuCollapsedShowTitle).toBeDefined();
-    expect(result.getMenuMixSideTrigger).toBeDefined();
-    expect(result.getMenuMixSideFixed).toBeDefined();
+    expect(result.getTopMenuAlign).toBeDefined();
+    expect(result.getTrigger).toBeDefined();
+    expect(result.getAccordion).toBeDefined();
+    expect(result.getCloseMixSidebarOnChange).toBeDefined();
+    expect(result.getCollapsedShowTitle).toBeDefined();
+    expect(result.getMixSideTrigger).toBeDefined();
+    expect(result.getMixSideFixed).toBeDefined();
+    expect(result.setMenuSetting).toBeDefined();
+    expect(result.toggleCollapsed).toBeDefined();
   });
 
   it('should return computed values from appStore', () => {
@@ -70,22 +72,22 @@ describe('hooks/setting/useMenuSetting', () => {
 
     expect(result.getMenuBgColor.value).toBe('#001529');
     expect(result.getMenuFixed.value).toBe(true);
-    expect(result.getMenuCollapsed.value).toBe(false);
-    expect(result.getMenuCanDrag.value).toBe(false);
-    expect(result.getMenuShow.value).toBe(true);
+    expect(result.getCollapsed.value).toBe(false);
+    expect(result.getCanDrag.value).toBe(false);
+    expect(result.getShowMenu.value).toBe(true);
     expect(result.getMenuHidden.value).toBe(false);
-    expect(result.getMenuSplit.value).toBe(false);
+    expect(result.getSplit.value).toBe(false);
     expect(result.getMenuWidth.value).toBe(210);
     expect(result.getMenuMode.value).toBe(MenuModeEnum.INLINE);
     expect(result.getMenuType.value).toBe(MenuTypeEnum.SIDEBAR);
     expect(result.getMenuTheme.value).toBe('dark');
-    expect(result.getMenuTopAlign.value).toBe('center');
-    expect(result.getMenuTrigger.value).toBe('HEADER');
-    expect(result.getMenuAccordion.value).toBe(true);
-    expect(result.getMenuCloseMixSidebarOnChange.value).toBe(false);
-    expect(result.getMenuCollapsedShowTitle.value).toBe(false);
-    expect(result.getMenuMixSideTrigger.value).toBe('click');
-    expect(result.getMenuMixSideFixed.value).toBe(false);
+    expect(result.getTopMenuAlign.value).toBe('center');
+    expect(result.getTrigger.value).toBe('HEADER');
+    expect(result.getAccordion.value).toBe(true);
+    expect(result.getCloseMixSidebarOnChange.value).toBe(false);
+    expect(result.getCollapsedShowTitle.value).toBe(false);
+    expect(result.getMixSideTrigger.value).toBe('click');
+    expect(result.getMixSideFixed.value).toBe(false);
   });
 
   it('should call setProjectConfig when setMenuSetting is called', () => {

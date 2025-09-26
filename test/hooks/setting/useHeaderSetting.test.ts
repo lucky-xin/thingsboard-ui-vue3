@@ -39,32 +39,28 @@ describe('hooks/setting/useHeaderSetting', () => {
     const result = useHeaderSetting();
 
     expect(result.getHeaderBgColor).toBeDefined();
-    expect(result.getHeaderFixed).toBeDefined();
-    expect(result.getHeaderShow).toBeDefined();
-    expect(result.getHeaderHidden).toBeDefined();
-    expect(result.getHeaderShowFullScreen).toBeDefined();
-    expect(result.getHeaderShowDoc).toBeDefined();
-    expect(result.getHeaderShowBreadCrumb).toBeDefined();
-    expect(result.getHeaderShowBreadCrumbIcon).toBeDefined();
-    expect(result.getHeaderShowCollapseButton).toBeDefined();
-    expect(result.getHeaderShowNotice).toBeDefined();
-    expect(result.getHeaderShowSearch).toBeDefined();
+    expect(result.getFixed).toBeDefined();
+    expect(result.getShowHeader).toBeDefined();
+    expect(result.getShowFullScreen).toBeDefined();
+    expect(result.getShowDoc).toBeDefined();
+    expect(result.getShowSearch).toBeDefined();
+    expect(result.getShowNotice).toBeDefined();
+    expect(result.getShowBread).toBeDefined();
+    expect(result.getShowContent).toBeDefined();
+    expect(result.getShowHeaderLogo).toBeDefined();
+    expect(result.setHeaderSetting).toBeDefined();
   });
 
   it('should return computed values from appStore', () => {
     const result = useHeaderSetting();
 
     expect(result.getHeaderBgColor.value).toBe('#ffffff');
-    expect(result.getHeaderFixed.value).toBe(true);
-    expect(result.getHeaderShow.value).toBe(true);
-    expect(result.getHeaderHidden.value).toBe(false);
-    expect(result.getHeaderShowFullScreen.value).toBe(true);
-    expect(result.getHeaderShowDoc.value).toBe(true);
-    expect(result.getHeaderShowBreadCrumb.value).toBe(true);
-    expect(result.getHeaderShowBreadCrumbIcon.value).toBe(true);
-    expect(result.getHeaderShowCollapseButton.value).toBe(true);
-    expect(result.getHeaderShowNotice.value).toBe(true);
-    expect(result.getHeaderShowSearch.value).toBe(true);
+    expect(result.getFixed.value).toBe(true);
+    expect(result.getShowHeader.value).toBe(true);
+    expect(result.getShowFullScreen.value).toBe(true);
+    expect(result.getShowDoc.value).toBe(true);
+    expect(result.getShowSearch.value).toBe(true);
+    expect(result.getShowNotice.value).toBe(true);
   });
 
   it('should call setProjectConfig when setHeaderSetting is called', () => {

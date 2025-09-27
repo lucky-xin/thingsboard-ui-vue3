@@ -7,9 +7,18 @@ describe('basic', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
+  })
+
+  it('should export PAGE_NOT_FOUND_ROUTE', () => {
+    expect(module.PAGE_NOT_FOUND_ROUTE).toBeDefined()
+  })
+  it('should export REDIRECT_ROUTE', () => {
+    expect(module.REDIRECT_ROUTE).toBeDefined()
+  })
+  it('should export ERROR_LOG_ROUTE', () => {
+    expect(module.ERROR_LOG_ROUTE).toBeDefined()
   })
 
   it('should handle edge cases', () => {

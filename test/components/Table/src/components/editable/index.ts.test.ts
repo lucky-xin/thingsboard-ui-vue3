@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import * as module from '/@/src/components/Table/src/components/editable/index'
+import * as module from '/@/components/Table/src/components/editable/index'
 
 describe('index', () => {
   it('should export expected functions/classes', () => {
@@ -7,11 +7,20 @@ describe('index', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
   })
 
+  it('should export renderEditCell', () => {
+    expect(module.renderEditCell).toBeDefined()
+  })
+
+  it('should have renderEditCell function', () => {
+    expect(typeof module.renderEditCell).toBe('function')
+  })
+  it('should have useTableContext function', () => {
+    expect(typeof module.useTableContext).toBe('function')
+  })
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality
     expect(true).toBe(true)

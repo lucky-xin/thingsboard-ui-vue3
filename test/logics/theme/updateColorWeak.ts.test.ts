@@ -7,11 +7,17 @@ describe('updateColorWeak', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
   })
 
+  it('should export updateColorWeak', () => {
+    expect(module.updateColorWeak).toBeDefined()
+  })
+
+  it('should have updateColorWeak function', () => {
+    expect(typeof module.updateColorWeak).toBe('function')
+  })
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality
     expect(true).toBe(true)

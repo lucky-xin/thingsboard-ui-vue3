@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import * as module from '/@/src/components/CardList/src/data'
+import * as module from '/@/components/CardList/src/data'
 
 describe('data', () => {
   it('should export expected functions/classes', () => {

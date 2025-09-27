@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import * as module from '/@/src/components/ColorPicker/src/lib/validators'
+import * as module from '/@/components/ColorPicker/src/lib/validators'
 
 describe('validators', () => {
   it('should export expected functions/classes', () => {

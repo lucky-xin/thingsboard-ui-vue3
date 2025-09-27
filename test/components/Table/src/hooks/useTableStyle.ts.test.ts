@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import * as module from '/@/src/components/Table/src/hooks/useTableStyle'
+import * as module from '/@/components/Table/src/hooks/useTableStyle'
 
 describe('useTableStyle', () => {
   it('should export expected functions/classes', () => {
@@ -7,11 +7,20 @@ describe('useTableStyle', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
   })
 
+  it('should export useTableStyle', () => {
+    expect(module.useTableStyle).toBeDefined()
+  })
+
+  it('should have useTableStyle function', () => {
+    expect(typeof module.useTableStyle).toBe('function')
+  })
+  it('should have getRowClassName function', () => {
+    expect(typeof module.getRowClassName).toBe('function')
+  })
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality
     expect(true).toBe(true)

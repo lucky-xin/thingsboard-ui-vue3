@@ -7,11 +7,17 @@ describe('updateGrayMode', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
   })
 
+  it('should export updateGrayMode', () => {
+    expect(module.updateGrayMode).toBeDefined()
+  })
+
+  it('should have updateGrayMode function', () => {
+    expect(typeof module.updateGrayMode).toBe('function')
+  })
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality
     expect(true).toBe(true)

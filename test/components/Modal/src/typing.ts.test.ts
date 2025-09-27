@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import * as module from '/@/src/components/Modal/src/typing'
+import * as module from '/@/components/Modal/src/typing'
 
 describe('typing', () => {
   it('should export expected functions/classes', () => {
@@ -7,10 +7,10 @@ describe('typing', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
   })
+
 
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality

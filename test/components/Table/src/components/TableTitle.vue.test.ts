@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import TableTitle from '/@/components/components/Table/src/components/TableTitle'
+import TableTitle from '/@/components/Table/src/components/TableTitle'
 
 describe('TableTitle', () => {
   it('should render without crashing', () => {
@@ -13,23 +13,21 @@ describe('TableTitle', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('should handle props correctly', () => {
-    const props = {}
+  it('should handle title prop correctly', () => {
     const wrapper = mount(TableTitle, {
-      props
+      props: { title: 'test-value' }
     })
-    expect(wrapper.exists()).toBe(true)
-  })
-
-  it('should emit events when expected', () => {
-    const wrapper = mount(TableTitle)
-    // Add event testing based on component functionality
     expect(wrapper.exists()).toBe(true)
   })
 
   it('should handle user interactions', () => {
     const wrapper = mount(TableTitle)
-    // Add interaction testing
+    // Add interaction testing based on component functionality
     expect(wrapper.exists()).toBe(true)
+  })
+
+  it('should have correct component structure', () => {
+    const wrapper = mount(TableTitle)
+    expect(wrapper.findComponent(TableTitle).exists()).toBe(true)
   })
 })

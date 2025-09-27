@@ -7,11 +7,35 @@ describe('updateBackground', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
   })
 
+  it('should export updateHeaderBgColor', () => {
+    expect(module.updateHeaderBgColor).toBeDefined()
+  })
+  it('should export updateSidebarBgColor', () => {
+    expect(module.updateSidebarBgColor).toBeDefined()
+  })
+
+  it('should have updateHeaderBgColor function', () => {
+    expect(typeof module.updateHeaderBgColor).toBe('function')
+  })
+  it('should have useAppStore function', () => {
+    expect(typeof module.useAppStore).toBe('function')
+  })
+  it('should have darken function', () => {
+    expect(typeof module.darken).toBe('function')
+  })
+  it('should have colorIsDark function', () => {
+    expect(typeof module.colorIsDark).toBe('function')
+  })
+  it('should have updateSidebarBgColor function', () => {
+    expect(typeof module.updateSidebarBgColor).toBe('function')
+  })
+  it('should have useAppStore function', () => {
+    expect(typeof module.useAppStore).toBe('function')
+  })
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality
     expect(true).toBe(true)

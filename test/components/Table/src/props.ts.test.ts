@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import * as module from '/@/src/components/Table/src/props'
+import * as module from '/@/components/Table/src/props'
 
 describe('props', () => {
   it('should export expected functions/classes', () => {
@@ -7,9 +7,12 @@ describe('props', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
+  })
+
+  it('should export basicProps', () => {
+    expect(module.basicProps).toBeDefined()
   })
 
   it('should handle edge cases', () => {

@@ -7,10 +7,10 @@ describe('tb', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
   })
+
 
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality

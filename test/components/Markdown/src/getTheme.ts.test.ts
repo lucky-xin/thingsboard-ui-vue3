@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import * as module from '/@/src/components/Markdown/src/getTheme'
+import * as module from '/@/components/Markdown/src/getTheme'
 
 describe('getTheme', () => {
   it('should export expected functions/classes', () => {
@@ -7,9 +7,12 @@ describe('getTheme', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
+  })
+
+  it('should export getTheme', () => {
+    expect(module.getTheme).toBeDefined()
   })
 
   it('should handle edge cases', () => {

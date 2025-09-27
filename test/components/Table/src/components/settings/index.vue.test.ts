@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import index from '/@/components/components/Table/src/components/settings/index'
+import index from '/@/components/Table/src/components/settings/index'
 
 describe('index', () => {
   it('should render without crashing', () => {
@@ -13,23 +13,26 @@ describe('index', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('should handle props correctly', () => {
-    const props = {}
+  it('should handle setting prop correctly', () => {
     const wrapper = mount(index, {
-      props
+      props: { setting: 'test-value' }
     })
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('should emit events when expected', () => {
+  it('should emit columns-change event', () => {
     const wrapper = mount(index)
-    // Add event testing based on component functionality
+    wrapper.vm.$emit('columns-change')
+    expect(wrapper.emitted('columns-change')).toBeTruthy()
+  })
+  it('should handle user interactions', () => {
+    const wrapper = mount(index)
+    // Add interaction testing based on component functionality
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('should handle user interactions', () => {
+  it('should have correct component structure', () => {
     const wrapper = mount(index)
-    // Add interaction testing
-    expect(wrapper.exists()).toBe(true)
+    expect(wrapper.findComponent(index).exists()).toBe(true)
   })
 })

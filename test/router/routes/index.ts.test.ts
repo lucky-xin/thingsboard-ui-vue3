@@ -7,9 +7,24 @@ describe('index', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
+  })
+
+  it('should export asyncRoutes', () => {
+    expect(module.asyncRoutes).toBeDefined()
+  })
+  it('should export RootRoute', () => {
+    expect(module.RootRoute).toBeDefined()
+  })
+  it('should export LoginRoute', () => {
+    expect(module.LoginRoute).toBeDefined()
+  })
+  it('should export LoginRoute', () => {
+    expect(module.LoginRoute).toBeDefined()
+  })
+  it('should export basicRoutes', () => {
+    expect(module.basicRoutes).toBeDefined()
   })
 
   it('should handle edge cases', () => {

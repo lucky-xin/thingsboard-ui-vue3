@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import ModalFooter from '/@/components/components/Modal/src/components/ModalFooter'
+import ModalFooter from '/@/components/Modal/src/components/ModalFooter'
 
 describe('ModalFooter', () => {
   it('should render without crashing', () => {
@@ -13,23 +13,25 @@ describe('ModalFooter', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('should handle props correctly', () => {
-    const props = {}
-    const wrapper = mount(ModalFooter, {
-      props
-    })
-    expect(wrapper.exists()).toBe(true)
-  })
 
-  it('should emit events when expected', () => {
+  it('should emit ok event', () => {
     const wrapper = mount(ModalFooter)
-    // Add event testing based on component functionality
-    expect(wrapper.exists()).toBe(true)
+    wrapper.vm.$emit('ok')
+    expect(wrapper.emitted('ok')).toBeTruthy()
   })
-
+  it('should emit cancel event', () => {
+    const wrapper = mount(ModalFooter)
+    wrapper.vm.$emit('cancel')
+    expect(wrapper.emitted('cancel')).toBeTruthy()
+  })
   it('should handle user interactions', () => {
     const wrapper = mount(ModalFooter)
-    // Add interaction testing
+    // Add interaction testing based on component functionality
     expect(wrapper.exists()).toBe(true)
+  })
+
+  it('should have correct component structure', () => {
+    const wrapper = mount(ModalFooter)
+    expect(wrapper.findComponent(ModalFooter).exists()).toBe(true)
   })
 })

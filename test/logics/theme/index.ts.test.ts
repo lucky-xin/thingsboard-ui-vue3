@@ -7,11 +7,17 @@ describe('index', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
   })
 
+
+  it('should have changeTheme function', () => {
+    expect(typeof module.changeTheme).toBe('function')
+  })
+  it('should have generateColors function', () => {
+    expect(typeof module.generateColors).toBe('function')
+  })
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality
     expect(true).toBe(true)

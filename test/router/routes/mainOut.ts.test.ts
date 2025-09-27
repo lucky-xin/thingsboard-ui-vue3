@@ -7,9 +7,15 @@ describe('mainOut', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
+  })
+
+  it('should export mainOutRoutes', () => {
+    expect(module.mainOutRoutes).toBeDefined()
+  })
+  it('should export mainOutRouteNames', () => {
+    expect(module.mainOutRouteNames).toBeDefined()
   })
 
   it('should handle edge cases', () => {

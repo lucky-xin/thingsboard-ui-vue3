@@ -7,11 +7,17 @@ describe('dark', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
   })
 
+
+  it('should have updateDarkTheme function', () => {
+    expect(typeof module.updateDarkTheme).toBe('function')
+  })
+  it('should have hasClass function', () => {
+    expect(typeof module.hasClass).toBe('function')
+  })
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality
     expect(true).toBe(true)

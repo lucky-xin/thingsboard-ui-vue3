@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import * as module from '/@/src/components/CodeEditor/src/typing'
+import * as module from '/@/components/CodeEditor/src/typing'
 
 describe('typing', () => {
   it('should export expected functions/classes', () => {

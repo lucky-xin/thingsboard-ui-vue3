@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import * as module from '/@/src/components/Modal/src/components/Modalx'
+import * as module from '/@/components/Modal/src/components/Modalx'
 
 describe('Modal', () => {
   it('should export expected functions/classes', () => {
@@ -7,11 +7,14 @@ describe('Modal', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
   })
 
+
+  it('should have useAttrs function', () => {
+    expect(typeof module.useAttrs).toBe('function')
+  })
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality
     expect(true).toBe(true)

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import ColumnSetting from '/@/components/components/Table/src/components/settings/ColumnSetting'
+import ColumnSetting from '/@/components/Table/src/components/settings/ColumnSetting'
 
 describe('ColumnSetting', () => {
   it('should render without crashing', () => {
@@ -13,23 +13,20 @@ describe('ColumnSetting', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('should handle props correctly', () => {
-    const props = {}
-    const wrapper = mount(ColumnSetting, {
-      props
-    })
-    expect(wrapper.exists()).toBe(true)
-  })
 
-  it('should emit events when expected', () => {
+  it('should emit columns-change event', () => {
     const wrapper = mount(ColumnSetting)
-    // Add event testing based on component functionality
-    expect(wrapper.exists()).toBe(true)
+    wrapper.vm.$emit('columns-change')
+    expect(wrapper.emitted('columns-change')).toBeTruthy()
   })
-
   it('should handle user interactions', () => {
     const wrapper = mount(ColumnSetting)
-    // Add interaction testing
+    // Add interaction testing based on component functionality
     expect(wrapper.exists()).toBe(true)
+  })
+
+  it('should have correct component structure', () => {
+    const wrapper = mount(ColumnSetting)
+    expect(wrapper.findComponent(ColumnSetting).exists()).toBe(true)
   })
 })

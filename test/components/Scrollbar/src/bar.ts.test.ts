@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import * as module from '/@/src/components/Scrollbar/src/bar'
+import * as module from '/@/components/Scrollbar/src/bar'
 
 describe('bar', () => {
   it('should export expected functions/classes', () => {

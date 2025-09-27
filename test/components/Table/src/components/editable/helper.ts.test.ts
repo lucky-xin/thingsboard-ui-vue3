@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import * as module from '/@/src/components/Table/src/components/editable/helper'
+import * as module from '/@/components/Table/src/components/editable/helper'
 
 describe('helper', () => {
   it('should export expected functions/classes', () => {
@@ -7,11 +7,17 @@ describe('helper', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
   })
 
+  it('should export createPlaceholderMessage', () => {
+    expect(module.createPlaceholderMessage).toBeDefined()
+  })
+
+  it('should have createPlaceholderMessage function', () => {
+    expect(typeof module.createPlaceholderMessage).toBe('function')
+  })
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality
     expect(true).toBe(true)

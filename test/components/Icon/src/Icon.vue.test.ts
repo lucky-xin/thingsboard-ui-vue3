@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import Icon from '/@/components/components/Icon/src/Icon'
+import Icon from '/@/components/Icon/src/Icon'
 
 describe('Icon', () => {
   it('should render without crashing', () => {
@@ -13,23 +13,15 @@ describe('Icon', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('should handle props correctly', () => {
-    const props = {}
-    const wrapper = mount(Icon, {
-      props
-    })
-    expect(wrapper.exists()).toBe(true)
-  })
-
-  it('should emit events when expected', () => {
-    const wrapper = mount(Icon)
-    // Add event testing based on component functionality
-    expect(wrapper.exists()).toBe(true)
-  })
 
   it('should handle user interactions', () => {
     const wrapper = mount(Icon)
-    // Add interaction testing
+    // Add interaction testing based on component functionality
     expect(wrapper.exists()).toBe(true)
+  })
+
+  it('should have correct component structure', () => {
+    const wrapper = mount(Icon)
+    expect(wrapper.findComponent(Icon).exists()).toBe(true)
   })
 })

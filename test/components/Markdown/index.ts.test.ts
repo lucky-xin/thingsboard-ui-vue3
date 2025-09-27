@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import * as module from '/@/src/components/Markdown/index'
+import * as module from '/@/components/Markdown/index'
 
 describe('index', () => {
   it('should export expected functions/classes', () => {
@@ -7,11 +7,23 @@ describe('index', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
   })
 
+  it('should export Markdown', () => {
+    expect(module.Markdown).toBeDefined()
+  })
+  it('should export MarkdownViewer', () => {
+    expect(module.MarkdownViewer).toBeDefined()
+  })
+
+  it('should have withInstall function', () => {
+    expect(typeof module.withInstall).toBe('function')
+  })
+  it('should have withInstall function', () => {
+    expect(typeof module.withInstall).toBe('function')
+  })
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality
     expect(true).toBe(true)

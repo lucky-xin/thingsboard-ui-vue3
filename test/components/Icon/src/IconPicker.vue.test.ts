@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import IconPicker from '/@/components/components/Icon/src/IconPicker'
+import IconPicker from '/@/components/Icon/src/IconPicker'
 
 describe('IconPicker', () => {
   it('should render without crashing', () => {
@@ -13,23 +13,15 @@ describe('IconPicker', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('should handle props correctly', () => {
-    const props = {}
-    const wrapper = mount(IconPicker, {
-      props
-    })
-    expect(wrapper.exists()).toBe(true)
-  })
-
-  it('should emit events when expected', () => {
-    const wrapper = mount(IconPicker)
-    // Add event testing based on component functionality
-    expect(wrapper.exists()).toBe(true)
-  })
 
   it('should handle user interactions', () => {
     const wrapper = mount(IconPicker)
-    // Add interaction testing
+    // Add interaction testing based on component functionality
     expect(wrapper.exists()).toBe(true)
+  })
+
+  it('should have correct component structure', () => {
+    const wrapper = mount(IconPicker)
+    expect(wrapper.findComponent(IconPicker).exists()).toBe(true)
   })
 })

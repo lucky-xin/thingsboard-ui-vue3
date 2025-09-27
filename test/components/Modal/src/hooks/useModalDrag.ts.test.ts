@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import * as module from '/@/src/components/Modal/src/hooks/useModalDrag'
+import * as module from '/@/components/Modal/src/hooks/useModalDrag'
 
 describe('useModalDrag', () => {
   it('should export expected functions/classes', () => {
@@ -7,11 +7,26 @@ describe('useModalDrag', () => {
   })
 
   it('should have correct exports', () => {
-    // Test all exported functions/classes
     const exports = Object.keys(module)
     expect(exports.length).toBeGreaterThan(0)
   })
 
+  it('should export useModalDragMove', () => {
+    expect(module.useModalDragMove).toBeDefined()
+  })
+
+  it('should have useModalDragMove function', () => {
+    expect(typeof module.useModalDragMove).toBe('function')
+  })
+  it('should have getStyle function', () => {
+    expect(typeof module.getStyle).toBe('function')
+  })
+  it('should have getStyle function', () => {
+    expect(typeof module.getStyle).toBe('function')
+  })
+  it('should have getStyle function', () => {
+    expect(typeof module.getStyle).toBe('function')
+  })
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality
     expect(true).toBe(true)

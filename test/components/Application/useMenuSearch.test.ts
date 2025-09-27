@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ref } from 'vue';
+import { ref, defineComponent } from 'vue';
 import { useMenuSearch } from '/@/components/Application/src/search/useMenuSearch';
+import { mount } from '@vue/test-utils';
 
 // Mock dependencies
 vi.mock('/@/router/menus', () => ({
@@ -56,14 +57,25 @@ describe('components/Application/useMenuSearch', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    
+
     mockRefs = ref([]);
     mockScrollWrap = ref({ offsetHeight: 400 });
     mockEmit = vi.fn();
   });
 
   it('should initialize with default values', () => {
-    const result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        return useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+    const result = component.setupState;
 
     expect(result.searchResult.value).toEqual([]);
     expect(result.keyword.value).toBe('');
@@ -74,8 +86,19 @@ describe('components/Application/useMenuSearch', () => {
   });
 
   it('should handle search with empty keyword', () => {
-    const result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
-    
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        return useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+    const result = component.setupState;
+
     const mockEvent = {
       target: { value: '' },
       stopPropagation: vi.fn(),
@@ -88,8 +111,19 @@ describe('components/Application/useMenuSearch', () => {
   });
 
   it('should handle search with keyword', () => {
-    const result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
-    
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        return useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+    const result = component.setupState;
+
     const mockEvent = {
       target: { value: 'test' },
       stopPropagation: vi.fn(),
@@ -102,8 +136,19 @@ describe('components/Application/useMenuSearch', () => {
   });
 
   it('should handle mouse enter event', () => {
-    const result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
-    
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        return useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+    const result = component.setupState;
+
     const mockEvent = {
       target: { dataset: { index: '2' } },
     };
@@ -114,8 +159,19 @@ describe('components/Application/useMenuSearch', () => {
   });
 
   it('should handle search result updates', () => {
-    const result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
-    
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        return useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+    const result = component.setupState;
+
     // Test that search results can be updated
     result.searchResult.value = [
       { name: 'test1', path: '/test1' },
@@ -128,8 +184,19 @@ describe('components/Application/useMenuSearch', () => {
   });
 
   it('should handle keyword updates', () => {
-    const result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
-    
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        return useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+    const result = component.setupState;
+
     result.keyword.value = 'test keyword';
 
     expect(result.keyword.value).toBe('test keyword');

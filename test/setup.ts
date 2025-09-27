@@ -194,7 +194,7 @@ vi.mock('/@/components/Button/index', () => {
   const BasicButton = addInstall({ name: 'BasicButton', template: '<button class="tb-basic-btn" />' });
   const PopConfirmButton = addInstall({ name: 'PopConfirmButton', template: '<button class="tb-popconfirm-btn" />' });
   const Button = addInstall({ name: 'Button', template: '<button class="tb-btn" />' });
-  return { BasicButton, PopConfirmButton, Button, default: BasicButton };
+  return { BasicButton, PopConfirmButton, Button, ButtonProps: {}, default: BasicButton };
 });
 
 // Remove over-broad mock for Table to keep real exports available
@@ -209,9 +209,10 @@ vi.mock('/@/components/Cropper', () => ({
   CropperImage: simpleComponent('CropperImage'),
   CropperAvatar: simpleComponent('CropperAvatar'),
 }));
-vi.mock('/@/components/Dialog', () => ({ BasicDialog: simpleComponent('BasicDialog') }));
+vi.mock('/@/components/Dialog', () => ({ BasicDialog: simpleComponent('BasicDialog'), BasicDialogInstance: {} }));
 vi.mock('/@/components/Drawer', () => ({
   BasicDrawer: simpleComponent('BasicDrawer'),
+  BasicDrawerInstance: {}, // Mock the type export
   useDrawer: () => [vi.fn(), vi.fn()],
   useDrawerInner: () => [vi.fn(), vi.fn()],
 }));
@@ -221,6 +222,7 @@ vi.mock('/@/components/Markdown', () => ({
 }));
 vi.mock('/@/components/Modal', () => ({
   BasicModal: simpleComponent('BasicModal'),
+  BasicModalInstance: {}, // Mock the type export
   useModalContext: () => ({ closeModal: vi.fn(), redoModalHeight: vi.fn() }),
   useModal: () => [vi.fn(), vi.fn()],
   useModalInner: () => [vi.fn(), vi.fn()],
@@ -612,6 +614,7 @@ vi.mock('/@/components/Authentication', () => ({
   AuthenticationLogin: addInstall({ name: 'AuthenticationLogin', template: '<div />' }),
   AuthenticationQrCodeLogin: addInstall({ name: 'AuthenticationQrCodeLogin', template: '<div />' }),
   AuthenticationRegister: addInstall({ name: 'AuthenticationRegister', template: '<div />' }),
+  AuthenticationProps: {},
 }));
 vi.mock('/@/components/ColorPicker', () => ({ ColorPicker: addInstall({ name: 'ColorPicker', template: '<div />' }) }));
 vi.mock('/@/components/Description', () => ({
@@ -656,9 +659,15 @@ vi.mock('/@/components/Form', () => {
     useForm: vi.fn(() => [vi.fn(), vi.fn()])
   };
 });
-vi.mock('/@/components/Preview', () => ({ ImagePreview: addInstall({ name: 'ImagePreview', template: '<div />' }) }));
-vi.mock('/@/components/SimpleMenu', () => ({ SimpleMenu: addInstall({ name: 'SimpleMenu', template: '<div />' }) }));
-vi.mock('/@/components/Tree', () => ({ BasicTree: addInstall({ name: 'BasicTree', template: '<div />' }) }));
+vi.mock('/@/components/Preview', () => ({ ImagePreview: addInstall({ name: 'ImagePreview', template: '<div />' }), createImgPreview: vi.fn() }));
+vi.mock('/@/components/SimpleMenu', () => ({ 
+  SimpleMenu: addInstall({ name: 'SimpleMenu', template: '<div />' }),
+  SimpleMenuTag: addInstall({ name: 'SimpleMenuTag', template: '<div />' })
+}));
+vi.mock('/@/components/Tree', () => ({ 
+  BasicTree: addInstall({ name: 'BasicTree', template: '<div />' }),
+  ContextMenuItem: {}
+}));
 
 // Mock loading directive module
 vi.mock('/@/directives/loading', () => {

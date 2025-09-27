@@ -109,12 +109,13 @@ describe('hooks/event/useScrollTo', () => {
     expect(mockIsActiveRef.value).toBe(false);
   });
 
-  it('should call callback when scrolling completes', (done) => {
+  it('should call callback when scrolling completes', async () => {
     const callback = vi.fn();
     const mockIsActiveRef = { value: false };
-    
+
     (ref as any).mockReturnValue(mockIsActiveRef);
     (unref as any).mockImplementation((val) => val.value);
+    (isFunction as any).mockReturnValue(true);
 
     // Mock a very short duration for faster test
     const result = useScrollTo({
@@ -128,17 +129,16 @@ describe('hooks/event/useScrollTo', () => {
     mockIsActiveRef.value = true;
 
     // Wait for animation to complete
-    setTimeout(() => {
-      expect(callback).toHaveBeenCalled();
-      expect(isFunction).toHaveBeenCalledWith(callback);
-      done();
-    }, 50);
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    expect(callback).toHaveBeenCalled();
+    expect(isFunction).toHaveBeenCalledWith(callback);
   });
 
-  it('should not call callback if callback is not a function', (done) => {
+  it('should not call callback if callback is not a function', async () => {
     const callback = 'not a function';
     const mockIsActiveRef = { value: false };
-    
+
     (ref as any).mockReturnValue(mockIsActiveRef);
     (isFunction as any).mockReturnValue(false);
 
@@ -152,10 +152,10 @@ describe('hooks/event/useScrollTo', () => {
     result.start();
     mockIsActiveRef.value = true;
 
-    setTimeout(() => {
-      expect(isFunction).toHaveBeenCalledWith(callback);
-      done();
-    }, 50);
+    // Wait for animation to complete
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    expect(isFunction).toHaveBeenCalledWith(callback);
   });
 
   it('should update element scrollTop during animation', () => {

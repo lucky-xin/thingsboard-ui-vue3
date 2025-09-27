@@ -181,7 +181,7 @@ export const usePermissionStore = defineStore('app-permission', {
           // this function may only need to be executed once, and the actual project can be put at the right time by itself
           let routeList: AppRouteRecordRaw[] = [];
           try {
-            this.changePermissionCode();
+            await this.changePermissionCode();
             // routeList = (await menuRouteApi()) as AppRouteRecordRaw[];
             routeList = [];
           } catch (error) {

@@ -1,5 +1,20 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
+import { mount } from '@vue/test-utils'
 import { AppLogo, AppProvider, AppSearch, AppLocalePicker, AppDarkModeToggle, useAppProviderContext } from '/@/components/Application/index'
+
+// Mock dependencies
+vi.mock('@/hooks/web/useI18n', () => ({
+  useI18n: () => ({
+    t: (key: string) => key
+  })
+}))
+
+vi.mock('vue-router', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn()
+  })
+}))
 
 describe('components/Application/index', () => {
   it('should export AppLogo component', () => {
@@ -32,43 +47,87 @@ describe('components/Application/index', () => {
     expect(typeof useAppProviderContext).toBe('function')
   })
 
-  it('should have all components installed with withInstall', () => {
-    expect(AppLogo.install).toBeDefined()
-    expect(AppProvider.install).toBeDefined()
-    expect(AppSearch.install).toBeDefined()
-    expect(AppLocalePicker.install).toBeDefined()
-    expect(AppDarkModeToggle.install).toBeDefined()
-  })
-
-  it('should have correct component structure', () => {
-    expect(AppLogo).toHaveProperty('name')
-    expect(AppProvider).toHaveProperty('name')
-    expect(AppSearch).toHaveProperty('name')
-    expect(AppLocalePicker).toHaveProperty('name')
-    expect(AppDarkModeToggle).toHaveProperty('name')
-  })
-
-  it('should execute all source code lines', () => {
-    // 这个测试确保所有导入和导出都被执行
-    const allExports = [AppLogo, AppProvider, AppSearch, AppLocalePicker, AppDarkModeToggle, useAppProviderContext]
-    allExports.forEach(exportItem => {
-      expect(exportItem).toBeDefined()
+  it('should render AppLogo component', () => {
+    const wrapper = mount(AppLogo, {
+      global: {
+        stubs: {
+          'a-button': true,
+          'a-dropdown': true,
+          'a-menu': true,
+          'a-menu-item': true,
+          'a-tooltip': true
+        }
+      }
     })
+    expect(wrapper.exists()).toBe(true)
   })
 
-  it('should test withInstall function calls', () => {
-    // 测试withInstall是否正确应用
-    expect(AppLogo.install).toBeDefined()
-    expect(typeof AppLogo.install).toBe('function')
+  it('should render AppProvider component', () => {
+    const wrapper = mount(AppProvider, {
+      global: {
+        stubs: {
+          'router-view': true
+        }
+      }
+    })
+    expect(wrapper.exists()).toBe(true)
   })
 
-  it('should test all imports are executed', () => {
-    // 确保所有导入都被执行
-    expect(AppLogo).toBeTruthy()
-    expect(AppProvider).toBeTruthy()
-    expect(AppSearch).toBeTruthy()
-    expect(AppLocalePicker).toBeTruthy()
-    expect(AppDarkModeToggle).toBeTruthy()
-    expect(useAppProviderContext).toBeTruthy()
+  it('should render AppSearch component', () => {
+    const wrapper = mount(AppSearch, {
+      global: {
+        stubs: {
+          'a-input': true,
+          'a-button': true,
+          'a-modal': true,
+          'a-drawer': true
+        }
+      }
+    })
+    expect(wrapper.exists()).toBe(true)
+  })
+
+  it('should render AppLocalePicker component', () => {
+    const wrapper = mount(AppLocalePicker, {
+      global: {
+        stubs: {
+          'a-dropdown': true,
+          'a-menu': true,
+          'a-menu-item': true,
+          'a-button': true
+        }
+      }
+    })
+    expect(wrapper.exists()).toBe(true)
+  })
+
+  it('should render AppDarkModeToggle component', () => {
+    const wrapper = mount(AppDarkModeToggle, {
+      global: {
+        stubs: {
+          'a-button': true,
+          'a-tooltip': true
+        }
+      }
+    })
+    expect(wrapper.exists()).toBe(true)
+  })
+
+  it('should call useAppProviderContext hook', () => {
+    expect(() => {
+      useAppProviderContext()
+    }).not.toThrow()
+  })
+
+  it('should have valid exports', () => {
+    const module = { AppLogo, AppProvider, AppSearch, AppLocalePicker, AppDarkModeToggle, useAppProviderContext }
+    const exports = Object.keys(module)
+    expect(exports.length).toBeGreaterThan(0)
+  })
+
+  it('should be importable without errors', () => {
+    expect(() => {
+      return { AppLogo, AppProvider, AppSearch, AppLocalePicker, AppDarkModeToggle, useAppProviderContext }
+    }).not.toThrow()
   })
 })

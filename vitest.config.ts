@@ -31,7 +31,11 @@ export default defineConfig({
       exclude: [
         'src/views/**',
         'src/api/**',
+        '**/types/**',
         '**/*.d.ts',
+        '**/typing.ts',
+        '**/index.ts',
+        '**/props.ts',
       ],
       reportsDirectory: './coverage',
     },

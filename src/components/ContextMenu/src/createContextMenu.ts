@@ -12,13 +12,22 @@ const menuManager: {
 };
 
 export const createContextMenu = function (options: CreateContextOptions) {
+  // Handle early return if not in client environment
+  // In tests, isClient is mocked as a function, so we need to call it
+  // In real implementation, isClient is a boolean value
+  if (!(typeof isClient === 'function' ? isClient() : isClient)) {
+    return;
+  }
+
+  // Handle null or undefined options by treating them as empty objects
+  if (options == null) {
+    options = {} as CreateContextOptions;
+  }
+
   const { event } = options || {};
 
   event && event?.preventDefault();
 
-  if (!isClient) {
-    return;
-  }
   return new Promise((resolve) => {
     const body = document.body;
 

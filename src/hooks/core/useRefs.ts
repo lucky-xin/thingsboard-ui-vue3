@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, Ref } from 'vue';
-import { onBeforeUpdate, shallowRef } from 'vue';
+import { getCurrentInstance, onBeforeUpdate, shallowRef } from 'vue';
 
 function useRefs<T = HTMLElement>(): {
   refs: Ref<T[]>;
@@ -7,9 +7,13 @@ function useRefs<T = HTMLElement>(): {
 } {
   const refs = shallowRef([]) as Ref<T[]>;
 
-  onBeforeUpdate(() => {
-    refs.value = [];
-  });
+  // 只在有活动组件实例时注册 onBeforeUpdate 钩子
+  const instance = getCurrentInstance();
+  if (instance) {
+    onBeforeUpdate(() => {
+      refs.value = [];
+    });
+  }
 
   const setRefs = (index: number) => (el: Element | ComponentPublicInstance | null) => {
     refs.value[index] = el as T;

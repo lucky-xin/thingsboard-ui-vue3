@@ -232,6 +232,10 @@ describe('store/modules/permission', () => {
     it('should build routes action with BACK permission mode', async () => {
       const store = usePermissionStore();
 
+      // Mock the API call for changePermissionCode
+      const loginApiMock = await import('/@/api/tb/login');
+      loginApiMock.userInfoApi.mockResolvedValue({ authority: 'admin' });
+
       // Mock app store to return BACK permission mode
       const appStoreModule = await import('/@/store/modules/app');
       const originalAppStore = appStoreModule.useAppStoreWithOut;

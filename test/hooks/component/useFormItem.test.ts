@@ -137,7 +137,7 @@ describe('hooks/component/useFormItem', () => {
       mockInstance = createMockInstance('JeeSiteCheckboxGroup');
       const props = { value: 'val1,val2' };
       const [state] = useRuleFormItem(props);
-      
+
       expect(state.value).toEqual(['val1', 'val2']);
     });
 
@@ -145,7 +145,7 @@ describe('hooks/component/useFormItem', () => {
       mockInstance = createMockInstance('JeeSiteSelect');
       const props = { value: 'val1,val2', mode: 'multiple' };
       const [state] = useRuleFormItem(props);
-      
+
       expect(state.value).toEqual(['val1', 'val2']);
     });
 
@@ -153,7 +153,7 @@ describe('hooks/component/useFormItem', () => {
       mockInstance = createMockInstance('JeeSiteSelect');
       const props = { value: 'val1,val2', mode: 'tags' };
       const [state] = useRuleFormItem(props);
-      
+
       expect(state.value).toEqual(['val1', 'val2']);
     });
 
@@ -161,19 +161,19 @@ describe('hooks/component/useFormItem', () => {
       mockInstance = createMockInstance('JeeSiteTreeSelect');
       const props = { value: 'val1,val2', treeCheckable: true };
       const [state] = useRuleFormItem(props);
-      
+
       expect(state.value).toEqual(['val1', 'val2']);
     });
 
     it('should handle labelInValue with multiple values', () => {
       mockInstance = createMockInstance('JeeSiteCheckboxGroup');
-      const props = { 
-        value: 'val1,val2', 
+      const props = {
+        value: 'val1,val2',
         labelValue: 'Label1,Label2',
-        labelInValue: true 
+        labelInValue: true
       };
       const [state] = useRuleFormItem(props);
-      
+
       expect(state.value).toEqual([
         { value: 'val1', label: 'Label1' },
         { value: 'val2', label: 'Label2' }

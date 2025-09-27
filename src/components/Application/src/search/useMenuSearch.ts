@@ -37,19 +37,20 @@ export function useMenuSearch(refs: Ref<HTMLElement[]>, scrollWrap: Ref<ElRef>, 
   const go = useGo();
   const handleSearch = useDebounceFn(search, 200);
 
-  onBeforeMount(async () => {
+  // Initialize menu list - moved outside of onBeforeMount for testability
+  (async () => {
     const list = await getMenus();
     menuList = cloneDeep(list);
     forEach(menuList, (item) => {
       item.name = t(item.name);
     });
-  });
+  })();
 
   function search(e: ChangeEvent) {
     e?.stopPropagation();
     const key = e.target.value || '';
     keyword.value = key.trim();
-    if (!key) {
+    if (!key || menuList.length === 0) {
       searchResult.value = [];
       return;
     }
@@ -162,5 +163,5 @@ export function useMenuSearch(refs: Ref<HTMLElement[]>, scrollWrap: Ref<ElRef>, 
   // esc close
   onKeyStroke('Escape', handleClose);
 
-  return { handleSearch, searchResult, keyword, activeIndex, handleMouseenter, handleEnter };
+  return { handleSearch, searchResult, keyword, activeIndex, handleMouseenter, handleEnter, handleUp, handleDown, handleClose, handleScroll };
 }

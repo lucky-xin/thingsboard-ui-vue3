@@ -2,6 +2,11 @@
 import os
 import re
 
+# 动态获取项目根目录
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+SRC_DIR = os.path.join(PROJECT_ROOT, 'src')
+TEST_DIR = os.path.join(PROJECT_ROOT, 'test')
+
 def generate_improved_vue_test(component_name, import_path, source_content):
     """生成改进的Vue组件测试"""
     return f'''import {{ describe, it, expect, vi }} from 'vitest'
@@ -347,14 +352,14 @@ def generate_improved_test_file(source_file):
     elif not test_file.endswith('.test.ts'):
         test_file = test_file.replace('.ts', '.test.ts')
     
-    test_file = os.path.join('/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3', test_file)
+    test_file = os.path.join(PROJECT_ROOT, test_file)
     test_dir = os.path.dirname(test_file)
     
     if test_dir:
         os.makedirs(test_dir, exist_ok=True)
     
     # 检查源文件是否存在
-    source_path = os.path.join('/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/src', source_file)
+    source_path = os.path.join(SRC_DIR, source_file)
     if not os.path.exists(source_path):
         print(f"源文件不存在: {source_path}")
         return False
@@ -381,7 +386,7 @@ def generate_improved_test_file(source_file):
 
 def process_improved_tests():
     """处理改进的测试生成"""
-    zero_file = '/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/coverage-zero.txt'
+    zero_file = os.path.join(PROJECT_ROOT, 'coverage-zero.txt')
     
     if not os.path.exists(zero_file):
         print("coverage-zero.txt文件不存在")

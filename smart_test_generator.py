@@ -7,6 +7,11 @@ import subprocess
 import sys
 from pathlib import Path
 
+# 动态获取项目根目录
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+SRC_DIR = os.path.join(PROJECT_ROOT, 'src')
+TEST_DIR = os.path.join(PROJECT_ROOT, 'test')
+
 def run_command(command, cwd=None):
     """运行命令并返回结果"""
     try:
@@ -44,8 +49,8 @@ def get_source_files_in_directory(dir_path):
             if is_source_file(file):
                 full_path = os.path.join(root, file)
                 # 转换为相对于src目录的路径
-                if full_path.startswith('/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/src/'):
-                    rel_path = full_path[len('/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/src/'):]
+                if full_path.startswith(SRC_DIR + '/'):
+                    rel_path = full_path[len(SRC_DIR + '/'):]
                     source_files.append(rel_path)
     return source_files
 
@@ -61,14 +66,14 @@ def generate_import_path(source_file_path):
 def generate_test_file(source_file_path):
     """为源代码文件生成测试文件"""
     # 构建完整的源文件路径
-    full_source_path = f"/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/src/{source_file_path}"
+    full_source_path = os.path.join(SRC_DIR, source_file_path)
     
     if not os.path.exists(full_source_path):
         print(f"源文件不存在: {full_source_path}")
         return False
     
     # 构建测试文件路径
-    test_file_path = f"/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/test/{source_file_path}.test.ts"
+    test_file_path = os.path.join(TEST_DIR, f"{source_file_path}.test.ts")
     
     # 确保测试目录存在
     os.makedirs(os.path.dirname(test_file_path), exist_ok=True)
@@ -213,7 +218,7 @@ def run_test_and_check_coverage(test_file_path):
     """运行测试并检查覆盖率"""
     # 运行测试命令
     command = f"npm test {test_file_path} -- --run --reporter=verbose"
-    success, stdout, stderr = run_command(command, cwd="/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3")
+    success, stdout, stderr = run_command(command, cwd=PROJECT_ROOT)
     
     if not success:
         print(f"测试运行失败: {stderr}")
@@ -227,16 +232,16 @@ def process_single_entry(entry):
     """处理单个条目"""
     print(f"\n处理: {entry}")
     
-    if is_directory(f"/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/src/{entry}"):
+    if is_directory(os.path.join(SRC_DIR, entry)):
         # 处理目录
-        source_files = get_source_files_in_directory(f"/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/src/{entry}")
+        source_files = get_source_files_in_directory(os.path.join(SRC_DIR, entry))
         print(f"目录 {entry} 包含 {len(source_files)} 个源代码文件")
         
         all_tests_passed = True
         for source_file in source_files:
             print(f"  处理文件: {source_file}")
             if generate_test_file(source_file):
-                test_file_path = f"/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/test/{source_file}.test.ts"
+                test_file_path = os.path.join(TEST_DIR, f"{source_file}.test.ts")
                 success, coverage = run_test_and_check_coverage(test_file_path)
                 if not success or coverage < 90:
                     all_tests_passed = False
@@ -252,7 +257,7 @@ def process_single_entry(entry):
     elif is_source_file(entry):
         # 处理单个源代码文件
         if generate_test_file(entry):
-            test_file_path = f"/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/test/{entry}.test.ts"
+            test_file_path = os.path.join(TEST_DIR, f"{entry}.test.ts")
             success, coverage = run_test_and_check_coverage(test_file_path)
             if success and coverage >= 90:
                 print(f"文件 {entry} 测试通过，覆盖率: {coverage}%")
@@ -269,7 +274,7 @@ def process_single_entry(entry):
 
 def process_coverage_zero():
     """处理coverage-zero.txt文件"""
-    coverage_zero_path = "/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/coverage-zero.txt"
+    coverage_zero_path = os.path.join(PROJECT_ROOT, "coverage-zero.txt")
     
     if not os.path.exists(coverage_zero_path):
         print("coverage-zero.txt文件不存在")

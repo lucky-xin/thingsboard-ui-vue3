@@ -25,45 +25,37 @@ export function useRuleFormItem<T extends Recordable>(
   const hasUpdateValueEmit = emitsOptions ? hasOwnProperty.call(emitsOptions, 'update:value') : true;
   const hasUpdateLabelValueEmit = emitsOptions ? hasOwnProperty.call(emitsOptions, 'update:labelValue') : true;
 
-  const isMultiple = computed(() => {
-    if (['JeeSiteCheckboxGroup'].includes(compName)) {
-      return true;
-    }
-    if (
-      ['JeeSiteSelect', 'JeeSiteTreeSelect'].includes(compName) &&
-      (props.mode === 'multiple' || props.mode === 'tags' || props.treeCheckable === true)
-    ) {
-      return true;
-    }
-    return false;
-  });
+  // Calculate isMultiple function to ensure it's available during initialization and updates
+  const getIsMultiple = () => {
+    const compName = instance?.type?.name || 'unknown';
+    return ['JeeSiteCheckboxGroup'].includes(compName) ||
+      (['JeeSiteSelect', 'JeeSiteTreeSelect'].includes(compName) &&
+        (props.mode === 'multiple' || props.mode === 'tags' || props.treeCheckable === true));
+  };
 
-  // Process initial value with the same logic as in watchEffect
-let initialValue = props[key] as any;
-// console.log('Processing initial value:', initialValue, 'compName:', compName, 'isMultiple:', isMultiple.value);
+  const isMultiple = getIsMultiple();
+  let initialValue = props[key] as any;
 
-if (initialValue === null || initialValue === undefined) {
-  initialValue = undefined;
-} else if (props.labelInValue) {
-  const values: Recordable = [];
-  if (isMultiple.value && !(initialValue instanceof Object) && !(initialValue instanceof Array)) {
-    const vals = (initialValue as string)?.split(',');
-    const labs = (props.labelValue as string)?.split(',');
-    // console.log('Processing labelInValue with multiple:', vals, labs);
-    for (const i in vals) {
-      values.push({ value: vals && vals[i], label: labs && labs[i] });
+  if (initialValue === null || initialValue === undefined) {
+    initialValue = undefined;
+  } else if (props.labelInValue) {
+    const values: Recordable = [];
+    if (isMultiple && !(initialValue instanceof Object) && !(initialValue instanceof Array)) {
+      const vals = (initialValue as string)?.split(',');
+      const labs = (props.labelValue as string)?.split(',');
+      for (const i in vals) {
+        values.push({ value: vals && vals[i], label: labs && labs[i] });
+      }
+      initialValue = values;
     }
-    initialValue = values;
+  } else if (
+    isMultiple &&
+    !(initialValue instanceof Object) &&
+    !(initialValue instanceof Array) &&
+    typeof initialValue === 'string'
+  ) {
+    initialValue = (initialValue as string).split(',');
   }
-} else if (
-  isMultiple.value &&
-  !(initialValue instanceof Object) &&
-  !(initialValue instanceof Array) &&
-  typeof initialValue === 'string'
-) {
-  // console.log('Splitting initial string value:', initialValue);
-  initialValue = (initialValue as string).split(',');
-}
 
 const innerState = reactive({
   value: initialValue as T[keyof T],
@@ -77,8 +69,8 @@ const innerState = reactive({
 
   watchEffect(() => {
     // Process the prop value before assigning to innerState
+    const isMultiple = getIsMultiple();
     let value = props[key] as any;
-    // console.log('WatchEffect - Processing value:', value, 'compName:', compName, 'isMultiple:', isMultiple.value);
     if (value === null || value === undefined) {
       innerState.value = undefined as T[keyof T];
       return;
@@ -87,10 +79,9 @@ const innerState = reactive({
     // Apply the same processing logic as in the getter
     if (props.labelInValue) {
       const values: Recordable = [];
-      if (isMultiple.value && !(value instanceof Object) && !(value instanceof Array)) {
+      if (isMultiple && !(value instanceof Object) && !(value instanceof Array)) {
         const vals = (value as string)?.split(',');
         const labs = (props.labelValue as string)?.split(',');
-        // console.log('WatchEffect - Processing labelInValue with multiple:', vals, labs);
         for (const i in vals) {
           values.push({ value: vals && vals[i], label: labs && labs[i] });
         }
@@ -98,12 +89,11 @@ const innerState = reactive({
         return;
       }
     } else if (
-      isMultiple.value &&
+      isMultiple &&
       !(value instanceof Object) &&
       !(value instanceof Array) &&
       typeof value === 'string'
     ) {
-      // console.log('WatchEffect - Splitting string value:', value);
       innerState.value = (value as string).split(',') as T[keyof T];
       return;
     }
@@ -113,36 +103,9 @@ const innerState = reactive({
 
   const state: any = computed({
     get() {
-      let value = toRaw(innerState.value) as any;
+      // Return the processed value from innerState directly
+      const value = toRaw(innerState.value) as any;
       if (value === null || value === undefined) return undefined;
-      if (props.labelInValue) {
-        const values: Recordable = [];
-        if (isMultiple.value && !(value instanceof Object) && !(value instanceof Array)) {
-          const vals = (value as string)?.split(',');
-          const labs = (props.labelValue as string)?.split(',');
-          for (const i in vals) {
-            values.push({ value: vals && vals[i], label: labs && labs[i] });
-          }
-          return values as T[keyof T];
-        } else if (!isObject(value) && !(value instanceof Object) && !(value instanceof Array)) {
-          return { value: String(value), label: props.labelValue } as T[keyof T];
-        } else if (value instanceof Array) {
-          for (const i in value) {
-            if (isObject(value[i])) break;
-            values.push({ value: value[i] });
-          }
-          if (values.length > 0) {
-            return values as T[keyof T];
-          }
-        }
-      } else if (
-        isMultiple.value &&
-        !(value instanceof Object) &&
-        !(value instanceof Array) &&
-        typeof value === 'string'
-      ) {
-        return (value as string).split(',') as T[keyof T];
-      }
       return value as T[keyof T];
     },
     set(value: any) {

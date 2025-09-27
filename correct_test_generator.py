@@ -2,9 +2,14 @@
 import os
 import re
 
+# 动态获取项目根目录
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+SRC_DIR = os.path.join(PROJECT_ROOT, 'src')
+TEST_DIR = os.path.join(PROJECT_ROOT, 'test')
+
 def find_component_file(component_path):
     """根据组件路径找到实际的文件"""
-    base_path = '/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/src/components'
+    base_path = os.path.join(SRC_DIR, 'components')
     full_path = os.path.join(base_path, component_path)
     
     if os.path.exists(full_path):
@@ -246,7 +251,7 @@ describe('{component_name}', () => {{
 
 def process_coverage_file():
     """直接处理coverage.txt文件"""
-    coverage_file = '/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/coverage.txt'
+    coverage_file = os.path.join(PROJECT_ROOT, 'coverage.txt')
     
     if not os.path.exists(coverage_file):
         print("coverage.txt文件不存在")
@@ -284,13 +289,13 @@ def process_coverage_file():
                 actual_file = find_component_file(component_path)
                 if actual_file:
                     # 生成测试文件
-                    test_file = actual_file.replace('/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3/src/', 'test/')
+                    test_file = actual_file.replace(SRC_DIR + '/', 'test/')
                     if test_file.endswith('.vue'):
                         test_file = test_file.replace('.vue', '.test.ts')
                     elif not test_file.endswith('.test.ts'):
                         test_file = test_file.replace('.ts', '.test.ts')
                     
-                    test_file = os.path.join('/Users/chaoxin.lu/IdeaProjects/tb-ui-vue3', test_file)
+                    test_file = os.path.join(PROJECT_ROOT, test_file)
                     test_dir = os.path.dirname(test_file)
                     
                     if test_dir:

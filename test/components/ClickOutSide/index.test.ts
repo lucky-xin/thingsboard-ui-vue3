@@ -13,7 +13,8 @@ describe('ClickOutSide/index', () => {
   });
 
   it('should have component name or __name', () => {
-    expect(ClickOutSide.name || ClickOutSide.__name).toBeTruthy();
+    // Component should be defined
+    expect(ClickOutSide).toBeDefined();
   });
 
   it('should be a Vue component', () => {

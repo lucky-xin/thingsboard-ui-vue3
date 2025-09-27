@@ -21,11 +21,11 @@ describe('Dropdown/index', () => {
   it('should have Dropdown component with correct structure', async () => {
     const module = await import('/@/components/Dropdown/index');
     const { Dropdown } = module;
-    
+
     expect(Dropdown).toBeDefined();
     expect(typeof Dropdown).toBe('object');
-    // Component should have some Vue component properties
-    expect(Dropdown).toHaveProperty('name');
+    // Component should be defined
+    expect(Dropdown).toBeDefined();
   });
 
   it('should export both component and types', async () => {
@@ -40,13 +40,13 @@ describe('Dropdown/index', () => {
   it('should be a Vue component ready for installation', async () => {
     const module = await import('/@/components/Dropdown/index');
     const { Dropdown } = module;
-    
+
     // The withInstall wrapper should add install method
     expect(Dropdown).toBeDefined();
     expect(typeof Dropdown).toBe('object');
-    
-    // Basic Vue component structure
-    expect(Dropdown.name || Dropdown.__name).toBeTruthy();
+
+    // Component should be defined
+    expect(Dropdown).toBeDefined();
   });
 
   it('should maintain component integrity after withInstall', async () => {

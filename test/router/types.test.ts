@@ -24,7 +24,7 @@ describe('router/types', () => {
         name: 'test-route',
         path: '/test', 
         meta: {},
-        component: () => import('/@/views/demo/index.vue'),
+        component: () => import('/@/views/tb/desktop/index.vue'),
         props: { someProps: true },
         fullPath: '/test/full',
         children: [],

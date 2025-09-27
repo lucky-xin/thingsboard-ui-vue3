@@ -3,11 +3,10 @@ import { createTypes, VueTypeValidableDef, VueTypesInterface } from 'vue-types';
 
 export type VueNode = VNodeChild | JSX.Element;
 
-type PropTypes = VueTypesInterface & {
+interface PropTypes extends VueTypesInterface {
   readonly style: VueTypeValidableDef<CSSProperties>;
   readonly VNodeChild: VueTypeValidableDef<VueNode>;
-  // readonly trueBool: VueTypeValidableDef<boolean>;
-};
+}
 
 const propTypes = createTypes({
   func: undefined,
@@ -18,17 +17,23 @@ const propTypes = createTypes({
   integer: undefined,
 }) as PropTypes;
 
-// propTypes.extend([
-//   {
-//     name: 'style',
-//     getter: true,
-//     type: [String, Object],
-//     default: undefined,
-//   },
-//   {
-//     name: 'VNodeChild',
-//     getter: true,
-//     type: undefined,
-//   },
-// ]);
+// Extend using ES6+ class syntax
+Object.defineProperties(propTypes, {
+  style: {
+    get() {
+      return this.shape({
+        type: [String, Object],
+        default: undefined,
+      });
+    },
+  },
+  VNodeChild: {
+    get() {
+      return this.shape({
+        type: undefined,
+      });
+    },
+  },
+});
+
 export { propTypes };

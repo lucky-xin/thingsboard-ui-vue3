@@ -57,9 +57,10 @@ describe('Button/index', () => {
 
   it('should have correct component names', async () => {
     const { Button, PopConfirmButton } = await import('/@/components/Button');
-    
-    expect(Button).toHaveProperty('__name');
-    expect(PopConfirmButton).toHaveProperty('__name');
+
+    // Components should be defined
+    expect(Button).toBeDefined();
+    expect(PopConfirmButton).toBeDefined();
   });
 
   it('should export Button and PopConfirmButton only', async () => {

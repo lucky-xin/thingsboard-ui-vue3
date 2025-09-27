@@ -9,7 +9,7 @@ vi.mock('/@/hooks/setting/useMenuSetting', () => ({
 }));
 
 vi.mock('/@/hooks/web/useDesign', () => ({
-  useDesign: vi.fn(() => ({ prefixCls: 'jeesite-page-footer' })),
+  useDesign: vi.fn(() => ({ prefixCls: 'page-footer' })),
 }));
 
 describe('components/Page/PageFooter', () => {
@@ -22,8 +22,9 @@ describe('components/Page/PageFooter', () => {
       }
     });
 
-    expect(wrapper.find('.jeesite-page-footer').exists()).toBe(true);
-    expect(wrapper.find('.jeesite-page-footer__left').exists()).toBe(true);
+    expect(wrapper.find('.page-footer').exists()).toBe(true);
+    expect(wrapper.find('.page-footer__left').exists()).toBe(true);
+    expect(wrapper.find('.page-footer__right').exists()).toBe(true);
     expect(wrapper.html()).toContain('left-slot');
     expect(wrapper.html()).toContain('center-slot');
     expect(wrapper.html()).toContain('right-slot');

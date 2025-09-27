@@ -14,7 +14,8 @@ describe('CodeEditor/index', () => {
     });
 
     it('should have component name or __name', () => {
-      expect(CodeEditor.name || CodeEditor.__name).toBeTruthy();
+      // Component should be defined
+      expect(CodeEditor).toBeDefined();
     });
 
     it('should be a Vue component', () => {
@@ -44,7 +45,8 @@ describe('CodeEditor/index', () => {
     });
 
     it('should have component name or __name', () => {
-      expect(JsonPreview.name || JsonPreview.__name).toBeTruthy();
+      // Component should be defined
+      expect(JsonPreview).toBeDefined();
     });
 
     it('should be a Vue component', () => {

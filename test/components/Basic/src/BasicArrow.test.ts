@@ -12,14 +12,14 @@ vi.mock('/@/hooks/web/useDesign', () => ({
 vi.mock('/@/components/Icon', () => ({
   Icon: {
     name: 'Icon',
-    template: '<span data-testid="icon"></span>',
+    template: '<span class="icon-mock"></span>',
   },
 }));
 
 vi.mock('ant-design-vue', () => ({
   Spin: {
     name: 'Spin',
-    template: '<span data-testid="spin"></span>',
+    template: '<span class="spin-mock"></span>',
     props: ['size', 'style'],
   },
 }));
@@ -27,10 +27,10 @@ vi.mock('ant-design-vue', () => ({
 describe('components/Basic/src/BasicArrow', () => {
   it('should render with default props', () => {
     const wrapper = mount(BasicArrow);
-    
+
     expect(wrapper.exists()).toBe(true);
-    expect(wrapper.find('[data-testid="icon"]').exists()).toBe(true);
-    expect(wrapper.find('[data-testid="spin"]').exists()).toBe(false);
+    expect(wrapper.find('.icon-mock').exists()).toBe(true);
+    expect(wrapper.find('.spin-mock').exists()).toBe(false);
   });
 
   it('should render loading state when loading is true', () => {
@@ -39,9 +39,9 @@ describe('components/Basic/src/BasicArrow', () => {
         loading: true,
       },
     });
-    
-    expect(wrapper.find('[data-testid="spin"]').exists()).toBe(true);
-    expect(wrapper.find('[data-testid="icon"]').exists()).toBe(false);
+
+    expect(wrapper.find('.spin-mock').exists()).toBe(true);
+    expect(wrapper.find('.icon-mock').exists()).toBe(false);
   });
 
   it('should apply correct classes based on props', () => {
@@ -85,9 +85,9 @@ describe('components/Basic/src/BasicArrow', () => {
         leaf: true,
       },
     });
-    
+
     // The icon should be set based on the computed property
-    expect(wrapper.find('[data-testid="icon"]').exists()).toBe(true);
+    expect(wrapper.find('.icon-mock').exists()).toBe(true);
   });
 
   it('should show correct icon for double arrow', () => {
@@ -96,8 +96,8 @@ describe('components/Basic/src/BasicArrow', () => {
         double: true,
       },
     });
-    
-    expect(wrapper.find('[data-testid="icon"]').exists()).toBe(true);
+
+    expect(wrapper.find('.icon-mock').exists()).toBe(true);
   });
 
   it('should show correct icon for regular arrow', () => {
@@ -107,8 +107,8 @@ describe('components/Basic/src/BasicArrow', () => {
         double: false,
       },
     });
-    
-    expect(wrapper.find('[data-testid="icon"]').exists()).toBe(true);
+
+    expect(wrapper.find('.icon-mock').exists()).toBe(true);
   });
 
   it('should handle all boolean props combinations', () => {

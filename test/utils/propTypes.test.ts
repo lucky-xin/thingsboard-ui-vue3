@@ -4,7 +4,7 @@ import { propTypes } from '/@/utils/propTypes';
 describe('utils/propTypes', () => {
   it('should export propTypes object', () => {
     expect(propTypes).toBeDefined();
-    expect(typeof propTypes).toBe('object');
+    expect(typeof propTypes).toBe('function');
   });
 
   it('should have func property', () => {

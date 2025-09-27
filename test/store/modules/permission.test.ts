@@ -191,9 +191,7 @@ describe('store/modules/permission', () => {
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       // Should not throw an error (the method should catch it)
-      await expect(async () => {
-        await store.changePermissionCode();
-      }).not.toThrow();
+      await expect(store.changePermissionCode()).resolves.toBeUndefined();
 
       expect(loginApiMock.userInfoApi).toHaveBeenCalled();
       expect(consoleSpy).toHaveBeenCalledWith('Failed to change permission code:', expect.any(Error));

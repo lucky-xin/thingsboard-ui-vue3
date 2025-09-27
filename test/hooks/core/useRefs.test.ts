@@ -2,6 +2,15 @@ import { describe, it, expect, vi } from 'vitest';
 import { ref, nextTick } from 'vue';
 import { useRefs } from '/@/hooks/core/useRefs';
 
+// Mock the onBeforeUpdate lifecycle hook since we're not in a component context
+vi.mock('vue', async () => {
+  const actual = await vi.importActual('vue');
+  return {
+    ...actual,
+    onBeforeUpdate: vi.fn(),
+  };
+});
+
 describe('hooks/core/useRefs', () => {
   it('should create refs array and setRefs function', () => {
     const { refs, setRefs } = useRefs<HTMLElement>();

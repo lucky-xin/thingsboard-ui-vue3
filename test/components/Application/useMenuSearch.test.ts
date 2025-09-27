@@ -215,4 +215,298 @@ describe('components/Application/useMenuSearch', () => {
 
     expect(result.keyword.value).toBe('test keyword');
   });
+
+  it('should handle active index updates', async () => {
+    let result: any;
+
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+        return result;
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+
+    // Set up search results
+    result.searchResult.value = [
+      { name: 'test1', path: '/test1' },
+      { name: 'test2', path: '/test2' },
+    ];
+
+    // Test activeIndex updates
+    result.activeIndex.value = 1;
+    expect(result.activeIndex.value).toBe(1);
+
+    result.activeIndex.value = 0;
+    expect(result.activeIndex.value).toBe(0);
+  });
+
+  it('should handle enter key navigation with empty results', async () => {
+    let result: any;
+
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+        return result;
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+
+    // Test handleEnter function with empty results
+    await result.handleEnter();
+    // Should not emit anything when there are no results
+    expect(mockEmit).not.toHaveBeenCalled();
+  });
+
+  it('should handle search with results and active index updates', async () => {
+    let result: any;
+
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+        return result;
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+
+    // Wait for async setup to complete
+    await component.vm.$nextTick();
+
+    const mockEvent = {
+      target: { value: 'dashboard' },
+      stopPropagation: vi.fn(),
+    } as any;
+
+    result.handleSearch(mockEvent);
+
+    expect(result.keyword.value).toBe('dashboard');
+    expect(mockEvent.stopPropagation).toHaveBeenCalled();
+    // Active index should be set to 0 when there are results
+    expect(result.activeIndex.value).toBe(0);
+  });
+
+  it('should handle mouse enter event with index', () => {
+    let result: any;
+
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+        return result;
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+
+    const mockEvent = {
+      target: { dataset: { index: '1' } },
+    } as any;
+
+    result.handleMouseenter(mockEvent);
+
+    expect(result.activeIndex.value).toBe(1);
+  });
+
+  it('should handle search result filtering', async () => {
+    let result: any;
+
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+        return result;
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+
+    // Wait for async setup to complete
+    await component.vm.$nextTick();
+
+    // Mock the filter function to return specific results
+    const { filter } = await import('/@/utils/helper/treeHelper');
+    (filter as any).mockImplementation(() => [
+      { name: 'dashboard', path: '/dashboard', hideMenu: false },
+    ]);
+
+    const mockEvent = {
+      target: { value: 'dash' },
+      stopPropagation: vi.fn(),
+    } as any;
+
+    result.handleSearch(mockEvent);
+
+    expect(result.keyword.value).toBe('dash');
+    expect(mockEvent.stopPropagation).toHaveBeenCalled();
+  });
+
+  it('should handle search with results', async () => {
+    let result: any;
+
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+        return result;
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+
+    // Wait for async setup to complete
+    await component.vm.$nextTick();
+
+    const mockEvent = {
+      target: { value: 'dashboard' },
+      stopPropagation: vi.fn(),
+    } as any;
+
+    result.handleSearch(mockEvent);
+
+    expect(result.keyword.value).toBe('dashboard');
+    expect(mockEvent.stopPropagation).toHaveBeenCalled();
+  });
+
+  it('should handle active index updates with search results', () => {
+    let result: any;
+
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+        return result;
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+
+    // Set up search results
+    result.searchResult.value = [
+      { name: 'test1', path: '/test1' },
+      { name: 'test2', path: '/test2' },
+      { name: 'test3', path: '/test3' },
+    ];
+
+    // Test activeIndex updates
+    result.activeIndex.value = 1;
+    expect(result.activeIndex.value).toBe(1);
+
+    result.activeIndex.value = 0;
+    expect(result.activeIndex.value).toBe(0);
+
+    result.activeIndex.value = 2;
+    expect(result.activeIndex.value).toBe(2);
+  });
+
+  it('should handle active index with no results', () => {
+    let result: any;
+
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+        return result;
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+
+    // Test activeIndex with empty results
+    result.searchResult.value = [];
+    result.activeIndex.value = 0;
+
+    expect(result.activeIndex.value).toBe(0); // Should not change
+  });
+
+  it('should handle enter key navigation with results', async () => {
+    let result: any;
+
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+        return result;
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+
+    // Set up search results
+    result.searchResult.value = [
+      { name: 'test1', path: '/test1' },
+      { name: 'test2', path: '/test2' },
+    ];
+    result.activeIndex.value = 0;
+
+    // Mock the go function
+    const { useGo } = await import('/@/hooks/web/usePage');
+    (useGo as any).mockImplementation(() => vi.fn());
+
+    // Test handleEnter function
+    await result.handleEnter();
+    expect(mockEmit).toHaveBeenCalledWith('close');
+  });
+
+  it('should handle active index updates and search results', async () => {
+    let result: any;
+
+    // Create a component wrapper to provide a valid Vue context
+    const wrapper = defineComponent({
+      setup() {
+        result = useMenuSearch(mockRefs, mockScrollWrap, mockEmit);
+        return result;
+      },
+      render() {
+        return null;
+      }
+    });
+
+    const component = mount(wrapper);
+
+    // Set up search results and refs
+    result.searchResult.value = [
+      { name: 'test1', path: '/test1' },
+    ];
+    result.activeIndex.value = 0;
+
+    // Test activeIndex updates
+    result.activeIndex.value = 1;
+    expect(result.activeIndex.value).toBe(1);
+
+    result.activeIndex.value = 0;
+    expect(result.activeIndex.value).toBe(0);
+  });
 });

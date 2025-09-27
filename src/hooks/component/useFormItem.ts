@@ -38,9 +38,36 @@ export function useRuleFormItem<T extends Recordable>(
     return false;
   });
 
-  const innerState = reactive({
-    value: props[key],
-  });
+  // Process initial value with the same logic as in watchEffect
+let initialValue = props[key] as any;
+// console.log('Processing initial value:', initialValue, 'compName:', compName, 'isMultiple:', isMultiple.value);
+
+if (initialValue === null || initialValue === undefined) {
+  initialValue = undefined;
+} else if (props.labelInValue) {
+  const values: Recordable = [];
+  if (isMultiple.value && !(initialValue instanceof Object) && !(initialValue instanceof Array)) {
+    const vals = (initialValue as string)?.split(',');
+    const labs = (props.labelValue as string)?.split(',');
+    // console.log('Processing labelInValue with multiple:', vals, labs);
+    for (const i in vals) {
+      values.push({ value: vals && vals[i], label: labs && labs[i] });
+    }
+    initialValue = values;
+  }
+} else if (
+  isMultiple.value &&
+  !(initialValue instanceof Object) &&
+  !(initialValue instanceof Array) &&
+  typeof initialValue === 'string'
+) {
+  // console.log('Splitting initial string value:', initialValue);
+  initialValue = (initialValue as string).split(',');
+}
+
+const innerState = reactive({
+  value: initialValue as T[keyof T],
+});
 
   const defaultState = readonly(innerState);
 
@@ -49,13 +76,45 @@ export function useRuleFormItem<T extends Recordable>(
   };
 
   watchEffect(() => {
-    innerState.value = props[key];
+    // Process the prop value before assigning to innerState
+    let value = props[key] as any;
+    // console.log('WatchEffect - Processing value:', value, 'compName:', compName, 'isMultiple:', isMultiple.value);
+    if (value === null || value === undefined) {
+      innerState.value = undefined as T[keyof T];
+      return;
+    }
+
+    // Apply the same processing logic as in the getter
+    if (props.labelInValue) {
+      const values: Recordable = [];
+      if (isMultiple.value && !(value instanceof Object) && !(value instanceof Array)) {
+        const vals = (value as string)?.split(',');
+        const labs = (props.labelValue as string)?.split(',');
+        // console.log('WatchEffect - Processing labelInValue with multiple:', vals, labs);
+        for (const i in vals) {
+          values.push({ value: vals && vals[i], label: labs && labs[i] });
+        }
+        innerState.value = values as T[keyof T];
+        return;
+      }
+    } else if (
+      isMultiple.value &&
+      !(value instanceof Object) &&
+      !(value instanceof Array) &&
+      typeof value === 'string'
+    ) {
+      // console.log('WatchEffect - Splitting string value:', value);
+      innerState.value = (value as string).split(',') as T[keyof T];
+      return;
+    }
+
+    innerState.value = value as T[keyof T];
   });
 
   const state: any = computed({
     get() {
       let value = toRaw(innerState.value) as any;
-      if (!value) return undefined;
+      if (value === null || value === undefined) return undefined;
       if (props.labelInValue) {
         const values: Recordable = [];
         if (isMultiple.value && !(value instanceof Object) && !(value instanceof Array)) {
@@ -64,30 +123,27 @@ export function useRuleFormItem<T extends Recordable>(
           for (const i in vals) {
             values.push({ value: vals && vals[i], label: labs && labs[i] });
           }
-          value = values as T[keyof T];
+          return values as T[keyof T];
         } else if (!isObject(value) && !(value instanceof Object) && !(value instanceof Array)) {
-          value = { value: String(value), label: props.labelValue };
+          return { value: String(value), label: props.labelValue } as T[keyof T];
         } else if (value instanceof Array) {
           for (const i in value) {
             if (isObject(value[i])) break;
             values.push({ value: value[i] });
           }
           if (values.length > 0) {
-            value = values as T[keyof T];
+            return values as T[keyof T];
           }
         }
       } else if (
         isMultiple.value &&
         !(value instanceof Object) &&
         !(value instanceof Array) &&
-        typeof value === 'string' &&
-        (value as string).includes(',')
+        typeof value === 'string'
       ) {
-        value = (value as string).split(',');
+        return (value as string).split(',') as T[keyof T];
       }
-      // console.log('innerState', value);
-      innerState.value = value as T[keyof T];
-      return innerState.value;
+      return value as T[keyof T];
     },
     set(value: any) {
       const previousValue = toRaw(defaultState.value);

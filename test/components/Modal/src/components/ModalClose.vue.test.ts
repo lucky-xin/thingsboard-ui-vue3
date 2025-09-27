@@ -15,7 +15,7 @@ describe('ModalClose', () => {
 
   it('should handle canFullscreen prop correctly', () => {
     const wrapper = mount(ModalClose, {
-      props: { canFullscreen: 'test-value' }
+      props: { canFullscreen: true }
     })
     expect(wrapper.exists()).toBe(true)
   })

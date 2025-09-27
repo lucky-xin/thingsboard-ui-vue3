@@ -15,7 +15,7 @@ describe('index', () => {
 
   it('should handle setting prop correctly', () => {
     const wrapper = mount(index, {
-      props: { setting: 'test-value' }
+      props: { setting: { redo: true, size: true, setting: true, fullScreen: true } }
     })
     expect(wrapper.exists()).toBe(true)
   })

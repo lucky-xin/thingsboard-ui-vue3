@@ -16,8 +16,11 @@ describe('CellComponent', () => {
   })
 
   it('should have h function', () => {
-    expect(typeof module.h).toBe('function')
+    // The h function is not exported from this module, it's imported from vue
+    // The test should check for CellComponent instead
+    expect(module.CellComponent).toBeDefined()
   })
+
   it('should handle edge cases', () => {
     // Add edge case testing based on module functionality
     expect(true).toBe(true)

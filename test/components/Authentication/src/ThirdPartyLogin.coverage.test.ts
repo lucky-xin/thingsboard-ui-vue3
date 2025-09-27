@@ -62,10 +62,10 @@ describe('ThirdPartyLogin coverage', () => {
     expect(icons).toHaveLength(4);
 
     // Check specific icons
-    expect(icons[0].props('icon')).toBe('mdi:wechat');
-    expect(icons[1].props('icon')).toBe('mdi:qqchat');
-    expect(icons[2].props('icon')).toBe('mdi:github');
-    expect(icons[3].props('icon')).toBe('mdi:google');
+    expect(icons.at(0).props('icon')).toBe('mdi:wechat');
+    expect(icons.at(1).props('icon')).toBe('mdi:qqchat');
+    expect(icons.at(2).props('icon')).toBe('mdi:github');
+    expect(icons.at(3).props('icon')).toBe('mdi:google');
   });
 
   it('should have correct component name', () => {

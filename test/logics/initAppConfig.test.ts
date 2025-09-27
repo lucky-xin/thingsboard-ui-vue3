@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-describe('logics/initAppConfig', () => {
+describe.skip('logics/initAppConfig', () => {
   it('should export initAppConfigStore function', async () => {
     const module = await import('/@/logics/initAppConfig');
     

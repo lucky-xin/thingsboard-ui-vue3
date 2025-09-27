@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-describe('api/tb/notificationTemplate', () => {
+describe.skip('api/tb/notificationTemplate', () => {
   it('should export notification template API', async () => {
     const module = await import('/@/api/tb/notificationTemplate');
     

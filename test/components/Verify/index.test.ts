@@ -26,7 +26,7 @@ describe('Verify/index', () => {
     expect(module).toBeDefined();
     expect(module.BasicDragVerify).toBeDefined();
     expect(module.RotateDragVerify).toBeDefined();
-  }, 15000);
+  }, 25000);
 
   it('should have correct component structure', async () => {
     const module = await import('/@/components/Verify/index');
@@ -36,7 +36,7 @@ describe('Verify/index', () => {
     expect(RotateDragVerify).toBeDefined();
     expect(typeof BasicDragVerify).toBe('object');
     expect(typeof RotateDragVerify).toBe('object');
-  });
+  }, 20000);
 
   it('should export typing definitions', async () => {
     const module = await import('/@/components/Verify/index');

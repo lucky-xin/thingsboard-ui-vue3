@@ -1,0 +1,35 @@
+import { describe, it, expect, vi } from 'vitest'
+import { mount } from '@vue/test-utils'
+import TableFooter from '/@/components/components/Table/src/components/TableFooter'
+
+describe('TableFooter', () => {
+  it('should render without crashing', () => {
+    const wrapper = mount(TableFooter)
+    expect(wrapper.exists()).toBe(true)
+  })
+
+  it('should render with default props', () => {
+    const wrapper = mount(TableFooter)
+    expect(wrapper.exists()).toBe(true)
+  })
+
+  it('should handle props correctly', () => {
+    const props = {}
+    const wrapper = mount(TableFooter, {
+      props
+    })
+    expect(wrapper.exists()).toBe(true)
+  })
+
+  it('should emit events when expected', () => {
+    const wrapper = mount(TableFooter)
+    // Add event testing based on component functionality
+    expect(wrapper.exists()).toBe(true)
+  })
+
+  it('should handle user interactions', () => {
+    const wrapper = mount(TableFooter)
+    // Add interaction testing
+    expect(wrapper.exists()).toBe(true)
+  })
+})

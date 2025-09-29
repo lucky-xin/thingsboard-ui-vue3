@@ -13,7 +13,7 @@ vi.mock('./src/Preview.vue', () => ({
 describe('Preview/index', () => {
   it('should export ImagePreview component', async () => {
     const module = await import('/@/components/Preview/index');
-    
+
     expect(module).toBeDefined();
     expect(module.ImagePreview).toBeDefined();
   });
@@ -21,7 +21,7 @@ describe('Preview/index', () => {
   it('should have correct component structure', async () => {
     const module = await import('/@/components/Preview/index');
     const { ImagePreview } = module;
-    
+
     expect(ImagePreview).toBeDefined();
     expect(typeof ImagePreview).toBe('object');
   });

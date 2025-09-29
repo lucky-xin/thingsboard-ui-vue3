@@ -1,12 +1,34 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import BasicHelp from '/@/components/Basic/src/BasicHelp.vue';
+import BasicHelp from '/@/components/Basic/src/BasicHelp';
 import { Tooltip } from 'ant-design-vue';
 import { Icon } from '/@/components/Icon';
 
 // Mock necessary modules
 vi.mock('/@/utils', () => ({
-  getPopupContainer: () => document.body,
+  withInstall: vi.fn((component) => {
+    const wrappedComponent = { ...component, install: vi.fn() };
+    return wrappedComponent;
+  }),
+  deepMerge: vi.fn((target, source) => {
+    if (!target) return source;
+    if (!source) return target;
+    const result = { ...target };
+    Object.keys(source).forEach(key => {
+      if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        result[key] = { ...(target[key] || {}), ...source[key] };
+      } else {
+        result[key] = source[key];
+      }
+    });
+    return result;
+  }),
+  setObjToUrlParams: vi.fn(),
+  openWindow: vi.fn(),
+  noop: vi.fn(),
+  sleep: vi.fn(),
+  getPopupContainer: vi.fn(() => document.body),
+  convertBytesToSize: vi.fn(),
 }));
 
 vi.mock('/@/utils/is', () => ({
@@ -20,6 +42,19 @@ vi.mock('/@/utils/helper/tsxHelper', () => ({
 
 vi.mock('/@/hooks/web/useDesign', () => ({
   useDesign: () => ({ prefixCls: 'jeesite-basic-help' }),
+}));
+
+// Mock ant-design-vue components
+vi.mock('ant-design-vue', () => ({
+  Tooltip: {
+    name: 'ATooltip',
+    props: {
+      title: [String, Object], // Allow both string and object for title
+      placement: String,
+      autoAdjustOverflow: Boolean,
+    },
+    template: '<div class="ant-tooltip"><slot /></div>',
+  },
 }));
 
 describe('BasicHelp', () => {
@@ -46,8 +81,8 @@ describe('BasicHelp', () => {
   it('should render with string text', () => {
     const wrapper = mount(BasicHelp, {
       props: {
-        text: 'Help text'
-      }
+        text: 'Help text',
+      },
     });
     expect(wrapper.findComponent(Tooltip).exists()).toBe(true);
   });
@@ -55,8 +90,8 @@ describe('BasicHelp', () => {
   it('should render with array text', () => {
     const wrapper = mount(BasicHelp, {
       props: {
-        text: ['Help text 1', 'Help text 2']
-      }
+        text: ['Help text 1', 'Help text 2'],
+      },
     });
     expect(wrapper.findComponent(Tooltip).exists()).toBe(true);
   });
@@ -65,8 +100,8 @@ describe('BasicHelp', () => {
     const wrapper = mount(BasicHelp, {
       props: {
         text: ['Help text 1', 'Help text 2'],
-        showIndex: true
-      }
+        showIndex: true,
+      },
     });
     expect(wrapper.findComponent(Tooltip).exists()).toBe(true);
   });
@@ -78,8 +113,8 @@ describe('BasicHelp', () => {
         maxWidth: '800px',
         color: '#000000',
         fontSize: '16px',
-        placement: 'left'
-      }
+        placement: 'left',
+      },
     });
     expect(wrapper.findComponent(Tooltip).exists()).toBe(true);
   });
@@ -87,8 +122,8 @@ describe('BasicHelp', () => {
   it('should render with slot content', () => {
     const wrapper = mount(BasicHelp, {
       slots: {
-        default: 'Custom help content'
-      }
+        default: 'Custom help content',
+      },
     });
     expect(wrapper.findComponent(Tooltip).exists()).toBe(true);
   });
@@ -97,8 +132,8 @@ describe('BasicHelp', () => {
     const wrapper = mount(BasicHelp, {
       props: {
         text: 'Help text',
-        placement: 'top'
-      }
+        placement: 'top',
+      },
     });
     const tooltip = wrapper.findComponent(Tooltip);
     expect(tooltip.props('placement')).toBe('top');

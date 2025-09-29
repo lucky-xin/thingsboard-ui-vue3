@@ -1,3 +1,839 @@
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
+// Mock state management and global dependencies
+vi.mock("/@/store", () => ({
+  useAppStore: () => ({
+    getTheme: vi.fn(() => "light"),
+    setTheme: vi.fn(),
+    locale: "en",
+    setLocale: vi.fn()
+  }),
+  useUserStore: () => ({
+    userInfo: { name: "Test User" },
+    isLoggedIn: true
+  })
+}));
+
+vi.mock("/@/hooks/setting/useLocale", () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: "en" })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key)
+  })
+}));
+
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { defHttp } from '/@/utils/http/axios';
 import { useTianditu } from '/@/hooks/web/useTianditu';
@@ -131,7 +967,7 @@ describe('hooks/web/useTianditu', () => {
       score: 95,
     };
 
-     vi.mocked(defHttp.get).mockResolvedValue({
+    vi.mocked(defHttp.get).mockResolvedValue({
       msg: 'ok',
       location: mockLocation,
     });
@@ -140,7 +976,7 @@ describe('hooks/web/useTianditu', () => {
 
     const location = await result.geocoder('Beijing');
 
-     expect(vi.mocked(defHttp.get)).toHaveBeenCalledWith(
+    expect(vi.mocked(defHttp.get)).toHaveBeenCalledWith(
       {
         url: 'https://api.tianditu.gov.cn/geocoder',
         params: {
@@ -148,14 +984,14 @@ describe('hooks/web/useTianditu', () => {
           tk: 'test-tk',
         },
       },
-      { withToken: false }
+      { withToken: false },
     );
 
     expect(location).toEqual(mockLocation);
   });
 
   it('should return null when geocoding fails', async () => {
-     vi.mocked(defHttp.get).mockResolvedValue({
+    vi.mocked(defHttp.get).mockResolvedValue({
       msg: 'error',
       location: null,
     });
@@ -168,7 +1004,7 @@ describe('hooks/web/useTianditu', () => {
   });
 
   it('should handle geocoding HTTP error', async () => {
-     vi.mocked(defHttp.get).mockRejectedValue(new Error('Network error'));
+    vi.mocked(defHttp.get).mockRejectedValue(new Error('Network error'));
 
     const result = useTianditu('test-tk');
 
@@ -176,7 +1012,7 @@ describe('hooks/web/useTianditu', () => {
   });
 
   it('should construct correct geocoding parameters', async () => {
-     vi.mocked(defHttp.get).mockResolvedValue({
+    vi.mocked(defHttp.get).mockResolvedValue({
       msg: 'ok',
       location: {},
     });
@@ -185,7 +1021,7 @@ describe('hooks/web/useTianditu', () => {
 
     await result.geocoder('Test City');
 
-     expect(vi.mocked(defHttp.get)).toHaveBeenCalledWith(
+    expect(vi.mocked(defHttp.get)).toHaveBeenCalledWith(
       {
         url: 'https://api.tianditu.gov.cn/geocoder',
         params: {
@@ -193,12 +1029,12 @@ describe('hooks/web/useTianditu', () => {
           tk: 'test-tk',
         },
       },
-      { withToken: false }
+      { withToken: false },
     );
   });
 
   it('should handle empty keyword in geocoding', async () => {
-     vi.mocked(defHttp.get).mockResolvedValue({
+    vi.mocked(defHttp.get).mockResolvedValue({
       msg: 'ok',
       location: {},
     });
@@ -207,7 +1043,7 @@ describe('hooks/web/useTianditu', () => {
 
     await result.geocoder('');
 
-     expect(vi.mocked(defHttp.get)).toHaveBeenCalledWith(
+    expect(vi.mocked(defHttp.get)).toHaveBeenCalledWith(
       {
         url: 'https://api.tianditu.gov.cn/geocoder',
         params: {
@@ -215,12 +1051,12 @@ describe('hooks/web/useTianditu', () => {
           tk: 'test-tk',
         },
       },
-      { withToken: false }
+      { withToken: false },
     );
   });
 
   it('should handle special characters in geocoding', async () => {
-     vi.mocked(defHttp.get).mockResolvedValue({
+    vi.mocked(defHttp.get).mockResolvedValue({
       msg: 'ok',
       location: {},
     });
@@ -229,7 +1065,7 @@ describe('hooks/web/useTianditu', () => {
 
     await result.geocoder('Beijing & Shanghai');
 
-     expect(vi.mocked(defHttp.get)).toHaveBeenCalledWith(
+    expect(vi.mocked(defHttp.get)).toHaveBeenCalledWith(
       {
         url: 'https://api.tianditu.gov.cn/geocoder',
         params: {
@@ -237,7 +1073,7 @@ describe('hooks/web/useTianditu', () => {
           tk: 'test-tk',
         },
       },
-      { withToken: false }
+      { withToken: false },
     );
   });
 });

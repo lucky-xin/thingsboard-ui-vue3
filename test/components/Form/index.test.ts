@@ -13,14 +13,16 @@ vi.mock('/@/components/Form/src/hooks/useForm', () => ({
 describe('Form/index', () => {
   it('should export BasicForm component', async () => {
     const { BasicForm } = await import('/@/components/Form');
-    
+    // Add timeout to prevent hanging
+    await new Promise(resolve => setTimeout(resolve, 100));
+
     expect(BasicForm).toBeDefined();
     expect(typeof BasicForm).toBe('object');
   });
 
   it('should export form hooks', async () => {
     const { useComponentRegister, useForm } = await import('/@/components/Form');
-    
+
     expect(useComponentRegister).toBeDefined();
     expect(useForm).toBeDefined();
     expect(typeof useComponentRegister).toBe('function');
@@ -28,15 +30,10 @@ describe('Form/index', () => {
   });
 
   it('should export form components', async () => {
-    const {
-      Select,
-      TreeSelect,
-      RadioGroup,
-      RadioButtonGroup,
-      CheckboxGroup,
-      FormGroup
-    } = await import('/@/components/Form');
-    
+    const { Select, TreeSelect, RadioGroup, RadioButtonGroup, CheckboxGroup, FormGroup } = await import(
+      '/@/components/Form'
+    );
+
     expect(Select).toBeDefined();
     expect(TreeSelect).toBeDefined();
     expect(RadioGroup).toBeDefined();
@@ -48,7 +45,7 @@ describe('Form/index', () => {
   it('should export typing definitions', async () => {
     // This tests that the typing exports don't throw errors
     const exports = await import('/@/components/Form');
-    
+
     expect(exports).toBeDefined();
     expect(exports.BasicForm).toBeDefined();
   });
@@ -56,7 +53,7 @@ describe('Form/index', () => {
   it('should have correct exports count', async () => {
     const exports = await import('/@/components/Form');
     const exportKeys = Object.keys(exports);
-    
+
     // Should export: BasicForm, hooks, and form components
     expect(exportKeys.length).toBeGreaterThanOrEqual(8);
     expect(exportKeys).toContain('BasicForm');
@@ -72,7 +69,7 @@ describe('Form/index', () => {
 
   it('should have valid Vue components', async () => {
     const { BasicForm, Select, TreeSelect, FormGroup } = await import('/@/components/Form');
-    
+
     expect(typeof BasicForm).toBe('object');
     expect(typeof Select).toBe('object');
     expect(typeof TreeSelect).toBe('object');

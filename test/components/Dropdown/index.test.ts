@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest';
 describe('Dropdown/index', () => {
   it('should export Dropdown component', async () => {
     const module = await import('/@/components/Dropdown/index');
-    
+
     expect(module).toBeDefined();
     expect(module.Dropdown).toBeDefined();
     expect(typeof module.Dropdown).toBe('object');
@@ -11,7 +11,7 @@ describe('Dropdown/index', () => {
 
   it('should export typing definitions', async () => {
     const module = await import('/@/components/Dropdown/index');
-    
+
     // Check that the module imports without error and has exports
     expect(module).toBeDefined();
     const exports = Object.keys(module);
@@ -31,7 +31,7 @@ describe('Dropdown/index', () => {
   it('should export both component and types', async () => {
     const module = await import('/@/components/Dropdown/index');
     const exports = Object.keys(module);
-    
+
     // Should contain at least the Dropdown component
     expect(exports).toContain('Dropdown');
     expect(exports.length).toBeGreaterThanOrEqual(1);
@@ -52,7 +52,7 @@ describe('Dropdown/index', () => {
   it('should maintain component integrity after withInstall', async () => {
     const module = await import('/@/components/Dropdown/index');
     const { Dropdown } = module;
-    
+
     // Component should still be a valid object
     expect(typeof Dropdown).toBe('object');
     expect(Dropdown).not.toBeNull();
@@ -69,7 +69,7 @@ describe('Dropdown/index', () => {
   it('should export correct number of items', async () => {
     const module = await import('/@/components/Dropdown/index');
     const exports = Object.keys(module);
-    
+
     // Should have at least the Dropdown component plus any type exports
     expect(exports.length).toBeGreaterThanOrEqual(1);
     expect(exports).toContain('Dropdown');

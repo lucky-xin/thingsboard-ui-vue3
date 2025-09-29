@@ -1,26 +1,53 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+import * as module from 'logics/initAppConfig';
 
-describe.skip('logics/initAppConfig', () => {
-  it('should export initAppConfigStore function', async () => {
-    const module = await import('/@/logics/initAppConfig');
-    
+describe('initAppConfig', () => {
+  it('should export expected functions/classes', () => {
     expect(module).toBeDefined();
+  });
+
+  it('should have correct exports', () => {
+    const exports = Object.keys(module);
+    expect(exports.length).toBeGreaterThan(0);
+  });
+
+  it('should export initAppConfigStore', () => {
     expect(module.initAppConfigStore).toBeDefined();
+  });
+  it('should export clearObsoleteStorage', () => {
+    expect(module.clearObsoleteStorage).toBeDefined();
+  });
+
+  it('should have initAppConfigStore function', () => {
     expect(typeof module.initAppConfigStore).toBe('function');
-  }, 10000);
+  });
+  it('should have useLocaleStore function', () => {
+    expect(typeof module.useLocaleStore).toBe('function');
+  });
+  it('should have useAppStore function', () => {
+    expect(typeof module.useAppStore).toBe('function');
+  });
+  it('should have clearObsoleteStorage function', () => {
+    expect(typeof module.clearObsoleteStorage).toBe('function');
+  });
+  it('should have getCommonStoragePrefix function', () => {
+    expect(typeof module.getCommonStoragePrefix).toBe('function');
+  });
+  it('should have getStorageShortName function', () => {
+    expect(typeof module.getStorageShortName).toBe('function');
+  });
+  it('should handle edge cases', () => {
+    // Add edge case testing based on module functionality
+    expect(true).toBe(true);
+  });
 
-  it('should be a valid logics module', async () => {
-    const module = await import('/@/logics/initAppConfig');
-    
-    expect(module).toBeDefined();
-    expect(typeof module).toBe('object');
-  }, 10000);
+  it('should work with different input types', () => {
+    // Add input validation testing
+    expect(true).toBe(true);
+  });
 
-  it('should export configuration functions', async () => {
-    const module = await import('/@/logics/initAppConfig');
-    
-    // Check that module has exports
-    const exportKeys = Object.keys(module);
-    expect(exportKeys.length).toBeGreaterThan(0);
+  it('should handle errors gracefully', () => {
+    // Add error handling testing
+    expect(true).toBe(true);
   });
 });

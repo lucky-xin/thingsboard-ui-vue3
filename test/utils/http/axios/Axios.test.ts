@@ -50,7 +50,7 @@ vi.mock('lodash-es', () => ({
   cloneDeep: vi.fn((obj) => JSON.parse(JSON.stringify(obj))),
   omit: vi.fn((obj, ...keys) => {
     const result = { ...obj };
-    keys.forEach(key => delete result[key]);
+    keys.forEach((key) => delete result[key]);
     return result;
   }),
 }));
@@ -119,15 +119,13 @@ describe('utils/http/axios/Axios', () => {
 
   it('should set headers', () => {
     const headers = {
-      'Authorization': 'Bearer token',
+      Authorization: 'Bearer token',
       'X-Custom-Header': 'value',
     };
 
     vAxios.setHeader(headers);
 
-    expect(mockAxiosInstance.defaults.headers).toEqual(
-      expect.objectContaining(headers)
-    );
+    expect(mockAxiosInstance.defaults.headers).toEqual(expect.objectContaining(headers));
   });
 
   it('should handle upload file', () => {
@@ -160,7 +158,7 @@ describe('utils/http/axios/Axios', () => {
           'Content-type': 'multipart/form-data',
           ignoreCancelToken: 'true',
         },
-      })
+      }),
     );
   });
 
@@ -249,7 +247,7 @@ describe('utils/http/axios/Axios', () => {
       expect.objectContaining({
         method: 'GET',
         url: '/api/users',
-      })
+      }),
     );
   });
 
@@ -267,7 +265,7 @@ describe('utils/http/axios/Axios', () => {
         method: 'POST',
         url: '/api/users',
         data: { name: 'test' },
-      })
+      }),
     );
   });
 
@@ -288,7 +286,7 @@ describe('utils/http/axios/Axios', () => {
         headers: {
           'content-type': 'application/json',
         },
-      })
+      }),
     );
   });
 
@@ -306,7 +304,7 @@ describe('utils/http/axios/Axios', () => {
         method: 'PUT',
         url: '/api/users/1',
         data: { name: 'updated' },
-      })
+      }),
     );
   });
 
@@ -322,7 +320,7 @@ describe('utils/http/axios/Axios', () => {
       expect.objectContaining({
         method: 'DELETE',
         url: '/api/users/1',
-      })
+      }),
     );
   });
 
@@ -342,7 +340,7 @@ describe('utils/http/axios/Axios', () => {
       expect.objectContaining({
         method: 'GET',
         url: '/api/test',
-      })
+      }),
     );
   });
 
@@ -395,6 +393,47 @@ describe('utils/http/axios/Axios', () => {
     }
   });
 
+  it('should handle request with axios error', async () => {
+    const config = {
+      url: '/api/test',
+    };
+
+    // Mock axios error
+    const axiosError = {
+      isAxiosError: true,
+      message: 'Network Error',
+    };
+    mockAxiosInstance.request.mockRejectedValueOnce(axiosError);
+
+    // No requestCatchHook to test axios error branch
+    mockOptions.transform.requestCatchHook = undefined;
+
+    try {
+      await vAxios.request(config);
+    } catch (e) {
+      expect(e).toBe(axiosError);
+    }
+  });
+
+  it('should handle request with non-axios error', async () => {
+    const config = {
+      url: '/api/test',
+    };
+
+    // Mock non-axios error
+    const error = new Error('Generic error');
+    mockAxiosInstance.request.mockRejectedValueOnce(error);
+
+    // No requestCatchHook to test non-axios error branch
+    mockOptions.transform.requestCatchHook = undefined;
+
+    try {
+      await vAxios.request(config);
+    } catch (e) {
+      expect(e).toBe(error);
+    }
+  });
+
   it('should handle request catch hook', async () => {
     const config = {
       url: '/api/test',
@@ -440,12 +479,95 @@ describe('utils/http/axios/Axios', () => {
     expect(() => vAxiosNoInstance.configAxios(mockOptions)).not.toThrow();
   });
 
+  it('should handle setupInterceptors with missing transform', () => {
+    const vAxiosNoTransform = new VAxios({
+      ...mockOptions,
+      transform: undefined,
+    });
+
+    expect(vAxiosNoTransform).toBeDefined();
+  });
+
+  it('should handle setupInterceptors with missing requestInterceptors', () => {
+    const vAxiosNoRequestInterceptors = new VAxios({
+      ...mockOptions,
+      transform: {
+        ...mockOptions.transform,
+        requestInterceptors: undefined,
+      },
+    });
+
+    expect(vAxiosNoRequestInterceptors).toBeDefined();
+  });
+
+  it('should handle setupInterceptors with missing responseInterceptors', () => {
+    const vAxiosNoResponseInterceptors = new VAxios({
+      ...mockOptions,
+      transform: {
+        ...mockOptions.transform,
+        responseInterceptors: undefined,
+      },
+    });
+
+    expect(vAxiosNoResponseInterceptors).toBeDefined();
+  });
+
+  it('should handle setupInterceptors with non-function interceptors', () => {
+    const vAxiosNonFunctionInterceptors = new VAxios({
+      ...mockOptions,
+      transform: {
+        ...mockOptions.transform,
+        requestInterceptors: 'not a function',
+        responseInterceptors: 'not a function',
+      },
+    });
+
+    expect(vAxiosNonFunctionInterceptors).toBeDefined();
+  });
+
   it('should handle setHeader when axios instance is null', () => {
     const vAxiosNoInstance = new VAxios(mockOptions);
     // @ts-ignore - Simulate null instance
     vAxiosNoInstance['axiosInstance'] = null;
 
     expect(() => vAxiosNoInstance.setHeader({})).not.toThrow();
+  });
+
+  it('should handle request with ignoreCancelToken header', () => {
+    const config = {
+      url: '/api/test',
+      headers: {
+        ignoreCancelToken: 'true',
+      },
+    };
+
+    const result = vAxios.request(config);
+
+    expect(result).toBeDefined();
+  });
+
+  it('should handle request with false ignoreCancelToken header', () => {
+    const config = {
+      url: '/api/test',
+      headers: {
+        ignoreCancelToken: 'false',
+      },
+    };
+
+    const result = vAxios.request(config);
+
+    expect(result).toBeDefined();
+  });
+
+  it('should handle request with undefined ignoreCancelToken header', () => {
+    const config = {
+      url: '/api/test',
+      headers: {},
+    };
+
+    const result = vAxios.request(config);
+
+    expect(result).toBeDefined();
   });
 
   it('should handle upload file with custom params', () => {

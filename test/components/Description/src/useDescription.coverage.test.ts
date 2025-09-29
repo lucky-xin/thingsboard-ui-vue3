@@ -118,7 +118,7 @@ describe('useDescription coverage', () => {
     };
 
     const [register, methods] = useDescription();
-    
+
     // Register instance first
     register(mockInstance);
 
@@ -134,7 +134,7 @@ describe('useDescription coverage', () => {
     };
 
     const [, methods] = useDescription();
-    
+
     // Don't register any instance
     expect(() => {
       methods.setDescProps(newProps);

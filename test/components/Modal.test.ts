@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { Modal } from 'ant-design-vue';
-import BasicModal from '/@/components/Modal/src/BasicModal.vue';
+import BasicModal from '/@/components/Modal/src/BasicModal';
 
 // Mock dependencies
 vi.mock('/@/hooks/web/useDesign', () => ({

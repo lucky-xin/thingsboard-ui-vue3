@@ -15,7 +15,7 @@ function addInstall<T extends any>(comp: T & Record<string, any>, name?: string)
 }
 
 // 优先级最高的核心 Mock，避免加载组件索引中的 withInstall 逻辑
-vi.mock('/@/components/Application', () => {
+vi.mock('components/Application', () => {
   return {
     useAppProviderContext: () => ({ prefixCls: 'jeesite', isMobile: false }),
     AppLogo: addInstall({ name: 'AppLogo', template: '<div class="app-logo"></div>' }),
@@ -42,7 +42,10 @@ try {
 } catch {}
 
 vi.mock('/@/components/Container', () => ({
-  CollapseContainer: addInstall({ name: 'CollapseContainer', template: '<div class="tb-collapse-container"><slot /></div>' }),
+  CollapseContainer: addInstall({
+    name: 'CollapseContainer',
+    template: '<div class="tb-collapse-container"><slot /></div>',
+  }),
   ScrollContainer: addInstall({ name: 'ScrollContainer', template: '<div class="tb-scroll-container"><slot /></div>' }),
   LazyContainer: addInstall({ name: 'LazyContainer', template: '<div class="tb-lazy-container"><slot /></div>' }),
 }));
@@ -184,13 +187,13 @@ vi.mock('/@/components/Dropdown', () => ({
 }));
 
 // 组件索引导出的额外符号最小 mock，避免“未定义导出”失败
-vi.mock('/@/components/Icon/index', () => {
+vi.mock('components/Icon/index', () => {
   const Icon = addInstall({ name: 'Icon', template: '<i class="tb-icon" />' });
   const IconPicker = addInstall({ name: 'IconPicker', template: '<div class="tb-icon-picker" />' });
   return { Icon, IconPicker, default: Icon };
 });
 
-vi.mock('/@/components/Button/index', () => {
+vi.mock('components/Button/index', () => {
   const BasicButton = addInstall({ name: 'BasicButton', template: '<button class="tb-basic-btn" />' });
   const PopConfirmButton = addInstall({ name: 'PopConfirmButton', template: '<button class="tb-popconfirm-btn" />' });
   const Button = addInstall({ name: 'Button', template: '<button class="tb-btn" />' });
@@ -232,7 +235,7 @@ vi.mock('/@/components/Resizer', () => ({ Resizer: simpleComponent('Resizer') })
 vi.mock('/@/components/VirtualScroll', () => ({ VScroll: simpleComponent('VScroll') }));
 
 // 全局最小 mock useMessage，避免 axios/checkStatus 等处调用时报错
-vi.mock('/@/hooks/web/useMessage', () => {
+vi.mock('hooks/web/useMessage', () => {
   const fn = () => ({
     createMessage: {
       error: vi.fn(),
@@ -255,7 +258,7 @@ vi.mock('/@/hooks/web/useMessage', () => {
 });
 
 // 最小 mock useDesign，避免引入 antd theme/token 与 Application 依赖链
-vi.mock('/@/hooks/web/useDesign', () => {
+vi.mock('hooks/web/useDesign', () => {
   function useDesign(scope?: string) {
     const prefixVar = 'jeesite';
     const prefixCls = scope ? `${prefixVar}-${scope}` : prefixVar;
@@ -416,14 +419,14 @@ vi.mock('/@/components/Authority', () => ({
   Authority: addInstall({ name: 'Authority', template: '<div class="authority" />' }),
 }));
 
-vi.mock('/@/components/Basic', () => {
+vi.mock('components/Basic', () => {
   const BasicArrow = addInstall({ name: 'BasicArrow', template: '<div class="basic-arrow" />' });
   const BasicTitle = addInstall({ name: 'BasicTitle', template: '<div class="basic-title" />' });
   const BasicHelp = addInstall({ name: 'BasicHelp', template: '<div class="basic-help" />' });
   return { BasicArrow, BasicTitle, BasicHelp };
 });
 
-vi.mock('/@/components/CountDown', () => {
+vi.mock('components/CountDown', () => {
   const CountdownInput = addInstall({
     name: 'CountdownInput',
     emits: ['change', 'update:value', 'send'],
@@ -478,7 +481,7 @@ vi.mock('/@/components/Table/index', async (importOriginal) => {
 });
 
 // Mock useFormItem hook to match tuple return [state, setState, defaultState]
-vi.mock('/@/hooks/component/useFormItem', () => {
+vi.mock('hooks/component/useFormItem', () => {
   function normalizeValue(props: any, key = 'value') {
     const val = props?.[key];
     let compName = '';
@@ -558,7 +561,7 @@ vi.mock('/@/components/CountTo', () => ({
 }));
 
 // Direct, lightweight mock for '/@/components/Table' (directory import path)
-vi.mock('/@/components/Table', () => {
+vi.mock('components/Table', () => {
   const BasicTable = addInstall({
     name: 'BasicTable',
     props: {
@@ -578,7 +581,7 @@ vi.mock('/@/components/Table', () => {
 });
 
 // Mock demo view for router types test
-vi.mock('/@/views/demo/index.vue', () => ({ default: addInstall({ name: 'DemoIndex', template: '<div />' }) }));
+vi.mock('../src/views/demo/index.vue', () => ({ default: addInstall({ name: 'DemoIndex', template: '<div />' }) }));
 
 // Mock ContextMenu index to expose spies
 vi.mock('/@/components/ContextMenu/index', () => ({
@@ -595,7 +598,7 @@ vi.mock('/@/utils/is', async (importOriginal) => {
     isHttpUrl: vi.fn(actual.isHttpUrl ?? (() => false)),
   };
 });
-vi.mock('path-to-regexp', () => ({ pathToRegexp: vi.fn(() => ({} as any)) }));
+vi.mock('path-to-regexp', () => ({ pathToRegexp: vi.fn(() => ({}) as any) }));
 
 // Provide minimal document stub for environments where it's undefined or torn down
 if (typeof (globalThis as any).document === 'undefined') {
@@ -638,7 +641,7 @@ vi.mock('/@/components/Page', () => ({
   PageWrapper: addInstall({ name: 'PageWrapper', template: '<div />' }),
   PageWrapperFixedHeightKey: 'PageWrapperFixedHeight',
 }));
-vi.mock('/@/components/Form', () => {
+vi.mock('components/Form', () => {
   const BasicForm = addInstall({ name: 'BasicForm', template: '<form />' });
   const Select = addInstall({ name: 'Select', template: '<select />' });
   const TreeSelect = addInstall({ name: 'TreeSelect', template: '<div />' });
@@ -646,7 +649,7 @@ vi.mock('/@/components/Form', () => {
   const RadioButtonGroup = addInstall({ name: 'RadioButtonGroup', template: '<div />' });
   const CheckboxGroup = addInstall({ name: 'CheckboxGroup', template: '<div />' });
   const FormGroup = addInstall({ name: 'FormGroup', template: '<div />' });
-  
+
   return {
     BasicForm,
     Select,
@@ -656,28 +659,31 @@ vi.mock('/@/components/Form', () => {
     CheckboxGroup,
     FormGroup,
     useComponentRegister: vi.fn(),
-    useForm: vi.fn(() => [vi.fn(), vi.fn()])
+    useForm: vi.fn(() => [vi.fn(), vi.fn()]),
   };
 });
-vi.mock('/@/components/Preview', () => ({ ImagePreview: addInstall({ name: 'ImagePreview', template: '<div />' }), createImgPreview: vi.fn() }));
-vi.mock('/@/components/SimpleMenu', () => ({ 
-  SimpleMenu: addInstall({ name: 'SimpleMenu', template: '<div />' }),
-  SimpleMenuTag: addInstall({ name: 'SimpleMenuTag', template: '<div />' })
+vi.mock('/@/components/Preview', () => ({
+  ImagePreview: addInstall({ name: 'ImagePreview', template: '<div />' }),
+  createImgPreview: vi.fn(),
 }));
-vi.mock('/@/components/Tree', () => ({ 
+vi.mock('/@/components/SimpleMenu', () => ({
+  SimpleMenu: addInstall({ name: 'SimpleMenu', template: '<div />' }),
+  SimpleMenuTag: addInstall({ name: 'SimpleMenuTag', template: '<div />' }),
+}));
+vi.mock('/@/components/Tree', () => ({
   BasicTree: addInstall({ name: 'BasicTree', template: '<div />' }),
-  ContextMenuItem: {}
+  ContextMenuItem: {},
 }));
 
 // Mock loading directive module
-vi.mock('/@/directives/loading', () => {
+vi.mock('directives/loading', () => {
   const dir: any = { mounted: vi.fn(), updated: vi.fn(), unmounted: vi.fn() };
   const setupLoadingDirective = vi.fn((_app: any) => {});
   return { default: dir, setupLoadingDirective };
 });
 
 // Mock permission directive module
-vi.mock('/@/directives/permission', () => {
+vi.mock('directives/permission', () => {
   const dir: any = { mounted: vi.fn(), updated: vi.fn(), unmounted: vi.fn() };
   const setupPermissionDirective = vi.fn((_app: any) => {});
   return { default: dir, setupPermissionDirective };
@@ -694,3 +700,32 @@ config.global.directives = {
 
 // Mock router guard setup
 vi.mock('/@/router/guard/index', () => ({ setupRouterGuard: vi.fn(() => {}) }));
+
+// Mock useMessage hook to prevent ant-design-vue import errors
+vi.mock('/@/hooks/web/useMessage', () => ({
+  useMessage: () => ({
+    createMessage: {
+      success: vi.fn(),
+      error: vi.fn(),
+      info: vi.fn(),
+      warning: vi.fn(),
+    },
+    notification: {
+      success: vi.fn(),
+      error: vi.fn(),
+      info: vi.fn(),
+      warning: vi.fn(),
+      open: vi.fn(),
+      close: vi.fn(),
+      destroy: vi.fn(),
+      config: vi.fn(),
+    },
+    createConfirm: vi.fn(),
+    createSuccessModal: vi.fn(),
+    createErrorModal: vi.fn(),
+    createInfoModal: vi.fn(),
+    createWarningModal: vi.fn(),
+    showMessageModal: vi.fn(),
+    showMessage: vi.fn(),
+  }),
+}));

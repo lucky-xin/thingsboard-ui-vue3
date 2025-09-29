@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import BasicForm from '/@/components/Form/src/BasicForm.vue';
+import BasicForm from '/@/components/Form/src/BasicForm';
 
 describe('components/Form/BasicForm extra', () => {
   it('should emit submit and reset, and toggle advanced', async () => {
@@ -23,8 +23,12 @@ describe('components/Form/BasicForm extra', () => {
     expect(api?.removeSchemaByFiled).toBeDefined();
 
     await api.setFieldsValue?.({});
-    try { await api.validate?.(); } catch {}
-    try { await api.submit(); } catch {}
+    try {
+      await api.validate?.();
+    } catch {}
+    try {
+      await api.submit();
+    } catch {}
     // 不调用 resetFields，避免依赖 antd form 的 clearValidate 导致未处理错误
     // advanced toggle via exposed handle (covered through formActionType)
     const toggle = api?.handleToggleAdvanced || api?.formActionType?.handleToggleAdvanced;

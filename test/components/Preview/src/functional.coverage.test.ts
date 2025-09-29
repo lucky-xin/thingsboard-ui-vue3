@@ -6,7 +6,7 @@ vi.mock('@vueuse/core', () => ({
 }));
 
 vi.mock('/@/utils/is', () => ({
-  isClient: vi.fn(),
+  isClient: true,
 }));
 
 vi.mock('vue', () => ({
@@ -16,15 +16,16 @@ vi.mock('vue', () => ({
 
 // Mock Functional.vue
 vi.mock('/@/components/Preview/src/Functional.vue', () => ({
-  default: 'ImgPreview',
+  default: {
+    name: 'ImgPreview',
+    __vccOpts: {},
+  },
 }));
 
 import { createImgPreview } from '/@/components/Preview/src/functional';
-import { isClient } from '/@/utils/is';
 import { createVNode, render } from 'vue';
 import type { Options } from '/@/components/Preview/src/typing';
 
-const mockIsClient = vi.mocked(isClient);
 const mockCreateVNode = vi.mocked(createVNode);
 const mockRender = vi.mocked(render);
 
@@ -46,7 +47,6 @@ Object.defineProperty(global, 'document', {
 describe('createImgPreview coverage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockIsClient.mockReturnValue(true);
     mockCreateVNode.mockReturnValue({
       component: {
         exposed: { close: vi.fn() },
@@ -54,13 +54,20 @@ describe('createImgPreview coverage', () => {
     } as any);
   });
 
-  it('should handle client environment check', () => {
-    mockIsClient.mockReturnValue(false);
+  it('should handle client environment check', async () => {
+    // Re-mock and re-import module to simulate non-client environment
+    vi.resetModules();
+    vi.doMock('/@/utils/is', () => ({
+      isClient: false,
+    }));
 
-    const result = createImgPreview({});
+    const { createImgPreview: createImgPreviewNoClient } = await import('/@/components/Preview/src/functional');
 
-    // The function should handle the client check
-    expect(true).toBe(true);
+    const result = createImgPreviewNoClient({});
+
+    expect(result).toBeUndefined();
+    expect(mockCreateVNode).not.toHaveBeenCalled();
+    expect(mockRender).not.toHaveBeenCalled();
   });
 
   it('should create img preview with default options', () => {
@@ -69,7 +76,10 @@ describe('createImgPreview coverage', () => {
     const result = createImgPreview(options);
 
     expect(mockDocument.createElement).toHaveBeenCalledWith('div');
-    expect(mockCreateVNode).toHaveBeenCalledWith('ImgPreview', {
+    expect(mockCreateVNode).toHaveBeenCalledWith({
+      name: 'ImgPreview',
+      __vccOpts: {},
+    }, {
       show: true,
       index: 0,
       scaleStep: 100,
@@ -89,7 +99,10 @@ describe('createImgPreview coverage', () => {
 
     const result = createImgPreview(options);
 
-    expect(mockCreateVNode).toHaveBeenCalledWith('ImgPreview', {
+    expect(mockCreateVNode).toHaveBeenCalledWith({
+      name: 'ImgPreview',
+      __vccOpts: {},
+    }, {
       show: false,
       index: 2,
       scaleStep: 50,
@@ -108,7 +121,10 @@ describe('createImgPreview coverage', () => {
 
     createImgPreview(options);
 
-    expect(mockCreateVNode).toHaveBeenCalledWith('ImgPreview', {
+    expect(mockCreateVNode).toHaveBeenCalledWith({
+      name: 'ImgPreview',
+      __vccOpts: {},
+    }, {
       show: true,
       index: 5,
       scaleStep: 100,
@@ -123,7 +139,10 @@ describe('createImgPreview coverage', () => {
 
     createImgPreview(options);
 
-    expect(mockCreateVNode).toHaveBeenCalledWith('ImgPreview', {
+    expect(mockCreateVNode).toHaveBeenCalledWith({
+      name: 'ImgPreview',
+      __vccOpts: {},
+    }, {
       show: false,
       index: 0,
       scaleStep: 100,
@@ -135,7 +154,10 @@ describe('createImgPreview coverage', () => {
 
     createImgPreview(options);
 
-    expect(mockCreateVNode).toHaveBeenCalledWith('ImgPreview', {
+    expect(mockCreateVNode).toHaveBeenCalledWith({
+      name: 'ImgPreview',
+      __vccOpts: {},
+    }, {
       show: true,
       index: 0,
       scaleStep: 100,
@@ -145,7 +167,10 @@ describe('createImgPreview coverage', () => {
   it('should handle null options', () => {
     const result = createImgPreview(null as any);
 
-    expect(mockCreateVNode).toHaveBeenCalledWith('ImgPreview', {
+    expect(mockCreateVNode).toHaveBeenCalledWith({
+      name: 'ImgPreview',
+      __vccOpts: {},
+    }, {
       show: true,
       index: 0,
       scaleStep: 100,
@@ -156,7 +181,10 @@ describe('createImgPreview coverage', () => {
   it('should handle undefined options', () => {
     const result = createImgPreview(undefined as any);
 
-    expect(mockCreateVNode).toHaveBeenCalledWith('ImgPreview', {
+    expect(mockCreateVNode).toHaveBeenCalledWith({
+      name: 'ImgPreview',
+      __vccOpts: {},
+    }, {
       show: true,
       index: 0,
       scaleStep: 100,
@@ -193,7 +221,10 @@ describe('createImgPreview coverage', () => {
 
     createImgPreview(options);
 
-    expect(mockCreateVNode).toHaveBeenCalledWith('ImgPreview', {
+    expect(mockCreateVNode).toHaveBeenCalledWith({
+      name: 'ImgPreview',
+      __vccOpts: {},
+    }, {
       show: true,
       index: 10,
       scaleStep: 200,
@@ -223,7 +254,10 @@ describe('createImgPreview coverage', () => {
 
     createImgPreview(options);
 
-    expect(mockCreateVNode).toHaveBeenCalledWith('ImgPreview', {
+    expect(mockCreateVNode).toHaveBeenCalledWith({
+      name: 'ImgPreview',
+      __vccOpts: {},
+    }, {
       show: false,
       index: 0,
       scaleStep: 100,
@@ -238,7 +272,10 @@ describe('createImgPreview coverage', () => {
 
     createImgPreview(options);
 
-    expect(mockCreateVNode).toHaveBeenCalledWith('ImgPreview', {
+    expect(mockCreateVNode).toHaveBeenCalledWith({
+      name: 'ImgPreview',
+      __vccOpts: {},
+    }, {
       show: true,
       index: 42,
       scaleStep: 150,
@@ -252,7 +289,10 @@ describe('createImgPreview coverage', () => {
 
     createImgPreview(options);
 
-    expect(mockCreateVNode).toHaveBeenCalledWith('ImgPreview', {
+    expect(mockCreateVNode).toHaveBeenCalledWith({
+      name: 'ImgPreview',
+      __vccOpts: {},
+    }, {
       show: true,
       index: 0,
       scaleStep: 100,

@@ -10,7 +10,7 @@ vi.mock('/@/components/Icon', () => ({
   },
 }));
 
-import AppSearchKeyItem from '/@/components/Application/src/search/AppSearchKeyItem.vue';
+import AppSearchKeyItem from '/@/components/Application/src/search/AppSearchKeyItem';
 
 describe('AppSearchKeyItem', () => {
   it('should render key item with icon', () => {

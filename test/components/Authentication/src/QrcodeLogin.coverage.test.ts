@@ -16,7 +16,7 @@ vi.mock('/@/components/Qrcode', () => ({
   },
 }));
 
-vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
+vi.mock('../src/components/Authentication/src/AuthTitle.vue', () => ({
   default: {
     name: 'AuthTitle',
     template: '<div class="auth-title"><slot></slot><slot name="desc"></slot></div>',
@@ -24,7 +24,7 @@ vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
 }));
 
 // Import the component
-import QrcodeLogin from '/@/components/Authentication/src/QrcodeLogin.vue';
+import QrcodeLogin from '/@/components/Authentication/src/QrcodeLogin';
 
 // Create a simple router for testing
 const router = createRouter({

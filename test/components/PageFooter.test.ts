@@ -1,11 +1,11 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import PageFooter from '/@/components/Page/src/PageFooter.vue';
+import PageFooter from '/@/components/Page/src/PageFooter';
 
 vi.mock('/@/hooks/setting/useMenuSetting', () => ({
   useMenuSetting: () => ({
-    getCalcContentWidth: '100%'
-  })
+    getCalcContentWidth: '100%',
+  }),
 }));
 
 vi.mock('/@/hooks/web/useDesign', () => ({
@@ -18,8 +18,8 @@ describe('components/Page/PageFooter', () => {
       slots: {
         left: '<div class="left-slot">L</div>',
         default: '<div class="center-slot">C</div>',
-        right: '<div class="right-slot">R</div>'
-      }
+        right: '<div class="right-slot">R</div>',
+      },
     });
 
     expect(wrapper.find('.page-footer').exists()).toBe(true);
@@ -30,5 +30,3 @@ describe('components/Page/PageFooter', () => {
     expect(wrapper.html()).toContain('right-slot');
   });
 });
-
-

@@ -1,14 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import BasicForm from '/@/components/Form/src/BasicForm.vue';
+import BasicForm from '/@/components/Form/src/BasicForm';
 
 describe('components/Form/BasicForm more funcs', () => {
   it('should cover update/reset schema, append/remove, get/validate fields and scrollToField', async () => {
     const wrapper = mount(BasicForm, {
       props: {
-        schemas: [
-          { field: 'name', label: 'Name', component: 'Input', defaultValue: 'Tom' },
-        ],
+        schemas: [{ field: 'name', label: 'Name', component: 'Input', defaultValue: 'Tom' }],
         labelWidth: 80,
         showActionButtonGroup: false,
       },
@@ -52,5 +50,3 @@ describe('components/Form/BasicForm more funcs', () => {
     expect(true).toBe(true);
   }, 10000);
 });
-
-

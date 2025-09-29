@@ -28,9 +28,11 @@ export function useRuleFormItem<T extends Recordable>(
   // Calculate isMultiple function to ensure it's available during initialization and updates
   const getIsMultiple = () => {
     const compName = instance?.type?.name || 'unknown';
-    return ['JeeSiteCheckboxGroup'].includes(compName) ||
+    return (
+      ['JeeSiteCheckboxGroup'].includes(compName) ||
       (['JeeSiteSelect', 'JeeSiteTreeSelect'].includes(compName) &&
-        (props.mode === 'multiple' || props.mode === 'tags' || props.treeCheckable === true));
+        (props.mode === 'multiple' || props.mode === 'tags' || props.treeCheckable === true))
+    );
   };
 
   const isMultiple = getIsMultiple();
@@ -57,9 +59,9 @@ export function useRuleFormItem<T extends Recordable>(
     initialValue = (initialValue as string).split(',');
   }
 
-const innerState = reactive({
-  value: initialValue as T[keyof T],
-});
+  const innerState = reactive({
+    value: initialValue as T[keyof T],
+  });
 
   const defaultState = readonly(innerState);
 
@@ -88,12 +90,7 @@ const innerState = reactive({
         innerState.value = values as T[keyof T];
         return;
       }
-    } else if (
-      isMultiple &&
-      !(value instanceof Object) &&
-      !(value instanceof Array) &&
-      typeof value === 'string'
-    ) {
+    } else if (isMultiple && !(value instanceof Object) && !(value instanceof Array) && typeof value === 'string') {
       innerState.value = (value as string).split(',') as T[keyof T];
       return;
     }

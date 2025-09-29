@@ -7,7 +7,7 @@ vi.mock('/@/router/constant', () => ({
 }));
 vi.mock('/@/hooks/web/useI18n', () => ({ t: (k: string) => k }));
 
-import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE, ERROR_LOG_ROUTE } from '/@/router/routes/basic';
+import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE, ERROR_LOG_ROUTE } from 'router/routes/basic';
 
 describe('router/routes/basic', () => {
   it('should export PAGE_NOT_FOUND_ROUTE', () => {
@@ -23,5 +23,3 @@ describe('router/routes/basic', () => {
     expect(ERROR_LOG_ROUTE.children?.[0].path).toBe('list');
   });
 });
-
-

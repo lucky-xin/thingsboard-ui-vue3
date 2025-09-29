@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { ContentType, LogoType, RenderQrCodeParams, ToCanvasFn, QrCodeActionType, QrcodeDoneEventParams } from '/@/components/Qrcode/src/typing';
+import {
+  ContentType,
+  LogoType,
+  RenderQrCodeParams,
+  ToCanvasFn,
+  QrCodeActionType,
+  QrcodeDoneEventParams,
+} from '/@/components/Qrcode/src/typing';
 
 describe('components/Qrcode/src/typing', () => {
   describe('ContentType', () => {

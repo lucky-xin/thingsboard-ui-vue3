@@ -46,5 +46,3 @@ describe('hooks/event/useWindowSizeFn', () => {
     vi.useRealTimers();
   });
 });
-
-

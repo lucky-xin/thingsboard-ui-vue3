@@ -32,7 +32,7 @@ describe('Form', () => {
 
     // Wait for the component to initialize
     await wrapper.vm.$nextTick();
-    
+
     // Since BasicForm is mocked, we can only verify that it renders successfully
     expect(wrapper.exists()).toBe(true);
   });
@@ -46,7 +46,7 @@ describe('Form', () => {
 
     // Wait for component to initialize
     await wrapper.vm.$nextTick();
-    
+
     // Since BasicForm is mocked, we test that component exists and can be mounted
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.vm).toBeTruthy();
@@ -60,10 +60,10 @@ describe('Form', () => {
         showResetButton: true,
       },
     });
-    
+
     // Wait for component to initialize
     await wrapper.vm.$nextTick();
-    
+
     // Since BasicForm is mocked, verify component renders successfully
     expect(wrapper.exists()).toBe(true);
   });
@@ -77,10 +77,10 @@ describe('Form', () => {
         submitButtonOptions: { text: '提交' },
       },
     });
-    
+
     // Wait for component to render completely
     await wrapper.vm.$nextTick();
-    
+
     // Since BasicForm is mocked, verify component renders successfully
     expect(wrapper.exists()).toBe(true);
   });

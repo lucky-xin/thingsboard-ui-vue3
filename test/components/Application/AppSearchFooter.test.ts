@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 // Mock dependencies
-vi.mock('/@/components/Application/src/search/AppSearchKeyItem.vue', () => ({
+vi.mock('../src/components/Application/src/search/AppSearchKeyItem.vue', () => ({
   default: {
     name: 'AppSearchKeyItem',
     props: ['icon'],
@@ -22,7 +22,7 @@ vi.mock('/@/hooks/web/useI18n', () => ({
   }),
 }));
 
-import AppSearchFooter from '/@/components/Application/src/search/AppSearchFooter.vue';
+import AppSearchFooter from '/@/components/Application/src/search/AppSearchFooter';
 
 describe('AppSearchFooter', () => {
   it('should render footer with correct class', () => {

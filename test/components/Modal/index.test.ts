@@ -27,14 +27,14 @@ vi.mock('/@/components/Modal/src/hooks/useModal', () => ({
 describe('Modal/index', () => {
   it('should export BasicModal component with withInstall', async () => {
     const { BasicModal } = await import('/@/components/Modal');
-    
+
     expect(BasicModal).toBeDefined();
     expect(BasicModal.install).toBeDefined();
   });
 
   it('should export modal hooks', async () => {
     const { useModalContext, useModal, useModalInner } = await import('/@/components/Modal');
-    
+
     expect(useModalContext).toBeDefined();
     expect(useModal).toBeDefined();
     expect(useModalInner).toBeDefined();
@@ -45,7 +45,7 @@ describe('Modal/index', () => {
 
   it('should have install method for BasicModal', async () => {
     const { BasicModal } = await import('/@/components/Modal');
-    
+
     expect(BasicModal.install).toBeDefined();
     expect(typeof BasicModal.install).toBe('function');
   });
@@ -55,7 +55,7 @@ describe('Modal/index', () => {
     const mockApp = {
       component: vi.fn(),
     };
-    
+
     BasicModal.install(mockApp as any, 'TestBasicModal');
     expect(mockApp.component).toHaveBeenCalledWith('TestBasicModal', expect.any(Object));
   });
@@ -63,7 +63,7 @@ describe('Modal/index', () => {
   it('should export typing definitions', async () => {
     // This tests that the typing exports don't throw errors
     const exports = await import('/@/components/Modal');
-    
+
     expect(exports).toBeDefined();
     expect(exports.BasicModal).toBeDefined();
   });
@@ -71,7 +71,7 @@ describe('Modal/index', () => {
   it('should have correct exports count', async () => {
     const exports = await import('/@/components/Modal');
     const exportKeys = Object.keys(exports);
-    
+
     // Should export: BasicModal, hooks, and typing exports
     expect(exportKeys).toContain('BasicModal');
     expect(exportKeys).toContain('useModalContext');
@@ -82,14 +82,14 @@ describe('Modal/index', () => {
 
   it('should be valid Vue component', async () => {
     const { BasicModal } = await import('/@/components/Modal');
-    
+
     expect(BasicModal).toBeDefined();
     expect(typeof BasicModal).toBe('object');
   });
 
   it('should export component with proper structure', async () => {
     const { BasicModal } = await import('/@/components/Modal');
-    
+
     // Component should have install method from withInstall
     expect(BasicModal.install).toBeInstanceOf(Function);
   });

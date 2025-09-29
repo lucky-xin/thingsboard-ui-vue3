@@ -25,7 +25,7 @@ describe('components/CountTo/src/CountTo.vue', () => {
         },
       };
     });
-    const { default: CountTo } = await import('/@/components/CountTo/src/CountTo.vue');
+    const { default: CountTo } = await import('../src/components/CountTo/src/CountTo.vue');
     const wrapper = mount(CountTo as any, { props: { startVal: 0, endVal: 10, duration: 1 } });
     const onStarted = vi.fn();
     const onFinished = vi.fn();
@@ -42,7 +42,7 @@ describe('components/CountTo/src/CountTo.vue', () => {
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
-import CountTo from '/@/components/CountTo/src/CountTo.vue';
+import CountTo from '/@/components/CountTo/src/CountTo';
 
 // Mock @vueuse/core
 vi.mock('@vueuse/core', () => ({

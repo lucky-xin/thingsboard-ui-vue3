@@ -43,5 +43,3 @@ describe('components/Button/src/props', () => {
     expect((buttonProps as any).onClick.default).toBe(null);
   });
 });
-
-

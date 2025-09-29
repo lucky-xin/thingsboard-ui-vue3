@@ -27,10 +27,10 @@ vi.mock('/@/components/Form', () => ({
   useForm: () => [vi.fn(), mockFormApi],
 }));
 
-vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
+vi.mock('../src/components/Authentication/src/AuthTitle.vue', () => ({
   default: {
-    name: 'AuthTitle',
-    template: '<div class="auth-title"><slot></slot><slot name="desc"></slot></div>',
+    name: 'Title',
+    template: '<div class="mb-7 sm:mx-auto sm:w-full sm:max-w-md"><h2 class="text-foreground mb-3 text-3xl font-bold leading-9 tracking-tight lg:text-4xl"><slot></slot></h2><p class="text-muted-foreground lg:text-md text-sm"><slot name="desc"></slot></p></div>',
   },
 }));
 
@@ -66,7 +66,7 @@ describe('CodeLogin', () => {
       },
     });
 
-    expect(wrapper.find('.auth-title').exists()).toBe(true);
+    expect(wrapper.find('.mb-7').exists()).toBe(true);
     expect(wrapper.find('.basic-form').exists()).toBe(true);
     expect(wrapper.findAllComponents({ name: 'Button' }).length).toBe(2);
   });

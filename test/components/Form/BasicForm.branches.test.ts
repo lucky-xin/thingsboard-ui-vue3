@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import BasicForm from '/@/components/Form/src/BasicForm.vue';
+import BasicForm from '/@/components/Form/src/BasicForm';
 
 describe('components/Form/src/BasicForm.vue branches', () => {
   it('should toggle compact class when compact prop is true', async () => {
@@ -14,5 +14,3 @@ describe('components/Form/src/BasicForm.vue branches', () => {
     expect(wrapper.classes().join(' ')).toContain('--compact');
   });
 });
-
-

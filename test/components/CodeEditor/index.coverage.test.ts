@@ -4,6 +4,8 @@ import { describe, it, expect } from 'vitest';
 describe('CodeEditor/index coverage', () => {
   it('should export all expected components', async () => {
     const module = await import('/@/components/CodeEditor');
+    // Add timeout to prevent hanging
+    await new Promise(resolve => setTimeout(resolve, 100));
 
     expect(module.CodeEditor).toBeDefined();
     expect(module.JsonPreview).toBeDefined();
@@ -47,4 +49,3 @@ describe('CodeEditor/index coverage', () => {
     expect(exportKeys.length).toBeGreaterThanOrEqual(2);
   }, 10000); // Increase timeout to 10 seconds
 });
-

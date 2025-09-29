@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 
-// Mock withInstall utility  
+// Mock withInstall utility
 vi.mock('/@/utils', () => ({
   withInstall: vi.fn((component) => {
     const mockComponent = {
@@ -18,7 +18,7 @@ vi.mock('/@/utils', () => ({
 describe('Page/index', () => {
   it('should export PageFooter and PageWrapper components with withInstall', async () => {
     const { PageFooter, PageWrapper } = await import('/@/components/Page');
-    
+
     expect(PageFooter).toBeDefined();
     expect(PageWrapper).toBeDefined();
     expect(PageFooter.install).toBeDefined();
@@ -27,7 +27,7 @@ describe('Page/index', () => {
 
   it('should export PageWrapperFixedHeightKey constant', async () => {
     const { PageWrapperFixedHeightKey } = await import('/@/components/Page');
-    
+
     expect(PageWrapperFixedHeightKey).toBeDefined();
     expect(PageWrapperFixedHeightKey).toBe('PageWrapperFixedHeight');
     expect(typeof PageWrapperFixedHeightKey).toBe('string');
@@ -35,7 +35,7 @@ describe('Page/index', () => {
 
   it('should have install method for both components', async () => {
     const { PageFooter, PageWrapper } = await import('/@/components/Page');
-    
+
     expect(PageFooter.install).toBeDefined();
     expect(PageWrapper.install).toBeDefined();
     expect(typeof PageFooter.install).toBe('function');
@@ -47,10 +47,10 @@ describe('Page/index', () => {
     const mockApp = {
       component: vi.fn(),
     };
-    
+
     PageFooter.install(mockApp as any, 'TestPageFooter');
     PageWrapper.install(mockApp as any, 'TestPageWrapper');
-    
+
     expect(mockApp.component).toHaveBeenCalledTimes(2);
     expect(mockApp.component).toHaveBeenCalledWith('TestPageFooter', expect.any(Object));
     expect(mockApp.component).toHaveBeenCalledWith('TestPageWrapper', expect.any(Object));
@@ -59,7 +59,7 @@ describe('Page/index', () => {
   it('should have correct exports count', async () => {
     const exports = await import('/@/components/Page');
     const exportKeys = Object.keys(exports);
-    
+
     // Should export: PageFooter, PageWrapper, and PageWrapperFixedHeightKey
     expect(exportKeys).toContain('PageFooter');
     expect(exportKeys).toContain('PageWrapper');
@@ -69,7 +69,7 @@ describe('Page/index', () => {
 
   it('should be valid Vue components', async () => {
     const { PageFooter, PageWrapper } = await import('/@/components/Page');
-    
+
     expect(PageFooter).toBeDefined();
     expect(PageWrapper).toBeDefined();
     expect(typeof PageFooter).toBe('object');
@@ -78,7 +78,7 @@ describe('Page/index', () => {
 
   it('should export components with proper structure', async () => {
     const { PageFooter, PageWrapper } = await import('/@/components/Page');
-    
+
     // Components should have install method from withInstall
     expect(PageFooter.install).toBeInstanceOf(Function);
     expect(PageWrapper.install).toBeInstanceOf(Function);

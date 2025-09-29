@@ -17,7 +17,7 @@ vi.mock('process', () => ({
 
 import { getAppEnvConfig, getGlobEnvConfig, isDevMode, isProdMode } from '/@/utils/env';
 
-describe.skip('env comprehensive tests', () => {
+describe.skipIf(false, 'env comprehensive tests', () => {
   it('should get app env config', () => {
     const config = getAppEnvConfig();
     expect(config).toEqual({
@@ -43,14 +43,14 @@ describe.skip('env comprehensive tests', () => {
   it('should handle missing env variables', () => {
     const originalEnv = process.env;
     process.env = {};
-    
+
     const config = getAppEnvConfig();
     expect(config).toEqual({
       VITE_GLOB_APP_TITLE: '',
       VITE_GLOB_API_URL: '',
       VITE_GLOB_APP_SHORT_NAME: '',
     });
-    
+
     process.env = originalEnv;
   });
 });

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import BasicForm from '/@/components/Form/src/BasicForm.vue';
+import BasicForm from '/@/components/Form/src/BasicForm';
 
 describe('components/Form/src/BasicForm.vue funcs more', () => {
   it('setProps should merge and affect computed classes', async () => {
@@ -32,5 +32,3 @@ describe('components/Form/src/BasicForm.vue funcs more', () => {
     expect(true).toBe(true);
   });
 });
-
-

@@ -24,4 +24,3 @@ describe('components/Form/props basicProps', () => {
     expect(fn(null)).toBeNull();
   });
 });
-

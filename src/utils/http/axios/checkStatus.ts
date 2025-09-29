@@ -7,11 +7,19 @@ import { useUserStoreWithOut } from '/@/store/modules/user';
 import projectSetting from '/@/settings/projectSetting';
 import { SessionTimeoutProcessingEnum } from '/@/enums/appEnum';
 
-const { showMessageModal, showMessage } = useMessage();
+let showMessageModal: any;
+let showMessage: any;
 // const error = createMessage.error!;
 const stp = projectSetting.sessionTimeoutProcessing;
 
 export function checkStatus(status: number, msg: string, errorMessageMode: ErrorMessageMode = 'message'): void {
+  // Initialize message functions here to avoid top-level execution during import
+  if (!showMessageModal || !showMessage) {
+    const messageFunctions = useMessage();
+    showMessageModal = messageFunctions.showMessageModal;
+    showMessage = messageFunctions.showMessage;
+  }
+
   const { t } = useI18n();
   const userStore = useUserStoreWithOut();
   let errMessage = '';

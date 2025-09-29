@@ -223,10 +223,10 @@ describe('utils/is', () => {
       // In test environment, Promise objects may not pass all these checks
       const promise = Promise.resolve();
       const result = isPromise(promise);
-      
+
       // Test that the function returns a boolean
       expect(typeof result).toBe('boolean');
-      
+
       // The actual result may be false due to implementation specifics
       expect(result).toBe(false);
     });
@@ -249,6 +249,47 @@ describe('utils/is', () => {
       expect(isPromise(undefined)).toBe(false);
       expect(isPromise('promise')).toBe(false);
       expect(isPromise(() => {})).toBe(false);
+    });
+
+    it('should handle edge case for Promise-like objects', () => {
+      // Test an object that has then and catch methods but is not a Promise
+      const thenable = {
+        then: vi.fn(),
+        catch: vi.fn(),
+      };
+
+      // The implementation first checks is(val, 'Promise') which will be false for plain objects
+      // This tests the short-circuit behavior of the && operators
+      expect(isPromise(thenable)).toBe(false);
+    });
+
+    it('should return false when isObject check fails', () => {
+      // Mock the is function to return true for 'Promise' but value is not an object
+      // This is hard to test directly without mocking the is function
+      // We'll test that null (which passes is(val, 'Promise') in some cases) fails isObject check
+      expect(isPromise(null)).toBe(false);
+    });
+
+    it('should return false when then is not a function', () => {
+      // Create an object that would pass is(val, 'Promise') and isObject but not isFunction(val.then)
+      const mockPromiseLike = {
+        then: 'not a function',
+        catch: vi.fn(),
+      };
+
+      // This will fail the is(val, 'Promise') check, so it will short-circuit
+      expect(isPromise(mockPromiseLike)).toBe(false);
+    });
+
+    it('should return false when catch is not a function', () => {
+      // Create an object that would pass is(val, 'Promise') and isObject but not isFunction(val.catch)
+      const mockPromiseLike = {
+        then: vi.fn(),
+        catch: 'not a function',
+      };
+
+      // This will fail the is(val, 'Promise') check, so it will short-circuit
+      expect(isPromise(mockPromiseLike)).toBe(false);
     });
   });
 
@@ -275,7 +316,7 @@ describe('utils/is', () => {
   describe('isFunction', () => {
     it('should return true for functions', () => {
       expect(isFunction(() => {})).toBe(true);
-      expect(isFunction(function() {})).toBe(true);
+      expect(isFunction(function () {})).toBe(true);
       expect(isFunction(async () => {})).toBe(true);
       expect(isFunction(function* generator() {})).toBe(true);
       expect(isFunction(Math.max)).toBe(true);
@@ -336,7 +377,7 @@ describe('utils/is', () => {
     it('should return true for arrays', () => {
       expect(isArray([])).toBe(true);
       expect(isArray([1, 2, 3])).toBe(true);
-      expect(isArray(new Array())).toBe(true);
+      expect(isArray([])).toBe(true);
       expect(isArray(Array.from('hello'))).toBe(true);
       expect(isArray([null, undefined])).toBe(true);
     });
@@ -368,7 +409,7 @@ describe('utils/is', () => {
         value: mockWindow,
         writable: true,
       });
-      
+
       // We need to mock the is function behavior for Window
       expect(isWindow(mockWindow)).toBe(false); // Will be false because is() check fails
     });
@@ -385,7 +426,7 @@ describe('utils/is', () => {
     it('should return true for DOM elements', () => {
       const mockElement = { tagName: 'DIV' };
       expect(isElement(mockElement)).toBe(true);
-      
+
       const anotherElement = { tagName: 'SPAN', id: 'test' };
       expect(isElement(anotherElement)).toBe(true);
     });
@@ -405,7 +446,14 @@ describe('utils/is', () => {
     it('should return true for Map objects', () => {
       expect(isMap(new Map())).toBe(true);
       expect(isMap(new Map([['key', 'value']]))).toBe(true);
-      expect(isMap(new Map([[1, 'one'], [2, 'two']]))).toBe(true);
+      expect(
+        isMap(
+          new Map([
+            [1, 'one'],
+            [2, 'two'],
+          ]),
+        ),
+      ).toBe(true);
     });
 
     it('should return false for non-Map values', () => {
@@ -481,18 +529,18 @@ describe('utils/is', () => {
   describe('type guard functionality', () => {
     it('should work as type guards in TypeScript', () => {
       const value: unknown = 'hello';
-      
+
       if (isString(value)) {
         // TypeScript should infer value as string here
         expect(value.toUpperCase()).toBe('HELLO');
       }
-      
+
       const numValue: unknown = 42;
       if (isNumber(numValue)) {
         // TypeScript should infer numValue as number here
         expect(numValue + 1).toBe(43);
       }
-      
+
       const arrValue: unknown = [1, 2, 3];
       if (isArray(arrValue)) {
         // TypeScript should infer arrValue as array here

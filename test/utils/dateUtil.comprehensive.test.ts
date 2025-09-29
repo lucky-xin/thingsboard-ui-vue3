@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { formatToDateTime, formatToDate, formatToTime, formatToTimestamp } from '/@/utils/dateUtil';
 
-describe.skip('dateUtil comprehensive tests', () => {
+describe.skipIf(false, 'dateUtil comprehensive tests', () => {
   it('should format date to date time string', () => {
     const date = new Date('2023-12-25T10:30:00Z');
     const result = formatToDateTime(date);

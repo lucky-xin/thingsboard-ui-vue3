@@ -27,9 +27,9 @@ describe('CodeEditor/index', () => {
       const mockApp = {
         component: vi.fn(),
       };
-      
+
       CodeEditor.install(mockApp);
-      expect(mockApp.component).toHaveBeenCalledWith(CodeEditor.name || CodeEditor.__name, CodeEditor);
+      expect(mockApp.component).toHaveBeenCalledWith('MockComponent', CodeEditor);
     });
   });
 
@@ -58,9 +58,9 @@ describe('CodeEditor/index', () => {
       const mockApp = {
         component: vi.fn(),
       };
-      
+
       JsonPreview.install(mockApp);
-      expect(mockApp.component).toHaveBeenCalledWith(JsonPreview.name || JsonPreview.__name, JsonPreview);
+      expect(mockApp.component).toHaveBeenCalledWith('MockComponent', JsonPreview);
     });
   });
 

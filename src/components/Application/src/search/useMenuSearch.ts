@@ -163,5 +163,16 @@ export function useMenuSearch(refs: Ref<HTMLElement[]>, scrollWrap: Ref<ElRef>, 
   // esc close
   onKeyStroke('Escape', handleClose);
 
-  return { handleSearch, searchResult, keyword, activeIndex, handleMouseenter, handleEnter, handleUp, handleDown, handleClose, handleScroll };
+  return {
+    handleSearch,
+    searchResult,
+    keyword,
+    activeIndex,
+    handleMouseenter,
+    handleEnter,
+    handleUp,
+    handleDown,
+    handleClose,
+    handleScroll,
+  };
 }

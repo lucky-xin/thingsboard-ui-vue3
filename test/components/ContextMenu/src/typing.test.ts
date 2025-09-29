@@ -1,5 +1,11 @@
-import { describe, it, expect } from 'vitest';
-import { Axis, ContextMenuItem, CreateContextOptions, ContextMenuProps, ItemContentProps } from '/@/components/ContextMenu/src/typing';
+import { describe, expect, it, vi } from 'vitest';
+import {
+  Axis,
+  ContextMenuItem,
+  ContextMenuProps,
+  CreateContextOptions,
+  ItemContentProps,
+} from '/@/components/ContextMenu/src/typing';
 
 describe('components/ContextMenu/src/typing', () => {
   describe('Axis', () => {

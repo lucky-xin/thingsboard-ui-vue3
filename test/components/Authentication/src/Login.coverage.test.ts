@@ -45,7 +45,7 @@ vi.mock('/@/router', () => ({
 }));
 
 // Import the component
-import Login from '/@/components/Authentication/src/Login.vue';
+import Login from '/@/components/Authentication/src/Login';
 
 // Create a simple router for testing
 const router = createRouter({

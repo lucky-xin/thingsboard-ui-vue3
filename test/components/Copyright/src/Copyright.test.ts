@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import Copyright from '/@/components/Copyright/src/Copyright.vue';
+import Copyright from '/@/components/Copyright/src/Copyright';
 
 describe('components/Copyright/src/Copyright', () => {
   it('should render with default props', () => {
     const wrapper = mount(Copyright);
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Copyright © 2024');
     expect(wrapper.text()).toContain('Thingsboard-UI-Vue3');
@@ -18,7 +18,7 @@ describe('components/Copyright/src/Copyright', () => {
         companyName: 'Custom Company',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Copyright © 2024');
     expect(wrapper.text()).toContain('Custom Company');
@@ -30,7 +30,7 @@ describe('components/Copyright/src/Copyright', () => {
         date: '2023',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Copyright © 2023');
     expect(wrapper.text()).toContain('Thingsboard-UI-Vue3');
@@ -43,10 +43,10 @@ describe('components/Copyright/src/Copyright', () => {
         companySiteLink: 'https://example.com',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Test Company');
-    
+
     const companyLink = wrapper.find('a[href="https://example.com"]');
     expect(companyLink.exists()).toBe(true);
     expect(companyLink.text()).toBe('Test Company');
@@ -60,10 +60,10 @@ describe('components/Copyright/src/Copyright', () => {
         icpLink: 'https://beian.miit.gov.cn',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('京ICP备12345678号');
-    
+
     const icpLink = wrapper.find('a[href="https://beian.miit.gov.cn"]');
     expect(icpLink.exists()).toBe(true);
     expect(icpLink.text()).toBe('京ICP备12345678号');
@@ -76,10 +76,10 @@ describe('components/Copyright/src/Copyright', () => {
         icp: '京ICP备12345678号',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('京ICP备12345678号');
-    
+
     const icpLink = wrapper.find('a[href="javascript:void(0)"]');
     expect(icpLink.exists()).toBe(true);
     expect(icpLink.text()).toBe('京ICP备12345678号');
@@ -95,16 +95,16 @@ describe('components/Copyright/src/Copyright', () => {
         icpLink: 'https://beian.miit.gov.cn',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Copyright © 2023');
     expect(wrapper.text()).toContain('Test Company');
     expect(wrapper.text()).toContain('京ICP备12345678号');
-    
+
     const companyLink = wrapper.find('a[href="https://example.com"]');
     expect(companyLink.exists()).toBe(true);
     expect(companyLink.text()).toBe('Test Company');
-    
+
     const icpLink = wrapper.find('a[href="https://beian.miit.gov.cn"]');
     expect(icpLink.exists()).toBe(true);
     expect(icpLink.text()).toBe('京ICP备12345678号');
@@ -116,7 +116,7 @@ describe('components/Copyright/src/Copyright', () => {
         companyName: '',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Copyright © 2024');
     expect(wrapper.text()).not.toContain('Thingsboard-UI-Vue3');
@@ -129,7 +129,7 @@ describe('components/Copyright/src/Copyright', () => {
         icp: '',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Copyright © 2024');
     expect(wrapper.text()).toContain('Thingsboard-UI-Vue3');
@@ -138,13 +138,13 @@ describe('components/Copyright/src/Copyright', () => {
 
   it('should have correct CSS classes', () => {
     const wrapper = mount(Copyright);
-    
+
     const container = wrapper.find('div');
     expect(container.classes()).toContain('text-md');
     expect(container.classes()).toContain('flex-center');
-    
+
     const links = wrapper.findAll('a');
-    links.forEach(link => {
+    links.forEach((link) => {
       expect(link.classes()).toContain('hover:text-primary-hover');
       expect(link.classes()).toContain('mx-1');
     });
@@ -160,7 +160,7 @@ describe('components/Copyright/src/Copyright', () => {
         icpLink: '',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Copyright ©');
     expect(wrapper.find('a').exists()).toBe(false);

@@ -88,5 +88,31 @@ describe('utils/mitt', () => {
 
       expect(handler).toHaveBeenCalledTimes(2);
     });
+
+    it('should handle one-time event registration', () => {
+      const emitter = mitt<{ test: string }>();
+      const handler = vi.fn();
+
+      // Test the isOne parameter which replaces existing handlers
+      emitter.on('test', handler, true); // isOne = true
+      emitter.emit('test', 'hello');
+      expect(handler).toHaveBeenCalledWith('hello');
+    });
+
+    it('should remove specific handler when provided', () => {
+      const emitter = mitt<{ test: string }>();
+      const handler1 = vi.fn();
+      const handler2 = vi.fn();
+
+      emitter.on('test', handler1);
+      emitter.on('test', handler2);
+
+      // Remove only handler1 with isAll=true to remove specific handler
+      emitter.off('test', handler1, true);
+      emitter.emit('test', 'hello');
+
+      expect(handler1).toHaveBeenCalledTimes(0); // handler1 should not be called
+      expect(handler2).toHaveBeenCalledTimes(1); // handler2 should be called
+    });
   });
 });

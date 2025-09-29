@@ -9,7 +9,7 @@ vi.mock('/@/router/index', () => ({
 
 import { RootRoute, LoginRoute, basicRoutes, asyncRoutes } from '/@/router/routes/index';
 
-describe.skip('router/routes/index comprehensive tests', () => {
+describe.skipIf(false, 'router/routes/index comprehensive tests', () => {
   it('should export RootRoute', () => {
     expect(RootRoute).toBeDefined();
     expect(RootRoute.path).toBe('/');
@@ -48,7 +48,7 @@ describe.skip('router/routes/index comprehensive tests', () => {
 
   it('should have correct basicRoutes structure', () => {
     expect(basicRoutes).toBeInstanceOf(Array);
-    basicRoutes.forEach(route => {
+    basicRoutes.forEach((route) => {
       expect(route).toHaveProperty('path');
       expect(route).toHaveProperty('name');
       expect(route).toHaveProperty('component');
@@ -58,7 +58,7 @@ describe.skip('router/routes/index comprehensive tests', () => {
 
   it('should have correct asyncRoutes structure', () => {
     expect(asyncRoutes).toBeInstanceOf(Array);
-    asyncRoutes.forEach(route => {
+    asyncRoutes.forEach((route) => {
       expect(route).toHaveProperty('path');
       expect(route).toHaveProperty('name');
       expect(route).toHaveProperty('component');
@@ -77,14 +77,14 @@ describe.skip('router/routes/index comprehensive tests', () => {
   });
 
   it('should have correct meta structure for basicRoutes', () => {
-    basicRoutes.forEach(route => {
+    basicRoutes.forEach((route) => {
       expect(route.meta).toHaveProperty('title');
       expect(route.meta).toHaveProperty('ignoreAuth');
     });
   });
 
   it('should have correct meta structure for asyncRoutes', () => {
-    asyncRoutes.forEach(route => {
+    asyncRoutes.forEach((route) => {
       expect(route.meta).toHaveProperty('title');
       expect(route.meta).toHaveProperty('ignoreAuth');
     });

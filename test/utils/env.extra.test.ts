@@ -23,7 +23,7 @@ describe('utils/env extra', () => {
     (warn as any).mockClear?.();
   });
 
-  it('should compute publicPath when VITE_PUBLIC_PATH is \'/\'', () => {
+  it("should compute publicPath when VITE_PUBLIC_PATH is '/'", () => {
     expect(publicPath).toBe('');
   });
 
@@ -43,5 +43,3 @@ describe('utils/env extra', () => {
     expect(conf.VITE_PROXY).toEqual([]);
   });
 });
-
-

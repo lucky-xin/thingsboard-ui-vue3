@@ -11,5 +11,3 @@ describe('router constants/types coverage', () => {
     expect(types).toBeDefined();
   });
 });
-
-

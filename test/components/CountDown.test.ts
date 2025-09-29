@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import CountButton from '/@/components/CountDown/src/CountButton.vue';
+import CountButton from '/@/components/CountDown/src/CountButton';
 
 // Mock the useI18n hook
 vi.mock('/@/hooks/web/useI18n', () => ({

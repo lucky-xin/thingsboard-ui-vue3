@@ -1,24 +1,24 @@
 import { mount } from '@vue/test-utils';
-import CardList from '/@/components/CardList/src/CardList.vue';
+import CardList from '/@/components/CardList/src/CardList';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { useGlobSetting } from '/@/hooks/setting';
 
 // Mock useMessage hook
-vi.mock('/@/hooks/web/useMessage', () => {
+vi.mock('hooks/web/useMessage', () => {
   return {
     useMessage: vi.fn(),
   };
 });
 
 // Mock useGlobSetting hook
-vi.mock('/@/hooks/setting', () => {
+vi.mock('hooks/setting', () => {
   return {
     useGlobSetting: vi.fn(),
   };
 });
 
 // Mock Form component
-vi.mock('/@/components/Form', () => {
+vi.mock('components/Form', () => {
   return {
     BasicForm: {
       name: 'BasicForm',
@@ -34,7 +34,7 @@ vi.mock('/@/components/Form', () => {
 });
 
 // Mock isFunction utility
-vi.mock('/@/utils/is', () => {
+vi.mock('utils/is', () => {
   return {
     isFunction: vi.fn().mockReturnValue(true),
   };
@@ -52,7 +52,7 @@ describe('CardList.vue', () => {
     (useMessage as any).mockReturnValue({
       showMessage: mockShowMessage,
     });
-    (useGlobSetting as any).mockReturnValue(mockUseGlobSetting);
+    (useGlobSetting as any).mockImplementation(() => mockUseGlobSetting);
   });
 
   it('renders correctly with default props', () => {
@@ -73,7 +73,7 @@ describe('CardList.vue', () => {
           'ellipsis-outlined': true,
           'redo-outlined': true,
           'table-outlined': true,
-          'dropdown': true,
+          dropdown: true,
         },
       },
     });
@@ -104,15 +104,15 @@ describe('CardList.vue', () => {
           'ellipsis-outlined': true,
           'redo-outlined': true,
           'table-outlined': true,
-          'dropdown': true,
+          dropdown: true,
         },
       },
     });
 
     // Wait for the component to mount and fetch to complete
     await wrapper.vm.$nextTick();
-    await new Promise(resolve => setTimeout(resolve, 200));
-    
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
     expect(mockApi).toHaveBeenCalled();
   });
 
@@ -141,15 +141,15 @@ describe('CardList.vue', () => {
           'ellipsis-outlined': true,
           'redo-outlined': true,
           'table-outlined': true,
-          'dropdown': true,
+          dropdown: true,
         },
       },
     });
 
     // Wait for the component to mount and fetch to complete
     await wrapper.vm.$nextTick();
-    await new Promise(resolve => setTimeout(resolve, 200));
-    
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
     expect(mockApi).toHaveBeenCalled();
     // Component should still render even if API fails
     expect(wrapper.exists()).toBe(true);

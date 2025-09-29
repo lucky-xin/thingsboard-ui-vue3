@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 
-import AuthTitle from '/@/components/Authentication/src/AuthTitle.vue';
+import AuthTitle from '/@/components/Authentication/src/AuthTitle';
 
 describe('AuthTitle', () => {
   it('should render title and description slots', () => {

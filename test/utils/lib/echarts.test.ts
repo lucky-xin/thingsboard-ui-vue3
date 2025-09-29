@@ -53,14 +53,14 @@ vi.mock('echarts/renderers', () => ({
 describe('utils/lib/echarts', () => {
   it('should export ECharts utilities', async () => {
     const module = await import('/@/utils/lib/echarts');
-    
+
     expect(module).toBeDefined();
     expect(typeof module).toBe('object');
   });
 
   it('should export echarts as default', async () => {
     const module = await import('/@/utils/lib/echarts');
-    
+
     expect(module.default).toBeDefined();
     expect(typeof module.default).toBe('object');
   });
@@ -68,7 +68,7 @@ describe('utils/lib/echarts', () => {
   it('should have echarts core methods', async () => {
     const module = await import('/@/utils/lib/echarts');
     const echarts = module.default;
-    
+
     expect(echarts.use).toBeDefined();
     expect(echarts.init).toBeDefined();
     expect(echarts.dispose).toBeDefined();
@@ -79,7 +79,7 @@ describe('utils/lib/echarts', () => {
 
   it('should have initialized with required components', async () => {
     const { use } = await import('echarts/core');
-    
+
     // Verify that echarts.use was called during module initialization
     // This tests that the module properly sets up the required components
     expect(use).toHaveBeenCalled();
@@ -87,7 +87,7 @@ describe('utils/lib/echarts', () => {
 
   it('should be a valid echarts module', async () => {
     const module = await import('/@/utils/lib/echarts');
-    
+
     expect(module).toBeDefined();
     expect(typeof module).toBe('object');
     expect(module.default).toBeDefined();
@@ -96,7 +96,7 @@ describe('utils/lib/echarts', () => {
   it('should have graphic utilities', async () => {
     const module = await import('/@/utils/lib/echarts');
     const echarts = module.default;
-    
+
     expect(echarts.graphic).toBeDefined();
     expect(typeof echarts.graphic).toBe('object');
   });

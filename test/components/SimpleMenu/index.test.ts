@@ -13,7 +13,7 @@ vi.mock('./src/SimpleMenu.vue', () => ({
 describe('SimpleMenu/index', () => {
   it('should export SimpleMenu component', async () => {
     const module = await import('/@/components/SimpleMenu/index');
-    
+
     expect(module).toBeDefined();
     expect(module.SimpleMenu).toBeDefined();
   });
@@ -21,7 +21,7 @@ describe('SimpleMenu/index', () => {
   it('should have correct component structure', async () => {
     const module = await import('/@/components/SimpleMenu/index');
     const { SimpleMenu } = module;
-    
+
     expect(SimpleMenu).toBeDefined();
     expect(typeof SimpleMenu).toBe('object');
   });

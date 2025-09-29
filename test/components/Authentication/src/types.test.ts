@@ -23,7 +23,7 @@ describe('components/Authentication/src/types', () => {
       showThirdPartyLogin: true,
       subTitle: 'Sub Title',
       title: 'Title',
-      submitButtonText: 'Submit'
+      submitButtonText: 'Submit',
     };
 
     expect(props).toBeDefined();
@@ -46,7 +46,7 @@ describe('components/Authentication/src/types', () => {
   it('should allow partial props', () => {
     // Test that all properties are optional
     const partialProps: AuthenticationProps = {
-      title: 'Test Title'
+      title: 'Test Title',
     };
 
     expect(partialProps).toBeDefined();

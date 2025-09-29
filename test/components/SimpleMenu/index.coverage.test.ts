@@ -31,8 +31,8 @@ describe('SimpleMenu/index coverage', () => {
   it('should have correct component names', async () => {
     const { SimpleMenu, SimpleMenuTag } = await import('/@/components/SimpleMenu');
 
-    expect(SimpleMenu).toHaveProperty('__name');
-    expect(SimpleMenuTag).toHaveProperty('__name');
+    expect(SimpleMenu).toHaveProperty('name');
+    expect(SimpleMenuTag).toHaveProperty('name');
   });
 
   it('should be importable as named exports', async () => {

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import ClickOutSide from '/@/components/ClickOutSide/src/ClickOutSide.vue';
+import ClickOutSide from '/@/components/ClickOutSide/src/ClickOutSide';
 
 // Mock @vueuse/core
 vi.mock('@vueuse/core', () => ({
@@ -19,7 +19,7 @@ describe('components/ClickOutSide/src/ClickOutSide', () => {
         default: '<div data-testid="content">Test Content</div>',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.find('[data-testid="content"]').exists()).toBe(true);
     expect(wrapper.find('[data-testid="content"]').text()).toBe('Test Content');
@@ -31,7 +31,7 @@ describe('components/ClickOutSide/src/ClickOutSide', () => {
         default: '<div>Test Content</div>',
       },
     });
-    
+
     expect(wrapper.emitted('mounted')).toBeTruthy();
     expect(wrapper.emitted('mounted')).toHaveLength(1);
   });
@@ -42,10 +42,10 @@ describe('components/ClickOutSide/src/ClickOutSide', () => {
         default: '<div>Test Content</div>',
       },
     });
-    
+
     // Wait for the mocked onClickOutside to trigger
-    await new Promise(resolve => setTimeout(resolve, 150));
-    
+    await new Promise((resolve) => setTimeout(resolve, 150));
+
     expect(wrapper.emitted('clickOutside')).toBeTruthy();
     expect(wrapper.emitted('clickOutside')).toHaveLength(1);
   });
@@ -62,7 +62,7 @@ describe('components/ClickOutSide/src/ClickOutSide', () => {
         `,
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.find('h1').text()).toBe('Title');
     expect(wrapper.find('p').text()).toBe('Paragraph');
@@ -72,13 +72,10 @@ describe('components/ClickOutSide/src/ClickOutSide', () => {
   it('should render with multiple slot elements', () => {
     const wrapper = mount(ClickOutSide, {
       slots: {
-        default: [
-          '<div data-testid="item1">Item 1</div>',
-          '<div data-testid="item2">Item 2</div>',
-        ],
+        default: ['<div data-testid="item1">Item 1</div>', '<div data-testid="item2">Item 2</div>'],
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.find('[data-testid="item1"]').exists()).toBe(true);
     expect(wrapper.find('[data-testid="item2"]').exists()).toBe(true);
@@ -86,7 +83,7 @@ describe('components/ClickOutSide/src/ClickOutSide', () => {
 
   it('should render with empty slot', () => {
     const wrapper = mount(ClickOutSide);
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.find('div').exists()).toBe(true);
   });
@@ -97,7 +94,7 @@ describe('components/ClickOutSide/src/ClickOutSide', () => {
         default: '<div>Test Content</div>',
       },
     });
-    
+
     const wrapDiv = wrapper.find('div');
     expect(wrapDiv.exists()).toBe(true);
     expect(wrapDiv.element).toBe(wrapper.vm.wrap);
@@ -109,13 +106,13 @@ describe('components/ClickOutSide/src/ClickOutSide', () => {
         default: '<div>Test Content</div>',
       },
     });
-    
+
     // Check mounted event
     expect(wrapper.emitted('mounted')).toBeTruthy();
-    
+
     // Wait for clickOutside event
-    await new Promise(resolve => setTimeout(resolve, 150));
-    
+    await new Promise((resolve) => setTimeout(resolve, 150));
+
     expect(wrapper.emitted('clickOutside')).toBeTruthy();
   });
 });

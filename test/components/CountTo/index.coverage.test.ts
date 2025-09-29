@@ -4,13 +4,13 @@ import { describe, it, expect } from 'vitest';
 describe('CountTo/index coverage', () => {
   it('should export CountTo component', async () => {
     const { CountTo } = await import('/@/components/CountTo');
-    
+
     expect(CountTo).toBeDefined();
   });
 
   it('should have install method', async () => {
     const { CountTo } = await import('/@/components/CountTo');
-    
+
     expect(CountTo.install).toBeDefined();
     expect(typeof CountTo.install).toBe('function');
   });
@@ -20,50 +20,49 @@ describe('CountTo/index coverage', () => {
     const mockApp = {
       component: vi.fn(),
     };
-    
+
     CountTo.install(mockApp as any);
-    
+
     expect(mockApp.component).toHaveBeenCalledTimes(1);
   });
 
   it('should export only CountTo component', async () => {
     const exports = await import('/@/components/CountTo');
     const exportKeys = Object.keys(exports);
-    
+
     expect(exportKeys).toEqual(['CountTo']);
   });
 
   it('should be valid Vue component', async () => {
     const { CountTo } = await import('/@/components/CountTo');
-    
+
     expect(CountTo).toBeDefined();
     expect(typeof CountTo).toBe('object');
   });
 
   it('should export component with proper structure', async () => {
     const { CountTo } = await import('/@/components/CountTo');
-    
+
     // Component should have install method from withInstall
     expect(CountTo.install).toBeInstanceOf(Function);
   });
 
   it('should work with withInstall utility', async () => {
     const { CountTo } = await import('/@/components/CountTo');
-    
+
     // Test that withInstall was applied correctly
     expect(CountTo).toHaveProperty('install');
-    
+
     // Test that install method works
     const mockApp = { component: vi.fn() };
     CountTo.install(mockApp as any);
-    
+
     expect(mockApp.component).toHaveBeenCalledTimes(1);
   });
 
   it('should have correct component name', async () => {
     const { CountTo } = await import('/@/components/CountTo');
-    
+
     expect(CountTo).toHaveProperty('__name');
   });
 });
-

@@ -13,7 +13,7 @@ vi.mock('./src/Scrollbar.vue', () => ({
 describe('Scrollbar/index', () => {
   it('should export Scrollbar component', async () => {
     const module = await import('/@/components/Scrollbar/index');
-    
+
     expect(module).toBeDefined();
     expect(module.Scrollbar).toBeDefined();
   });
@@ -21,7 +21,7 @@ describe('Scrollbar/index', () => {
   it('should have correct component structure', async () => {
     const module = await import('/@/components/Scrollbar/index');
     const { Scrollbar } = module;
-    
+
     expect(Scrollbar).toBeDefined();
     expect(typeof Scrollbar).toBe('object');
   });

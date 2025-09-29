@@ -12,7 +12,29 @@ vi.mock('vue', async () => {
 });
 
 vi.mock('/@/utils', () => ({
+  withInstall: vi.fn((component) => {
+    const wrappedComponent = { ...component, install: vi.fn() };
+    return wrappedComponent;
+  }),
+  deepMerge: vi.fn((target, source) => {
+    if (!target) return source;
+    if (!source) return target;
+    const result = { ...target };
+    Object.keys(source).forEach(key => {
+      if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        result[key] = { ...(target[key] || {}), ...source[key] };
+      } else {
+        result[key] = source[key];
+      }
+    });
+    return result;
+  }),
+  setObjToUrlParams: vi.fn(),
+  openWindow: vi.fn(),
   noop: vi.fn(),
+  sleep: vi.fn(),
+  getPopupContainer: vi.fn(() => document.body),
+  convertBytesToSize: vi.fn(),
 }));
 
 vi.mock('/@/components/Icon', () => ({
@@ -30,7 +52,7 @@ describe('utils/factory/createAsyncComponent', () => {
   it('should create async component with default options', () => {
     const mockLoader = vi.fn();
     const mockDefineResult = { name: 'AsyncComponent' };
-    
+
     (defineAsyncComponent as any).mockReturnValue(mockDefineResult);
 
     const result = createAsyncComponent(mockLoader);
@@ -55,7 +77,7 @@ describe('utils/factory/createAsyncComponent', () => {
       loading: true,
       retry: false,
     };
-    
+
     (defineAsyncComponent as any).mockReturnValue(mockDefineResult);
 
     const result = createAsyncComponent(mockLoader, options);
@@ -73,33 +95,33 @@ describe('utils/factory/createAsyncComponent', () => {
   it('should not create loading component when loading is false', () => {
     const mockLoader = vi.fn();
     const options = { loading: false };
-    
+
     createAsyncComponent(mockLoader, options);
 
     expect(defineAsyncComponent).toHaveBeenCalledWith(
       expect.objectContaining({
         loadingComponent: undefined,
-      })
+      }),
     );
   });
 
   it('should create loading component when loading is true', () => {
     const mockLoader = vi.fn();
     const options = { loading: true, size: 'default' as const };
-    
+
     createAsyncComponent(mockLoader, options);
 
     expect(defineAsyncComponent).toHaveBeenCalledWith(
       expect.objectContaining({
         loadingComponent: expect.anything(),
-      })
+      }),
     );
   });
 
   it('should handle onError with retry enabled', () => {
     const mockLoader = vi.fn();
     const options = { retry: true };
-    
+
     createAsyncComponent(mockLoader, options);
 
     const callArgs = (defineAsyncComponent as any).mock.calls[0][0];
@@ -110,11 +132,11 @@ describe('utils/factory/createAsyncComponent', () => {
     // Test retry logic
     const mockRetry = vi.fn();
     const mockFail = vi.fn();
-    
+
     // Should retry on fetch error with attempts <= 3
     const fetchError = new Error('fetch error');
     onError(fetchError, mockRetry, mockFail, 2);
-    
+
     expect(mockRetry).toHaveBeenCalled();
     expect(mockFail).not.toHaveBeenCalled();
   });
@@ -122,9 +144,9 @@ describe('utils/factory/createAsyncComponent', () => {
   it('should handle onError with retry disabled', async () => {
     const mockLoader = vi.fn();
     const options = { retry: false };
-    
+
     const { noop } = await import('/@/utils');
-    
+
     createAsyncComponent(mockLoader, options);
 
     const callArgs = (defineAsyncComponent as any).mock.calls[0][0];
@@ -136,7 +158,7 @@ describe('utils/factory/createAsyncComponent', () => {
   it('should fail when retry attempts exceed limit', () => {
     const mockLoader = vi.fn();
     const options = { retry: true };
-    
+
     createAsyncComponent(mockLoader, options);
 
     const callArgs = (defineAsyncComponent as any).mock.calls[0][0];
@@ -144,11 +166,11 @@ describe('utils/factory/createAsyncComponent', () => {
 
     const mockRetry = vi.fn();
     const mockFail = vi.fn();
-    
+
     // Should fail when attempts > 3
     const fetchError = new Error('fetch error');
     onError(fetchError, mockRetry, mockFail, 4);
-    
+
     expect(mockRetry).not.toHaveBeenCalled();
     expect(mockFail).toHaveBeenCalled();
   });
@@ -156,7 +178,7 @@ describe('utils/factory/createAsyncComponent', () => {
   it('should fail on non-fetch errors', () => {
     const mockLoader = vi.fn();
     const options = { retry: true };
-    
+
     createAsyncComponent(mockLoader, options);
 
     const callArgs = (defineAsyncComponent as any).mock.calls[0][0];
@@ -164,11 +186,11 @@ describe('utils/factory/createAsyncComponent', () => {
 
     const mockRetry = vi.fn();
     const mockFail = vi.fn();
-    
+
     // Should fail on non-fetch error
     const otherError = new Error('some other error');
     onError(otherError, mockRetry, mockFail, 1);
-    
+
     expect(mockRetry).not.toHaveBeenCalled();
     expect(mockFail).toHaveBeenCalled();
   });
@@ -176,22 +198,22 @@ describe('utils/factory/createAsyncComponent', () => {
   it('should apply all size options correctly', () => {
     const mockLoader = vi.fn();
     const sizes: Array<'default' | 'small' | 'large'> = ['default', 'small', 'large'];
-    
-    sizes.forEach(size => {
+
+    sizes.forEach((size) => {
       vi.clearAllMocks();
       createAsyncComponent(mockLoader, { loading: true, size });
-      
+
       expect(defineAsyncComponent).toHaveBeenCalledWith(
         expect.objectContaining({
           loadingComponent: expect.anything(),
-        })
+        }),
       );
     });
   });
 
   it('should handle empty options object', () => {
     const mockLoader = vi.fn();
-    
+
     createAsyncComponent(mockLoader, {});
 
     expect(defineAsyncComponent).toHaveBeenCalledWith({

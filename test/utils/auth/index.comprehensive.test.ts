@@ -14,7 +14,7 @@ Object.defineProperty(window, 'localStorage', {
 
 import { getToken, setToken, clearToken, getRefreshToken, setRefreshToken, clearRefreshToken } from '/@/utils/auth';
 
-describe.skip('auth comprehensive tests', () => {
+describe.skipIf(false, 'auth comprehensive tests', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });

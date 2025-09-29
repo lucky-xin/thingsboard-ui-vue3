@@ -11,7 +11,7 @@ vi.mock('/@/utils/is', () => ({
 }));
 
 // Mock ContextMenu.vue
-vi.mock('/@/components/ContextMenu/src/ContextMenu.vue', () => ({
+vi.mock('../src/components/ContextMenu/src/ContextMenu.vue', () => ({
   default: 'ContextMenuVue',
 }));
 
@@ -149,12 +149,12 @@ describe('createContextMenu coverage', () => {
   });
 
   it('should handle event without preventDefault', () => {
-    const event = { 
-      clientX: 50, 
+    const event = {
+      clientX: 50,
       clientY: 100,
-      preventDefault: vi.fn()
+      preventDefault: vi.fn(),
     } as any;
-    
+
     createContextMenu({ event });
 
     expect(mockCreateVNode).toHaveBeenCalledWith('ContextMenuVue', {

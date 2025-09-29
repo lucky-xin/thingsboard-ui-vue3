@@ -1,5 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { DrawerInstance, ReturnMethods, RegisterFn, ReturnInnerMethods, UseDrawerReturnType, UseDrawerInnerReturnType, DrawerFooterProps } from '/@/components/Drawer/src/typing';
+import {
+  DrawerInstance,
+  ReturnMethods,
+  RegisterFn,
+  ReturnInnerMethods,
+  UseDrawerReturnType,
+  UseDrawerInnerReturnType,
+  DrawerFooterProps,
+} from '/@/components/Drawer/src/typing';
 
 describe('components/Drawer/src/typing', () => {
   describe('DrawerInstance', () => {

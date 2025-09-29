@@ -1,10 +1,26 @@
-<script lang="tsx">
+<template>
+  <Tooltip
+    :overlay-class-name="`${prefixCls}__wrap`"
+    :title="tooltipTitle"
+    :auto-adjust-overflow="true"
+    :overlay-style="overlayStyle"
+    :placement="placement"
+    :get-popup-container="getPopupContainer"
+  >
+    <span :class="prefixCls">
+      <slot>
+        <Icon icon="i-ant-design:question-circle-outlined" />
+      </slot>
+    </span>
+  </Tooltip>
+</template>
+
+<script lang="ts">
   import type { CSSProperties, PropType } from 'vue';
   import { defineComponent, computed, unref } from 'vue';
   import { Tooltip } from 'ant-design-vue';
   import { getPopupContainer } from '/@/utils';
   import { isString, isArray } from '/@/utils/is';
-  import { getSlot } from '/@/utils/helper/tsxHelper';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { Icon } from '/@/components/Icon';
 
@@ -43,48 +59,35 @@
     name: 'BasicHelp',
     components: { Icon, Tooltip },
     props,
-    setup(props, { slots }) {
+    setup(props) {
       const { prefixCls } = useDesign('basic-help');
 
-      const getTooltipStyle = computed((): CSSProperties => ({ color: props.color, fontSize: props.fontSize }));
+      const tooltipStyle = computed((): CSSProperties => ({ color: props.color, fontSize: props.fontSize }));
 
-      const getOverlayStyle = computed((): CSSProperties => ({ maxWidth: props.maxWidth }));
+      const overlayStyle = computed((): CSSProperties => ({ maxWidth: props.maxWidth }));
 
-      function renderTitle() {
+      const tooltipTitle = computed(() => {
         const textList = props.text;
 
         if (isString(textList)) {
-          return <p>{textList}</p>;
+          return `<p>${textList}</p>`;
         }
 
         if (isArray(textList)) {
           return textList.map((text, index) => {
-            return (
-              <p key={text}>
-                <>
-                  {props.showIndex ? `${index + 1}. ` : ''}
-                  {text}
-                </>
-              </p>
-            );
-          });
+            const prefix = props.showIndex ? `${index + 1}. ` : '';
+            return `<p>${prefix}${text}</p>`;
+          }).join('');
         }
-        return null;
-      }
+        return '';
+      });
 
-      return () => {
-        return (
-          <Tooltip
-            overlayClassName={`${prefixCls}__wrap`}
-            title={<div style={unref(getTooltipStyle)}>{renderTitle()}</div>}
-            autoAdjustOverflow={true}
-            overlayStyle={unref(getOverlayStyle)}
-            placement={props.placement as 'right'}
-            getPopupContainer={() => getPopupContainer()}
-          >
-            <span class={prefixCls}>{getSlot(slots) || <Icon icon="i-ant-design:question-circle-outlined" />}</span>
-          </Tooltip>
-        );
+      return {
+        prefixCls,
+        tooltipStyle,
+        overlayStyle,
+        tooltipTitle,
+        getPopupContainer,
       };
     },
   });

@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
-import JsonPreview from '/@/components/CodeEditor/src/json-preview/JsonPreview.vue';
+import JsonPreview from '/@/components/CodeEditor/src/json-preview/JsonPreview';
 
 describe('JsonPreview.vue', () => {
   it('renders correctly with default props', () => {

@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import Authority from '/@/components/Authority/src/Authority.vue';
+import Authority from '/@/components/Authority/src/Authority';
 import { usePermission } from '/@/hooks/web/usePermission';
 
 // Mock usePermission hook
-vi.mock('/@/hooks/web/usePermission', () => {
+vi.mock('hooks/web/usePermission', () => {
   return {
     usePermission: vi.fn(),
   };

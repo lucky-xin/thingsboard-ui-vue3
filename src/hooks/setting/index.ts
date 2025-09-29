@@ -34,7 +34,8 @@ export const useGlobSetting = (): Readonly<GlobConfig> => {
     if (isProdMode()) {
       return `${location.protocol.replace('https:', 'wss:').replace('http:', 'ws:')}${location.host}${VITE_GLOB_API_URL_WEBSOCKET}`;
     }
-    const viteProxy = JSON.parse(VITE_PROXY);
+    const proxyConfig = VITE_PROXY || '[["/api", "http://localhost:8080"]]';
+    const viteProxy = JSON.parse(proxyConfig);
     const proxyHost = viteProxy[0][1].replace(viteProxy[0][0], '');
     return `${proxyHost.replace('https:', 'wss:').replace('http:', 'ws:')}${VITE_GLOB_API_URL_WEBSOCKET}`;
   })();

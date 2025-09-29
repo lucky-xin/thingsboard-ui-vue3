@@ -269,9 +269,9 @@ describe('components/Form/src/types/formItem', () => {
         rules: [
           { required: true, message: 'Password is required' },
           { min: 8, message: 'Password must be at least 8 characters' },
-          { 
-            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, 
-            message: 'Password must contain uppercase, lowercase, number and special character' 
+          {
+            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+            message: 'Password must contain uppercase, lowercase, number and special character',
           },
         ],
         validateTrigger: ['change', 'blur'],

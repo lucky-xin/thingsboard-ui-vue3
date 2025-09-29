@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import * as mod from '/@/router/routes/mainOut';
+import * as mod from 'router/routes/mainOut';
 
 describe('router/routes/mainOut', () => {
   it('should export mainOutRoutes and names', () => {
@@ -7,5 +7,3 @@ describe('router/routes/mainOut', () => {
     expect(Array.isArray(mod.mainOutRouteNames)).toBe(true);
   });
 });
-
-

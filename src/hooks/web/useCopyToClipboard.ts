@@ -26,7 +26,7 @@ export function useCopyToClipboard(initial?: string) {
 export function copyTextToClipboard(input: string, { target = document.body }: Options = {}) {
   // Convert to string to handle null/undefined gracefully
   const textValue = String(input || '');
-  
+
   const element = document.createElement('textarea');
   const previouslyFocusedElement = document.activeElement;
 
@@ -57,16 +57,16 @@ export function copyTextToClipboard(input: string, { target = document.body }: O
   } catch (e: any) {
     // Clean up before re-throwing
     element.remove();
-    
+
     if (originalRange && selection) {
       selection.removeAllRanges();
       selection.addRange(originalRange);
     }
-    
+
     if (previouslyFocusedElement) {
       (previouslyFocusedElement as HTMLElement).focus();
     }
-    
+
     throw new Error(e);
   }
 

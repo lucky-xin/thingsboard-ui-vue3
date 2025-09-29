@@ -16,4 +16,3 @@ describe('components/Button/src/props.ts funcs coverage', () => {
     expect((buttonProps as any).onClick.default).toBe(null);
   });
 });
-

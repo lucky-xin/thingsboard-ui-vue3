@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import BasicArrow from '/@/components/Basic/src/BasicArrow.vue';
+import BasicArrow from '/@/components/Basic/src/BasicArrow';
 
 // Mock dependencies
 vi.mock('/@/hooks/web/useDesign', () => ({
@@ -53,7 +53,7 @@ describe('components/Basic/src/BasicArrow', () => {
         inset: true,
       },
     });
-    
+
     const element = wrapper.find('span');
     expect(element.classes()).toContain('jeesite-basic-arrow');
     expect(element.classes()).toContain('jeesite-basic-arrow--active');
@@ -63,18 +63,18 @@ describe('components/Basic/src/BasicArrow', () => {
 
   it('should emit click event when clicked', async () => {
     const wrapper = mount(BasicArrow);
-    
+
     await wrapper.trigger('click');
-    
+
     expect(wrapper.emitted('click')).toBeTruthy();
     expect(wrapper.emitted('click')).toHaveLength(1);
   });
 
   it('should emit dblclick event when double clicked', async () => {
     const wrapper = mount(BasicArrow);
-    
+
     await wrapper.trigger('dblclick');
-    
+
     expect(wrapper.emitted('dblclick')).toBeTruthy();
     expect(wrapper.emitted('dblclick')).toHaveLength(1);
   });
@@ -123,7 +123,7 @@ describe('components/Basic/src/BasicArrow', () => {
         loading: false,
       },
     });
-    
+
     const element = wrapper.find('span');
     expect(element.classes()).toContain('jeesite-basic-arrow');
     expect(element.classes()).toContain('jeesite-basic-arrow--active');
@@ -139,7 +139,7 @@ describe('components/Basic/src/BasicArrow', () => {
         expand: true,
       },
     });
-    
+
     const element = wrapper.find('span');
     expect(element.classes()).toContain('jeesite-basic-arrow');
     expect(element.classes()).toContain('jeesite-basic-arrow--active');
@@ -153,7 +153,7 @@ describe('components/Basic/src/BasicArrow', () => {
         expand: true,
       },
     });
-    
+
     const element = wrapper.find('span');
     expect(element.classes()).toContain('jeesite-basic-arrow');
     expect(element.classes()).toContain('jeesite-basic-arrow--active');

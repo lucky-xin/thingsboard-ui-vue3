@@ -21,7 +21,7 @@ describe('AxiosTransform', () => {
 
   it('should have optional hook properties', () => {
     const transform = new TestAxiosTransform();
-    
+
     expect(transform.beforeRequestHook).toBeUndefined();
     expect(transform.transformRequestHook).toBeUndefined();
     expect(transform.requestCatchHook).toBeUndefined();
@@ -60,7 +60,7 @@ describe('AxiosTransform', () => {
     const transform = new TestAxiosTransform();
     const mockConfig = { url: '/test' } as AxiosRequestConfig;
     const mockOptions = { joinTime: true } as RequestOptions;
-    
+
     transform.beforeRequestHook = (config, options) => {
       return { ...config, url: '/modified' };
     };
@@ -73,7 +73,7 @@ describe('AxiosTransform', () => {
     const transform = new TestAxiosTransform();
     const mockResponse = { data: { code: 200, result: 'success' } } as AxiosResponse<Result>;
     const mockOptions = { isTransformResponse: true } as RequestOptions;
-    
+
     transform.transformRequestHook = (res, options) => {
       return res.data.result;
     };
@@ -86,7 +86,7 @@ describe('AxiosTransform', () => {
     const transform = new TestAxiosTransform();
     const mockError = new Error('Network error');
     const mockOptions = { errorMessageMode: 'message' } as RequestOptions;
-    
+
     transform.requestCatchHook = async (e, options) => {
       return Promise.resolve('handled');
     };

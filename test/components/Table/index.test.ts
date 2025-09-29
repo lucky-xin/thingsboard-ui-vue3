@@ -8,14 +8,8 @@ vi.mock('/@/components/Table/src/hooks/useTable', () => ({
 // Test Table component index exports
 describe('Table/index', () => {
   it('should export table components', async () => {
-    const {
-      BasicTable,
-      TableAction,
-      EditTableHeaderIcon,
-      TableImg,
-      TableHeader
-    } = await import('/@/components/Table');
-    
+    const { BasicTable, TableAction, EditTableHeaderIcon, TableImg, TableHeader } = await import('/@/components/Table');
+
     expect(BasicTable).toBeDefined();
     expect(TableAction).toBeDefined();
     expect(EditTableHeaderIcon).toBeDefined();
@@ -25,7 +19,7 @@ describe('Table/index', () => {
 
   it('should export useTable hook', async () => {
     const { useTable } = await import('/@/components/Table');
-    
+
     expect(useTable).toBeDefined();
     expect(typeof useTable).toBe('function');
   });
@@ -33,7 +27,7 @@ describe('Table/index', () => {
   it('should export typing definitions', async () => {
     // This tests that the typing exports don't throw errors
     const exports = await import('/@/components/Table');
-    
+
     expect(exports).toBeDefined();
     expect(exports.BasicTable).toBeDefined();
     expect(exports.useTable).toBeDefined();
@@ -42,7 +36,7 @@ describe('Table/index', () => {
   it('should have correct exports count', async () => {
     const exports = await import('/@/components/Table');
     const exportKeys = Object.keys(exports);
-    
+
     // Should export: components, hooks, and type definitions
     expect(exportKeys).toContain('BasicTable');
     expect(exportKeys).toContain('TableAction');
@@ -55,7 +49,7 @@ describe('Table/index', () => {
 
   it('should be valid Vue components', async () => {
     const { BasicTable, TableAction, TableHeader } = await import('/@/components/Table');
-    
+
     expect(BasicTable).toBeDefined();
     expect(TableAction).toBeDefined();
     expect(TableHeader).toBeDefined();
@@ -75,15 +69,8 @@ describe('Table/index', () => {
   it('should handle component imports correctly', async () => {
     // Test that all imports can be destructured without errors
     const exports = await import('/@/components/Table');
-    const {
-      BasicTable,
-      TableAction,
-      EditTableHeaderIcon,
-      TableImg,
-      TableHeader,
-      useTable
-    } = exports;
-    
+    const { BasicTable, TableAction, EditTableHeaderIcon, TableImg, TableHeader, useTable } = exports;
+
     expect(BasicTable).toBeDefined();
     expect(TableAction).toBeDefined();
     expect(EditTableHeaderIcon).toBeDefined();

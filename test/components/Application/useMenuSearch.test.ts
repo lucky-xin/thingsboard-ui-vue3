@@ -5,23 +5,25 @@ import { mount } from '@vue/test-utils';
 
 // Mock dependencies
 vi.mock('/@/router/menus', () => ({
-  getMenus: vi.fn(() => Promise.resolve([
-    {
-      name: 'dashboard',
-      path: '/dashboard',
-      icon: 'dashboard-icon',
-      hideMenu: false,
-      meta: {},
-      children: [
-        {
-          name: 'overview',
-          path: '/dashboard/overview',
-          hideMenu: false,
-          meta: { hideChildrenInMenu: true },
-        },
-      ],
-    },
-  ])),
+  getMenus: vi.fn(() =>
+    Promise.resolve([
+      {
+        name: 'dashboard',
+        path: '/dashboard',
+        icon: 'dashboard-icon',
+        hideMenu: false,
+        meta: {},
+        children: [
+          {
+            name: 'overview',
+            path: '/dashboard/overview',
+            hideMenu: false,
+            meta: { hideChildrenInMenu: true },
+          },
+        ],
+      },
+    ]),
+  ),
 }));
 
 vi.mock('/@/utils/helper/treeHelper', () => ({
@@ -74,7 +76,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -100,7 +102,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -127,7 +129,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -154,7 +156,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -179,7 +181,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -206,7 +208,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -227,7 +229,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -257,7 +259,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -279,7 +281,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -311,7 +313,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -336,7 +338,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -346,9 +348,7 @@ describe('components/Application/useMenuSearch', () => {
 
     // Mock the filter function to return specific results
     const { filter } = await import('/@/utils/helper/treeHelper');
-    (filter as any).mockImplementation(() => [
-      { name: 'dashboard', path: '/dashboard', hideMenu: false },
-    ]);
+    (filter as any).mockImplementation(() => [{ name: 'dashboard', path: '/dashboard', hideMenu: false }]);
 
     const mockEvent = {
       target: { value: 'dash' },
@@ -372,7 +372,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -402,7 +402,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -436,7 +436,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -459,7 +459,7 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
@@ -491,15 +491,13 @@ describe('components/Application/useMenuSearch', () => {
       },
       render() {
         return null;
-      }
+      },
     });
 
     const component = mount(wrapper);
 
     // Set up search results and refs
-    result.searchResult.value = [
-      { name: 'test1', path: '/test1' },
-    ];
+    result.searchResult.value = [{ name: 'test1', path: '/test1' }];
     result.activeIndex.value = 0;
 
     // Test activeIndex updates

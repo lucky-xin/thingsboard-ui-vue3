@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import account from '/@/router/routes/modules/account';
-import desktop from '/@/router/routes/modules/desktop';
-import tb from '/@/router/routes/modules/tb';
+import account from 'router/routes/modules/account';
+import desktop from 'router/routes/modules/desktop';
+import tb from 'router/routes/modules/tb';
 
 function assertModuleShape(mod: any) {
   expect(typeof mod).toBe('object');
@@ -27,4 +27,3 @@ describe('router/routes/modules/* funcs surrogate', () => {
     expect(Array.isArray(tb.children)).toBe(true);
   });
 });
-

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import CollapseForm from '/@/components/CollapseForm/src/CollapseForm.vue';
+import CollapseForm from '/@/components/CollapseForm/src/CollapseForm';
 
 // Mock dependencies
 vi.mock('/@/hooks/web/useI18n', () => ({

@@ -6,5 +6,3 @@ describe('utils/event index simple import', () => {
     expect(mod).toBeDefined();
   });
 });
-
-

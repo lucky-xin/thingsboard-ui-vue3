@@ -38,7 +38,7 @@ describe('directives/permission', () => {
     const mockApp = {
       directive: vi.fn(),
     } as any;
-    
+
     // Test that the function can be called without throwing an error
     expect(() => {
       setupPermissionDirective(mockApp);
@@ -49,7 +49,7 @@ describe('directives/permission', () => {
     const mockParentNode = { removeChild: vi.fn() };
     const mockElement = { parentNode: mockParentNode };
     const mockBinding = createMockBinding('test-permission');
-    
+
     expect(() => {
       (authDirective as ObjectDirective).mounted!(mockElement as any, mockBinding, null as any, null as any);
     }).not.toThrow();
@@ -59,11 +59,11 @@ describe('directives/permission', () => {
     const mockParentNode = { removeChild: vi.fn() };
     const mockElement = { parentNode: mockParentNode };
     const mockBinding = createMockBinding('');
-    
+
     expect(() => {
       (authDirective as ObjectDirective).mounted!(mockElement as any, mockBinding, null as any, null as any);
     }).not.toThrow();
-    
+
     expect(mockParentNode.removeChild).not.toHaveBeenCalled();
   });
 
@@ -71,11 +71,11 @@ describe('directives/permission', () => {
     const mockParentNode = { removeChild: vi.fn() };
     const mockElement = { parentNode: mockParentNode };
     const mockBinding = createMockBinding(null);
-    
+
     expect(() => {
       (authDirective as ObjectDirective).mounted!(mockElement as any, mockBinding, null as any, null as any);
     }).not.toThrow();
-    
+
     expect(mockParentNode.removeChild).not.toHaveBeenCalled();
   });
 
@@ -83,18 +83,18 @@ describe('directives/permission', () => {
     const mockParentNode = { removeChild: vi.fn() };
     const mockElement = { parentNode: mockParentNode };
     const mockBinding = createMockBinding(undefined);
-    
+
     expect(() => {
       (authDirective as ObjectDirective).mounted!(mockElement as any, mockBinding, null as any, null as any);
     }).not.toThrow();
-    
+
     expect(mockParentNode.removeChild).not.toHaveBeenCalled();
   });
 
   it('should handle missing parent node gracefully', () => {
     const mockElement = { parentNode: null };
     const mockBinding = createMockBinding('test-permission');
-    
+
     expect(() => {
       (authDirective as ObjectDirective).mounted!(mockElement as any, mockBinding, null as any, null as any);
     }).not.toThrow();
@@ -103,13 +103,13 @@ describe('directives/permission', () => {
   it('should handle directive with various permission types', () => {
     const mockParentNode = { removeChild: vi.fn() };
     const mockElement = { parentNode: mockParentNode };
-    
+
     // Test with string permission
     const stringBinding = createMockBinding('admin');
     expect(() => {
       (authDirective as ObjectDirective).mounted!(mockElement as any, stringBinding, null as any, null as any);
     }).not.toThrow();
-    
+
     // Test with array permission
     const arrayBinding = createMockBinding(['admin', 'user']);
     expect(() => {

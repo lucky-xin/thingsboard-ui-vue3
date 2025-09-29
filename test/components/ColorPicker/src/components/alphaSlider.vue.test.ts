@@ -1,35 +1,35 @@
-import { describe, it, expect, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
-import alphaSlider from '/@/components/components/ColorPicker/src/components/alphaSlider'
+import { describe, it, expect, vi } from 'vitest';
+import { mount } from '@vue/test-utils';
+import alphaSlider from '/@/components/ColorPicker/src/components/alphaSlider';
 
 describe('alphaSlider', () => {
   it('should render without crashing', () => {
-    const wrapper = mount(alphaSlider)
-    expect(wrapper.exists()).toBe(true)
-  })
+    const wrapper = mount(alphaSlider);
+    expect(wrapper.exists()).toBe(true);
+  });
 
   it('should render with default props', () => {
-    const wrapper = mount(alphaSlider)
-    expect(wrapper.exists()).toBe(true)
-  })
+    const wrapper = mount(alphaSlider);
+    expect(wrapper.exists()).toBe(true);
+  });
 
   it('should handle props correctly', () => {
-    const props = {}
+    const props = {};
     const wrapper = mount(alphaSlider, {
-      props
-    })
-    expect(wrapper.exists()).toBe(true)
-  })
+      props,
+    });
+    expect(wrapper.exists()).toBe(true);
+  });
 
   it('should emit events when expected', () => {
-    const wrapper = mount(alphaSlider)
+    const wrapper = mount(alphaSlider);
     // Add event testing based on component functionality
-    expect(wrapper.exists()).toBe(true)
-  })
+    expect(wrapper.exists()).toBe(true);
+  });
 
   it('should handle user interactions', () => {
-    const wrapper = mount(alphaSlider)
+    const wrapper = mount(alphaSlider);
     // Add interaction testing
-    expect(wrapper.exists()).toBe(true)
-  })
-})
+    expect(wrapper.exists()).toBe(true);
+  });
+});

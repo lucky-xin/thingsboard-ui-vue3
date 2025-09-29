@@ -1,12 +1,12 @@
 import { mount } from '@vue/test-utils';
-import ClickOutSide from '/@/components/ClickOutSide/src/ClickOutSide.vue';
+import ClickOutSide from '/@/components/ClickOutSide/src/ClickOutSide';
 
 describe('ClickOutSide.vue', () => {
   it('renders slot content correctly', () => {
     const wrapper = mount(ClickOutSide, {
       slots: {
-        default: '<div class="test-content">Test Content</div>'
-      }
+        default: '<div class="test-content">Test Content</div>',
+      },
     });
 
     expect(wrapper.find('.test-content').exists()).toBe(true);
@@ -16,8 +16,8 @@ describe('ClickOutSide.vue', () => {
   it('emits mounted event when component is mounted', async () => {
     const wrapper = mount(ClickOutSide, {
       slots: {
-        default: '<div>Test Content</div>'
-      }
+        default: '<div>Test Content</div>',
+      },
     });
 
     // Wait for the mounted event to be emitted
@@ -29,8 +29,8 @@ describe('ClickOutSide.vue', () => {
   it('emits clickOutside event when clicking outside', async () => {
     const wrapper = mount(ClickOutSide, {
       slots: {
-        default: '<div class="inner-content">Inner Content</div>'
-      }
+        default: '<div class="inner-content">Inner Content</div>',
+      },
     });
 
     // Wait for the component to be mounted

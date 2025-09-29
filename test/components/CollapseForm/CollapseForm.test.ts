@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
-import CollapseForm from '/@/components/CollapseForm/src/CollapseForm.vue';
+import CollapseForm from '/@/components/CollapseForm/src/CollapseForm';
 
 // Mock ant-design-vue Collapse component
 vi.mock('ant-design-vue', () => ({
@@ -95,9 +95,7 @@ describe('CollapseForm.vue', () => {
   });
 
   it('renders slot content for each config item', () => {
-    const config = [
-      { value: 'basic', label: 'Basic Info', open: true },
-    ];
+    const config = [{ value: 'basic', label: 'Basic Info', open: true }];
 
     const wrapper = mount(CollapseForm, {
       props: {

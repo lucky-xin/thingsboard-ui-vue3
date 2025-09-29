@@ -11,4 +11,3 @@ describe('router/routes/index.ts funcs surrogate', () => {
     expect((routesIndex as any).RootRoute?.redirect).toBeDefined();
   });
 });
-

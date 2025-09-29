@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import BasicButton from '/@/components/Button/src/BasicButton.vue';
+import BasicButton from '/@/components/Button/src/BasicButton';
 
 describe('components/Button/src/BasicButton.vue', () => {
   it('should render prefix/postfix icon classes when provided', async () => {
@@ -19,5 +19,3 @@ describe('components/Button/src/BasicButton.vue', () => {
     expect(wrapper.find('.ant-btn').classes()).toEqual(expect.arrayContaining(['is-disabled']));
   });
 });
-
-

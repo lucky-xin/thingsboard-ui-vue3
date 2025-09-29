@@ -31,7 +31,7 @@ describe('utils/cache/index', () => {
 
   it('should export cache utilities', async () => {
     const module = await import('/@/utils/cache/index');
-    
+
     expect(module).toBeDefined();
     expect(typeof module).toBe('object');
   });
@@ -39,14 +39,14 @@ describe('utils/cache/index', () => {
   describe('WebStorage', () => {
     it('should export WebStorage instance', async () => {
       const module = await import('/@/utils/cache/index');
-      
+
       expect(module.WebStorage).toBeDefined();
       expect(typeof module.WebStorage).toBe('object');
     });
 
     it('should be default export', async () => {
       const module = await import('/@/utils/cache/index');
-      
+
       expect(module.default).toBe(module.WebStorage);
     });
   });
@@ -54,7 +54,7 @@ describe('utils/cache/index', () => {
   describe('createStorage', () => {
     it('should export createStorage function', async () => {
       const module = await import('/@/utils/cache/index');
-      
+
       expect(module.createStorage).toBeDefined();
       expect(typeof module.createStorage).toBe('function');
     });
@@ -82,7 +82,7 @@ describe('utils/cache/index', () => {
   describe('createSessionStorage', () => {
     it('should export createSessionStorage function', async () => {
       const module = await import('/@/utils/cache/index');
-      
+
       expect(module.createSessionStorage).toBeDefined();
       expect(typeof module.createSessionStorage).toBe('function');
     });
@@ -104,7 +104,7 @@ describe('utils/cache/index', () => {
   describe('createLocalStorage', () => {
     it('should export createLocalStorage function', async () => {
       const module = await import('/@/utils/cache/index');
-      
+
       expect(module.createLocalStorage).toBeDefined();
       expect(typeof module.createLocalStorage).toBe('function');
     });

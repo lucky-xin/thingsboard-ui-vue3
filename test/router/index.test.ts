@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import * as routerIndex from '/@/router/index';
+import * as routerIndex from 'router/index';
 
 describe('router/index', () => {
   it('should export router configuration', () => {

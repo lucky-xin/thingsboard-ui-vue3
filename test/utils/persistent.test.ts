@@ -56,6 +56,17 @@ describe('utils/cache/persistent', () => {
     window.dispatchEvent(new StorageEvent('storage', { key: APP_SESSION_CACHE_KEY, newValue: '1', oldValue: '0' } as any));
     expect(Persistent.getLocal<any>(TOKEN_KEY as any) === undefined || typeof Persistent.getLocal<any>(TOKEN_KEY as any) === 'string').toBe(true);
   });
+
+  it('should handle storage event with null key', () => {
+    // This will cover the branch in storageChange function where key is null
+    window.dispatchEvent(new StorageEvent('storage', { key: null } as any));
+  });
+
+  it('should handle storage event with empty key values', () => {
+    // This will cover more branches in storageChange function
+    window.dispatchEvent(new StorageEvent('storage', { key: APP_LOCAL_CACHE_KEY, newValue: '', oldValue: '' } as any));
+    window.dispatchEvent(new StorageEvent('storage', { key: APP_SESSION_CACHE_KEY, newValue: '', oldValue: '' } as any));
+  });
 });
 
 

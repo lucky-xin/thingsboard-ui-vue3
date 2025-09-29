@@ -26,26 +26,26 @@ describe('directives/index', () => {
 
   it('should setup permission directive', async () => {
     const { setupPermissionDirective } = await import('/@/directives/permission');
-    
+
     setupGlobDirectives(app);
-    
+
     expect(setupPermissionDirective).toHaveBeenCalledWith(app);
   });
 
   it('should setup loading directive', async () => {
     const { setupLoadingDirective } = await import('/@/directives/loading');
-    
+
     setupGlobDirectives(app);
-    
+
     expect(setupLoadingDirective).toHaveBeenCalledWith(app);
   });
 
   it('should setup both directives when called', async () => {
     const { setupPermissionDirective } = await import('/@/directives/permission');
     const { setupLoadingDirective } = await import('/@/directives/loading');
-    
+
     setupGlobDirectives(app);
-    
+
     expect(setupPermissionDirective).toHaveBeenCalledTimes(1);
     expect(setupLoadingDirective).toHaveBeenCalledTimes(1);
   });

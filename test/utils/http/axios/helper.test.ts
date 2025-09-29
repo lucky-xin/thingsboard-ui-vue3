@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { joinTimestamp, formatRequestDate } from '/@/utils/http/axios/helper';
+import { isObject, isString } from '/@/utils/is';
 
 // Mock dependencies
 vi.mock('/@/utils/is', () => ({
@@ -127,6 +128,49 @@ describe('utils/http/axios/helper', () => {
       // Just verify the function handles the input without throwing
       expect(() => formatRequestDate(params)).not.toThrow();
       expect(params.name).toBe('test');
+    });
+
+    it('should handle error in string trimming with exception', () => {
+      const params: any = {
+        name: '  test  ',
+      };
+
+      // Mock isString to return true for the value
+      vi.mocked(isString).mockImplementation(() => true);
+
+      // Mock trim to throw an error
+      const originalTrim = String.prototype.trim;
+      String.prototype.trim = vi.fn(() => {
+        throw new Error('trim error');
+      });
+
+      // Should throw error when trim fails
+      expect(() => formatRequestDate(params)).toThrow('trim error');
+
+      // Restore original trim
+      String.prototype.trim = originalTrim;
+    });
+
+    it('should handle non-string keys', () => {
+      const params: any = {
+        123: 'test',
+        true: 'value',
+      };
+
+      // Should not throw error for non-string keys
+      expect(() => formatRequestDate(params)).not.toThrow();
+    });
+
+    it('should not process falsy values', () => {
+      const params = {
+        name: '',
+        description: null,
+        count: 0,
+        active: false,
+      };
+
+      // Should not throw error for falsy values
+      expect(() => formatRequestDate(params)).not.toThrow();
     });
   });
 });

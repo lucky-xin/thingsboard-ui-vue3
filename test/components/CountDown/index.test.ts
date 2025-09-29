@@ -10,10 +10,11 @@ vi.mock('/@/utils', () => ({
     });
     return wrappedComponent;
   }),
+  deepMerge: vi.fn((target, source) => ({ ...target, ...source })),
 }));
 
 // Mock the CountButton component
-vi.mock('./src/CountButton.vue', () => ({
+vi.mock('/@/components/CountDown/src/CountButton.vue', () => ({
   default: {
     name: 'CountButton',
     props: {
@@ -34,7 +35,7 @@ vi.mock('./src/CountButton.vue', () => ({
 }));
 
 // Mock the CountdownInput component
-vi.mock('./src/CountdownInput.vue', () => ({
+vi.mock('/@/components/CountDown/src/CountdownInput.vue', () => ({
   default: {
     name: 'CountdownInput',
     props: {
@@ -56,24 +57,24 @@ vi.mock('./src/CountdownInput.vue', () => ({
 describe('CountDown/index', () => {
   it('should export CountdownInput and CountButton components with withInstall', async () => {
     const module = await import('/@/components/CountDown/index');
-    
+
     expect(module).toBeDefined();
     expect(module.CountdownInput).toBeDefined();
     expect(module.CountButton).toBeDefined();
-  });
+  }, 10000);
 
   it('should have install method for CountdownInput', async () => {
     const module = await import('/@/components/CountDown/index');
     const { CountdownInput } = module;
-    
+
     expect(CountdownInput.install).toBeDefined();
     expect(typeof CountdownInput.install).toBe('function');
-  });
+  }, 10000);
 
   it('should have install method for CountButton', async () => {
     const module = await import('/@/components/CountDown/index');
     const { CountButton } = module;
-    
+
     expect(CountButton.install).toBeDefined();
     expect(typeof CountButton.install).toBe('function');
   });
@@ -81,7 +82,7 @@ describe('CountDown/index', () => {
   it('should install components correctly', async () => {
     const module = await import('/@/components/CountDown/index');
     const { CountdownInput, CountButton } = module;
-    
+
     const mockApp = {
       component: vi.fn(),
     } as unknown as App;
@@ -95,7 +96,7 @@ describe('CountDown/index', () => {
   it('should have correct component names', async () => {
     const module = await import('/@/components/CountDown/index');
     const { CountdownInput, CountButton } = module;
-    
+
     expect(CountdownInput.name).toBe('CountdownInput');
     expect(CountButton.name).toBe('CountButton');
   });
@@ -103,14 +104,14 @@ describe('CountDown/index', () => {
   it('should export only CountdownInput and CountButton', async () => {
     const module = await import('/@/components/CountDown/index');
     const exports = Object.keys(module);
-    
+
     expect(exports).toEqual(['CountdownInput', 'CountButton']);
   });
 
   it('should have correct props for CountButton', async () => {
     const module = await import('/@/components/CountDown/index');
     const { CountButton } = module;
-    
+
     expect(CountButton.props).toBeDefined();
     expect(CountButton.props).toHaveProperty('value');
     expect(CountButton.props).toHaveProperty('count');
@@ -124,7 +125,7 @@ describe('CountDown/index', () => {
   it('should have correct props for CountdownInput', async () => {
     const module = await import('/@/components/CountDown/index');
     const { CountdownInput } = module;
-    
+
     expect(CountdownInput.props).toBeDefined();
     expect(CountdownInput.props).toHaveProperty('value');
     expect(CountdownInput.props).toHaveProperty('count');
@@ -137,7 +138,7 @@ describe('CountDown/index', () => {
   it('should have correct emits for CountButton', async () => {
     const module = await import('/@/components/CountDown/index');
     const { CountButton } = module;
-    
+
     expect(CountButton.emits).toBeDefined();
     expect(CountButton.emits).toContain('update:value');
     expect(CountButton.emits).toContain('change');
@@ -147,7 +148,7 @@ describe('CountDown/index', () => {
   it('should have correct emits for CountdownInput', async () => {
     const module = await import('/@/components/CountDown/index');
     const { CountdownInput } = module;
-    
+
     expect(CountdownInput.emits).toBeDefined();
     expect(CountdownInput.emits).toContain('update:value');
     expect(CountdownInput.emits).toContain('change');

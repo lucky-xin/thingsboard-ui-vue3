@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils';
-import BasicDialog from '/@/components/Dialog/src/BasicDialog.vue';
+import BasicDialog from '/@/components/Dialog/src/BasicDialog';
 
 // Mock Modal and Drawer components
-vi.mock('/@/components/Modal', () => {
+vi.mock('components/Modal', () => {
   return {
     BasicModal: {
       name: 'BasicModal',
@@ -11,7 +11,7 @@ vi.mock('/@/components/Modal', () => {
   };
 });
 
-vi.mock('/@/components/Drawer', () => {
+vi.mock('components/Drawer', () => {
   return {
     BasicDrawer: {
       name: 'BasicDrawer',

@@ -8,4 +8,3 @@ describe('router/routes/mainOut.ts funcs coverage', () => {
     expect(mainOutRouteNames.length).toBe(mainOutRoutes.length);
   });
 });
-

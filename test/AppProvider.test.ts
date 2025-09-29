@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import AppProvider from '/@/components/Application/src/AppProvider.vue';
+import AppProvider from '../src/components/Application/src/AppProvider.vue';
 
 describe('AppProvider', () => {
   it('renders correctly with default prefixCls', () => {

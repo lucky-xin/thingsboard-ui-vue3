@@ -6,7 +6,7 @@ import { useScript } from '/@/hooks/web/useScript';
 describe('useScript', () => {
   it('should create script with correct initial state', () => {
     const opts = { src: 'https://example.com/test.js' };
-    
+
     const TestComponent = defineComponent({
       setup() {
         const { isLoading, error, success, toPromise } = useScript(opts);
@@ -25,7 +25,7 @@ describe('useScript', () => {
 
   it('should create promise that can be called', () => {
     const opts = { src: 'https://example.com/test.js' };
-    
+
     const TestComponent = defineComponent({
       setup() {
         const { toPromise } = useScript(opts);

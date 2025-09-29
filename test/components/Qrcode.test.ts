@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import Qrcode from '/@/components/Qrcode/src/Qrcode.vue';
+import Qrcode from '/@/components/Qrcode/src/Qrcode';
 
 // Mock the qrcode library functions
 vi.mock('qrcode', () => ({

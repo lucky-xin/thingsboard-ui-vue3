@@ -1,11 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { 
-  AesEncryption, 
-  encryptByBase64, 
-  decryptByBase64, 
-  encryptByMd5,
-  type EncryptionParams 
-} from '/@/utils/cipher';
+import { AesEncryption, encryptByBase64, decryptByBase64, encryptByMd5, type EncryptionParams } from '/@/utils/cipher';
 
 describe('utils/cipher', () => {
   describe('AesEncryption', () => {
@@ -104,7 +98,7 @@ describe('utils/cipher', () => {
     it('should encode text to base64', () => {
       const text = 'Hello, World!';
       const encoded = encryptByBase64(text);
-      
+
       expect(encoded).toBeDefined();
       expect(typeof encoded).toBe('string');
       expect(encoded).not.toBe(text);
@@ -177,7 +171,7 @@ describe('utils/cipher', () => {
     it('should hash password using MD5', () => {
       const password = 'mypassword';
       const hashed = encryptByMd5(password);
-      
+
       expect(hashed).toBeDefined();
       expect(typeof hashed).toBe('string');
       expect(hashed).not.toBe(password);
@@ -238,18 +232,18 @@ describe('utils/cipher', () => {
   describe('integration tests', () => {
     it('should work with all encryption methods together', () => {
       const originalText = 'Integration test data';
-      
+
       // Base64 encoding
       const base64Encoded = encryptByBase64(originalText);
       const base64Decoded = decryptByBase64(base64Encoded);
       expect(base64Decoded).toBe(originalText);
-      
+
       // AES encryption
       const aes = new AesEncryption({ key: '1234567890123456', iv: '1234567890123456' });
       const aesEncrypted = aes.encryptByAES(originalText);
       const aesDecrypted = aes.decryptByAES(aesEncrypted);
       expect(aesDecrypted).toBe(originalText);
-      
+
       // MD5 hashing (one-way)
       const md5Hash = encryptByMd5(originalText);
       expect(md5Hash).toBeDefined();
@@ -258,13 +252,13 @@ describe('utils/cipher', () => {
 
     it('should handle edge cases', () => {
       const edgeCases = ['', 'single', 'normal text', '123456'];
-      
-      edgeCases.forEach(testCase => {
+
+      edgeCases.forEach((testCase) => {
         // Base64
         const base64Encoded = encryptByBase64(testCase);
         const base64Decoded = decryptByBase64(base64Encoded);
         expect(base64Decoded).toBe(testCase);
-        
+
         // AES - only test with non-empty strings due to encryption padding
         if (testCase.length > 0) {
           const aes = new AesEncryption({ key: '1234567890123456', iv: '1234567890123456' });
@@ -272,7 +266,7 @@ describe('utils/cipher', () => {
           const aesDecrypted = aes.decryptByAES(aesEncrypted);
           expect(aesDecrypted).toBe(testCase);
         }
-        
+
         // MD5
         const md5Hash = encryptByMd5(testCase);
         expect(md5Hash).toBeDefined();

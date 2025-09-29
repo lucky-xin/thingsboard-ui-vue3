@@ -17,4 +17,3 @@ describe('components/Form/componentMap', () => {
     expect(componentMap.get('Divider')).not.toBe(Dummy);
   });
 });
-

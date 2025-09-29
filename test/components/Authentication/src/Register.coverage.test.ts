@@ -23,7 +23,7 @@ vi.mock('/@/components/Form', () => ({
   useForm: () => [vi.fn(), { validate: vi.fn() }],
 }));
 
-vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
+vi.mock('../src/components/Authentication/src/AuthTitle.vue', () => ({
   default: {
     name: 'AuthTitle',
     template: '<div class="auth-title"><slot></slot><slot name="desc"></slot></div>',
@@ -34,7 +34,7 @@ vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
 const mockT = vi.fn((key) => key);
 
 // Import the component
-import Register from '/@/components/Authentication/src/Register.vue';
+import Register from '/@/components/Authentication/src/Register';
 
 // Create a simple router for testing
 const router = createRouter({

@@ -307,13 +307,7 @@ describe('components/Form/src/types/index', () => {
     });
 
     it('should support array of component types', () => {
-      const componentTypes: ComponentType[] = [
-        'Input',
-        'Select',
-        'DatePicker',
-        'Switch',
-        'Checkbox',
-      ];
+      const componentTypes: ComponentType[] = ['Input', 'Select', 'DatePicker', 'Switch', 'Checkbox'];
 
       expect(componentTypes).toHaveLength(5);
       expect(componentTypes).toContain('Input');

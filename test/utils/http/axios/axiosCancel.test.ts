@@ -98,7 +98,7 @@ describe('utils/http/axios/axiosCancel', () => {
 
       // Add first request
       axiosCanceler.addPending(config);
-      
+
       // Add same request again (should remove first, then add new)
       axiosCanceler.addPending(config);
 
@@ -125,7 +125,7 @@ describe('utils/http/axios/axiosCancel', () => {
 
       // Add request first
       axiosCanceler.addPending(config);
-      
+
       // Then remove it
       axiosCanceler.removePending(config);
 
@@ -173,7 +173,7 @@ describe('utils/http/axios/axiosCancel', () => {
       };
 
       axiosCanceler.addPending(config);
-      
+
       // Should be able to remove the pending request
       expect(() => axiosCanceler.removePending(config)).not.toThrow();
     });
@@ -215,10 +215,10 @@ describe('utils/http/axios/axiosCancel', () => {
       };
 
       axiosCanceler.addPending(config);
-      
+
       // Mock isFunction to return false
       vi.mocked(isFunction).mockReturnValue(false);
-      
+
       expect(() => axiosCanceler.removeAllPending()).not.toThrow();
     });
 
@@ -229,10 +229,10 @@ describe('utils/http/axios/axiosCancel', () => {
       };
 
       axiosCanceler.addPending(config);
-      
+
       // Mock isFunction to return true
       vi.mocked(isFunction).mockReturnValue(true);
-      
+
       expect(() => axiosCanceler.removeAllPending()).not.toThrow();
     });
 
@@ -243,10 +243,10 @@ describe('utils/http/axios/axiosCancel', () => {
       };
 
       axiosCanceler.addPending(config);
-      
+
       // Mock isFunction to return false for null
       vi.mocked(isFunction).mockReturnValue(false);
-      
+
       expect(() => axiosCanceler.removeAllPending()).not.toThrow();
     });
 

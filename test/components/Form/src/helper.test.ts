@@ -1,5 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { createPlaceholderMessage, dateItemType, setComponentRuleType, processDateValue } from '/@/components/Form/src/helper';
+import {
+  createPlaceholderMessage,
+  dateItemType,
+  setComponentRuleType,
+  processDateValue,
+} from '/@/components/Form/src/helper';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { dateUtil } from '/@/utils/dateUtil';
 import { isNumber } from '/@/utils/is';
@@ -13,11 +18,11 @@ vi.mock('/@/hooks/web/useI18n', () => ({
         'common.chooseText': 'Please choose',
       };
       return translations[key] || key;
-    })
+    }),
   })),
 }));
 
-vi.mock('/@/utils/dateUtil', () => {
+vi.mock('utils/dateUtil', () => {
   const mockDateInstance = {
     format: vi.fn(() => '2023-09-27'),
   };
@@ -205,9 +210,9 @@ describe('components/Form/src/helper', () => {
       const value = 'test value';
       const component = 'Input';
       const componentProps = {};
-      
+
       const result = processDateValue(value, component, componentProps);
-      
+
       expect(result).toBe(value);
     });
 
@@ -215,9 +220,9 @@ describe('components/Form/src/helper', () => {
       const value = null;
       const component = 'DatePicker';
       const componentProps = { valueFormat: 'YYYY-MM-DD' };
-      
+
       const result = processDateValue(value, component, componentProps);
-      
+
       expect(result).toBeNull();
     });
 
@@ -225,9 +230,9 @@ describe('components/Form/src/helper', () => {
       const value = undefined;
       const component = 'DatePicker';
       const componentProps = { valueFormat: 'YYYY-MM-DD' };
-      
+
       const result = processDateValue(value, component, componentProps);
-      
+
       expect(result).toBeUndefined();
     });
 
@@ -235,9 +240,9 @@ describe('components/Form/src/helper', () => {
       const value = '';
       const component = 'DatePicker';
       const componentProps = { valueFormat: 'YYYY-MM-DD' };
-      
+
       const result = processDateValue(value, component, componentProps);
-      
+
       expect(result).toBe('');
     });
 

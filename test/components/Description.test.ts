@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { Descriptions } from 'ant-design-vue';
-import Description from '/@/components/Description/src/Description.vue';
+import Description from '/@/components/Description/src/Description';
 
 // Mock dependencies
 vi.mock('/@/hooks/web/useDesign', () => ({
@@ -211,7 +211,7 @@ describe('Description', () => {
         span: 1,
       },
     ];
-    
+
     const wrapper = mount(Description, {
       props: {
         schema: customSchema,

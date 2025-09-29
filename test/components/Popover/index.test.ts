@@ -17,14 +17,14 @@ vi.mock('/@/utils', () => ({
 describe('Popover/index', () => {
   it('should export Popover component with withInstall', async () => {
     const { Popover } = await import('/@/components/Popover');
-    
+
     expect(Popover).toBeDefined();
     expect(Popover.install).toBeDefined();
   });
 
   it('should have install method for Popover', async () => {
     const { Popover } = await import('/@/components/Popover');
-    
+
     expect(Popover.install).toBeDefined();
     expect(typeof Popover.install).toBe('function');
   });
@@ -34,7 +34,7 @@ describe('Popover/index', () => {
     const mockApp = {
       component: vi.fn(),
     };
-    
+
     Popover.install(mockApp as any, 'TestPopover');
     expect(mockApp.component).toHaveBeenCalledWith('TestPopover', expect.any(Object));
   });
@@ -42,7 +42,7 @@ describe('Popover/index', () => {
   it('should export typing definitions', async () => {
     // This tests that the typing exports don't throw errors
     const exports = await import('/@/components/Popover');
-    
+
     expect(exports).toBeDefined();
     expect(exports.Popover).toBeDefined();
   });
@@ -50,7 +50,7 @@ describe('Popover/index', () => {
   it('should have correct exports count', async () => {
     const exports = await import('/@/components/Popover');
     const exportKeys = Object.keys(exports);
-    
+
     // Should export: Popover and typing exports
     expect(exportKeys).toContain('Popover');
     expect(exportKeys.length).toBeGreaterThanOrEqual(1);
@@ -58,14 +58,14 @@ describe('Popover/index', () => {
 
   it('should be valid Vue component', async () => {
     const { Popover } = await import('/@/components/Popover');
-    
+
     expect(Popover).toBeDefined();
     expect(typeof Popover).toBe('object');
   });
 
   it('should export component with proper structure', async () => {
     const { Popover } = await import('/@/components/Popover');
-    
+
     // Component should have install method from withInstall
     expect(Popover.install).toBeInstanceOf(Function);
   });

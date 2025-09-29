@@ -18,7 +18,7 @@ vi.mock('/@/utils', () => ({
 describe('Markdown/index', () => {
   it('should export Markdown and MarkdownViewer components with withInstall', async () => {
     const { Markdown, MarkdownViewer } = await import('/@/components/Markdown');
-    
+
     expect(Markdown).toBeDefined();
     expect(MarkdownViewer).toBeDefined();
     expect(Markdown.install).toBeDefined();
@@ -27,7 +27,7 @@ describe('Markdown/index', () => {
 
   it('should have install method for both components', async () => {
     const { Markdown, MarkdownViewer } = await import('/@/components/Markdown');
-    
+
     expect(Markdown.install).toBeDefined();
     expect(MarkdownViewer.install).toBeDefined();
     expect(typeof Markdown.install).toBe('function');
@@ -39,10 +39,10 @@ describe('Markdown/index', () => {
     const mockApp = {
       component: vi.fn(),
     };
-    
+
     Markdown.install(mockApp as any, 'TestMarkdown');
     MarkdownViewer.install(mockApp as any, 'TestMarkdownViewer');
-    
+
     expect(mockApp.component).toHaveBeenCalledTimes(2);
     expect(mockApp.component).toHaveBeenCalledWith('TestMarkdown', expect.any(Object));
     expect(mockApp.component).toHaveBeenCalledWith('TestMarkdownViewer', expect.any(Object));
@@ -51,7 +51,7 @@ describe('Markdown/index', () => {
   it('should export typing definitions', async () => {
     // This tests that the typing exports don't throw errors
     const exports = await import('/@/components/Markdown');
-    
+
     expect(exports).toBeDefined();
     expect(exports.Markdown).toBeDefined();
     expect(exports.MarkdownViewer).toBeDefined();
@@ -60,7 +60,7 @@ describe('Markdown/index', () => {
   it('should have correct exports count', async () => {
     const exports = await import('/@/components/Markdown');
     const exportKeys = Object.keys(exports);
-    
+
     // Should export: Markdown, MarkdownViewer, and typing exports
     expect(exportKeys).toContain('Markdown');
     expect(exportKeys).toContain('MarkdownViewer');
@@ -69,7 +69,7 @@ describe('Markdown/index', () => {
 
   it('should be valid Vue components', async () => {
     const { Markdown, MarkdownViewer } = await import('/@/components/Markdown');
-    
+
     expect(Markdown).toBeDefined();
     expect(MarkdownViewer).toBeDefined();
     expect(typeof Markdown).toBe('object');
@@ -78,7 +78,7 @@ describe('Markdown/index', () => {
 
   it('should export components with proper structure', async () => {
     const { Markdown, MarkdownViewer } = await import('/@/components/Markdown');
-    
+
     // Components should have install method from withInstall
     expect(Markdown.install).toBeInstanceOf(Function);
     expect(MarkdownViewer.install).toBeInstanceOf(Function);

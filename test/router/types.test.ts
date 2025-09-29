@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { AppRouteRecordRaw, Menu, MenuTag, MenuModule, AppRouteModule } from '/@/router/types';
+import type { AppRouteRecordRaw, Menu, MenuTag, MenuModule, AppRouteModule } from 'router/types';
 import { Authority } from '/@/enums/authorityEnum';
 
 describe('router/types', () => {
@@ -22,9 +22,9 @@ describe('router/types', () => {
     it('should support optional properties', () => {
       const route: AppRouteRecordRaw = {
         name: 'test-route',
-        path: '/test', 
+        path: '/test',
         meta: {},
-        component: () => import('/@/views/tb/desktop/index.vue'),
+        component: () => import('../src/views/tb/desktop/index.vue'),
         props: { someProps: true },
         fullPath: '/test/full',
         children: [],

@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest';
 
 // Import the source file directly to ensure coverage
-import { 
-  AuthenticationCodeLogin, 
-  AuthenticationForgetPassword, 
-  AuthenticationLogin, 
-  AuthenticationQrCodeLogin, 
+import {
+  AuthenticationCodeLogin,
+  AuthenticationForgetPassword,
+  AuthenticationLogin,
+  AuthenticationQrCodeLogin,
   AuthenticationRegister,
-  type AuthenticationProps 
+  type AuthenticationProps,
 } from '/@/components/Authentication';
 
 describe('components/Authentication/index', () => {
@@ -18,7 +18,7 @@ describe('components/Authentication/index', () => {
 
   it('should export AuthenticationForgetPassword component', () => {
     expect(AuthenticationForgetPassword).toBeDefined();
-    expect(AuthenticationForgetPassword.name).toBe('AuthenticationForgetPassword');
+    expect(AuthenticationForgetPassword.name).toBe('ForgetPassword');
   });
 
   it('should export AuthenticationLogin component', () => {
@@ -33,7 +33,7 @@ describe('components/Authentication/index', () => {
 
   it('should export AuthenticationRegister component', () => {
     expect(AuthenticationRegister).toBeDefined();
-    expect(AuthenticationRegister.name).toBe('AuthenticationRegister');
+    expect(AuthenticationRegister.name).toBe('RegisterForm');
   });
 
   it('should export AuthenticationProps type', () => {

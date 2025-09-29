@@ -39,7 +39,7 @@ describe('utils/cache/storageCache', () => {
   describe('createStorage', () => {
     it('should create storage instance with default parameters', () => {
       const storage = createStorage();
-      
+
       expect(storage).toBeDefined();
       expect(typeof storage.set).toBe('function');
       expect(typeof storage.get).toBe('function');
@@ -56,7 +56,7 @@ describe('utils/cache/storageCache', () => {
         timeout: 3600,
         hasEncrypt: false,
       });
-      
+
       expect(storage).toBeDefined();
       expect(typeof storage.set).toBe('function');
       expect(typeof storage.get).toBe('function');
@@ -101,9 +101,9 @@ describe('utils/cache/storageCache', () => {
       it('should set value in storage', () => {
         const key = 'testKey';
         const value = { data: 'test' };
-        
+
         storage.set(key, value);
-        
+
         expect(mockStorage.setItem).toHaveBeenCalled();
         const calls = (mockStorage.setItem as any).mock.calls;
         expect(calls[0][0]).toBe('TEST_TESTKEY');
@@ -114,9 +114,9 @@ describe('utils/cache/storageCache', () => {
         const key = 'testKey';
         const value = 'test';
         const expire = 3600;
-        
+
         storage.set(key, value, expire);
-        
+
         expect(mockStorage.setItem).toHaveBeenCalled();
         const calls = (mockStorage.setItem as any).mock.calls;
         expect(calls[0][0]).toBe('TEST_TESTKEY');
@@ -133,11 +133,11 @@ describe('utils/cache/storageCache', () => {
           time: Date.now(),
           expire: null,
         });
-        
+
         (mockStorage.getItem as any).mockReturnValue(data);
-        
+
         const result = storage.get(key);
-        
+
         expect(result).toBe(value);
         expect(mockStorage.getItem).toHaveBeenCalledWith('TEST_TESTKEY');
       });
@@ -145,11 +145,11 @@ describe('utils/cache/storageCache', () => {
       it('should return default value when key does not exist', () => {
         const key = 'nonExistentKey';
         const defaultValue = 'default';
-        
+
         (mockStorage.getItem as any).mockReturnValue(null);
-        
+
         const result = storage.get(key, defaultValue);
-        
+
         expect(result).toBe(defaultValue);
       });
 
@@ -161,11 +161,11 @@ describe('utils/cache/storageCache', () => {
           time: Date.now(),
           expire: Date.now() - 1000, // expired
         });
-        
+
         (mockStorage.getItem as any).mockReturnValue(data);
-        
+
         const result = storage.get(key, defaultValue);
-        
+
         // When data is expired, the function removes the key but does not return the default value
         // This seems to be a bug in the implementation, but we test the current behavior
         expect(result).toBeUndefined();
@@ -175,11 +175,11 @@ describe('utils/cache/storageCache', () => {
       it('should return default value when JSON parsing fails', () => {
         const key = 'testKey';
         const defaultValue = 'default';
-        
+
         (mockStorage.getItem as any).mockReturnValue('invalid json');
-        
+
         const result = storage.get(key, defaultValue);
-        
+
         expect(result).toBe(defaultValue);
       });
 
@@ -191,11 +191,11 @@ describe('utils/cache/storageCache', () => {
           time: Date.now(),
           expire: Date.now() + 3600000, // valid for 1 hour
         });
-        
+
         (mockStorage.getItem as any).mockReturnValue(data);
-        
+
         const result = storage.get(key);
-        
+
         expect(result).toBe(value);
       });
     });
@@ -203,9 +203,9 @@ describe('utils/cache/storageCache', () => {
     describe('remove', () => {
       it('should remove value from storage', () => {
         const key = 'testKey';
-        
+
         storage.remove(key);
-        
+
         expect(mockStorage.removeItem).toHaveBeenCalledWith('TEST_TESTKEY');
       });
     });
@@ -213,7 +213,7 @@ describe('utils/cache/storageCache', () => {
     describe('clear', () => {
       it('should clear all storage', () => {
         storage.clear();
-        
+
         expect(mockStorage.clear).toHaveBeenCalled();
       });
     });
@@ -235,9 +235,9 @@ describe('utils/cache/storageCache', () => {
     it('should encrypt data when setting', () => {
       const key = 'testKey';
       const value = 'test';
-      
+
       storage.set(key, value);
-      
+
       expect(mockStorage.setItem).toHaveBeenCalled();
       const calls = (mockStorage.setItem as any).mock.calls;
       expect(calls[0][0]).toBe('ENCRYPTED_TESTKEY');
@@ -252,11 +252,11 @@ describe('utils/cache/storageCache', () => {
         time: Date.now(),
         expire: null,
       });
-      
+
       (mockStorage.getItem as any).mockReturnValue(`encrypted_${data}`);
-      
+
       const result = storage.get(key);
-      
+
       expect(result).toBe(value);
     });
   });
@@ -267,9 +267,9 @@ describe('utils/cache/storageCache', () => {
         prefixKey: 'test_',
         storage: mockStorage,
       });
-      
+
       storage.set('myKey', 'value');
-      
+
       expect(mockStorage.setItem).toHaveBeenCalled();
       const calls = (mockStorage.setItem as any).mock.calls;
       expect(calls[0][0]).toBe('TEST_MYKEY');

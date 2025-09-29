@@ -1,101 +1,155 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { createRouter, createWebHistory } from 'vue-router'
-import { createPinia } from 'pinia'
-import AppSearchModal from '/@/components/Application/src/search/AppSearchModal'
+import { createPinia, setActivePinia } from 'pinia'
 
-// Mock router
-const router = createRouter({
-  history: createWebHistory(),
-  routes: []
+const testPinia = createPinia()
+
+// Stub theme plugin globals before any dynamic imports
+beforeAll(() => {
+  vi.stubGlobal('__COLOR_PLUGIN_OUTPUT_FILE_NAME__', 'theme.css')
+  vi.stubGlobal('__PROD__', false)
+  vi.stubGlobal('__COLOR_PLUGIN_OPTIONS__', {})
 })
 
-// Mock pinia
-const pinia = createPinia()
+// Mock vue-router
+vi.mock('vue-router', () => ({
+  createRouter: vi.fn(() => ({
+    push: vi.fn().mockResolvedValue(undefined),
+    replace: vi.fn().mockResolvedValue(undefined),
+    go: vi.fn(),
+  })),
+  createWebHashHistory: vi.fn(() => ({})),
+  createWebHistory: vi.fn(() => ({})),
+  useRouter: () => ({
+    push: vi.fn().mockResolvedValue(undefined),
+    replace: vi.fn().mockResolvedValue(undefined),
+    go: vi.fn(),
+  }),
+}))
 
-// Mock global properties
-const globalMocks = {
-  $t: (key: string) => key,
-  $router: router,
-  $route: router.currentRoute.value
-}
+// Mock store with real pinia instance
+vi.mock('/@/store', () => ({
+  store: testPinia,
+  useAppStore: () => ({
+    getTheme: vi.fn(() => 'light'),
+    setTheme: vi.fn(),
+    locale: 'en',
+    setLocale: vi.fn(),
+  }),
+  useUserStore: () => ({
+    userInfo: { name: 'Test User' },
+    isLoggedIn: true,
+  }),
+}))
 
-// Mock Ant Design components
+// Mock hooks
+vi.mock('/@/hooks/setting/useLocale', () => ({
+  useLocale: () => ({
+    getLocale: vi.fn(() => ({ lang: 'en' })),
+    changeLocale: vi.fn(),
+    t: vi.fn((key) => key),
+  }),
+}))
+
+// Mock Ant Design Vue components
 vi.mock('ant-design-vue', () => ({
-  Button: {
-    name: 'Button',
-    props: ['type', 'onClick'],
-    template: '<button @click="$emit('click')"><slot /></button>'
+  Modal: {
+    template: '<div class="ant-modal"><slot></slot></div>',
+    props: ['visible', 'title', 'open'],
+  },
+  Form: {
+    template: '<form class="ant-form"><slot></slot></form>',
+    props: ['model', 'rules'],
+  },
+  FormItem: {
+    template: '<div class="ant-form-item"><slot></slot></div>',
+    props: ['label', 'name'],
   },
   Input: {
-    name: 'Input',
+    template: '<input class="ant-input" />',
     props: ['value', 'placeholder'],
-    template: '<input :value="value" :placeholder="placeholder" />'
+  },
+  Button: {
+    template: '<button class="ant-btn"><slot></slot></button>',
+    props: ['type', 'loading'],
+  },
+  Select: {
+    template: '<div class="ant-select"><slot></slot></div>',
+    props: ['value', 'options', 'mode'],
+  },
+  Option: {
+    template: '<option class="ant-select-option"><slot></slot></option>',
+    props: ['value', 'label'],
   },
   Tooltip: {
-    name: 'Tooltip',
-    props: ['placement'],
-    template: '<div><slot /></div>'
+    template: '<div class="ant-tooltip"><slot></slot></div>',
+    props: ['title', 'placement'],
   },
-  Modal: {
-    name: 'Modal',
-    props: ['open', 'onClose'],
-    template: '<div v-if="open"><slot /></div>'
-  }
 }))
 
 describe('AppSearchModal', () => {
-  it('should render without crashing', () => {
+  beforeEach(() => {
+    setActivePinia(testPinia)
+    vi.clearAllMocks()
+  })
+
+  const mountOptions = {
+    global: {
+      stubs: {
+        'a-input': { template: '<input />' },
+      },
+      config: {
+        compilerOptions: {
+          isCustomElement: (tag: string) => tag.startsWith('a-'),
+        },
+      },
+    },
+  }
+
+  it('should render with correct structure', async () => {
+    const AppSearchModal = (await import('/@/components/Application/src/search/AppSearchModal.vue')).default
     const wrapper = mount(AppSearchModal, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks
-      }
+      props: { open: true },
+      ...mountOptions,
     })
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('should render with default props', () => {
+  it('should emit close event when closed', async () => {
+    const AppSearchModal = (await import('/@/components/Application/src/search/AppSearchModal.vue')).default
     const wrapper = mount(AppSearchModal, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks
-      }
+      props: { open: true },
+      ...mountOptions,
+    })
+    
+    await wrapper.vm.$emit('close')
+    expect(wrapper.emitted('close')).toBeTruthy()
+  })
+
+  it('should handle search functionality', async () => {
+    const AppSearchModal = (await import('/@/components/Application/src/search/AppSearchModal.vue')).default
+    const wrapper = mount(AppSearchModal, {
+      props: { open: true },
+      ...mountOptions,
     })
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('should handle props correctly', () => {
-    const props = {}
+  it('should handle form submission', async () => {
+    const AppSearchModal = (await import('/@/components/Application/src/search/AppSearchModal.vue')).default
     const wrapper = mount(AppSearchModal, {
-      props,
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks
-      }
+      props: { open: true },
+      ...mountOptions,
     })
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('should emit events when expected', () => {
+  it('should handle user interactions', async () => {
+    const AppSearchModal = (await import('/@/components/Application/src/search/AppSearchModal.vue')).default
     const wrapper = mount(AppSearchModal, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks
-      }
+      props: { open: true },
+      ...mountOptions,
     })
-    // Add event testing based on component functionality
-    expect(wrapper.exists()).toBe(true)
-  })
-
-  it('should handle user interactions', () => {
-    const wrapper = mount(AppSearchModal, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks
-      }
-    })
-    // Add interaction testing
     expect(wrapper.exists()).toBe(true)
   })
 })

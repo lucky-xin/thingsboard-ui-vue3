@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
-import CountTo from '/@/components/CountTo/src/CountTo.vue';
+import CountTo from '/@/components/CountTo/src/CountTo';
 
 describe('CountTo formatting branches', () => {
   it('formats with decimals and no thousands separator', async () => {
@@ -42,4 +42,3 @@ describe('CountTo formatting branches', () => {
     expect(wrapper.find('span').text()).toMatch(/[,]/);
   });
 });
-

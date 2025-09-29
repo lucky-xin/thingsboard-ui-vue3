@@ -27,15 +27,16 @@ export function useBreakpoint() {
 // Just call it once
 export function createBreakpointListen(fn?: (opt: CreateCallbackParams) => void) {
   const screenRef = ref<sizeEnum>(sizeEnum.XL);
-  const realWidthRef = ref(
-    typeof window !== 'undefined' ? window.innerWidth : 1200
-  );
+  const realWidthRef = ref(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
   function getWindowWidth() {
     // Check if document and window are available (not in server-side rendering or some test environments)
     const width =
-      typeof document !== 'undefined' ? document.body.clientWidth :
-      typeof window !== 'undefined' ? window.innerWidth : 1200;
+      typeof document !== 'undefined'
+        ? document.body.clientWidth
+        : typeof window !== 'undefined'
+          ? window.innerWidth
+          : 1200;
     const xs = screenMap.get(sizeEnum.XS)!;
     const sm = screenMap.get(sizeEnum.SM)!;
     const md = screenMap.get(sizeEnum.MD)!;

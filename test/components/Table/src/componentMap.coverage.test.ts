@@ -34,7 +34,7 @@ describe('componentMap coverage', () => {
         keysToDelete.push(key);
       }
     });
-    keysToDelete.forEach(key => componentMap.delete(key));
+    keysToDelete.forEach((key) => componentMap.delete(key));
   });
 
   function isDefaultComponent(key: ComponentType): boolean {
@@ -74,18 +74,18 @@ describe('componentMap coverage', () => {
 
   it('should add custom component', () => {
     const customComponent = { name: 'CustomComponent' } as any;
-    
+
     add('CustomComponent' as ComponentType, customComponent);
-    
+
     expect(componentMap.get('CustomComponent' as ComponentType)).toBe(customComponent);
   });
 
   it('should delete custom component', () => {
     const customComponent = { name: 'CustomComponent' } as any;
-    
+
     add('CustomComponent' as ComponentType, customComponent);
     expect(componentMap.has('CustomComponent' as ComponentType)).toBe(true);
-    
+
     del('CustomComponent' as ComponentType);
     expect(componentMap.has('CustomComponent' as ComponentType)).toBe(false);
   });
@@ -93,10 +93,10 @@ describe('componentMap coverage', () => {
   it('should handle adding multiple custom components', () => {
     const component1 = { name: 'Component1' } as any;
     const component2 = { name: 'Component2' } as any;
-    
+
     add('Component1' as ComponentType, component1);
     add('Component2' as ComponentType, component2);
-    
+
     expect(componentMap.get('Component1' as ComponentType)).toBe(component1);
     expect(componentMap.get('Component2' as ComponentType)).toBe(component2);
   });
@@ -105,16 +105,16 @@ describe('componentMap coverage', () => {
     expect(() => {
       del('NonExistentComponent' as ComponentType);
     }).not.toThrow();
-    
+
     expect(componentMap.has('NonExistentComponent' as ComponentType)).toBe(false);
   });
 
   it('should handle overwriting existing component', () => {
     const originalComponent = componentMap.get('Input');
     const newComponent = { name: 'NewInput' } as any;
-    
+
     add('Input', newComponent);
-    
+
     expect(componentMap.get('Input')).toBe(newComponent);
     expect(componentMap.get('Input')).not.toBe(originalComponent);
   });
@@ -125,7 +125,7 @@ describe('componentMap coverage', () => {
       { name: 'NumberComponent', type: 'NumberComponent' as ComponentType },
       { name: 'BooleanComponent', type: 'BooleanComponent' as ComponentType },
     ];
-    
+
     testComponents.forEach(({ name, type }) => {
       const component = { name } as any;
       add(type, component);
@@ -136,16 +136,16 @@ describe('componentMap coverage', () => {
   it('should handle null and undefined components', () => {
     add('NullComponent' as ComponentType, null as any);
     add('UndefinedComponent' as ComponentType, undefined as any);
-    
+
     expect(componentMap.get('NullComponent' as ComponentType)).toBeNull();
     expect(componentMap.get('UndefinedComponent' as ComponentType)).toBeUndefined();
   });
 
   it('should handle function components', () => {
     const functionComponent = () => 'Function Component';
-    
+
     add('FunctionComponent' as ComponentType, functionComponent);
-    
+
     expect(componentMap.get('FunctionComponent' as ComponentType)).toBe(functionComponent);
   });
 
@@ -154,18 +154,18 @@ describe('componentMap coverage', () => {
       name: 'ObjectComponent',
       render: () => 'Object Component',
     };
-    
+
     add('ObjectComponent' as ComponentType, objectComponent);
-    
+
     expect(componentMap.get('ObjectComponent' as ComponentType)).toBe(objectComponent);
   });
 
   it('should maintain map size correctly', () => {
     const initialSize = componentMap.size;
-    
+
     add('TestComponent' as ComponentType, {} as any);
     expect(componentMap.size).toBe(initialSize + 1);
-    
+
     del('TestComponent' as ComponentType);
     expect(componentMap.size).toBe(initialSize);
   });
@@ -173,10 +173,10 @@ describe('componentMap coverage', () => {
   it('should handle case sensitivity', () => {
     const component1 = { name: 'Component1' } as any;
     const component2 = { name: 'Component2' } as any;
-    
+
     add('component1' as ComponentType, component1);
     add('Component1' as ComponentType, component2);
-    
+
     expect(componentMap.get('component1' as ComponentType)).toBe(component1);
     expect(componentMap.get('Component1' as ComponentType)).toBe(component2);
     expect(componentMap.size).toBeGreaterThan(13); // 13 default + 2 custom
@@ -184,17 +184,17 @@ describe('componentMap coverage', () => {
 
   it('should handle special characters in component names', () => {
     const specialComponent = { name: 'Special-Component' } as any;
-    
+
     add('Special-Component' as ComponentType, specialComponent);
-    
+
     expect(componentMap.get('Special-Component' as ComponentType)).toBe(specialComponent);
   });
 
   it('should handle empty string component name', () => {
     const emptyComponent = { name: 'Empty' } as any;
-    
+
     add('' as ComponentType, emptyComponent);
-    
+
     expect(componentMap.get('' as ComponentType)).toBe(emptyComponent);
   });
 

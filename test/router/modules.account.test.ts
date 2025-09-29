@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 vi.mock('/@/router/constant', () => ({ LAYOUT: {} }));
 vi.mock('/@/hooks/web/useI18n', () => ({ t: (k: string) => k }));
 
-import account from '/@/router/routes/modules/account';
+import account from 'router/routes/modules/account';
 
 describe('router/routes/modules/account', () => {
   it('should export account route config', () => {
@@ -11,5 +11,3 @@ describe('router/routes/modules/account', () => {
     expect(account.children?.length).toBeGreaterThan(0);
   });
 });
-
-

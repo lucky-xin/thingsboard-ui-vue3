@@ -31,7 +31,7 @@ vi.mock('lodash-es', () => ({
   }),
   uniqBy: vi.fn((arr, key) => {
     const seen = new Set();
-    return arr.filter(item => {
+    return arr.filter((item) => {
       const val = item[key];
       if (seen.has(val)) return false;
       seen.add(val);
@@ -330,7 +330,7 @@ describe('useFormEvents', () => {
 
   it('should get fields value', () => {
     mockHandleFormValues.mockReturnValue(mockFormModel);
-    
+
     const { getFieldsValue } = useFormEvents({
       emit: mockEmit,
       getProps: mockGetProps,

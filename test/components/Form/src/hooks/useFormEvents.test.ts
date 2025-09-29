@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useFormEvents } from '/@/components/Form/src/hooks/useFormEvents';
 import { unref, toRaw } from 'vue';
 import { isArray, isFunction, isObject, isString } from '/@/utils/is';
-import { deepMerge } from '/@/utils';
+import { deepMerge } from 'utils';
 import { processNumberValue, processDateValue } from '/@/components/Form/src/helper';
 import { cloneDeep, get, uniqBy } from 'lodash-es';
 import { error } from '/@/utils/log';
@@ -277,7 +277,6 @@ describe('components/Form/src/hooks/useFormEvents', () => {
         expect(true).toBe(true);
       });
     });
-
 
     describe('appendSchemaByField', () => {
       it('should append schema by field', () => {

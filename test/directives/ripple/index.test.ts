@@ -91,37 +91,34 @@ describe('directives/ripple/index', () => {
   describe('beforeMount hook', () => {
     it('should return early if binding value is false', () => {
       mockBinding.value = false;
-      
+
       (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
-      
+
       expect(mockElement.addEventListener).not.toHaveBeenCalled();
     });
 
     it('should add event listener when binding value is true', () => {
       mockElement.getAttribute.mockReturnValue(null);
-      
+
       (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
-      
-      expect(mockElement.addEventListener).toHaveBeenCalledWith(
-        'mousedown',
-        expect.any(Function)
-      );
+
+      expect(mockElement.addEventListener).toHaveBeenCalledWith('mousedown', expect.any(Function));
     });
 
     it('should use custom background from attribute', () => {
       mockElement.getAttribute.mockReturnValue('#ff0000');
-      
+
       (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
-      
+
       expect(mockElement.getAttribute).toHaveBeenCalledWith('ripple-background');
       expect(mockElement.addEventListener).toHaveBeenCalled();
     });
 
     it('should handle modifiers correctly', () => {
       mockBinding.modifiers = { click: true, '500': true };
-      
+
       (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
-      
+
       expect(mockElement.addEventListener).toHaveBeenCalled();
     });
   });
@@ -134,34 +131,34 @@ describe('directives/ripple/index', () => {
 
     it('should call clearRipple when binding value is false', () => {
       mockBinding.value = false;
-      
+
       (RippleDirective as ObjectDirective).updated!(mockElement, mockBinding, null as any, null as any);
-      
+
       expect(mockElement.clearRipple).toHaveBeenCalled();
     });
 
     it('should not call clearRipple when binding value is true', () => {
       mockBinding.value = true;
       mockElement.getAttribute.mockReturnValue('#blue');
-      
+
       (RippleDirective as ObjectDirective).updated!(mockElement, mockBinding, null as any, null as any);
-      
+
       expect(mockElement.clearRipple).not.toHaveBeenCalled();
     });
 
     it('should call setBackground with attribute value', () => {
       mockBinding.value = true;
       mockElement.getAttribute.mockReturnValue('#green');
-      
+
       (RippleDirective as ObjectDirective).updated!(mockElement, mockBinding, null as any, null as any);
-      
+
       expect(mockElement.setBackground).toHaveBeenCalledWith('#green');
     });
 
     it('should handle missing clearRipple method gracefully', () => {
       mockElement.clearRipple = undefined;
       mockBinding.value = false;
-      
+
       expect(() => {
         (RippleDirective as ObjectDirective).updated!(mockElement, mockBinding, null as any, null as any);
       }).not.toThrow();
@@ -171,7 +168,7 @@ describe('directives/ripple/index', () => {
       mockElement.setBackground = undefined;
       mockBinding.value = true;
       mockElement.getAttribute.mockReturnValue('#red');
-      
+
       expect(() => {
         (RippleDirective as ObjectDirective).updated!(mockElement, mockBinding, null as any, null as any);
       }).not.toThrow();
@@ -182,16 +179,16 @@ describe('directives/ripple/index', () => {
     it('should create ripple elements when event is triggered', () => {
       vi.useFakeTimers();
       const createElementSpy = vi.spyOn(document, 'createElement');
-      
+
       mockElement.getAttribute.mockReturnValue(null);
       (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
-      
+
       // Trigger the event listener
       const eventListener = mockElement.addEventListener.mock.calls[0][1];
       eventListener(mockEvent);
-      
+
       expect(createElementSpy).toHaveBeenCalledTimes(2); // ripple and container
-      
+
       vi.useRealTimers();
     });
 
@@ -199,12 +196,12 @@ describe('directives/ripple/index', () => {
       mockEvent.touches = [{ clientX: 30, clientY: 40 }];
       delete mockEvent.clientX;
       delete mockEvent.clientY;
-      
+
       mockElement.getAttribute.mockReturnValue(null);
       (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
-      
+
       const eventListener = mockElement.addEventListener.mock.calls[0][1];
-      
+
       expect(() => {
         eventListener(mockEvent);
       }).not.toThrow();
@@ -228,7 +225,7 @@ describe('directives/ripple/index', () => {
       // These are compile-time checks, but we can verify the directive structure
       expect(RippleDirective).toHaveProperty('beforeMount');
       expect(RippleDirective).toHaveProperty('updated');
-      
+
       // Check that it's a valid Vue directive structure
       expect(typeof (RippleDirective as ObjectDirective).beforeMount).toBe('function');
       expect(typeof (RippleDirective as ObjectDirective).updated).toBe('function');

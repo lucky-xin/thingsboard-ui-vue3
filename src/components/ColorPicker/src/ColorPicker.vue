@@ -32,26 +32,145 @@
 
   const emit = defineEmits(['change', 'update:value']);
 
-  const currentColor = ref('');
+  const setupComponent = () => {
+    const currentColor = ref('');
 
-  const { t } = useI18n();
-  const { prefixCls } = useDesign('color-picker');
+    const { t } = useI18n();
+    const { prefixCls } = useDesign('color-picker');
 
-  watchEffect(() => {
-    currentColor.value = props.value;
-  });
+    const initializeColor = () => {
+      currentColor.value = props.value;
+    };
 
-  watch(
-    () => currentColor.value,
-    (v) => {
+    const handleColorChange = (v: string) => {
       emit('update:value', v);
-      return emit('change', v);
-    },
-  );
+      emit('change', v);
+    };
 
-  function handleChange(value) {
-    currentColor.value = value;
-  }
+    const handleChange = (value: string) => {
+      currentColor.value = value;
+    };
+
+    const setupWatchEffect = () => {
+      watchEffect(initializeColor);
+    };
+
+    const setupWatchers = () => {
+      watch(
+        () => currentColor.value,
+        handleColorChange,
+      );
+    };
+
+    const initializeComponent = () => {
+      setupWatchEffect();
+      setupWatchers();
+    };
+
+    const getCurrentColor = () => {
+      return currentColor.value;
+    };
+
+    const setCurrentColor = (value: string) => {
+      currentColor.value = value;
+    };
+
+    const getTranslations = () => {
+      return t;
+    };
+
+    const getPrefixCls = () => {
+      return prefixCls;
+    };
+
+    const validateColor = (color: string) => {
+      return Boolean(color && color.length > 0);
+    };
+
+    const formatColor = (color: string) => {
+      return color.startsWith('#') ? color : `#${color}`;
+    };
+
+    const resetColor = () => {
+      currentColor.value = '';
+    };
+
+    const updateColorFromProps = () => {
+      if (props.value) {
+        currentColor.value = props.value;
+      }
+    };
+
+    const getColorValue = () => {
+      return currentColor.value || props.value || '';
+    };
+
+    const setColorValue = (value: string) => {
+      currentColor.value = value;
+      emit('update:value', value);
+      emit('change', value);
+    };
+
+    const clearColor = () => {
+      currentColor.value = '';
+      emit('update:value', '');
+      emit('change', '');
+    };
+
+    const isColorValid = (color: string) => {
+      return /^#[0-9A-F]{6}$/i.test(color);
+    };
+
+    initializeComponent();
+
+    return {
+      currentColor,
+      t,
+      prefixCls,
+      initializeColor,
+      handleColorChange,
+      handleChange,
+      setupWatchEffect,
+      setupWatchers,
+      initializeComponent,
+      getCurrentColor,
+      setCurrentColor,
+      getTranslations,
+      getPrefixCls,
+      validateColor,
+      formatColor,
+      resetColor,
+      updateColorFromProps,
+      getColorValue,
+      setColorValue,
+      clearColor,
+      isColorValid,
+    };
+  };
+
+  const {
+    currentColor,
+    t,
+    prefixCls,
+    initializeColor,
+    handleColorChange,
+    handleChange,
+    setupWatchEffect,
+    setupWatchers,
+    initializeComponent,
+    getCurrentColor,
+    setCurrentColor,
+    getTranslations,
+    getPrefixCls,
+    validateColor,
+    formatColor,
+    resetColor,
+    updateColorFromProps,
+    getColorValue,
+    setColorValue,
+    clearColor,
+    isColorValid,
+  } = setupComponent();
 </script>
 
 <style lang="less">

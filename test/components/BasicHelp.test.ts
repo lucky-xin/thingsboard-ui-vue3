@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import BasicHelp from '/@/components/Basic/src/BasicHelp.vue';
+import BasicHelp from '/@/components/Basic/src/BasicHelp';
 
 // Mock the useDesign hook
 vi.mock('/@/hooks/web/useDesign', () => ({
@@ -29,7 +29,29 @@ vi.mock('/@/utils/helper/tsxHelper', () => ({
 
 // Mock the utils functions
 vi.mock('/@/utils', () => ({
+  withInstall: vi.fn((component) => {
+    const wrappedComponent = { ...component, install: vi.fn() };
+    return wrappedComponent;
+  }),
+  deepMerge: vi.fn((target, source) => {
+    if (!target) return source;
+    if (!source) return target;
+    const result = { ...target };
+    Object.keys(source).forEach(key => {
+      if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        result[key] = { ...(target[key] || {}), ...source[key] };
+      } else {
+        result[key] = source[key];
+      }
+    });
+    return result;
+  }),
+  setObjToUrlParams: vi.fn(),
+  openWindow: vi.fn(),
+  noop: vi.fn(),
+  sleep: vi.fn(),
   getPopupContainer: vi.fn(() => document.body),
+  convertBytesToSize: vi.fn(),
 }));
 
 vi.mock('/@/utils/is', () => ({
@@ -47,7 +69,14 @@ describe('BasicHelp', () => {
         stubs: {
           'a-tooltip': {
             template: '<div class="mock-tooltip" :title="title"><slot /></div>',
-            props: ['title', 'placement', 'overlayStyle', 'overlayClassName', 'autoAdjustOverflow', 'getPopupContainer'],
+            props: [
+              'title',
+              'placement',
+              'overlayStyle',
+              'overlayClassName',
+              'autoAdjustOverflow',
+              'getPopupContainer',
+            ],
           },
           Icon: {
             template: '<span class="mock-icon">?</span>',
@@ -73,7 +102,14 @@ describe('BasicHelp', () => {
         stubs: {
           'a-tooltip': {
             template: '<div class="mock-tooltip" :title="title"><slot /></div>',
-            props: ['title', 'placement', 'overlayStyle', 'overlayClassName', 'autoAdjustOverflow', 'getPopupContainer'],
+            props: [
+              'title',
+              'placement',
+              'overlayStyle',
+              'overlayClassName',
+              'autoAdjustOverflow',
+              'getPopupContainer',
+            ],
           },
           Icon: {
             template: '<span class="mock-icon">?</span>',
@@ -322,7 +358,14 @@ describe('BasicHelp', () => {
         stubs: {
           'a-tooltip': {
             template: '<div class="mock-tooltip" :title="title"><slot /></div>',
-            props: ['title', 'placement', 'overlayStyle', 'overlayClassName', 'autoAdjustOverflow', 'getPopupContainer'],
+            props: [
+              'title',
+              'placement',
+              'overlayStyle',
+              'overlayClassName',
+              'autoAdjustOverflow',
+              'getPopupContainer',
+            ],
           },
           Icon: {
             template: '<span class="mock-icon">?</span>',
@@ -351,7 +394,14 @@ describe('BasicHelp', () => {
         stubs: {
           'a-tooltip': {
             template: '<div class="mock-tooltip" :title="title"><slot /></div>',
-            props: ['title', 'placement', 'overlayStyle', 'overlayClassName', 'autoAdjustOverflow', 'getPopupContainer'],
+            props: [
+              'title',
+              'placement',
+              'overlayStyle',
+              'overlayClassName',
+              'autoAdjustOverflow',
+              'getPopupContainer',
+            ],
           },
           Icon: {
             template: '<span class="mock-icon">?</span>',

@@ -42,7 +42,7 @@ describe('useComponentRegister coverage', () => {
 
     // Get the cleanup function passed to tryOnUnmounted
     const cleanupFunction = mockTryOnUnmounted.mock.calls[0][0];
-    
+
     // Call the cleanup function
     cleanupFunction();
 
@@ -59,7 +59,7 @@ describe('useComponentRegister coverage', () => {
 
     testCases.forEach(({ name, comp }) => {
       vi.clearAllMocks();
-      
+
       useComponentRegister(name, comp);
 
       expect(mockAdd).toHaveBeenCalledWith(name, comp);
@@ -132,7 +132,7 @@ describe('useComponentRegister coverage', () => {
     useComponentRegister(compName, comp);
 
     const cleanupFunction = mockTryOnUnmounted.mock.calls[0][0];
-    
+
     // Call cleanup multiple times
     cleanupFunction();
     cleanupFunction();
@@ -144,11 +144,11 @@ describe('useComponentRegister coverage', () => {
 
   it('should handle different component name types', () => {
     const comp = { name: 'TestComponent' } as any;
-    
+
     // Test with string literal types
     const componentTypes: ComponentType[] = [
       'Input',
-      'Select', 
+      'Select',
       'DatePicker',
       'TimePicker',
       'RadioGroup',
@@ -171,7 +171,7 @@ describe('useComponentRegister coverage', () => {
 
     componentTypes.forEach((compName, index) => {
       vi.clearAllMocks();
-      
+
       useComponentRegister(compName, comp);
 
       expect(mockAdd).toHaveBeenCalledWith(compName, comp);

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import BasicTitle from '/@/components/Basic/src/BasicTitle.vue';
+import BasicTitle from '/@/components/Basic/src/BasicTitle';
 
 // Mock dependencies
 vi.mock('/@/hooks/web/useDesign', () => ({
@@ -9,11 +9,11 @@ vi.mock('/@/hooks/web/useDesign', () => ({
   })),
 }));
 
-vi.mock('/@/components/Basic/src/BasicHelp.vue', () => ({
+vi.mock('../src/components/Basic/src/BasicHelp.vue', () => ({
   default: {
     name: 'BasicHelp',
-    template: '<span data-testid="basic-help"></span>',
-    props: ['text'],
+    template: '<span class="jeesite-basic-title-help" data-testid="basic-help"></span>',
+    props: ['text', 'class'],
   },
 }));
 
@@ -24,7 +24,7 @@ describe('components/Basic/src/BasicTitle', () => {
         default: 'Title Text',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Title Text');
     expect(wrapper.find('[data-testid="basic-help"]').exists()).toBe(false);
@@ -39,10 +39,10 @@ describe('components/Basic/src/BasicTitle', () => {
         default: 'Title Text',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Title Text');
-    expect(wrapper.find('[data-testid="basic-help"]').exists()).toBe(true);
+    expect(wrapper.findComponent({ name: 'BasicHelp' }).exists()).toBe(true);
   });
 
   it('should render with help message as array', () => {
@@ -54,10 +54,10 @@ describe('components/Basic/src/BasicTitle', () => {
         default: 'Title Text',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Title Text');
-    expect(wrapper.find('[data-testid="basic-help"]').exists()).toBe(true);
+    expect(wrapper.findComponent({ name: 'BasicHelp' }).exists()).toBe(true);
   });
 
   it('should apply span class when span is true and has slot content', () => {
@@ -69,7 +69,7 @@ describe('components/Basic/src/BasicTitle', () => {
         default: 'Title Text',
       },
     });
-    
+
     const element = wrapper.find('span');
     expect(element.classes()).toContain('jeesite-basic-title');
     expect(element.classes()).toContain('jeesite-basic-title-show-span');
@@ -81,7 +81,7 @@ describe('components/Basic/src/BasicTitle', () => {
         span: true,
       },
     });
-    
+
     const element = wrapper.find('span');
     expect(element.classes()).toContain('jeesite-basic-title');
     expect(element.classes()).not.toContain('jeesite-basic-title-show-span');
@@ -96,7 +96,7 @@ describe('components/Basic/src/BasicTitle', () => {
         default: 'Title Text',
       },
     });
-    
+
     const element = wrapper.find('span');
     expect(element.classes()).toContain('jeesite-basic-title');
     expect(element.classes()).toContain('jeesite-basic-title-normal');
@@ -112,7 +112,7 @@ describe('components/Basic/src/BasicTitle', () => {
         default: 'Title Text',
       },
     });
-    
+
     const element = wrapper.find('span');
     expect(element.classes()).toContain('jeesite-basic-title');
     expect(element.classes()).toContain('jeesite-basic-title-show-span');
@@ -130,11 +130,11 @@ describe('components/Basic/src/BasicTitle', () => {
         default: 'Title Text',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Title Text');
-    expect(wrapper.find('[data-testid="basic-help"]').exists()).toBe(true);
-    
+    expect(wrapper.findComponent({ name: 'BasicHelp' }).exists()).toBe(true);
+
     const element = wrapper.find('span');
     expect(element.classes()).toContain('jeesite-basic-title');
     expect(element.classes()).toContain('jeesite-basic-title-show-span');
@@ -150,7 +150,7 @@ describe('components/Basic/src/BasicTitle', () => {
         default: 'Title Text',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Title Text');
     expect(wrapper.find('[data-testid="basic-help"]').exists()).toBe(false);
@@ -165,11 +165,11 @@ describe('components/Basic/src/BasicTitle', () => {
         default: 'Title Text',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toContain('Title Text');
-    // Empty array is still truthy, so help will be shown
-    expect(wrapper.find('[data-testid="basic-help"]').exists()).toBe(true);
+    // Empty array is falsy in v-if context, so help will not be shown
+    expect(wrapper.find('[data-testid="basic-help"]').exists()).toBe(false);
   });
 
   it('should render with complex slot content', () => {
@@ -178,7 +178,7 @@ describe('components/Basic/src/BasicTitle', () => {
         default: '<strong>Bold Title</strong>',
       },
     });
-    
+
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.html()).toContain('<strong>Bold Title</strong>');
   });

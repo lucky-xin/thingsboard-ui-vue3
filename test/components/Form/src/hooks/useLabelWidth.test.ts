@@ -32,7 +32,7 @@ describe('components/Form/src/hooks/useLabelWidth', () => {
         labelWidth: undefined,
         disabledLabelWidth: false,
       });
-      
+
       const propsRef = ref({
         labelWidth: undefined,
         labelCol: undefined,
@@ -51,7 +51,7 @@ describe('components/Form/src/hooks/useLabelWidth', () => {
         labelWidth: '100px',
         disabledLabelWidth: true,
       });
-      
+
       const propsRef = ref({
         labelWidth: '200px',
         labelCol: undefined,
@@ -70,7 +70,7 @@ describe('components/Form/src/hooks/useLabelWidth', () => {
         labelWidth: '150px',
         disabledLabelWidth: false,
       });
-      
+
       const propsRef = ref({
         labelWidth: '200px',
         labelCol: undefined,
@@ -89,7 +89,7 @@ describe('components/Form/src/hooks/useLabelWidth', () => {
         labelWidth: undefined,
         disabledLabelWidth: false,
       });
-      
+
       const propsRef = ref({
         labelWidth: '200px',
         labelCol: undefined,
@@ -104,13 +104,13 @@ describe('components/Form/src/hooks/useLabelWidth', () => {
 
     it('should convert number labelWidth to pixel string', () => {
       vi.mocked(isNumber).mockReturnValue(true);
-      
+
       const schemaItemRef = ref({
         itemProps: {},
         labelWidth: 150,
         disabledLabelWidth: false,
       });
-      
+
       const propsRef = ref({
         labelWidth: undefined,
         labelCol: undefined,
@@ -132,7 +132,7 @@ describe('components/Form/src/hooks/useLabelWidth', () => {
         labelWidth: '150px',
         disabledLabelWidth: false,
       });
-      
+
       const propsRef = ref({
         labelWidth: undefined,
         labelCol: { span: 8 },
@@ -151,7 +151,7 @@ describe('components/Form/src/hooks/useLabelWidth', () => {
         labelWidth: '150px',
         disabledLabelWidth: false,
       });
-      
+
       const propsRef = ref({
         labelWidth: undefined,
         labelCol: { span: 8 },
@@ -170,7 +170,7 @@ describe('components/Form/src/hooks/useLabelWidth', () => {
         labelWidth: '150px',
         disabledLabelWidth: false,
       });
-      
+
       const propsRef = ref({
         labelWidth: undefined,
         labelCol: undefined,
@@ -188,7 +188,7 @@ describe('components/Form/src/hooks/useLabelWidth', () => {
         labelWidth: '150px',
         disabledLabelWidth: false,
       });
-      
+
       const propsRef = ref({
         labelWidth: undefined,
         labelCol: undefined,
@@ -207,7 +207,7 @@ describe('components/Form/src/hooks/useLabelWidth', () => {
         labelWidth: 0,
         disabledLabelWidth: false,
       });
-      
+
       const propsRef = ref({
         labelWidth: undefined,
         labelCol: undefined,
@@ -226,7 +226,7 @@ describe('components/Form/src/hooks/useLabelWidth', () => {
         labelWidth: '',
         disabledLabelWidth: false,
       });
-      
+
       const propsRef = ref({
         labelWidth: undefined,
         labelCol: undefined,
@@ -248,7 +248,7 @@ describe('components/Form/src/hooks/useLabelWidth', () => {
         labelWidth: '150px',
         disabledLabelWidth: false,
       });
-      
+
       const propsRef = ref({
         labelWidth: undefined,
         labelCol: { span: 8, offset: 1 },
@@ -265,13 +265,13 @@ describe('components/Form/src/hooks/useLabelWidth', () => {
 
     it('should handle string labelWidth without conversion', () => {
       vi.mocked(isNumber).mockReturnValue(false);
-      
+
       const schemaItemRef = ref({
         itemProps: {},
         labelWidth: '150px',
         disabledLabelWidth: false,
       });
-      
+
       const propsRef = ref({
         labelWidth: undefined,
         labelCol: undefined,

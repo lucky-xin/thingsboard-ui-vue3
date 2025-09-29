@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { Popconfirm } from 'ant-design-vue';
-import PopConfirmButton from '/@/components/Button/src/PopConfirmButton.vue';
+import PopConfirmButton from '/@/components/Button/src/PopConfirmButton';
 
 // Mock dependencies
 vi.mock('/@/hooks/core/useAttrs', () => ({

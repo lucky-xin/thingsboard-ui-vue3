@@ -1,12 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { 
-  Component, 
-  AppRouteRecordRaw, 
-  MenuTag, 
-  Menu, 
-  MenuModule, 
-  AppRouteModule 
-} from '/@/router/types';
+import type { Component, AppRouteRecordRaw, MenuTag, Menu, MenuModule, AppRouteModule } from 'router/types';
 import { Authority } from '/@/enums/authorityEnum';
 
 describe('router types coverage', () => {
@@ -14,7 +7,7 @@ describe('router types coverage', () => {
     // Test that Component type can accept different function types
     const componentFunction: Component = () => Promise.resolve({});
     const componentWithGenerics: Component<string> = () => Promise.resolve('test');
-    
+
     expect(typeof componentFunction).toBe('function');
     expect(typeof componentWithGenerics).toBe('function');
   });
@@ -24,8 +17,8 @@ describe('router types coverage', () => {
       name: 'test',
       path: '/test',
       meta: {
-        title: 'Test'
-      }
+        title: 'Test',
+      },
     };
 
     expect(route).toHaveProperty('name');
@@ -43,7 +36,7 @@ describe('router types coverage', () => {
       component: 'TestComponent',
       children: [],
       props: { id: 1 },
-      fullPath: '/test/full'
+      fullPath: '/test/full',
     };
 
     expect(route).toHaveProperty('component');
@@ -56,7 +49,7 @@ describe('router types coverage', () => {
     const tag: MenuTag = {
       type: 'primary',
       content: 'New',
-      dot: true
+      dot: true,
     };
 
     expect(tag).toHaveProperty('type');
@@ -78,7 +71,7 @@ describe('router types coverage', () => {
   it('should define Menu interface correctly', () => {
     const menu: Menu = {
       name: 'Home',
-      path: '/home'
+      path: '/home',
     };
 
     expect(menu).toHaveProperty('name');
@@ -101,7 +94,7 @@ describe('router types coverage', () => {
       roles: [Authority.ADMIN],
       meta: { title: 'Dashboard' },
       tag: { type: 'success', content: 'New' },
-      hideMenu: false
+      hideMenu: false,
     };
 
     expect(menu.icon).toBe('home');
@@ -122,8 +115,8 @@ describe('router types coverage', () => {
       orderNo: 1,
       menu: {
         name: 'Test',
-        path: '/test'
-      }
+        path: '/test',
+      },
     };
 
     expect(menuModule).toHaveProperty('orderNo');
@@ -136,8 +129,8 @@ describe('router types coverage', () => {
     const menuModule: MenuModule = {
       menu: {
         name: 'Test',
-        path: '/test'
-      }
+        path: '/test',
+      },
     };
 
     expect(menuModule).toHaveProperty('menu');
@@ -148,7 +141,7 @@ describe('router types coverage', () => {
     const routeModule: AppRouteModule = {
       name: 'test',
       path: '/test',
-      meta: {}
+      meta: {},
     };
 
     expect(routeModule).toHaveProperty('name');
@@ -163,7 +156,7 @@ describe('router types coverage', () => {
       children: [
         {
           name: 'Child1',
-          path: '/parent/child1'
+          path: '/parent/child1',
         },
         {
           name: 'Child2',
@@ -171,11 +164,11 @@ describe('router types coverage', () => {
           children: [
             {
               name: 'Grandchild',
-              path: '/parent/child2/grandchild'
-            }
-          ]
-        }
-      ]
+              path: '/parent/child2/grandchild',
+            },
+          ],
+        },
+      ],
     };
 
     expect(parentMenu.children).toHaveLength(2);
@@ -193,9 +186,9 @@ describe('router types coverage', () => {
         {
           name: 'child',
           path: '/parent/child',
-          meta: {}
-        }
-      ]
+          meta: {},
+        },
+      ],
     };
 
     expect(parentRoute.children).toHaveLength(1);
@@ -207,7 +200,7 @@ describe('router types coverage', () => {
       name: 'test',
       path: '/test',
       meta: {},
-      component: 'TestComponent'
+      component: 'TestComponent',
     };
 
     expect(typeof route.component).toBe('string');
@@ -220,7 +213,7 @@ describe('router types coverage', () => {
       name: 'test',
       path: '/test',
       meta: {},
-      component: componentFn
+      component: componentFn,
     };
 
     expect(typeof route.component).toBe('function');
@@ -232,7 +225,7 @@ describe('router types coverage', () => {
       name: 'test',
       path: '/test',
       meta: {},
-      components: componentFn
+      components: componentFn,
     };
 
     expect(typeof route.components).toBe('function');
@@ -242,7 +235,7 @@ describe('router types coverage', () => {
     const menu: Menu = {
       name: 'Admin',
       path: '/admin',
-      roles: [Authority.ADMIN, Authority.USER]
+      roles: [Authority.ADMIN, Authority.USER],
     };
 
     expect(Array.isArray(menu.roles)).toBe(true);
@@ -268,8 +261,8 @@ describe('router types coverage', () => {
         id: 1,
         name: 'test',
         active: true,
-        data: { nested: 'value' }
-      }
+        data: { nested: 'value' },
+      },
     };
 
     expect(route.props).toHaveProperty('id');

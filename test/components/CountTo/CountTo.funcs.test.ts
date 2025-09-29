@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
-import CountTo from '/@/components/CountTo/src/CountTo.vue';
+import CountTo from '/@/components/CountTo/src/CountTo';
 
 describe('components/CountTo/src/CountTo.vue funcs coverage', () => {
   it('should call start() and emit events', async () => {
@@ -40,4 +40,3 @@ describe('components/CountTo/src/CountTo.vue funcs coverage', () => {
     expect(typeof onFinished).toBe('function');
   });
 });
-

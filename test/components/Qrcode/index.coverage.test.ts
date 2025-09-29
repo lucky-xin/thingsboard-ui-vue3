@@ -42,4 +42,3 @@ describe('Qrcode/index coverage', () => {
     expect(exportKeys.length).toBeGreaterThanOrEqual(1);
   }, 10000); // Increase timeout to 10 seconds
 });
-

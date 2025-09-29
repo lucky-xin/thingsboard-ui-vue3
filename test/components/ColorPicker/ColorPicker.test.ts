@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
-import ColorPicker from '/@/components/ColorPicker/src/ColorPicker.vue';
+import ColorPicker from '/@/components/ColorPicker/src/ColorPicker';
 
 // Mock ant-design-vue Input component
 vi.mock('ant-design-vue', () => ({
@@ -12,7 +12,7 @@ vi.mock('ant-design-vue', () => ({
 }));
 
 // Mock the SimpleColorPicker component
-vi.mock('/@/components/ColorPicker/src/SimpleColorPicker.vue', () => ({
+vi.mock('../src/components/ColorPicker/src/SimpleColorPicker.vue', () => ({
   default: {
     name: 'SimpleColorPicker',
     template: '<div data-testid="simple-color-picker"><slot></slot></div>',
@@ -175,5 +175,4 @@ describe('ColorPicker.vue', () => {
     expect(wrapper.emitted('update:value')).toBeTruthy();
     expect(wrapper.emitted('change')).toBeTruthy();
   });
-
 });

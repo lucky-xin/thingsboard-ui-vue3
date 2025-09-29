@@ -17,7 +17,7 @@ describe('settings/componentSetting', () => {
 
     it('should have fetchSetting configuration', () => {
       const { fetchSetting } = componentSetting.table;
-      
+
       expect(fetchSetting).toBeDefined();
       expect(fetchSetting.pageField).toBe('page');
       expect(fetchSetting.sizeField).toBe('pageSize');
@@ -27,21 +27,21 @@ describe('settings/componentSetting', () => {
 
     it('should have pageSizeOptions array', () => {
       const { pageSizeOptions } = componentSetting.table;
-      
+
       expect(Array.isArray(pageSizeOptions)).toBe(true);
       expect(pageSizeOptions).toEqual(['10', '20', '50', '80', '100']);
     });
 
     it('should have correct default values', () => {
       const { defaultPageSize, defaultSize } = componentSetting.table;
-      
+
       expect(defaultPageSize).toBe(20);
       expect(defaultSize).toBe('middle');
     });
 
     it('should have default sort configuration', () => {
       const { defaultSort } = componentSetting.table;
-      
+
       expect(defaultSort).toBeDefined();
       expect(defaultSort.sortProperty).toBe('createdTime');
       expect(defaultSort.sortOrder).toBe('DESC');
@@ -49,7 +49,7 @@ describe('settings/componentSetting', () => {
 
     it('should have defaultSortFn function', () => {
       const { defaultSortFn } = componentSetting.table;
-      
+
       expect(typeof defaultSortFn).toBe('function');
     });
 
@@ -61,9 +61,9 @@ describe('settings/componentSetting', () => {
         column: {} as any,
         field: 'name',
       };
-      
+
       const result = defaultSortFn(sortInfo);
-      
+
       expect(result).toEqual({
         sortProperty: 'name',
         sortOrder: 'asc',
@@ -78,9 +78,9 @@ describe('settings/componentSetting', () => {
         column: {} as any,
         field: 'createdTime',
       };
-      
+
       const result = defaultSortFn(sortInfo);
-      
+
       expect(result).toEqual({
         sortProperty: 'createdTime',
         sortOrder: 'desc',
@@ -95,9 +95,9 @@ describe('settings/componentSetting', () => {
         column: {} as any,
         field: 'name',
       };
-      
+
       const result = defaultSortFn(sortInfo);
-      
+
       expect(result).toBeUndefined();
     });
 
@@ -109,24 +109,24 @@ describe('settings/componentSetting', () => {
         column: {} as any,
         field: null as any,
       };
-      
+
       const result = defaultSortFn(sortInfo);
-      
+
       expect(result).toBeUndefined();
     });
 
     it('should have defaultFilterFn function', () => {
       const { defaultFilterFn } = componentSetting.table;
-      
+
       expect(typeof defaultFilterFn).toBe('function');
     });
 
     it('should return data as-is in defaultFilterFn', () => {
       const { defaultFilterFn } = componentSetting.table;
       const testData = { name: ['test'], status: ['active'] };
-      
+
       const result = defaultFilterFn(testData);
-      
+
       expect(result).toBe(testData);
     });
   });
@@ -139,7 +139,7 @@ describe('settings/componentSetting', () => {
 
     it('should have native property set to false', () => {
       const { scrollbar } = componentSetting;
-      
+
       expect(scrollbar.native).toBe(false);
     });
   });
@@ -147,11 +147,11 @@ describe('settings/componentSetting', () => {
   it('should be immutable structure', () => {
     const originalTable = componentSetting.table;
     const originalScrollbar = componentSetting.scrollbar;
-    
+
     // Attempt to modify should not affect original
     const modifiedSetting = { ...componentSetting };
     modifiedSetting.table = { ...originalTable, defaultPageSize: 50 };
-    
+
     expect(componentSetting.table.defaultPageSize).toBe(20);
     expect(componentSetting.table).toBe(originalTable);
     expect(componentSetting.scrollbar).toBe(originalScrollbar);
@@ -159,8 +159,8 @@ describe('settings/componentSetting', () => {
 
   it('should contain all expected top-level properties', () => {
     const expectedProperties = ['table', 'scrollbar'];
-    
-    expectedProperties.forEach(prop => {
+
+    expectedProperties.forEach((prop) => {
       expect(componentSetting).toHaveProperty(prop);
     });
   });

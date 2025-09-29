@@ -21,10 +21,10 @@ vi.mock('/@/components/Icon', () => ({
   },
 }));
 
-vi.mock('/@/components/Application/src/search/AppSearchFooter.vue', () => ({
+vi.mock('../src/components/Application/src/search/AppSearchFooter.vue', () => ({
   default: {
     name: 'AppSearchFooter',
-    template: '<div class="app-search-footer"></div>',
+    template: '<div class="jeesite-app-search-footer"></div>',
   },
 }));
 
@@ -136,7 +136,8 @@ describe('AppSearchModal', () => {
       global: globalConfig,
     });
 
-    expect(wrapper.find('.app-search-footer').exists()).toBe(true);
+    // Check for the AppSearchFooter component instead of CSS class
+    expect(wrapper.findComponent({ name: 'AppSearchFooter' }).exists()).toBe(true);
   });
 
   it('should handle close event', async () => {

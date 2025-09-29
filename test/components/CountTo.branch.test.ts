@@ -12,8 +12,10 @@ describe('components/CountTo/src/CountTo.vue branches', () => {
         useTransition: (src: any) => src, // passthrough for immediate updates
       };
     });
-    const { default: CountTo } = await import('/@/components/CountTo/src/CountTo.vue');
-    const wrapper = mount(CountTo as any, { props: { startVal: 0, endVal: 10, autoplay: true, useEasing: false, duration: 0 } });
+    const { default: CountTo } = await import('../src/components/CountTo/src/CountTo.vue');
+    const wrapper = mount(CountTo as any, {
+      props: { startVal: 0, endVal: 10, autoplay: true, useEasing: false, duration: 0 },
+    });
     await wrapper.setProps({ endVal: 20 });
     await nextTick();
     expect(wrapper.text()).toContain('20');
@@ -29,11 +31,9 @@ describe('components/CountTo/src/CountTo.vue branches', () => {
         useTransition: () => ref(undefined),
       };
     });
-    const { default: CountTo } = await import('/@/components/CountTo/src/CountTo.vue');
+    const { default: CountTo } = await import('../src/components/CountTo/src/CountTo.vue');
     const wrapper = mount(CountTo as any, { props: { autoplay: false } });
     // value should be '' when underlying number is undefined
     expect(wrapper.text()).toBe('');
   });
 });
-
-

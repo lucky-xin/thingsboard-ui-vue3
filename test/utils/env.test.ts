@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as envUtils from '/@/utils/env';
 import { version } from '../../package.json';
+import { getEnvConfigName } from '../../build/config/getEnvConfigName';
+import { warn } from '/@/utils/log';
 
 // Mock the log module
 vi.mock('/@/utils/log', () => ({
@@ -78,11 +80,24 @@ describe('utils/env', () => {
       expect(config).toHaveProperty('MODE', 'test');
     });
 
-    it('should warn when app short name contains invalid characters', () => {
-      // This test would need more complex mocking setup
-      // For now, we'll test the basic functionality
+    it('should handle production mode with valid app short name', () => {
+      // Mock the getEnvConfigName function to return a custom config name
+      vi.mock('../../build/config/getEnvConfigName', () => ({
+        getEnvConfigName: () => 'TEST_CONFIG',
+      }));
+
+      // Mock window to return a config with valid app short name
+      (global as any).TEST_CONFIG = {
+        VITE_GLOB_APP_SHORT_NAME: 'TEST_APP', // Valid characters
+        VITE_PROXY: '[]',
+        MODE: 'production',
+        DEV: false,
+        PROD: true,
+      };
+
       const config = envUtils.getAppEnvConfig();
       expect(config).toHaveProperty('VITE_GLOB_APP_SHORT_NAME', 'TEST_APP');
+      // Note: The MODE property comes from the original env object, not from window.TEST_CONFIG
     });
 
     it('should handle special characters in app short name', () => {

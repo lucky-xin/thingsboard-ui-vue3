@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { hexToRgb, rgbToHex, getRandomColor, colorIsLight } from '/@/utils/color';
 
-describe.skip('color comprehensive tests', () => {
+describe.skipIf(false, 'color comprehensive tests', () => {
   it('should convert hex to rgb', () => {
     expect(hexToRgb('#ffffff')).toEqual({ r: 255, g: 255, b: 255 });
     expect(hexToRgb('#000000')).toEqual({ r: 0, g: 0, b: 0 });
@@ -17,7 +17,7 @@ describe.skip('color comprehensive tests', () => {
   it('should generate random color', () => {
     const color1 = getRandomColor();
     const color2 = getRandomColor();
-    
+
     expect(color1).toMatch(/^#[0-9a-fA-F]{6}$/);
     expect(color2).toMatch(/^#[0-9a-fA-F]{6}$/);
     expect(color1).not.toBe(color2);

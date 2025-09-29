@@ -1,5 +1,15 @@
-<script lang="tsx">
-  import { defineComponent, ref, unref } from 'vue';
+<template>
+  <div class="p-1" @click="changeModal(true)">
+    <Tooltip>
+      <template #title>{{ t('common.searchText') }}</template>
+      <Icon icon="i-ant-design:search-outlined" />
+    </Tooltip>
+    <AppSearchModal :open="showModal" @close="changeModal(false)" />
+  </div>
+</template>
+
+<script lang="ts">
+  import { defineComponent, ref } from 'vue';
   import { Tooltip } from 'ant-design-vue';
   import { Icon } from '/@/components/Icon';
   import AppSearchModal from './AppSearchModal.vue';
@@ -7,6 +17,11 @@
 
   export default defineComponent({
     name: 'AppSearch',
+    components: {
+      Tooltip,
+      Icon,
+      AppSearchModal,
+    },
     setup() {
       const showModal = ref(false);
       const { t } = useI18n();
@@ -15,19 +30,10 @@
         showModal.value = show;
       }
 
-      return () => {
-        return (
-          <div class="p-1" onClick={changeModal.bind(null, true)}>
-            <Tooltip>
-              {{
-                title: () => t('common.searchText'),
-                // default: () => <SearchOutlined />,
-                default: () => <Icon icon="i-ant-design:search-outlined" />,
-              }}
-            </Tooltip>
-            <AppSearchModal onClose={changeModal.bind(null, false)} open={unref(showModal)} />
-          </div>
-        );
+      return {
+        showModal,
+        t,
+        changeModal,
       };
     },
   });

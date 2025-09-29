@@ -26,8 +26,8 @@ describe('ClickOutSide/index', () => {
     const mockApp = {
       component: vi.fn(),
     };
-    
+
     ClickOutSide.install(mockApp);
-    expect(mockApp.component).toHaveBeenCalledWith(ClickOutSide.name || ClickOutSide.__name, ClickOutSide);
+    expect(mockApp.component).toHaveBeenCalledWith('MockComponent', ClickOutSide);
   });
 });

@@ -41,7 +41,7 @@ describe('components/CountDown/useCountdown', () => {
     start();
 
     expect(isStart.value).toBe(true);
-    
+
     // Fast-forward time
     vi.advanceTimersByTime(1000);
     expect(currentCount.value).toBe(2);
@@ -94,10 +94,10 @@ describe('components/CountDown/useCountdown', () => {
 
     start();
     const initialValue = currentCount.value;
-    
+
     start(); // Try to start again
     vi.advanceTimersByTime(1000);
-    
+
     // Should only advance once
     expect(currentCount.value).toBe(initialValue - 1);
   });
@@ -107,7 +107,7 @@ describe('components/CountDown/useCountdown', () => {
 
     start();
     clear();
-    
+
     // Timer should be cleared, count should not change
     const valueAfterClear = currentCount.value;
     vi.advanceTimersByTime(2000);
@@ -117,7 +117,7 @@ describe('components/CountDown/useCountdown', () => {
   it('should handle unmount cleanup', () => {
     // Just verify the function can be called without errors
     const result = useCountdown(5);
-    
+
     expect(result).toBeDefined();
     expect(result.start).toBeInstanceOf(Function);
   });

@@ -142,7 +142,10 @@ describe('components/Excel/src/typing', () => {
 
     it('should support optional properties', () => {
       const aoAToSheet: AoAToSheet = {
-        data: [['Name', 'Age'], ['John', 30]],
+        data: [
+          ['Name', 'Age'],
+          ['John', 30],
+        ],
       };
 
       expect(aoAToSheet.data).toHaveLength(2);

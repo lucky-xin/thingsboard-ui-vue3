@@ -6,7 +6,7 @@ import { App } from 'vue';
 describe('Container/index', () => {
   it('should export all container components with withInstall', async () => {
     const module = await import('/@/components/Container/index');
-    
+
     expect(module).toBeDefined();
     expect(module.CollapseContainer).toBeDefined();
     expect(module.ScrollContainer).toBeDefined();
@@ -40,7 +40,7 @@ describe('Container/index', () => {
   it('should install components correctly', async () => {
     const module = await import('/@/components/Container/index');
     const { CollapseContainer, ScrollContainer, LazyContainer } = module;
-    
+
     const mockApp = {
       component: vi.fn(),
     } as unknown as App;
@@ -54,7 +54,7 @@ describe('Container/index', () => {
 
   it('should export typing module', async () => {
     const module = await import('/@/components/Container/index');
-    
+
     // Just check that the module imports without error
     expect(module).toBeDefined();
   });
@@ -62,7 +62,7 @@ describe('Container/index', () => {
   it('should be valid Vue components', async () => {
     const module = await import('/@/components/Container/index');
     const { CollapseContainer, ScrollContainer, LazyContainer } = module;
-    
+
     expect(CollapseContainer).toBeDefined();
     expect(ScrollContainer).toBeDefined();
     expect(LazyContainer).toBeDefined();

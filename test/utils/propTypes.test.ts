@@ -42,18 +42,18 @@ describe('utils/propTypes', () => {
   it('should be able to create validators', () => {
     const stringValidator = propTypes.string;
     expect(stringValidator).toBeDefined();
-    
+
     const boolValidator = propTypes.bool;
     expect(boolValidator).toBeDefined();
-    
+
     const numberValidator = propTypes.number;
     expect(numberValidator).toBeDefined();
   });
 
   it('should have all expected properties', () => {
     const expectedProps = ['func', 'bool', 'string', 'number', 'object', 'integer', 'style', 'VNodeChild'];
-    
-    expectedProps.forEach(prop => {
+
+    expectedProps.forEach((prop) => {
       expect(propTypes).toHaveProperty(prop);
     });
   });

@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import Description from '/@/components/Description/src/Description';
 
@@ -12,11 +13,16 @@ vi.mock('ant-design-vue', () => {
         template: '<div class="a-descriptions-item"><slot></slot></div>',
       },
     },
+    Tooltip: {
+      name: 'ATooltip',
+      template: '<div class="ant-tooltip"><slot></slot></div>',
+      props: ['title', 'placement'],
+    },
   };
 });
 
 // Mock Container component
-vi.mock('components/Container', () => {
+vi.mock('/@/components/Container', () => {
   return {
     CollapseContainer: {
       name: 'CollapseContainer',
@@ -26,7 +32,7 @@ vi.mock('components/Container', () => {
 });
 
 // Mock useDesign hook
-vi.mock('hooks/web/useDesign', () => {
+vi.mock('/@/hooks/web/useDesign', () => {
   return {
     useDesign: vi.fn(() => {
       return {
@@ -37,7 +43,7 @@ vi.mock('hooks/web/useDesign', () => {
 });
 
 // Mock useAttrs hook
-vi.mock('hooks/core/useAttrs', () => {
+vi.mock('/@/hooks/core/useAttrs', () => {
   return {
     useAttrs: vi.fn(() => {
       return () => ({});

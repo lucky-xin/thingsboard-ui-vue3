@@ -873,7 +873,7 @@ import { useI18n } from '/@/hooks/web/useI18n';
 import { useTitle as usePageTitle } from '@vueuse/core';
 import { useGlobSetting } from '/@/hooks/setting';
 import { useRouter } from 'vue-router';
-import { REDIRECT_NAME } from 'router/constant';
+import { REDIRECT_NAME } from '/@/router/constant';
 
 describe('hooks/web/useTitle', () => {
   let mockPageTitle: any;

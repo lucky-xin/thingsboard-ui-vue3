@@ -1,1222 +1,100 @@
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
-// Mock Ant Design Vue components
-vi.mock("ant-design-vue", () => ({
-  Dropdown: {
-    template: "<div class=\"ant-dropdown\"><slot></slot></div>",
-    props: ["placement", "trigger", "dropMenuList"]
-  },
-  Select: {
-    template: "<div class=\"ant-select\"><slot></slot></div>",
-    props: ["value", "options", "mode"]
-  },
-  Modal: {
-    template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
-  },
-  Form: {
-    template: "<form class=\"ant-form\"><slot></slot></form>",
-    props: ["model", "rules"]
-  },
-  FormItem: {
-    template: "<div class=\"ant-form-item\"><slot></slot></div>",
-    props: ["label", "name"]
-  },
-  Input: {
-    template: "<input class=\"ant-input\" />",
-    props: ["value", "placeholder"]
-  },
-  Button: {
-    template: "<button class=\"ant-btn\"><slot></slot></button>",
-    props: ["type", "loading"]
-  }
-}));
-
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import ExportExcelModal from '/@/components/Excel/src/ExportExcelModal';
+
+// Mock Ant Design Vue components
+vi.mock("ant-design-vue", async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    Modal: {
+      template: "<div class=\"ant-modal\"><slot></slot></div>",
+      props: ["visible", "title", "width", "footer"]
+    },
+    Form: {
+      template: "<form class=\"ant-form\"><slot></slot></form>",
+      props: ["model", "rules", "layout"]
+    },
+    FormItem: {
+      template: "<div class=\"ant-form-item\"><slot></slot></div>",
+      props: ["label", "name", "rules"]
+    },
+    Input: {
+      template: "<input class=\"ant-input\" />",
+      props: ["value", "placeholder", "disabled"]
+    },
+    Button: {
+      template: "<button class=\"ant-btn\"><slot></slot></button>",
+      props: ["type", "loading", "disabled"]
+    },
+    Tooltip: {
+      template: "<div class=\"ant-tooltip\"><slot></slot></div>",
+      props: ["title", "placement"]
+    },
+    Space: {
+      template: "<div class=\"ant-space\"><slot></slot></div>",
+      props: ["direction", "size"]
+    },
+    Skeleton: {
+      template: "<div class=\"ant-skeleton\">Skeleton</div>",
+      props: ["active", "loading"]
+    }
+  };
+});
+
+// Mock Vue Router
+vi.mock('vue-router', () => ({
+  useRouter: vi.fn(() => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    go: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn()
+  })),
+  useRoute: vi.fn(() => ({
+    path: '/',
+    name: 'Home',
+    params: {},
+    query: {},
+    meta: {}
+  })),
+  createRouter: vi.fn(() => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    go: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn()
+  })),
+  createWebHistory: vi.fn(() => ({})),
+  createWebHashHistory: vi.fn(() => ({}))
+}));
+
+// Mock hooks
+vi.mock('/@/hooks/web/useDesign', () => ({
+  useDesign: vi.fn(() => ({
+    prefixCls: 'export-excel-modal'
+  }))
+}));
+
+vi.mock('/@/hooks/web/useMessage', () => ({
+  useMessage: vi.fn(() => ({
+    createMessage: vi.fn()
+  }))
+}));
+
+vi.mock('/@/hooks/web/useI18n', () => ({
+  useI18n: vi.fn(() => ({
+    t: vi.fn((key: string) => key)
+  })),
+  t: vi.fn((key: string) => key)
+}));
+
+// Mock Excel utilities
+vi.mock('/@/components/Excel/src/Export2Excel', () => ({
+  jsonToSheetXlsx: vi.fn(),
+  aoaToSheetXlsx: vi.fn()
+}));
+
+import ExportExcelModal from '/@/components/Excel/src/ExportExcelModal.vue';
 
 describe('ExportExcelModal', () => {
   it('should render without crashing', () => {
@@ -1230,22 +108,73 @@ describe('ExportExcelModal', () => {
   });
 
   it('should handle props correctly', () => {
-    const props = {};
+    const props = {
+      visible: true,
+      title: 'Export Excel',
+      data: []
+    };
     const wrapper = mount(ExportExcelModal, {
-      props,
+      props
     });
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should emit events when expected', () => {
     const wrapper = mount(ExportExcelModal);
-    // Add event testing based on component functionality
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should handle user interactions', () => {
     const wrapper = mount(ExportExcelModal);
-    // Add interaction testing
     expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should render with different visibility states', () => {
+    const visibleStates = [true, false];
+    
+    visibleStates.forEach(visible => {
+      const wrapper = mount(ExportExcelModal, {
+        props: { visible }
+      });
+      expect(wrapper.exists()).toBe(true);
+    });
+  });
+
+  it('should render with different titles', () => {
+    const titles = ['Export Data', 'Download Excel', 'Export to File'];
+    
+    titles.forEach(title => {
+      const wrapper = mount(ExportExcelModal, {
+        props: { title }
+      });
+      expect(wrapper.exists()).toBe(true);
+    });
+  });
+
+  it('should handle empty data', () => {
+    const wrapper = mount(ExportExcelModal, {
+      props: { data: [] }
+    });
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should handle data with different structures', () => {
+    const dataStructures = [
+      [],
+      [{ name: 'John', age: 30 }],
+      [{ id: 1, value: 'test' }, { id: 2, value: 'example' }]
+    ];
+    
+    dataStructures.forEach(data => {
+      const wrapper = mount(ExportExcelModal, {
+        props: { data }
+      });
+      expect(wrapper.exists()).toBe(true);
+    });
+  });
+
+  it('should be a valid Vue component', () => {
+    expect(ExportExcelModal).toBeDefined();
+    expect(typeof ExportExcelModal).toBe('object');
   });
 });

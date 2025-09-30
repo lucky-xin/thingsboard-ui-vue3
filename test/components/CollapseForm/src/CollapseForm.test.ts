@@ -25,8 +25,11 @@ vi.mock('/@/layouts/default/content/useContentViewHeight', () => ({
 vi.mock('/@/utils/propTypes', () => ({
   propTypes: {
     array: { def: (defaultValue: any) => ({ type: Array, default: defaultValue }) },
-    string: { type: String },
-    bool: { type: Boolean },
+    string: { def: (defaultValue: any) => ({ type: String, default: defaultValue }) },
+    bool: { def: (defaultValue: any) => ({ type: Boolean, default: defaultValue }) },
+    number: { def: (defaultValue: any) => ({ type: Number, default: defaultValue }) },
+    object: { def: (defaultValue: any) => ({ type: Object, default: defaultValue }) },
+    func: { def: (defaultValue: any) => ({ type: Function, default: defaultValue }) },
   },
 }));
 

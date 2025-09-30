@@ -25,7 +25,7 @@ describe('components/CountTo/src/CountTo.vue', () => {
         },
       };
     });
-    const { default: CountTo } = await import('../src/components/CountTo/src/CountTo.vue');
+    const { default: CountTo } = await import('/@/components/CountTo/src/CountTo.vue');
     const wrapper = mount(CountTo as any, { props: { startVal: 0, endVal: 10, duration: 1 } });
     const onStarted = vi.fn();
     const onFinished = vi.fn();

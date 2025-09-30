@@ -11,6 +11,7 @@ vi.mock('/@/utils', () => ({
     };
     return mockComponent;
   }),
+  deepMerge: vi.fn((target, source) => ({ ...target, ...source })),
 }));
 
 // Mock modal hooks

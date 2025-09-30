@@ -257,18 +257,6 @@ vi.mock('hooks/web/useMessage', () => {
   return { useMessage: fn };
 });
 
-// 最小 mock useDesign，避免引入 antd theme/token 与 Application 依赖链
-vi.mock('hooks/web/useDesign', () => {
-  function useDesign(scope?: string) {
-    const prefixVar = 'jeesite';
-    const prefixCls = scope ? `${prefixVar}-${scope}` : prefixVar;
-    const variables = {};
-    const hashId = 'hash123';
-    return { prefixCls, prefixVar, variables, hashId } as any;
-  }
-  const useAppInject = () => ({ getIsMobile: false });
-  return { useDesign, useAppInject };
-});
 
 // Mock `withInstall` globally to ensure all component tests work properly
 vi.mock('/@/utils', async (importOriginal) => {

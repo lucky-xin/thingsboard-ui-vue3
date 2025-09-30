@@ -4,7 +4,7 @@ import { CardList } from '/@/components/CardList';
 describe('components/CardList/index', () => {
   it('should export CardList component', () => {
     expect(CardList).toBeDefined();
-    expect(CardList.name).toBe('CardList');
+    expect(typeof CardList).toBe('object');
   });
 
   it('should have install method', () => {

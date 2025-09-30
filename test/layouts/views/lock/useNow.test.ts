@@ -835,7 +835,7 @@ vi.mock("/@/hooks/setting/useLocale", () => ({
 }));
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { useNow } from 'layouts/views/lock/useNow';
+import { useNow } from '/@/layouts/views/lock/useNow';
 import { nextTick } from 'vue';
 
 // Mock dependencies

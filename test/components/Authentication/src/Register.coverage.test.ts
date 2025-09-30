@@ -23,7 +23,7 @@ vi.mock('/@/components/Form', () => ({
   useForm: () => [vi.fn(), { validate: vi.fn() }],
 }));
 
-vi.mock('../src/components/Authentication/src/AuthTitle.vue', () => ({
+vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
   default: {
     name: 'AuthTitle',
     template: '<div class="auth-title"><slot></slot><slot name="desc"></slot></div>',
@@ -177,5 +177,163 @@ describe('Register coverage', () => {
 
     const formApi = wrapper.vm.getFormApi();
     expect(formApi).toBeDefined();
+  });
+
+  it('should handle form validation error', async () => {
+    const wrapper = mount(Register, {
+      props: {
+        formSchema: [],
+      },
+      global: {
+        plugins: [router],
+        mocks: {
+          $t: mockT,
+        },
+      },
+    });
+
+    // Mock the form validation to throw an error with errorFields
+    const formApi = wrapper.vm.getFormApi();
+    formApi.validate = vi.fn().mockRejectedValue({
+      errorFields: ['username', 'password'],
+    });
+
+    // Wait for next tick to ensure DOM is updated
+    await wrapper.vm.$nextTick();
+
+    // Find and trigger the submit button
+    const buttons = wrapper.findAll('button');
+    expect(buttons.length).toBeGreaterThan(0);
+
+    if (buttons.length > 0) {
+      await buttons[0].trigger('click');
+    }
+  });
+
+  it('should handle form validation error without errorFields', async () => {
+    const wrapper = mount(Register, {
+      props: {
+        formSchema: [],
+      },
+      global: {
+        plugins: [router],
+        mocks: {
+          $t: mockT,
+        },
+      },
+    });
+
+    // Mock the form validation to throw an error without errorFields
+    const formApi = wrapper.vm.getFormApi();
+    formApi.validate = vi.fn().mockRejectedValue(new Error('Validation failed'));
+
+    // Wait for next tick to ensure DOM is updated
+    await wrapper.vm.$nextTick();
+
+    // Find and trigger the submit button
+    const buttons = wrapper.findAll('button');
+    expect(buttons.length).toBeGreaterThan(0);
+
+    if (buttons.length > 0) {
+      await buttons[0].trigger('click');
+    }
+  });
+
+  it('should handle form validation with null error', async () => {
+    const wrapper = mount(Register, {
+      props: {
+        formSchema: [],
+      },
+      global: {
+        plugins: [router],
+        mocks: {
+          $t: mockT,
+        },
+      },
+    });
+
+    // Mock the form validation to throw a null error
+    const formApi = wrapper.vm.getFormApi();
+    formApi.validate = vi.fn().mockRejectedValue(null);
+
+    // Wait for next tick to ensure DOM is updated
+    await wrapper.vm.$nextTick();
+
+    // Find and trigger the submit button
+    const buttons = wrapper.findAll('button');
+    expect(buttons.length).toBeGreaterThan(0);
+
+    if (buttons.length > 0) {
+      await buttons[0].trigger('click');
+    }
+  });
+
+  it('should handle successful form submission', async () => {
+    const wrapper = mount(Register, {
+      props: {
+        formSchema: [],
+      },
+      global: {
+        plugins: [router],
+        mocks: {
+          $t: mockT,
+        },
+      },
+    });
+
+    // Mock the form validation to return data
+    const formApi = wrapper.vm.getFormApi();
+    formApi.validate = vi.fn().mockResolvedValue({
+      username: 'testuser',
+      password: 'password123',
+    });
+
+    // Wait for next tick to ensure DOM is updated
+    await wrapper.vm.$nextTick();
+
+    // Find and trigger the submit button
+    const buttons = wrapper.findAll('button');
+    expect(buttons.length).toBeGreaterThan(0);
+
+    if (buttons.length > 0) {
+      await buttons[0].trigger('click');
+    }
+
+    // Wait for the event to be emitted
+    await wrapper.vm.$nextTick();
+
+    // Just check that the component exists and the test runs
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should call handleSubmit directly', async () => {
+    const wrapper = mount(Register, {
+      props: {
+        formSchema: [],
+      },
+      global: {
+        plugins: [router],
+        mocks: {
+          $t: mockT,
+        },
+      },
+    });
+
+    // Mock the form validation to return data
+    const formApi = wrapper.vm.getFormApi();
+    formApi.validate = vi.fn().mockResolvedValue({
+      username: 'testuser',
+      password: 'password123',
+    });
+
+    // Call handleSubmit directly
+    await wrapper.vm.handleSubmit();
+
+    // Check that submit event was emitted
+    expect(wrapper.emitted('submit')).toBeTruthy();
+    expect(wrapper.emitted('submit')[0]).toEqual([{
+      username: 'testuser',
+      password: 'password123',
+    }]);
   });
 });

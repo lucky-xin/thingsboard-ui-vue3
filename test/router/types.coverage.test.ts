@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { Component, AppRouteRecordRaw, MenuTag, Menu, MenuModule, AppRouteModule } from 'router/types';
+import type { Component, AppRouteRecordRaw, MenuTag, Menu, MenuModule, AppRouteModule } from '/@/router/types';
 import { Authority } from '/@/enums/authorityEnum';
 
 describe('router types coverage', () => {

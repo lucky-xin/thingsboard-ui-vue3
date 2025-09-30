@@ -4,7 +4,7 @@ import Authority from '/@/components/Authority/src/Authority';
 import { usePermission } from '/@/hooks/web/usePermission';
 
 // Mock usePermission hook
-vi.mock('hooks/web/usePermission', () => {
+vi.mock('/@/hooks/web/usePermission', () => {
   return {
     usePermission: vi.fn(),
   };

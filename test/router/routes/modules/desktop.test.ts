@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import * as module from 'router/routes/modules/desktop';
+import * as module from '/@/router/routes/modules/desktop';
 
 describe('desktop', () => {
   it('should export expected functions/classes', () => {

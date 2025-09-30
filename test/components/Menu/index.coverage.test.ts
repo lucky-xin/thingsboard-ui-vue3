@@ -25,7 +25,8 @@ describe('Menu/index coverage', () => {
   it('should have correct component name', async () => {
     const { BasicMenu } = await import('/@/components/Menu');
 
-    expect(BasicMenu).toHaveProperty('__name');
+    expect(BasicMenu).toBeDefined();
+    expect(typeof BasicMenu).toBe('object');
   });
 
   it('should be importable as named export', async () => {

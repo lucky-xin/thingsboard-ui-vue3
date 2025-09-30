@@ -50,6 +50,15 @@ vi.mock('ant-design-vue', () => ({
     },
     template: '<div class="ant-tooltip"><slot /></div>',
   },
+  Badge: {
+    name: 'ABadge',
+    props: {
+      count: [String, Number],
+      dot: Boolean,
+      status: String,
+    },
+    template: '<div class="ant-badge"><slot /></div>',
+  },
 }));
 
 import TableImg from '/@/components/Table/src/components/TableImg';

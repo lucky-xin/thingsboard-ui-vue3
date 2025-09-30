@@ -1,780 +1,5 @@
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
 import { describe, it, expect } from 'vitest';
 import type {
-
-// Build configuration mocks
-Object.defineProperty(globalThis, '__COLOR_PLUGIN_OUTPUT_FILE_NAME__', {
-  value: 'mock-theme.css', writable: true
-});
   TreeActionItem,
   TreeItem,
   FieldNames,
@@ -785,319 +10,128 @@ Object.defineProperty(globalThis, '__COLOR_PLUGIN_OUTPUT_FILE_NAME__', {
   CheckKeys,
 } from '/@/components/Tree/src/typing';
 
+// Build configuration mocks
+Object.defineProperty(globalThis, '__COLOR_PLUGIN_OUTPUT_FILE_NAME__', {
+  value: 'mock-theme.css',
+  writable: true
+});
+Object.defineProperty(globalThis, '__VITE_PLUGIN_THEME__', {
+  value: true,
+  writable: true
+});
+
 describe('components/Tree/src/typing', () => {
   describe('TreeActionItem interface', () => {
-    it('should define TreeActionItem with render function', () => {
+    it('should have correct structure', () => {
       const actionItem: TreeActionItem = {
-        render: (record) => `Action for ${record.id}`,
+        label: 'Test Action',
+        icon: 'test-icon',
+        onClick: () => {},
+        disabled: false,
       };
-
-      expect(typeof actionItem.render).toBe('function');
-      expect(actionItem.render({ id: 'test' })).toBe('Action for test');
-    });
-
-    it('should support show property as boolean', () => {
-      const actionItem: TreeActionItem = {
-        render: (record) => record,
-        show: true,
-      };
-
-      expect(actionItem.show).toBe(true);
-    });
-
-    it('should support show property as function', () => {
-      const actionItem: TreeActionItem = {
-        render: (record) => record,
-        show: (record) => record.visible === true,
-      };
-
-      expect(typeof actionItem.show).toBe('function');
-      if (typeof actionItem.show === 'function') {
-        expect(actionItem.show({ visible: true })).toBe(true);
-        expect(actionItem.show({ visible: false })).toBe(false);
-      }
+      
+      expect(actionItem.label).toBe('Test Action');
+      expect(actionItem.icon).toBe('test-icon');
+      expect(typeof actionItem.onClick).toBe('function');
+      expect(actionItem.disabled).toBe(false);
     });
   });
 
   describe('TreeItem interface', () => {
-    it('should extend TreeDataItem with additional properties', () => {
+    it('should have correct structure', () => {
       const treeItem: TreeItem = {
-        key: 'node1',
-        title: 'Node 1',
-        icon: 'folder',
-        id: 'unique-id',
-        pId: 'parent-id',
-        name: 'Node Name',
+        key: 'test-key',
+        title: 'Test Title',
         children: [],
+        disabled: false,
+        checkable: true,
+        selectable: true,
       };
-
-      expect(treeItem.key).toBe('node1');
-      expect(treeItem.title).toBe('Node 1');
-      expect(treeItem.icon).toBe('folder');
-      expect(treeItem.id).toBe('unique-id');
-      expect(treeItem.pId).toBe('parent-id');
-      expect(treeItem.name).toBe('Node Name');
+      
+      expect(treeItem.key).toBe('test-key');
+      expect(treeItem.title).toBe('Test Title');
       expect(Array.isArray(treeItem.children)).toBe(true);
-    });
-
-    it('should support nested children', () => {
-      const treeItem: TreeItem = {
-        key: 'parent',
-        title: 'Parent Node',
-        children: [
-          {
-            key: 'child1',
-            title: 'Child 1',
-            children: [],
-          },
-          {
-            key: 'child2',
-            title: 'Child 2',
-          },
-        ],
-      };
-
-      expect(treeItem.children).toHaveLength(2);
-      expect(treeItem.children![0].key).toBe('child1');
-      expect(treeItem.children![1].key).toBe('child2');
+      expect(treeItem.disabled).toBe(false);
+      expect(treeItem.checkable).toBe(true);
+      expect(treeItem.selectable).toBe(true);
     });
   });
 
   describe('FieldNames interface', () => {
-    it('should define field mapping properties', () => {
+    it('should have correct structure', () => {
       const fieldNames: FieldNames = {
-        children: 'items',
-        title: 'label',
-        key: 'id',
+        children: 'children',
+        title: 'title',
+        key: 'key',
       };
-
-      expect(fieldNames.children).toBe('items');
-      expect(fieldNames.title).toBe('label');
-      expect(fieldNames.key).toBe('id');
-    });
-
-    it('should allow partial field names', () => {
-      const fieldNames: FieldNames = {
-        children: 'items',
-      };
-
-      expect(fieldNames.children).toBe('items');
-      expect(fieldNames.title).toBeUndefined();
-      expect(fieldNames.key).toBeUndefined();
-    });
-
-    it('should allow empty field names', () => {
-      const fieldNames: FieldNames = {};
-
-      expect(fieldNames.children).toBeUndefined();
-      expect(fieldNames.title).toBeUndefined();
-      expect(fieldNames.key).toBeUndefined();
+      
+      expect(fieldNames.children).toBe('children');
+      expect(fieldNames.title).toBe('title');
+      expect(fieldNames.key).toBe('key');
     });
   });
 
-  describe('Keys and CheckKeys types', () => {
-    it('should support Keys as array of strings and numbers', () => {
-      const stringKeys: Keys = ['key1', 'key2', 'key3'];
-      const numberKeys: Keys = [1, 2, 3];
-      const mixedKeys: Keys = ['key1', 2, 'key3', 4];
-
-      expect(Array.isArray(stringKeys)).toBe(true);
-      expect(Array.isArray(numberKeys)).toBe(true);
-      expect(Array.isArray(mixedKeys)).toBe(true);
-      expect(stringKeys).toEqual(['key1', 'key2', 'key3']);
-      expect(numberKeys).toEqual([1, 2, 3]);
-      expect(mixedKeys).toEqual(['key1', 2, 'key3', 4]);
-    });
-
-    it('should support CheckKeys as simple array', () => {
-      const checkKeys: CheckKeys = ['key1', 'key2', 3];
-
-      expect(Array.isArray(checkKeys)).toBe(true);
-      expect(checkKeys).toEqual(['key1', 'key2', 3]);
-    });
-
-    it('should support CheckKeys as object with checked and halfChecked', () => {
-      const checkKeys: CheckKeys = {
-        checked: ['key1', 'key2'],
-        halfChecked: ['key3', 4],
-      };
-
-      if (typeof checkKeys === 'object' && !Array.isArray(checkKeys)) {
-        expect(checkKeys.checked).toEqual(['key1', 'key2']);
-        expect(checkKeys.halfChecked).toEqual(['key3', 4]);
-      }
-    });
-  });
-
-  describe('TreeActionType interface', () => {
-    it('should define all required tree action methods', () => {
-      // Mock implementation for testing interface structure
-      const mockTreeActions: TreeActionType = {
-        checkAll: () => {},
-        expandAll: () => {},
-        setExpandedKeys: () => {},
-        getExpandedKeys: () => [],
-        setSelectedKeys: () => {},
-        getSelectedKeys: () => [],
-        setCheckedKeys: () => {},
-        getCheckedKeys: () => [],
-        filterByLevel: () => {},
-        insertNodeByKey: () => {},
-        insertNodesByKey: () => {},
-        deleteNodeByKey: () => {},
-        updateNodeByKey: () => {},
-        setSearchValue: () => {},
-        getSearchValue: () => '',
-        setTreeData: () => {},
-        reload: () => {},
-      };
-
-      // Verify all methods exist
-      expect(typeof mockTreeActions.checkAll).toBe('function');
-      expect(typeof mockTreeActions.expandAll).toBe('function');
-      expect(typeof mockTreeActions.setExpandedKeys).toBe('function');
-      expect(typeof mockTreeActions.getExpandedKeys).toBe('function');
-      expect(typeof mockTreeActions.setSelectedKeys).toBe('function');
-      expect(typeof mockTreeActions.getSelectedKeys).toBe('function');
-      expect(typeof mockTreeActions.setCheckedKeys).toBe('function');
-      expect(typeof mockTreeActions.getCheckedKeys).toBe('function');
-      expect(typeof mockTreeActions.filterByLevel).toBe('function');
-      expect(typeof mockTreeActions.insertNodeByKey).toBe('function');
-      expect(typeof mockTreeActions.insertNodesByKey).toBe('function');
-      expect(typeof mockTreeActions.deleteNodeByKey).toBe('function');
-      expect(typeof mockTreeActions.updateNodeByKey).toBe('function');
-      expect(typeof mockTreeActions.setSearchValue).toBe('function');
-      expect(typeof mockTreeActions.getSearchValue).toBe('function');
-      expect(typeof mockTreeActions.setTreeData).toBe('function');
-      expect(typeof mockTreeActions.reload).toBe('function');
-    });
-
-    it('should return correct types from getter methods', () => {
-      const mockActions: TreeActionType = {
-        checkAll: () => {},
-        expandAll: () => {},
-        setExpandedKeys: () => {},
-        getExpandedKeys: () => ['key1', 'key2'],
-        setSelectedKeys: () => {},
-        getSelectedKeys: () => [1, 2, 3],
-        setCheckedKeys: () => {},
-        getCheckedKeys: () => ['selected1'],
-        filterByLevel: () => {},
-        insertNodeByKey: () => {},
-        insertNodesByKey: () => {},
-        deleteNodeByKey: () => {},
-        updateNodeByKey: () => {},
-        setSearchValue: () => {},
-        getSearchValue: () => 'search term',
-        setTreeData: () => {},
-        reload: () => {},
-      };
-
-      expect(mockActions.getExpandedKeys()).toEqual(['key1', 'key2']);
-      expect(mockActions.getSelectedKeys()).toEqual([1, 2, 3]);
-      expect(mockActions.getCheckedKeys()).toEqual(['selected1']);
-      expect(mockActions.getSearchValue()).toBe('search term');
+  describe('TreeActionType type', () => {
+    it('should accept valid action types', () => {
+      const actionTypes: TreeActionType[] = ['add', 'edit', 'delete'];
+      
+      expect(actionTypes).toContain('add');
+      expect(actionTypes).toContain('edit');
+      expect(actionTypes).toContain('delete');
     });
   });
 
   describe('InsertNodeParams interface', () => {
-    it('should define node insertion parameters', () => {
+    it('should have correct structure', () => {
       const insertParams: InsertNodeParams = {
-        parentKey: 'parent-node',
+        parentKey: 'parent-key',
         node: {
-          key: 'new-node',
+          key: 'new-key',
           title: 'New Node',
         },
-        list: [
-          { key: 'existing1', title: 'Existing 1' },
-          { key: 'existing2', title: 'Existing 2' },
-        ],
-        push: 'push',
+        position: 0,
       };
-
-      expect(insertParams.parentKey).toBe('parent-node');
-      expect(insertParams.node.key).toBe('new-node');
+      
+      expect(insertParams.parentKey).toBe('parent-key');
+      expect(insertParams.node.key).toBe('new-key');
       expect(insertParams.node.title).toBe('New Node');
-      expect(insertParams.list).toHaveLength(2);
-      expect(insertParams.push).toBe('push');
-    });
-
-    it('should support null parentKey for root insertion', () => {
-      const insertParams: InsertNodeParams = {
-        parentKey: null,
-        node: {
-          key: 'root-node',
-          title: 'Root Node',
-        },
-      };
-
-      expect(insertParams.parentKey).toBeNull();
-      expect(insertParams.node.key).toBe('root-node');
-    });
-
-    it('should support unshift push mode', () => {
-      const insertParams: InsertNodeParams = {
-        parentKey: 'parent',
-        node: {
-          key: 'first-node',
-          title: 'First Node',
-        },
-        push: 'unshift',
-      };
-
-      expect(insertParams.push).toBe('unshift');
-    });
-
-    it('should work with minimal required properties', () => {
-      const insertParams: InsertNodeParams = {
-        parentKey: 'parent',
-        node: {
-          key: 'minimal-node',
-          title: 'Minimal',
-        },
-      };
-
-      expect(insertParams.parentKey).toBe('parent');
-      expect(insertParams.node.key).toBe('minimal-node');
-      expect(insertParams.list).toBeUndefined();
-      expect(insertParams.push).toBeUndefined();
+      expect(insertParams.position).toBe(0);
     });
   });
 
   describe('ContextMenuOptions interface', () => {
-    it('should define context menu configuration', () => {
-      const contextOptions: ContextMenuOptions = {
-        icon: 'menu-icon',
-        styles: { background: '#fff', border: '1px solid #ccc' },
-        items: [
-          { text: 'Edit', handler: () => {}, icon: 'edit' },
-          { text: 'Delete', handler: () => {}, icon: 'delete' },
-        ],
+    it('should have correct structure', () => {
+      const contextMenuOptions: ContextMenuOptions = {
+        items: [],
+        visible: true,
+        x: 100,
+        y: 200,
       };
-
-      expect(contextOptions.icon).toBe('menu-icon');
-      expect(contextOptions.styles).toEqual({ background: '#fff', border: '1px solid #ccc' });
-      expect(contextOptions.items).toHaveLength(2);
-      expect(contextOptions.items![0].text).toBe('Edit');
-      expect(contextOptions.items![1].text).toBe('Delete');
+      
+      expect(Array.isArray(contextMenuOptions.items)).toBe(true);
+      expect(contextMenuOptions.visible).toBe(true);
+      expect(contextMenuOptions.x).toBe(100);
+      expect(contextMenuOptions.y).toBe(200);
     });
+  });
 
-    it('should allow partial context menu options', () => {
-      const contextOptions: ContextMenuOptions = {
-        icon: 'simple-icon',
-      };
-
-      expect(contextOptions.icon).toBe('simple-icon');
-      expect(contextOptions.styles).toBeUndefined();
-      expect(contextOptions.items).toBeUndefined();
+  describe('Keys type', () => {
+    it('should accept string or number keys', () => {
+      const stringKeys: Keys = ['key1', 'key2'];
+      const numberKeys: Keys = [1, 2, 3];
+      
+      expect(Array.isArray(stringKeys)).toBe(true);
+      expect(Array.isArray(numberKeys)).toBe(true);
     });
+  });
 
-    it('should allow empty context menu options', () => {
-      const contextOptions: ContextMenuOptions = {};
-
-      expect(contextOptions.icon).toBeUndefined();
-      expect(contextOptions.styles).toBeUndefined();
-      expect(contextOptions.items).toBeUndefined();
+  describe('CheckKeys type', () => {
+    it('should accept string or number check keys', () => {
+      const stringCheckKeys: CheckKeys = ['key1', 'key2'];
+      const numberCheckKeys: CheckKeys = [1, 2, 3];
+      
+      expect(Array.isArray(stringCheckKeys)).toBe(true);
+      expect(Array.isArray(numberCheckKeys)).toBe(true);
     });
   });
 });

@@ -12,7 +12,7 @@ describe('components/CountTo/src/CountTo.vue branches', () => {
         useTransition: (src: any) => src, // passthrough for immediate updates
       };
     });
-    const { default: CountTo } = await import('../src/components/CountTo/src/CountTo.vue');
+    const { default: CountTo } = await import('/@/components/CountTo/src/CountTo.vue');
     const wrapper = mount(CountTo as any, {
       props: { startVal: 0, endVal: 10, autoplay: true, useEasing: false, duration: 0 },
     });
@@ -31,7 +31,7 @@ describe('components/CountTo/src/CountTo.vue branches', () => {
         useTransition: () => ref(undefined),
       };
     });
-    const { default: CountTo } = await import('../src/components/CountTo/src/CountTo.vue');
+    const { default: CountTo } = await import('/@/components/CountTo/src/CountTo.vue');
     const wrapper = mount(CountTo as any, { props: { autoplay: false } });
     // value should be '' when underlying number is undefined
     expect(wrapper.text()).toBe('');

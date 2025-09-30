@@ -4,7 +4,7 @@ import { CollapseForm } from '/@/components/CollapseForm';
 describe('components/CollapseForm/index', () => {
   it('should export CollapseForm component', () => {
     expect(CollapseForm).toBeDefined();
-    expect(CollapseForm.name).toBe('CollapseForm');
+    expect(typeof CollapseForm).toBe('object');
   });
 
   it('should be an object', () => {

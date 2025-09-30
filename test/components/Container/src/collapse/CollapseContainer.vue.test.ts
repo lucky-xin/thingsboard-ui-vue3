@@ -54,6 +54,14 @@ vi.mock('ant-design-vue', () => ({
     },
     template: '<button class="ant-btn">Button</button>',
   },
+  Tooltip: {
+    name: 'ATooltip',
+    props: {
+      title: String,
+      placement: String,
+    },
+    template: '<div class="ant-tooltip"><slot /></div>',
+  },
 }));
 
 import CollapseContainer from '/@/components/Container/src/collapse/CollapseContainer';

@@ -16,7 +16,7 @@ vi.mock('/@/components/Qrcode', () => ({
   },
 }));
 
-vi.mock('../src/components/Authentication/src/AuthTitle.vue', () => ({
+vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
   default: {
     name: 'AuthTitle',
     template: '<div class="auth-title"><slot></slot><slot name="desc"></slot></div>',

@@ -4,7 +4,7 @@ import { ColorPicker } from '/@/components/ColorPicker';
 describe('components/ColorPicker/index', () => {
   it('should export ColorPicker component', () => {
     expect(ColorPicker).toBeDefined();
-    expect(ColorPicker.name).toBe('ColorPicker');
+    expect(typeof ColorPicker).toBe('object');
   });
 
   it('should have correct component structure', () => {

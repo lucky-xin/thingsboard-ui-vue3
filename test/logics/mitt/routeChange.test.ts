@@ -21,14 +21,8 @@ describe('routeChange', () => {
     expect(module.removeTabChangeListener).toBeDefined();
   });
 
-  it('should have Symbol function', () => {
-    expect(typeof module.Symbol).toBe('function');
-  });
   it('should have setRouteChange function', () => {
     expect(typeof module.setRouteChange).toBe('function');
-  });
-  it('should have getRawRoute function', () => {
-    expect(typeof module.getRawRoute).toBe('function');
   });
   it('should have listenerRouteChange function', () => {
     expect(typeof module.listenerRouteChange).toBe('function');

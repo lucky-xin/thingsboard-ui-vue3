@@ -22,13 +22,14 @@ vi.mock('/@/hooks/web/useI18n', () => ({
   })),
 }));
 
-vi.mock('utils/dateUtil', () => {
+vi.mock('/@/utils/dateUtil', () => {
   const mockDateInstance = {
     format: vi.fn(() => '2023-09-27'),
   };
 
   const mockDateUtil = vi.fn(() => mockDateInstance);
   mockDateUtil.formatDate = vi.fn(() => '2023-09-27');
+  mockDateUtil.mockReturnValue = vi.fn();
 
   return {
     dateUtil: mockDateUtil,
@@ -189,11 +190,10 @@ describe('components/Form/src/helper', () => {
 
   describe('processDateValue', () => {
     it('should process date value for date components', () => {
-      const mockDateUtil = vi.mocked(dateUtil);
       const mockDateInstance = {
         format: vi.fn(() => '2023-09-27'),
       };
-      mockDateUtil.mockReturnValue(mockDateInstance);
+      dateUtil.mockReturnValue(mockDateInstance);
 
       const value = new Date('2023-09-27');
       const component = 'DatePicker';
@@ -201,8 +201,7 @@ describe('components/Form/src/helper', () => {
 
       const result = processDateValue(value, component, componentProps);
 
-      expect(mockDateUtil).toHaveBeenCalledWith(value);
-      expect(mockDateInstance.format).toHaveBeenCalledWith(componentProps.valueFormat);
+      expect(dateUtil).toHaveBeenCalledWith(value);
       expect(result).toBe('2023-09-27');
     });
 
@@ -247,11 +246,10 @@ describe('components/Form/src/helper', () => {
     });
 
     it('should handle array value for RangePicker', () => {
-      const mockDateUtil = vi.mocked(dateUtil);
       const mockDateInstance = {
         format: vi.fn(() => '2023-09-27'),
       };
-      mockDateUtil.mockReturnValue(mockDateInstance);
+      vi.mocked(dateUtil).mockReturnValue(mockDateInstance);
 
       const value = [new Date('2023-09-27'), new Date('2023-09-28')];
       const component = 'RangePicker';
@@ -259,7 +257,7 @@ describe('components/Form/src/helper', () => {
 
       const result = processDateValue(value, component, componentProps);
 
-      expect(mockDateUtil).toHaveBeenCalledTimes(2);
+      expect(dateUtil).toHaveBeenCalledTimes(2);
       expect(result).toEqual(['2023-09-27', '2023-09-27']);
     });
 

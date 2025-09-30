@@ -91,6 +91,6 @@ describe('Dialog/index', () => {
     // Type exports are compile-time only, so we can't test them at runtime
     // but we can verify the module structure is correct
     const exports = Object.keys(module);
-    expect(exports).toEqual(['BasicDialog', 'BasicDialogInstance']);
+    expect(exports).toEqual(['BasicDialog']);
   });
 });

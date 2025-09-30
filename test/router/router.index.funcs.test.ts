@@ -825,7 +825,7 @@ vi.mock('/@/hooks/web/usePage', () => ({ useGo: () => vi.fn() }));
 vi.mock('/@/layouts/iframe/useFrameKeepAlive', () => ({ initFramePage: () => vi.fn() }));
 vi.mock('/@/utils/cipher', () => ({ encryptByMd5: (s: string) => 'md5' + s.length }));
 
-import { router, resetRouter, setupRouter } from 'router';
+import { router, resetRouter, setupRouter } from '/@/router';
 
 describe('router/index.ts funcs', () => {
   it('should resetRouter without removing whitelisted routes', () => {

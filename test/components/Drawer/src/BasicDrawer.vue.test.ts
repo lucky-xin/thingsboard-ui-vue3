@@ -20,6 +20,7 @@ vi.mock('/@/hooks/web/useI18n', () => ({
   useI18n: vi.fn(() => ({
     t: vi.fn((key: string) => key),
   })),
+  t: vi.fn((key: string) => key),
 }));
 
 // Mock ant-design-vue components
@@ -47,6 +48,22 @@ vi.mock('ant-design-vue', () => ({
       size: String,
     },
     template: '<button class="ant-btn">Button</button>',
+  },
+  Tooltip: {
+    name: 'ATooltip',
+    props: {
+      title: String,
+      placement: String,
+    },
+    template: '<div class="ant-tooltip"><slot /></div>',
+  },
+  Skeleton: {
+    name: 'ASkeleton',
+    props: {
+      active: Boolean,
+      loading: Boolean,
+    },
+    template: '<div class="ant-skeleton">Skeleton</div>',
   },
 }));
 

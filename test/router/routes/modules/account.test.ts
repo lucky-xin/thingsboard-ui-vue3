@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import * as module from 'router/routes/modules/account';
+import * as module from '/@/router/routes/modules/account';
 
 describe('account', () => {
   it('should export expected functions/classes', () => {

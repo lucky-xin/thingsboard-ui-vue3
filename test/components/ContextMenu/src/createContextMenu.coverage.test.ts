@@ -4,6 +4,14 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 vi.mock('vue', () => ({
   createVNode: vi.fn(),
   render: vi.fn(),
+  defineComponent: vi.fn(),
+  computed: vi.fn(),
+  ref: vi.fn(),
+  reactive: vi.fn(),
+  watchEffect: vi.fn(),
+  onMounted: vi.fn(),
+  onUnmounted: vi.fn(),
+  nextTick: vi.fn(),
 }));
 
 vi.mock('/@/utils/is', () => ({
@@ -11,8 +19,48 @@ vi.mock('/@/utils/is', () => ({
 }));
 
 // Mock ContextMenu.vue
-vi.mock('../src/components/ContextMenu/src/ContextMenu.vue', () => ({
+vi.mock('/@/components/ContextMenu/src/ContextMenu.vue', () => ({
   default: 'ContextMenuVue',
+}));
+
+// Mock Icon component
+vi.mock('/@/components/Icon/src/Icon.vue', () => ({
+  default: {
+    name: 'Icon',
+    template: '<span class="icon"></span>',
+  },
+}));
+
+// Mock IconPicker component
+vi.mock('/@/components/Icon/src/IconPicker.vue', () => ({
+  default: {
+    name: 'IconPicker',
+    template: '<div class="icon-picker"></div>',
+  },
+}));
+
+// Mock Icon index
+vi.mock('/@/components/Icon/index.ts', () => ({
+  Icon: {
+    name: 'Icon',
+    template: '<span class="icon"></span>',
+  },
+  IconPicker: {
+    name: 'IconPicker',
+    template: '<div class="icon-picker"></div>',
+  },
+}));
+
+// Mock ant-design-vue
+vi.mock('ant-design-vue', () => ({
+  Menu: {
+    name: 'AMenu',
+    template: '<div class="ant-menu"><slot /></div>',
+  },
+  Divider: {
+    name: 'ADivider',
+    template: '<div class="ant-divider"></div>',
+  },
 }));
 
 import { createContextMenu, destroyContextMenu } from '/@/components/ContextMenu/src/createContextMenu';

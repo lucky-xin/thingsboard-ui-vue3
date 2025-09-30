@@ -2,12 +2,17 @@ import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
 import ColorPicker from '/@/components/ColorPicker/src/ColorPicker';
 
-// Mock ant-design-vue Input component
+// Mock ant-design-vue components
 vi.mock('ant-design-vue', () => ({
   Input: {
     name: 'AInput',
     template: '<input data-testid="a-input" />',
     props: ['style', 'placeholder', 'class', 'value'],
+  },
+  Popover: {
+    name: 'APopover',
+    template: '<div data-testid="a-popover"><slot></slot></div>',
+    props: ['title', 'placement', 'trigger'],
   },
 }));
 

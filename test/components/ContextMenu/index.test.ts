@@ -50,9 +50,9 @@ describe('ContextMenu/index', () => {
     const module = await import('/@/components/ContextMenu/index');
     const { destroyContextMenu } = module;
 
-    destroyContextMenu();
-
-    expect(destroyContextMenu).toHaveBeenCalled();
+    // Test that destroyContextMenu can be called without error
+    expect(() => destroyContextMenu()).not.toThrow();
+    expect(typeof destroyContextMenu).toBe('function');
   });
 
   it('should have correct exports count', async () => {

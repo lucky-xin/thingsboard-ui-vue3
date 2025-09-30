@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { AppRouteRecordRaw, Menu, MenuTag, MenuModule, AppRouteModule } from 'router/types';
+import type { AppRouteRecordRaw, Menu, MenuTag, MenuModule, AppRouteModule } from '/@/router/types';
 import { Authority } from '/@/enums/authorityEnum';
 
 describe('router/types', () => {
@@ -24,7 +24,7 @@ describe('router/types', () => {
         name: 'test-route',
         path: '/test',
         meta: {},
-        component: () => import('../src/views/tb/desktop/index.vue'),
+        component: () => Promise.resolve({ default: {} }),
         props: { someProps: true },
         fullPath: '/test/full',
         children: [],

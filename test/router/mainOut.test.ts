@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import * as mod from 'router/routes/mainOut';
+import * as mod from '/@/router/routes/mainOut';
 
 describe('router/routes/mainOut', () => {
   it('should export mainOutRoutes and names', () => {

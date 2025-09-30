@@ -7,7 +7,7 @@ vi.mock('/@/enums/authorityEnum', () => ({
 }));
 vi.mock('/@/hooks/web/usePermission', () => ({ usePermission: () => ({ hasPermission: () => true }) }));
 
-import tb from 'router/routes/modules/tb';
+import tb from '/@/router/routes/modules/tb';
 
 describe('router/routes/modules/tb', () => {
   it('should export tb route config', () => {

@@ -8,7 +8,7 @@ vi.mock('/@/router/constant', () => ({
 }));
 vi.mock('/@/hooks/web/useI18n', () => ({ t: (k: string) => k }));
 
-import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE, ERROR_LOG_ROUTE } from 'router/routes/basic';
+import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE, ERROR_LOG_ROUTE } from '/@/router/routes/basic';
 
 describe('router/routes/basic funcs', () => {
   it('should expose route component loader functions (without executing)', async () => {

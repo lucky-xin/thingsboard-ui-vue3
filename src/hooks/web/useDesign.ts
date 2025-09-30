@@ -18,8 +18,8 @@ export function useDesign(scope: string) {
   // }
   return {
     // prefixCls: computed(() => `${values.prefixCls}-${scope}`),
-    prefixCls: `${values.prefixCls}-${scope}`,
-    prefixVar: values.prefixCls,
+    prefixCls: `${values.prefixCls.value}-${scope}`,
+    prefixVar: values.prefixCls.value,
     hashId: token.hashId.value,
     // style,
   };

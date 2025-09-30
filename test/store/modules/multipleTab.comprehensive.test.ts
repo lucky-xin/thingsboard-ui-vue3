@@ -20,798 +20,6 @@ vi.mock("/@/hooks/setting/useLocale", () => ({
   })
 }));
 
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
-
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
-
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
 import { useMultipleTabStore } from '/@/store/modules/multipleTab';
@@ -831,6 +39,7 @@ vi.mock('/@/utils/cache/persistent', () => ({
 }));
 
 vi.mock('/@/utils', () => ({
+  getRawRoute: vi.fn((route) => route),
   withInstall: vi.fn((component) => {
     const wrappedComponent = { ...component, install: vi.fn() };
     return wrappedComponent;
@@ -1216,6 +425,299 @@ describe('store/modules/multipleTab', () => {
 
         expect(store.tabList.some((t: any) => t.path === '/affix')).toBe(true);
         expect(mockRouter.replace).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('closeTabByKey', () => {
+      beforeEach(() => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1', params: {}, query: {} },
+          { path: '/tab2', fullPath: '/tab2', name: 'Tab2', params: {}, query: {} },
+          { path: '/tab3', fullPath: '/tab3', name: 'Tab3', params: {}, query: {} },
+        ] as any;
+      });
+
+      it('should close tab by key', async () => {
+        await store.closeTabByKey('/tab2', mockRouter);
+
+        expect(store.tabList).toHaveLength(2);
+        expect(store.tabList.find((t) => t.path === '/tab2')).toBeUndefined();
+      });
+
+      it('should not close non-existent tab', async () => {
+        await store.closeTabByKey('/non-existent', mockRouter);
+
+        expect(store.tabList).toHaveLength(3);
+      });
+    });
+
+    describe('sortTabs', () => {
+      beforeEach(() => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1' },
+          { path: '/tab2', fullPath: '/tab2', name: 'Tab2' },
+          { path: '/tab3', fullPath: '/tab3', name: 'Tab3' },
+        ] as any;
+        store.lastDragEndIndex = 0;
+      });
+
+      it('should sort tabs by moving tab from index 0 to index 2', async () => {
+        await store.sortTabs(0, 2);
+
+        expect(store.tabList[0].path).toBe('/tab2');
+        expect(store.tabList[1].path).toBe('/tab3');
+        expect(store.tabList[2].path).toBe('/tab1');
+        expect(store.lastDragEndIndex).toBe(1);
+      });
+
+      it('should sort tabs by moving tab from index 1 to index 0', async () => {
+        await store.sortTabs(1, 0);
+
+        expect(store.tabList[0].path).toBe('/tab2');
+        expect(store.tabList[1].path).toBe('/tab1');
+        expect(store.tabList[2].path).toBe('/tab3');
+        expect(store.lastDragEndIndex).toBe(1);
+      });
+    });
+
+    describe('closeLeftTabs', () => {
+      beforeEach(() => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1', meta: {} },
+          { path: '/tab2', fullPath: '/tab2', name: 'Tab2', meta: {} },
+          { path: '/tab3', fullPath: '/tab3', name: 'Tab3', meta: {} },
+          { path: '/tab4', fullPath: '/tab4', name: 'Tab4', meta: {} },
+        ] as any;
+      });
+
+      it('should close left tabs', async () => {
+        const targetRoute = { path: '/tab3', fullPath: '/tab3' } as any;
+        
+        await store.closeLeftTabs(targetRoute, mockRouter);
+
+        expect(store.tabList).toHaveLength(2);
+        expect(store.tabList[0].path).toBe('/tab3');
+        expect(store.tabList[1].path).toBe('/tab4');
+      });
+
+      it('should not close affix tabs when closing left tabs', async () => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1', meta: { affix: true } },
+          { path: '/tab2', fullPath: '/tab2', name: 'Tab2', meta: {} },
+          { path: '/tab3', fullPath: '/tab3', name: 'Tab3', meta: {} },
+        ] as any;
+
+        const targetRoute = { path: '/tab3', fullPath: '/tab3' } as any;
+        
+        await store.closeLeftTabs(targetRoute, mockRouter);
+
+        expect(store.tabList).toHaveLength(2);
+        expect(store.tabList[0].path).toBe('/tab1'); // affix tab preserved
+        expect(store.tabList[1].path).toBe('/tab3');
+      });
+    });
+
+    describe('closeRightTabs', () => {
+      beforeEach(() => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1', meta: {} },
+          { path: '/tab2', fullPath: '/tab2', name: 'Tab2', meta: {} },
+          { path: '/tab3', fullPath: '/tab3', name: 'Tab3', meta: {} },
+          { path: '/tab4', fullPath: '/tab4', name: 'Tab4', meta: {} },
+        ] as any;
+      });
+
+      it('should close right tabs', async () => {
+        const targetRoute = { path: '/tab2', fullPath: '/tab2' } as any;
+        
+        await store.closeRightTabs(targetRoute, mockRouter);
+
+        expect(store.tabList).toHaveLength(2);
+        expect(store.tabList[0].path).toBe('/tab1');
+        expect(store.tabList[1].path).toBe('/tab2');
+      });
+
+      it('should not close affix tabs when closing right tabs', async () => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1', meta: {} },
+          { path: '/tab2', fullPath: '/tab2', name: 'Tab2', meta: {} },
+          { path: '/tab3', fullPath: '/tab3', name: 'Tab3', meta: { affix: true } },
+        ] as any;
+
+        const targetRoute = { path: '/tab1', fullPath: '/tab1' } as any;
+        
+        await store.closeRightTabs(targetRoute, mockRouter);
+
+        expect(store.tabList).toHaveLength(2);
+        expect(store.tabList[0].path).toBe('/tab1');
+        expect(store.tabList[1].path).toBe('/tab3'); // affix tab preserved
+      });
+    });
+
+    describe('closeAllTab', () => {
+      it('should close all tabs except affix tabs', async () => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1', meta: {} },
+          { path: '/tab2', fullPath: '/tab2', name: 'Tab2', meta: { affix: true } },
+          { path: '/tab3', fullPath: '/tab3', name: 'Tab3', meta: {} },
+        ] as any;
+
+        await store.closeAllTab(mockRouter);
+
+        expect(store.tabList).toHaveLength(1);
+        expect(store.tabList[0].path).toBe('/tab2'); // affix tab preserved
+        expect(store.cacheTabList.size).toBe(0);
+      });
+      
+      it('should call goToPage when closing all tabs', async () => {
+        const { useGo } = await import('/@/hooks/web/usePage');
+        const mockGo = vi.fn();
+        vi.mocked(useGo).mockReturnValue(mockGo);
+        
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1', meta: {} },
+        ] as any;
+
+        await store.closeAllTab(mockRouter);
+
+        expect(mockGo).toHaveBeenCalledWith(PageEnum.BASE_HOME, true);
+      });
+    });
+
+    describe('closeOtherTabs', () => {
+      beforeEach(() => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1', meta: {} },
+          { path: '/tab2', fullPath: '/tab2', name: 'Tab2', meta: {} },
+          { path: '/tab3', fullPath: '/tab3', name: 'Tab3', meta: {} },
+          { path: '/tab4', fullPath: '/tab4', name: 'Tab4', meta: {} },
+        ] as any;
+      });
+
+      it('should close other tabs', async () => {
+        const targetRoute = { path: '/tab2', fullPath: '/tab2' } as any;
+        
+        await store.closeOtherTabs(targetRoute, mockRouter);
+
+        expect(store.tabList).toHaveLength(1);
+        expect(store.tabList[0].path).toBe('/tab2');
+      });
+
+      it('should not close affix tabs when closing other tabs', async () => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1', meta: {} },
+          { path: '/tab2', fullPath: '/tab2', name: 'Tab2', meta: {} },
+          { path: '/tab3', fullPath: '/tab3', name: 'Tab3', meta: { affix: true } },
+        ] as any;
+
+        const targetRoute = { path: '/tab2', fullPath: '/tab2' } as any;
+        
+        await store.closeOtherTabs(targetRoute, mockRouter);
+
+        expect(store.tabList).toHaveLength(2);
+        expect(store.tabList[0].path).toBe('/tab2');
+        expect(store.tabList[1].path).toBe('/tab3'); // affix tab preserved
+      });
+    });
+
+    describe('bulkCloseTabs', () => {
+      beforeEach(() => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1' },
+          { path: '/tab2', fullPath: '/tab2', name: 'Tab2' },
+          { path: '/tab3', fullPath: '/tab3', name: 'Tab3' },
+        ] as any;
+      });
+
+      it('should close multiple tabs by path list', async () => {
+        const pathList = ['/tab1', '/tab3'];
+        
+        await store.bulkCloseTabs(pathList);
+
+        expect(store.tabList).toHaveLength(1);
+        expect(store.tabList[0].path).toBe('/tab2');
+      });
+    });
+
+    describe('updateTabPath', () => {
+      it('should update tab path', async () => {
+        store.tabList = [
+          { path: '/old-path', fullPath: '/old-path', name: 'Tab1' },
+        ] as any;
+
+        const route = store.tabList[0];
+        await store.updateTabPath('/new-path', route as any);
+
+        expect(store.tabList[0].path).toBe('/new-path');
+        expect(store.tabList[0].fullPath).toBe('/new-path');
+      });
+      
+      it('should update tab path and cache', async () => {
+        store.tabList = [
+          { path: '/old-path', fullPath: '/old-path', name: 'Tab1', meta: {} },
+        ] as any;
+        
+        // Add to cache first
+        store.cacheTabList.add('Tab1');
+        
+        const route = store.tabList[0];
+        await store.updateTabPath('/new-path', route as any);
+        
+        // Cache should be updated
+        await store.updateCacheTab();
+      });
+
+      it('should not update path for non-existent tab', async () => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1' },
+        ] as any;
+
+        const nonExistentRoute = { path: '/non-existent' } as any;
+        await store.updateTabPath('/new-path', nonExistentRoute);
+
+        expect(store.tabList[0].path).toBe('/tab1');
+        expect(store.tabList[0].fullPath).toBe('/tab1');
+      });
+    });
+    
+    describe('setTabTitle', () => {
+      it('should set tab title', async () => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1', meta: { title: 'Old Title' } },
+        ] as any;
+
+        const route = store.tabList[0];
+        await store.setTabTitle('New Title', route as any);
+
+        expect(store.tabList[0].meta.title).toBe('New Title');
+      });
+      
+      it('should set tab title and update cache', async () => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1', meta: { title: 'Old Title' } },
+        ] as any;
+        
+        // Add to cache first
+        store.cacheTabList.add('Tab1');
+        
+        const route = store.tabList[0];
+        await store.setTabTitle('New Title', route as any);
+        
+        // Cache should be updated
+        await store.updateCacheTab();
+        
+        expect(store.tabList[0].meta.title).toBe('New Title');
+      });
+
+      it('should not set title for non-existent tab', async () => {
+        store.tabList = [
+          { path: '/tab1', fullPath: '/tab1', name: 'Tab1', meta: { title: 'Old Title' } },
+        ] as any;
+
+        const nonExistentRoute = { path: '/non-existent' } as any;
+        await store.setTabTitle('New Title', nonExistentRoute);
+
+        expect(store.tabList[0].meta.title).toBe('Old Title');
       });
     });
   });

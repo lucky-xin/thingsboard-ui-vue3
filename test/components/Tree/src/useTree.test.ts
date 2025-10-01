@@ -885,6 +885,22 @@ describe('components/Tree/src/useTree', () => {
 
       expect(keys).toEqual([]);
     });
+
+    it('should handle missing key field gracefully', () => {
+      mockGetFieldNames.value = { children: 'children' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const keys = treeInstance.getAllKeys();
+      expect(keys).toEqual([]);
+    });
+
+    it('should handle missing children field gracefully', () => {
+      mockGetFieldNames.value = { key: 'key' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const keys = treeInstance.getAllKeys();
+      expect(keys).toEqual([]);
+    });
   });
 
   describe('getEnabledKeys', () => {
@@ -918,6 +934,30 @@ describe('components/Tree/src/useTree', () => {
       const keys = treeInstance.getEnabledKeys(customData);
 
       expect(keys).toEqual(['enabled1']);
+    });
+
+    it('should handle missing field names gracefully', () => {
+      mockGetFieldNames.value = {};
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const keys = treeInstance.getEnabledKeys();
+      expect(keys).toEqual([]);
+    });
+
+    it('should handle missing key field gracefully', () => {
+      mockGetFieldNames.value = { children: 'children' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const keys = treeInstance.getEnabledKeys();
+      expect(keys).toEqual([]);
+    });
+
+    it('should handle missing children field gracefully', () => {
+      mockGetFieldNames.value = { key: 'key' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const keys = treeInstance.getEnabledKeys();
+      expect(keys).toEqual([]);
     });
   });
 
@@ -962,6 +1002,30 @@ describe('components/Tree/src/useTree', () => {
 
       expect(keys).toEqual(['parent', 'child1', 'child2']);
     });
+
+    it('should handle missing field names gracefully', () => {
+      mockGetFieldNames.value = {};
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const keys = treeInstance.getChildrenKeys('1');
+      expect(keys).toEqual([]);
+    });
+
+    it('should handle missing key field gracefully', () => {
+      mockGetFieldNames.value = { children: 'children' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const keys = treeInstance.getChildrenKeys('1');
+      expect(keys).toEqual([]);
+    });
+
+    it('should handle missing children field gracefully', () => {
+      mockGetFieldNames.value = { key: 'key' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const keys = treeInstance.getChildrenKeys('1');
+      expect(keys).toEqual([]);
+    });
   });
 
   describe('updateNodeByKey', () => {
@@ -997,6 +1061,30 @@ describe('components/Tree/src/useTree', () => {
       treeInstance.updateNodeByKey('', { title: 'New Title' });
 
       expect(JSON.stringify(mockTreeDataRef.value)).toBe(originalData);
+    });
+
+    it('should handle missing field names gracefully', () => {
+      mockGetFieldNames.value = {};
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const newData = { title: 'Updated Node' };
+      expect(() => treeInstance.updateNodeByKey('1', newData)).not.toThrow();
+    });
+
+    it('should handle missing key field gracefully', () => {
+      mockGetFieldNames.value = { children: 'children' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const newData = { title: 'Updated Node' };
+      expect(() => treeInstance.updateNodeByKey('1', newData)).not.toThrow();
+    });
+
+    it('should handle missing children field gracefully', () => {
+      mockGetFieldNames.value = { key: 'key' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const newData = { title: 'Updated Node' };
+      expect(() => treeInstance.updateNodeByKey('1', newData)).not.toThrow();
     });
   });
 
@@ -1040,6 +1128,33 @@ describe('components/Tree/src/useTree', () => {
 
       expect(keys).toEqual(['root']);
     });
+
+    it('should handle missing field names gracefully', () => {
+      mockGetFieldNames.value = {};
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const keys = treeInstance.filterByLevel(1);
+      // When field names are missing, it should still return an array with empty strings for each root node
+      expect(keys).toEqual(['', '', '']);
+    });
+
+    it('should handle missing key field gracefully', () => {
+      mockGetFieldNames.value = { children: 'children' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const keys = treeInstance.filterByLevel(1);
+      // When key field is missing, it should still return an array with empty strings for each root node
+      expect(keys).toEqual(['', '', '']);
+    });
+
+    it('should handle missing children field gracefully', () => {
+      mockGetFieldNames.value = { key: 'key' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const keys = treeInstance.filterByLevel(1);
+      // When children field is missing, it should return keys of root nodes
+      expect(keys).toEqual(['1', '2', '3']);
+    });
   });
 
   describe('insertNodeByKey', () => {
@@ -1081,6 +1196,30 @@ describe('components/Tree/src/useTree', () => {
       expect(mockTreeDataRef.value[2].children).toBeDefined();
       expect(mockTreeDataRef.value[2].children).toHaveLength(1);
       expect(mockTreeDataRef.value[2].children[0]).toEqual(newNode);
+    });
+
+    it('should handle missing field names gracefully', () => {
+      mockGetFieldNames.value = {};
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const newNode = { key: 'new-node', title: 'New Node' };
+      expect(() => treeInstance.insertNodeByKey({ parentKey: null, node: newNode })).not.toThrow();
+    });
+
+    it('should handle missing key field gracefully', () => {
+      mockGetFieldNames.value = { children: 'children' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const newNode = { key: 'new-node', title: 'New Node' };
+      expect(() => treeInstance.insertNodeByKey({ parentKey: '1', node: newNode })).not.toThrow();
+    });
+
+    it('should handle missing children field gracefully', () => {
+      mockGetFieldNames.value = { key: 'key' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const newNode = { key: 'new-node', title: 'New Node' };
+      expect(() => treeInstance.insertNodeByKey({ parentKey: '1', node: newNode })).not.toThrow();
     });
   });
 
@@ -1124,6 +1263,39 @@ describe('components/Tree/src/useTree', () => {
 
       expect(mockTreeDataRef.value).toHaveLength(originalLength);
     });
+
+    it('should handle missing field names gracefully', () => {
+      mockGetFieldNames.value = {};
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const newNodes = [{ key: 'new-node', title: 'New Node' }];
+      expect(() => treeInstance.insertNodesByKey({ parentKey: '1', list: newNodes })).not.toThrow();
+    });
+
+    it('should handle missing key field gracefully', () => {
+      mockGetFieldNames.value = { children: 'children' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const newNodes = [{ key: 'new-node', title: 'New Node' }];
+      expect(() => treeInstance.insertNodesByKey({ parentKey: '1', list: newNodes })).not.toThrow();
+    });
+
+    it('should handle missing children field gracefully', () => {
+      mockGetFieldNames.value = { key: 'key' };
+      treeInstance = useTree(mockTreeDataRef, mockGetFieldNames);
+
+      const newNodes = [{ key: 'new-node', title: 'New Node' }];
+      expect(() => treeInstance.insertNodesByKey({ parentKey: '1', list: newNodes })).not.toThrow();
+    });
+
+    it('should handle parent key not found gracefully', () => {
+      const newNodes = [{ key: 'new-node', title: 'New Node' }];
+      const originalData = JSON.stringify(mockTreeDataRef.value);
+
+      treeInstance.insertNodesByKey({ parentKey: 'non-existent', list: newNodes });
+
+      expect(JSON.stringify(mockTreeDataRef.value)).toBe(originalData);
+    });
   });
 
   describe('deleteNodeByKey', () => {
@@ -1155,6 +1327,14 @@ describe('components/Tree/src/useTree', () => {
       const originalData = JSON.stringify(mockTreeDataRef.value);
 
       treeInstance.deleteNodeByKey('');
+
+      expect(JSON.stringify(mockTreeDataRef.value)).toBe(originalData);
+    });
+
+    it('should handle undefined key gracefully', () => {
+      const originalData = JSON.stringify(mockTreeDataRef.value);
+
+      treeInstance.deleteNodeByKey(undefined as any);
 
       expect(JSON.stringify(mockTreeDataRef.value)).toBe(originalData);
     });

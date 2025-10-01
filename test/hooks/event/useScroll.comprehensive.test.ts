@@ -1,15 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { ref, nextTick } from 'vue';
 
-// Mock Vue
-vi.mock('vue', () => ({
-  ref: vi.fn((value) => ({ value })),
-  nextTick: vi.fn((callback) => callback && callback()),
-  onMounted: vi.fn((callback) => callback()),
-  onUnmounted: vi.fn((callback) => callback()),
-  watch: vi.fn(() => vi.fn()),
-}));
-
 // Mock window
 const mockWindow = {
   addEventListener: vi.fn(),
@@ -27,18 +18,44 @@ Object.defineProperty(global, 'window', {
 
 // Mock document
 Object.defineProperty(document, 'documentElement', {
-  value: { 
+  value: {
     scrollHeight: 1000,
     scrollWidth: 1500,
   },
   writable: true,
 });
 
+// Mock Vue
+vi.mock('vue', () => ({
+  ref: vi.fn((value) => ({ value })),
+  nextTick: vi.fn((callback) => callback && callback()),
+  onMounted: vi.fn((callback) => callback()),
+  onUnmounted: vi.fn((callback) => callback()),
+  watch: vi.fn((refEl, callback, options) => {
+    // Simulate immediate watch call
+    if (options && options.immediate) {
+      callback(refEl.value, null, () => {});
+    }
+    return vi.fn();
+  }),
+}));
+
+// Mock isWindow and isObject functions
+vi.mock('/@/utils/is', () => ({
+  isWindow: vi.fn((value) => value === mockWindow),
+  isObject: vi.fn((value) => typeof value === 'object' && value !== null),
+}));
+
+// Mock useThrottleFn
+vi.mock('@vueuse/core', () => ({
+  useThrottleFn: vi.fn((fn) => fn),
+}));
+
 import { useScroll } from '/@/hooks/event/useScroll';
 
 // Build configuration mocks
 Object.defineProperty(globalThis, '__COLOR_PLUGIN_OUTPUT_FILE_NAME__', {
-  value: 'mock-theme.css', 
+  value: 'mock-theme.css',
   writable: true
 });
 
@@ -72,8 +89,7 @@ describe('useScroll comprehensive tests', () => {
   it('should add scroll event listener on mount', () => {
     const refEl = ref(window);
     useScroll(refEl);
-    // The hook uses watch to add event listeners, so we check if watch was called
-    expect(vi.mocked(vi.fn())).toBeDefined();
+    expect(mockWindow.addEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
   });
 
   it('should remove scroll event listener on unmount', () => {
@@ -110,6 +126,9 @@ describe('useScroll comprehensive tests', () => {
     // Test initial values
     expect(refY.value).toBe(0);
     expect(refX.value).toBe(0);
+
+    // Check that addEventListener was called
+    expect(mockElement.addEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
   });
 
   it('should handle throttled scroll', () => {
@@ -132,7 +151,7 @@ describe('useScroll comprehensive tests', () => {
   it('should stop watching on unmount', () => {
     const refEl = ref(window);
     const { stop } = useScroll(refEl);
-    
+
     expect(typeof stop).toBe('function');
     stop();
   });
@@ -150,7 +169,7 @@ describe('useScroll comprehensive tests', () => {
       scrollLeft: 30,
       scrollTop: 40,
     };
-    
+
     const refEl = ref(mockElement1);
     const { refX, refY } = useScroll(refEl);
 

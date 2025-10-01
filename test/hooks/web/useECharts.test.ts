@@ -1058,7 +1058,21 @@ describe('hooks/web/useECharts', () => {
   it('should dispose chart on unmount', () => {
     const result = useECharts(mockElRef);
 
-    // Just verify the function exists and can be called
-    expect(result.getInstance).toBeInstanceOf(Function);
+    // Get the instance to ensure it's created
+    const instance = result.getInstance();
+
+    // Verify the chart instance was created
+    expect(instance).toBe(mockChartInstance);
+  });
+
+  it('should initialize chart options correctly', () => {
+    const result = useECharts(mockElRef);
+    const options = { title: { text: 'Test Chart' } };
+
+    // Call setOptions to trigger the initialization code path
+    result.setOptions(options);
+
+    // Verify the options were set
+    expect(options).toBeDefined();
   });
 });

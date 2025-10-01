@@ -1,28 +1,29 @@
 import { describe, it, expect } from 'vitest';
 
-describe('index', () => {
-  it('should be defined', () => {
-    // Simple test to ensure module can be loaded
-    expect(true).toBe(true);
+describe('Layout Header Components Index', () => {
+  it('should be able to import the module without errors', async () => {
+    // This test ensures the module can be imported successfully
+    const module = await import('/@/layouts/default/header/components/index.ts');
+    expect(module).toBeDefined();
   });
 
-  it('should have basic functionality', () => {
-    // Basic functionality test
-    expect(true).toBe(true);
+  it('should export all expected components', async () => {
+    const module = await import('/@/layouts/default/header/components/index.ts');
+
+    // Check that all expected exports are present
+    expect(module.LayoutBreadcrumb).toBeDefined();
+    expect(module.Notify).toBeDefined();
+    expect(module.ErrorAction).toBeDefined();
+    expect(module.SettingDrawer).toBeDefined();
+    expect(module.FullScreen).toBeDefined();
+    expect(module.UserDropDown).toBeDefined();
   });
 
-  it('should handle edge cases', () => {
-    // Edge case testing
-    expect(true).toBe(true);
-  });
+  it('should have the correct number of exports', async () => {
+    const module = await import('/@/layouts/default/header/components/index.ts');
 
-  it('should work with different inputs', () => {
-    // Input validation testing
-    expect(true).toBe(true);
-  });
-
-  it('should handle errors gracefully', () => {
-    // Error handling testing
-    expect(true).toBe(true);
+    // Count the number of exports (excluding default export if any)
+    const exports = Object.keys(module);
+    expect(exports.length).toBeGreaterThanOrEqual(6); // At least 6 named exports
   });
 });

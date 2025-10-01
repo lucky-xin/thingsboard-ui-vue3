@@ -18,9 +18,9 @@ export function useDesign(scope: string) {
   // }
   return {
     // prefixCls: computed(() => `${values.prefixCls}-${scope}`),
-    prefixCls: `${values.prefixCls.value}-${scope}`,
-    prefixVar: values.prefixCls.value,
-    hashId: token.hashId.value,
+    prefixCls: values.prefixCls?.value ? `${values.prefixCls.value}-${scope}` : '',
+    prefixVar: values.prefixCls?.value || '',
+    hashId: token.hashId?.value || '',
     // style,
   };
 }

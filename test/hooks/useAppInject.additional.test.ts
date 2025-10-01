@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 // Build configuration mocks
 Object.defineProperty(globalThis, '__COLOR_PLUGIN_OUTPUT_FILE_NAME__', {
@@ -10,6 +10,13 @@ Object.defineProperty(globalThis, '__PROD__', {
 Object.defineProperty(globalThis, '__COLOR_PLUGIN_OPTIONS__', {
   value: { injectTo: 'body' }, writable: true
 });
+
+// Mock the useAppProviderContext
+vi.mock('/@/components/Application', () => ({
+  useAppProviderContext: vi.fn(() => ({
+    isMobile: { value: false }
+  }))
+}));
 
 describe('hooks/useAppInject', () => {
   it('should export useAppInject hook', { timeout: 30000 }, async () => {
@@ -25,5 +32,17 @@ describe('hooks/useAppInject', () => {
 
     expect(module).toBeDefined();
     expect(typeof module).toBe('object');
+  });
+
+  // 增加测试用例以提高覆盖率
+  it('should return correct values when calling useAppInject', async () => {
+    const module = await import('/@/hooks/web/useAppInject');
+    const { useAppInject } = module;
+
+    // Call the hook function to improve coverage
+    const result = useAppInject();
+
+    expect(result).toBeDefined();
+    expect(result.getIsMobile).toBeDefined();
   });
 });

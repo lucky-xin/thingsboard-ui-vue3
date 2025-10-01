@@ -268,7 +268,7 @@ describe('logics/initAppConfig', () => {
 
   it('should handle key conditions in clearObsoleteStorage', async () => {
     const { clearObsoleteStorage } = await import('/@/logics/initAppConfig');
-    
+
     // Mock Object.keys to test various key conditions
     const originalObjectKeys = Object.keys;
     Object.keys = vi.fn((obj) => {
@@ -278,25 +278,631 @@ describe('logics/initAppConfig', () => {
       }
       return [];
     });
-    
+
     const localStorageMock = {
       removeItem: vi.fn(),
     };
-    
+
     Object.defineProperty(global, 'localStorage', {
       value: localStorageMock,
       writable: true,
     });
-    
+
     Object.defineProperty(global, 'sessionStorage', {
       value: { removeItem: vi.fn() },
       writable: true,
     });
-    
+
     // Should not throw with various key conditions
     expect(() => clearObsoleteStorage()).not.toThrow();
-    
+
     // Restore Object.keys
     Object.keys = originalObjectKeys;
+  });
+
+  // Additional tests to improve coverage for initAppConfigStore
+  it('should handle theme color different from primary color', async () => {
+    // Mock the dependencies
+    vi.mock('/@/store/modules/app', () => ({
+      useAppStore: vi.fn(() => ({
+        getDarkMode: 'light',
+        getHeaderSetting: { bgColor: '#ffffff' },
+        getMenuSetting: { bgColor: '#ffffff' },
+        setProjectConfig: vi.fn(),
+      })),
+    }));
+
+    vi.mock('/@/store/modules/locale', () => ({
+      useLocaleStore: vi.fn(() => ({
+        initLocale: vi.fn(),
+      })),
+    }));
+
+    vi.mock('/@/utils/cache/persistent', () => ({
+      Persistent: {
+        getLocal: vi.fn(() => null),
+      },
+    }));
+
+    vi.mock('/@/utils', () => ({
+      deepMerge: vi.fn((a, b) => ({ ...a, ...b })),
+    }));
+
+    vi.mock('/@/settings/projectSetting', () => ({
+      default: {
+        themeColor: '#ff0000',
+        grayMode: false,
+        colorWeak: false,
+        headerSetting: { bgColor: '#ffffff' },
+        menuSetting: { bgColor: '#ffffff' },
+      },
+    }));
+
+    vi.mock('/@/logics/theme/updateBackground', () => ({
+      updateHeaderBgColor: vi.fn(),
+      updateSidebarBgColor: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/dark', () => ({
+      updateDarkTheme: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme', () => ({
+      changeTheme: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/updateColorWeak', () => ({
+      updateColorWeak: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/updateGrayMode', () => ({
+      updateGrayMode: vi.fn(),
+    }));
+
+    vi.mock('/@/utils/env', () => ({
+      getCommonStoragePrefix: vi.fn(() => 'common_prefix'),
+      getStorageShortName: vi.fn(() => 'short_prefix'),
+    }));
+
+    const { initAppConfigStore } = await import('/@/logics/initAppConfig');
+
+    // Set up mocks for localStorage
+    Object.defineProperty(global, 'localStorage', {
+      value: {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        length: 0,
+        key: vi.fn(),
+      },
+      writable: true,
+    });
+
+    Object.defineProperty(global, 'sessionStorage', {
+      value: {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        length: 0,
+        key: vi.fn(),
+      },
+      writable: true,
+    });
+
+    // Should not throw even with complex conditions
+    expect(() => initAppConfigStore()).not.toThrow();
+  });
+
+  it('should handle dark mode condition in initAppConfigStore', async () => {
+    // Mock the dependencies
+    vi.mock('/@/store/modules/app', () => ({
+      useAppStore: vi.fn(() => ({
+        getDarkMode: 'dark',
+        getHeaderSetting: { bgColor: '#000000' },
+        getMenuSetting: { bgColor: '#000000' },
+        setProjectConfig: vi.fn(),
+      })),
+    }));
+
+    vi.mock('/@/store/modules/locale', () => ({
+      useLocaleStore: vi.fn(() => ({
+        initLocale: vi.fn(),
+      })),
+    }));
+
+    vi.mock('/@/utils/cache/persistent', () => ({
+      Persistent: {
+        getLocal: vi.fn(() => null),
+      },
+    }));
+
+    vi.mock('/@/utils', () => ({
+      deepMerge: vi.fn((a, b) => ({ ...a, ...b })),
+    }));
+
+    vi.mock('/@/settings/projectSetting', () => ({
+      default: {
+        themeColor: '#2a50ec',
+        grayMode: false,
+        colorWeak: false,
+        headerSetting: { bgColor: '#000000' },
+        menuSetting: { bgColor: '#000000' },
+      },
+    }));
+
+    vi.mock('/@/logics/theme/updateBackground', () => ({
+      updateHeaderBgColor: vi.fn(),
+      updateSidebarBgColor: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/dark', () => ({
+      updateDarkTheme: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme', () => ({
+      changeTheme: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/updateColorWeak', () => ({
+      updateColorWeak: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/updateGrayMode', () => ({
+      updateGrayMode: vi.fn(),
+    }));
+
+    vi.mock('/@/utils/env', () => ({
+      getCommonStoragePrefix: vi.fn(() => 'common_prefix'),
+      getStorageShortName: vi.fn(() => 'short_prefix'),
+    }));
+
+    const { initAppConfigStore } = await import('/@/logics/initAppConfig');
+
+    // Set up mocks for localStorage
+    Object.defineProperty(global, 'localStorage', {
+      value: {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        length: 0,
+        key: vi.fn(),
+      },
+      writable: true,
+    });
+
+    Object.defineProperty(global, 'sessionStorage', {
+      value: {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        length: 0,
+        key: vi.fn(),
+      },
+      writable: true,
+    });
+
+    // Should not throw even with complex conditions
+    expect(() => initAppConfigStore()).not.toThrow();
+  });
+
+  it('should handle header and menu background colors in initAppConfigStore', async () => {
+    // Mock the dependencies
+    vi.mock('/@/store/modules/app', () => ({
+      useAppStore: vi.fn(() => ({
+        getDarkMode: 'light',
+        getHeaderSetting: { bgColor: '#123456' },
+        getMenuSetting: { bgColor: '#654321' },
+        setProjectConfig: vi.fn(),
+      })),
+    }));
+
+    vi.mock('/@/store/modules/locale', () => ({
+      useLocaleStore: vi.fn(() => ({
+        initLocale: vi.fn(),
+      })),
+    }));
+
+    vi.mock('/@/utils/cache/persistent', () => ({
+      Persistent: {
+        getLocal: vi.fn(() => ({
+          headerSetting: { bgColor: '#123456' },
+          menuSetting: { bgColor: '#654321' },
+        })),
+      },
+    }));
+
+    vi.mock('/@/utils', () => ({
+      deepMerge: vi.fn((a, b) => ({ ...a, ...b })),
+    }));
+
+    vi.mock('/@/settings/projectSetting', () => ({
+      default: {
+        themeColor: '#2a50ec',
+        grayMode: false,
+        colorWeak: false,
+        headerSetting: { bgColor: '#123456' },
+        menuSetting: { bgColor: '#654321' },
+      },
+    }));
+
+    vi.mock('/@/logics/theme/updateBackground', () => ({
+      updateHeaderBgColor: vi.fn(),
+      updateSidebarBgColor: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/dark', () => ({
+      updateDarkTheme: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme', () => ({
+      changeTheme: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/updateColorWeak', () => ({
+      updateColorWeak: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/updateGrayMode', () => ({
+      updateGrayMode: vi.fn(),
+    }));
+
+    vi.mock('/@/utils/env', () => ({
+      getCommonStoragePrefix: vi.fn(() => 'common_prefix'),
+      getStorageShortName: vi.fn(() => 'short_prefix'),
+    }));
+
+    const { initAppConfigStore } = await import('/@/logics/initAppConfig');
+
+    // Set up mocks for localStorage
+    Object.defineProperty(global, 'localStorage', {
+      value: {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        length: 0,
+        key: vi.fn(),
+      },
+      writable: true,
+    });
+
+    Object.defineProperty(global, 'sessionStorage', {
+      value: {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        length: 0,
+        key: vi.fn(),
+      },
+      writable: true,
+    });
+
+    // Should not throw even with complex conditions
+    expect(() => initAppConfigStore()).not.toThrow();
+  });
+
+  it('should handle clearObsoleteStorage with matching keys', async () => {
+    const { clearObsoleteStorage } = await import('/@/logics/initAppConfig');
+
+    // Mock Object.keys to return specific keys that match the conditions
+    const originalObjectKeys = Object.keys;
+    Object.keys = vi.fn((obj) => {
+      if (obj === global.localStorage) {
+        return ['common_prefix_test_item', 'common_prefix_another_item'];
+      }
+      if (obj === global.sessionStorage) {
+        return ['common_prefix_test_item'];
+      }
+      return [];
+    });
+
+    const localStorageMock = {
+      removeItem: vi.fn(),
+    };
+
+    const sessionStorageMock = {
+      removeItem: vi.fn(),
+    };
+
+    Object.defineProperty(global, 'localStorage', {
+      value: localStorageMock,
+      writable: true,
+    });
+
+    Object.defineProperty(global, 'sessionStorage', {
+      value: sessionStorageMock,
+      writable: true,
+    });
+
+    // Should not throw and should call removeItem for matching keys
+    expect(() => clearObsoleteStorage()).not.toThrow();
+
+    // Restore Object.keys
+    Object.keys = originalObjectKeys;
+  });
+
+  it('should handle grayMode and colorWeak conditions in initAppConfigStore', async () => {
+    // Mock the dependencies
+    vi.mock('/@/store/modules/app', () => ({
+      useAppStore: vi.fn(() => ({
+        getDarkMode: 'light',
+        getHeaderSetting: { bgColor: '#ffffff' },
+        getMenuSetting: { bgColor: '#ffffff' },
+        setProjectConfig: vi.fn(),
+      })),
+    }));
+
+    vi.mock('/@/store/modules/locale', () => ({
+      useLocaleStore: vi.fn(() => ({
+        initLocale: vi.fn(),
+      })),
+    }));
+
+    vi.mock('/@/utils/cache/persistent', () => ({
+      Persistent: {
+        getLocal: vi.fn(() => null),
+      },
+    }));
+
+    vi.mock('/@/utils', () => ({
+      deepMerge: vi.fn((a, b) => ({ ...a, ...b })),
+    }));
+
+    vi.mock('/@/settings/projectSetting', () => ({
+      default: {
+        themeColor: '#2a50ec',
+        grayMode: true,
+        colorWeak: true,
+        headerSetting: { bgColor: '#ffffff' },
+        menuSetting: { bgColor: '#ffffff' },
+      },
+    }));
+
+    vi.mock('/@/logics/theme/updateBackground', () => ({
+      updateHeaderBgColor: vi.fn(),
+      updateSidebarBgColor: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/dark', () => ({
+      updateDarkTheme: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme', () => ({
+      changeTheme: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/updateColorWeak', () => ({
+      updateColorWeak: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/updateGrayMode', () => ({
+      updateGrayMode: vi.fn(),
+    }));
+
+    vi.mock('/@/utils/env', () => ({
+      getCommonStoragePrefix: vi.fn(() => 'common_prefix'),
+      getStorageShortName: vi.fn(() => 'short_prefix'),
+    }));
+
+    const { initAppConfigStore } = await import('/@/logics/initAppConfig');
+
+    // Set up mocks for localStorage
+    Object.defineProperty(global, 'localStorage', {
+      value: {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        length: 0,
+        key: vi.fn(),
+      },
+      writable: true,
+    });
+
+    Object.defineProperty(global, 'sessionStorage', {
+      value: {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        length: 0,
+        key: vi.fn(),
+      },
+      writable: true,
+    });
+
+    // Should not throw even with complex conditions
+    expect(() => initAppConfigStore()).not.toThrow();
+  });
+
+  it('should handle dark mode DARK condition in initAppConfigStore', async () => {
+    // Mock the dependencies
+    vi.mock('/@/store/modules/app', () => ({
+      useAppStore: vi.fn(() => ({
+        getDarkMode: 'dark',
+        getHeaderSetting: { bgColor: '#000000' },
+        getMenuSetting: { bgColor: '#000000' },
+        setProjectConfig: vi.fn(),
+      })),
+    }));
+
+    vi.mock('/@/store/modules/locale', () => ({
+      useLocaleStore: vi.fn(() => ({
+        initLocale: vi.fn(),
+      })),
+    }));
+
+    vi.mock('/@/utils/cache/persistent', () => ({
+      Persistent: {
+        getLocal: vi.fn(() => null),
+      },
+    }));
+
+    vi.mock('/@/utils', () => ({
+      deepMerge: vi.fn((a, b) => ({ ...a, ...b })),
+    }));
+
+    vi.mock('/@/settings/projectSetting', () => ({
+      default: {
+        themeColor: '#2a50ec',
+        grayMode: false,
+        colorWeak: false,
+        headerSetting: { bgColor: '#000000' },
+        menuSetting: { bgColor: '#000000' },
+      },
+    }));
+
+    vi.mock('/@/logics/theme/updateBackground', () => ({
+      updateHeaderBgColor: vi.fn(),
+      updateSidebarBgColor: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/dark', () => ({
+      updateDarkTheme: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme', () => ({
+      changeTheme: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/updateColorWeak', () => ({
+      updateColorWeak: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/updateGrayMode', () => ({
+      updateGrayMode: vi.fn(),
+    }));
+
+    vi.mock('/@/utils/env', () => ({
+      getCommonStoragePrefix: vi.fn(() => 'common_prefix'),
+      getStorageShortName: vi.fn(() => 'short_prefix'),
+    }));
+
+    const { initAppConfigStore } = await import('/@/logics/initAppConfig');
+
+    // Set up mocks for localStorage
+    Object.defineProperty(global, 'localStorage', {
+      value: {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        length: 0,
+        key: vi.fn(),
+      },
+      writable: true,
+    });
+
+    Object.defineProperty(global, 'sessionStorage', {
+      value: {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        length: 0,
+        key: vi.fn(),
+      },
+      writable: true,
+    });
+
+    // Should not throw even with complex conditions
+    expect(() => initAppConfigStore()).not.toThrow();
+  });
+
+  it('should handle setTimeout in clearObsoleteStorage', async () => {
+    // Mock setTimeout to immediately call the callback
+    const originalSetTimeout = global.setTimeout;
+    global.setTimeout = vi.fn((callback) => {
+      callback();
+      return 1;
+    });
+
+    // Mock the dependencies
+    vi.mock('/@/store/modules/app', () => ({
+      useAppStore: vi.fn(() => ({
+        getDarkMode: 'light',
+        getHeaderSetting: { bgColor: '#ffffff' },
+        getMenuSetting: { bgColor: '#ffffff' },
+        setProjectConfig: vi.fn(),
+      })),
+    }));
+
+    vi.mock('/@/store/modules/locale', () => ({
+      useLocaleStore: vi.fn(() => ({
+        initLocale: vi.fn(),
+      })),
+    }));
+
+    vi.mock('/@/utils/cache/persistent', () => ({
+      Persistent: {
+        getLocal: vi.fn(() => null),
+      },
+    }));
+
+    vi.mock('/@/utils', () => ({
+      deepMerge: vi.fn((a, b) => ({ ...a, ...b })),
+    }));
+
+    vi.mock('/@/settings/projectSetting', () => ({
+      default: {
+        themeColor: '#2a50ec',
+        grayMode: false,
+        colorWeak: false,
+        headerSetting: { bgColor: '#ffffff' },
+        menuSetting: { bgColor: '#ffffff' },
+      },
+    }));
+
+    vi.mock('/@/logics/theme/updateBackground', () => ({
+      updateHeaderBgColor: vi.fn(),
+      updateSidebarBgColor: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/dark', () => ({
+      updateDarkTheme: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme', () => ({
+      changeTheme: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/updateColorWeak', () => ({
+      updateColorWeak: vi.fn(),
+    }));
+
+    vi.mock('/@/logics/theme/updateGrayMode', () => ({
+      updateGrayMode: vi.fn(),
+    }));
+
+    vi.mock('/@/utils/env', () => ({
+      getCommonStoragePrefix: vi.fn(() => 'common_prefix'),
+      getStorageShortName: vi.fn(() => 'short_prefix'),
+    }));
+
+    const { initAppConfigStore } = await import('/@/logics/initAppConfig');
+
+    // Set up mocks for localStorage
+    Object.defineProperty(global, 'localStorage', {
+      value: {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        length: 0,
+        key: vi.fn(),
+      },
+      writable: true,
+    });
+
+    Object.defineProperty(global, 'sessionStorage', {
+      value: {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        length: 0,
+        key: vi.fn(),
+      },
+      writable: true,
+    });
+
+    // Should not throw even with complex conditions
+    expect(() => initAppConfigStore()).not.toThrow();
+
+    // Restore setTimeout
+    global.setTimeout = originalSetTimeout;
   });
 });

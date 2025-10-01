@@ -5,20 +5,11 @@ import RippleDirective from '/@/directives/ripple/index';
 describe('directives/ripple', () => {
   // Mock DOM APIs
   let element: HTMLElement;
-  let mockEvent: any;
 
   beforeEach(() => {
     // Create a mock element
     element = document.createElement('div');
     element.style.position = 'static';
-
-    // Create a mock event
-    mockEvent = {
-      clientX: 100,
-      clientY: 100,
-      type: 'mousedown',
-      preventDefault: vi.fn(),
-    };
 
     // Mock getBoundingClientRect
     element.getBoundingClientRect = vi.fn().mockReturnValue({
@@ -127,9 +118,9 @@ describe('directives/ripple', () => {
     expect((element as any).clearRipple).toHaveBeenCalled();
   });
 
-  it('should create ripple effect on mousedown event', () => {
-    // Mock addEventListener
-    const addEventListenerSpy = vi.spyOn(element, 'addEventListener');
+  it('should handle ripple background attribute', () => {
+    // Set ripple background attribute
+    element.setAttribute('ripple-background', 'rgba(255, 0, 0, 0.5)');
 
     // Create binding
     const binding: DirectiveBinding = {
@@ -141,10 +132,58 @@ describe('directives/ripple', () => {
       dir: {} as any,
     };
 
+    // Mock addEventListener
+    const addEventListenerSpy = vi.spyOn(element, 'addEventListener');
+
     // Set up the directive
     RippleDirective.beforeMount!(element, binding, null as any, null as any);
 
     // Check that addEventListener was called
     expect(addEventListenerSpy).toHaveBeenCalledWith('mousedown', expect.any(Function));
+  });
+
+  it('should clear ripple on mouseup event', () => {
+    // Create binding
+    const binding: DirectiveBinding = {
+      instance: null,
+      value: true,
+      oldValue: undefined,
+      arg: undefined,
+      modifiers: {},
+      dir: {} as any,
+    };
+
+    // Mock addEventListener
+    const addEventListenerSpy = vi.spyOn(element, 'addEventListener');
+
+    // Set up the directive
+    RippleDirective.beforeMount!(element, binding, null as any, null as any);
+
+    // Check that addEventListener was called
+    expect(addEventListenerSpy).toHaveBeenCalledWith('mousedown', expect.any(Function));
+  });
+
+  it('should handle modifiers in binding', () => {
+    // Create binding with modifiers
+    const binding: DirectiveBinding = {
+      instance: null,
+      value: true,
+      oldValue: undefined,
+      arg: undefined,
+      modifiers: {
+        touchstart: true,
+        '500': true,
+      },
+      dir: {} as any,
+    };
+
+    // Mock addEventListener
+    const addEventListenerSpy = vi.spyOn(element, 'addEventListener');
+
+    // Set up the directive
+    RippleDirective.beforeMount!(element, binding, null as any, null as any);
+
+    // Check that addEventListener was called with touchstart event
+    expect(addEventListenerSpy).toHaveBeenCalledWith('touchstart', expect.any(Function));
   });
 });

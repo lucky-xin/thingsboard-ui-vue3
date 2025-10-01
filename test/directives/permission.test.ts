@@ -3,9 +3,11 @@ import type { DirectiveBinding, ObjectDirective } from 'vue';
 import authDirective, { setupPermissionDirective } from '/@/directives/permission';
 
 // Mock usePermission hook
+const mockHasPermission = vi.fn(() => true);
+
 vi.mock('/@/hooks/web/usePermission', () => ({
   usePermission: () => ({
-    hasPermission: () => true,
+    hasPermission: mockHasPermission,
     changeAuthority: vi.fn(),
     togglePermissionMode: vi.fn(),
     refreshMenu: vi.fn(),
@@ -115,5 +117,35 @@ describe('directives/permission', () => {
     expect(() => {
       (authDirective as ObjectDirective).mounted!(mockElement as any, arrayBinding, null as any, null as any);
     }).not.toThrow();
+  });
+
+  it('should remove element when permission is denied', () => {
+    // Mock hasPermission to return false
+    mockHasPermission.mockReturnValueOnce(false);
+
+    const mockParentNode = { removeChild: vi.fn() };
+    const mockElement = { parentNode: mockParentNode };
+    const mockBinding = createMockBinding('admin');
+
+    expect(() => {
+      (authDirective as ObjectDirective).mounted!(mockElement as any, mockBinding, null as any, null as any);
+    }).not.toThrow();
+
+    expect(mockParentNode.removeChild).toHaveBeenCalledWith(mockElement);
+  });
+
+  it('should not remove element when permission is granted', () => {
+    // Mock hasPermission to return true
+    mockHasPermission.mockReturnValueOnce(true);
+
+    const mockParentNode = { removeChild: vi.fn() };
+    const mockElement = { parentNode: mockParentNode };
+    const mockBinding = createMockBinding('admin');
+
+    expect(() => {
+      (authDirective as ObjectDirective).mounted!(mockElement as any, mockBinding, null as any, null as any);
+    }).not.toThrow();
+
+    expect(mockParentNode.removeChild).not.toHaveBeenCalled();
   });
 });

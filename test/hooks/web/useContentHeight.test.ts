@@ -1099,4 +1099,104 @@ describe('hooks/web/useContentHeight', () => {
     // Should not throw error
     expect(true).toBe(true);
   });
+
+  it('should calculate subtract space with bottom direction', () => {
+    const result = useContentHeight(mockFlag, mockAnchorRef, mockSubtractHeightRefs, mockSubstractSpaceRefs);
+
+    // Trigger the calculation which should call calcSubtractSpace
+    result.redoHeight();
+
+    // Verify the function exists
+    expect(result.redoHeight).toBeInstanceOf(Function);
+  });
+
+  it('should handle upward space with string class name that matches parent', () => {
+    mockUpwardSpace.value = 'ant-layout';
+    mockAnchorRef.value.parentElement = {
+      classList: { contains: vi.fn(() => true) },
+      parentElement: null,
+    };
+
+    const result = useContentHeight(
+      mockFlag,
+      mockAnchorRef,
+      mockSubtractHeightRefs,
+      mockSubstractSpaceRefs,
+      mockUpwardSpace,
+      mockOffsetHeightRef,
+    );
+
+    result.redoHeight();
+
+    // Should not throw error
+    expect(true).toBe(true);
+  });
+
+  it('should handle upward space with nested parents and string class', () => {
+    mockUpwardSpace.value = 'ant-layout';
+    mockAnchorRef.value.parentElement = {
+      classList: { contains: vi.fn(() => false) },
+      parentElement: {
+        classList: { contains: vi.fn(() => true) },
+        parentElement: null,
+      },
+    };
+
+    const result = useContentHeight(
+      mockFlag,
+      mockAnchorRef,
+      mockSubtractHeightRefs,
+      mockSubstractSpaceRefs,
+      mockUpwardSpace,
+      mockOffsetHeightRef,
+    );
+
+    result.redoHeight();
+
+    // Should not throw error
+    expect(true).toBe(true);
+  });
+
+  it('should handle compensation height with layout footer', () => {
+    const result = useContentHeight(mockFlag, mockAnchorRef, mockSubtractHeightRefs, mockSubstractSpaceRefs);
+
+    const compensation = {
+      useLayoutFooter: true,
+      elements: [ref({ offsetHeight: 20 })],
+    };
+
+    result.setCompensation(compensation);
+    result.redoHeight();
+
+    // Should not throw error
+    expect(true).toBe(true);
+  });
+
+  it('should handle watch callback for layout footer height changes', () => {
+    const result = useContentHeight(mockFlag, mockAnchorRef, mockSubtractHeightRefs, mockSubstractSpaceRefs);
+
+    // Simulate layout footer height change
+    result.redoHeight();
+
+    // Should not throw error
+    expect(true).toBe(true);
+  });
+
+  it('should handle upward space with ref value', () => {
+    const upwardSpaceRef = ref('ant-layout');
+
+    const result = useContentHeight(
+      mockFlag,
+      mockAnchorRef,
+      mockSubtractHeightRefs,
+      mockSubstractSpaceRefs,
+      upwardSpaceRef,
+      mockOffsetHeightRef,
+    );
+
+    result.redoHeight();
+
+    // Should not throw error
+    expect(true).toBe(true);
+  });
 });

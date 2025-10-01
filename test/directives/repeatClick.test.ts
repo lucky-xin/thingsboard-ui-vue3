@@ -131,4 +131,67 @@ describe('directives/repeatClick', () => {
 
     wrapper.unmount();
   });
+
+  it('should call handler when mousedown and mouseup within 100ms', async () => {
+    const wrapper = mount(TestComponent);
+    const button = wrapper.find('#test-button');
+    const handleClick = wrapper.vm.handleClick;
+
+    // Reset the mock to start fresh
+    handleClick.mockClear();
+
+    // Simulate mousedown event
+    await button.trigger('mousedown');
+
+    // Simulate document mouseup event (the clear function is bound to document mouseup)
+    const mouseupEvent = new MouseEvent('mouseup', { bubbles: true });
+    document.dispatchEvent(mouseupEvent);
+
+    // Wait a bit for the clear function to execute
+    await new Promise(resolve => setTimeout(resolve, 10));
+
+    // The handler should be called once from the clear function
+    // (because the time difference is less than 100ms)
+    expect(handleClick).toHaveBeenCalled();
+
+    wrapper.unmount();
+  });
+
+  it('should handle interval cleanup properly', async () => {
+    const wrapper = mount(TestComponent);
+    const button = wrapper.find('#test-button');
+    const handleClick = wrapper.vm.handleClick;
+
+    // Reset the mock to start fresh
+    handleClick.mockClear();
+
+    // Simulate mousedown event
+    await button.trigger('mousedown');
+
+    // Wait for interval to trigger (100ms interval)
+    await new Promise(resolve => setTimeout(resolve, 150));
+
+    // Record calls before mouseup
+    const callsBeforeMouseup = handleClick.mock.calls.length;
+
+    // Simulate document mouseup event (the clear function is bound to document mouseup)
+    const mouseupEvent = new MouseEvent('mouseup', { bubbles: true });
+    document.dispatchEvent(mouseupEvent);
+
+    // Wait for cleanup
+    await new Promise(resolve => setTimeout(resolve, 10));
+
+    // Wait longer to ensure interval is cleared and no more calls
+    await new Promise(resolve => setTimeout(resolve, 200));
+    const callsAfterWaiting = handleClick.mock.calls.length;
+
+    // Should have some calls from the interval before mouseup
+    expect(callsBeforeMouseup).toBeGreaterThan(0);
+
+    // After mouseup and waiting, should not have many more calls
+    // (interval should be cleared)
+    expect(callsAfterWaiting - callsBeforeMouseup).toBeLessThan(3);
+
+    wrapper.unmount();
+  });
 });

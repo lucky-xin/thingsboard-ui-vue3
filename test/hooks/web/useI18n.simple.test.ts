@@ -873,6 +873,29 @@ describe('hooks/web/useI18n', () => {
       expect(translated).toBe('test.key');
     });
 
+    it('should handle case when i18n is null or undefined', async () => {
+      // Temporarily override the i18n import to simulate null case
+      const originalModule = await import('/@/locales/setupI18n');
+      const mockModule = { ...originalModule, i18n: null };
+
+      // Use vi.doMock to mock the module for this specific test
+      vi.doMock('/@/locales/setupI18n', () => mockModule);
+
+      // Clear the module cache and re-import
+      vi.resetModules();
+      const { useI18n } = await import('/@/hooks/web/useI18n');
+
+      const result = useI18n();
+      expect(result.t).toBeInstanceOf(Function);
+
+      const translated = result.t('test.key');
+      expect(translated).toBe('test.key');
+
+      // Restore the original mock
+      vi.doMock('/@/locales/setupI18n', () => originalModule);
+      vi.resetModules();
+    });
+
     it('should handle translation with arguments', () => {
       const { t } = useI18n();
 

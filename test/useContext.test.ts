@@ -61,4 +61,30 @@ describe('useContext', () => {
     expect(context.state.isMobile).toBeDefined();
     expect(mockProvide).toHaveBeenCalledWith(testSymbol, expect.any(Object));
   });
+
+  it('useContext function calls inject with correct parameters', () => {
+    const testSymbol = Symbol('test-inject');
+    const defaultValue = { test: 'default' };
+
+    // Test useContext with key and defaultValue
+    useContext(testSymbol, defaultValue);
+
+    expect(mockInject).toHaveBeenCalledWith(testSymbol, defaultValue);
+  });
+
+  it('useContext function calls inject with empty object when no defaultValue', () => {
+    const testSymbol = Symbol('test-inject-no-default');
+
+    // Test useContext with key only
+    useContext(testSymbol);
+
+    expect(mockInject).toHaveBeenCalledWith(testSymbol, {});
+  });
+
+  it('useContext function with default Symbol key', () => {
+    // Test useContext without any parameters (uses default Symbol)
+    useContext();
+
+    expect(mockInject).toHaveBeenCalledWith(expect.any(Symbol), {});
+  });
 });

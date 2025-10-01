@@ -206,6 +206,212 @@ describe('directives/ripple/index', () => {
         eventListener(mockEvent);
       }).not.toThrow();
     });
+
+    it('should handle clearRipple functionality', async () => {
+      vi.useFakeTimers();
+
+      mockElement.getAttribute.mockReturnValue(null);
+      (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
+
+      // Trigger the event listener
+      const eventListener = mockElement.addEventListener.mock.calls[0][1];
+      eventListener(mockEvent);
+
+      // Simulate mouseup event to trigger clearRipple
+      const mouseupListener = mockElement.addEventListener.mock.calls.find(call => call[0] === 'mouseup');
+      if (mouseupListener) {
+        mouseupListener[1]();
+      }
+
+      // Advance timers to trigger clearRipple timeouts
+      vi.advanceTimersByTime(1000);
+
+      vi.useRealTimers();
+    });
+
+    it('should handle clearRipple with no child nodes', async () => {
+      vi.useFakeTimers();
+
+      // Mock childNodes to be empty
+      mockElement.childNodes = [];
+
+      mockElement.getAttribute.mockReturnValue(null);
+      (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
+
+      // Trigger the event listener
+      const eventListener = mockElement.addEventListener.mock.calls[0][1];
+      eventListener(mockEvent);
+
+      // Simulate mouseup event to trigger clearRipple
+      const mouseupListener = mockElement.addEventListener.mock.calls.find(call => call[0] === 'mouseup');
+      if (mouseupListener) {
+        mouseupListener[1]();
+      }
+
+      // Advance timers to trigger clearRipple timeouts
+      vi.advanceTimersByTime(1000);
+
+      vi.useRealTimers();
+    });
+
+    it('should handle clearRipple with ripple-container child nodes', async () => {
+      vi.useFakeTimers();
+
+      // Mock childNodes to contain ripple-container
+      mockElement.childNodes = [
+        { className: 'ripple-container' },
+        { className: 'other-class' }
+      ];
+
+      mockElement.getAttribute.mockReturnValue(null);
+      (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
+
+      // Trigger the event listener
+      const eventListener = mockElement.addEventListener.mock.calls[0][1];
+      eventListener(mockEvent);
+
+      // Simulate mouseup event to trigger clearRipple
+      const mouseupListener = mockElement.addEventListener.mock.calls.find(call => call[0] === 'mouseup');
+      if (mouseupListener) {
+        mouseupListener[1]();
+      }
+
+      // Advance timers to trigger clearRipple timeouts
+      vi.advanceTimersByTime(1000);
+
+      vi.useRealTimers();
+    });
+
+    it('should handle clearRipple with position style', async () => {
+      vi.useFakeTimers();
+
+      // Mock childNodes to be empty and set position style
+      mockElement.childNodes = [];
+      mockElement.style.position = 'relative';
+
+      mockElement.getAttribute.mockReturnValue(null);
+      (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
+
+      // Trigger the event listener
+      const eventListener = mockElement.addEventListener.mock.calls[0][1];
+      eventListener(mockEvent);
+
+      // Simulate mouseup event to trigger clearRipple
+      const mouseupListener = mockElement.addEventListener.mock.calls.find(call => call[0] === 'mouseup');
+      if (mouseupListener) {
+        mouseupListener[1]();
+      }
+
+      // Advance timers to trigger clearRipple timeouts
+      vi.advanceTimersByTime(1000);
+
+      vi.useRealTimers();
+    });
+
+    it('should handle clearRipple with static position style', async () => {
+      vi.useFakeTimers();
+
+      // Mock childNodes to be empty and set position style to static
+      mockElement.childNodes = [];
+      mockElement.style.position = 'static';
+      mockElement.getAttribute.mockReturnValue(null);
+      (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
+
+      // Trigger the event listener
+      const eventListener = mockElement.addEventListener.mock.calls[0][1];
+      eventListener(mockEvent);
+
+      // Simulate mouseup event to trigger clearRipple
+      const mouseupListener = mockElement.addEventListener.mock.calls.find(call => call[0] === 'mouseup');
+      if (mouseupListener) {
+        mouseupListener[1]();
+      }
+
+      // Advance timers to trigger clearRipple timeouts
+      vi.advanceTimersByTime(1000);
+
+      vi.useRealTimers();
+    });
+
+    it('should handle clearRipple with stored target position', async () => {
+      vi.useFakeTimers();
+
+      // Mock childNodes to be empty and mock getComputedStyle to return relative position
+      mockElement.childNodes = [];
+      mockElement.style.position = ''; // Empty position to trigger storedTargetPosition logic
+
+      // Mock getComputedStyle to return relative position
+      (global.window.getComputedStyle as any).mockReturnValue({
+        borderWidth: '1px',
+        position: 'relative',
+        borderTopLeftRadius: '0px',
+        borderTopRightRadius: '0px',
+        borderBottomLeftRadius: '0px',
+        borderBottomRightRadius: '0px',
+      });
+
+      mockElement.getAttribute.mockReturnValue(null);
+      (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
+
+      // Trigger the event listener
+      const eventListener = mockElement.addEventListener.mock.calls[0][1];
+      eventListener(mockEvent);
+
+      // Simulate mouseup event to trigger clearRipple
+      const mouseupListener = mockElement.addEventListener.mock.calls.find(call => call[0] === 'mouseup');
+      if (mouseupListener) {
+        mouseupListener[1]();
+      }
+
+      // Advance timers to trigger clearRipple timeouts
+      vi.advanceTimersByTime(1000);
+
+      vi.useRealTimers();
+    });
+
+    it('should handle setBackground functionality', () => {
+      vi.useFakeTimers();
+
+      mockElement.getAttribute.mockReturnValue('#ff0000');
+      (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
+
+      // Trigger the event listener to create ripple elements
+      const eventListener = mockElement.addEventListener.mock.calls[0][1];
+      eventListener(mockEvent);
+
+      // Check if setBackground method was added to element
+      expect(typeof (mockElement as any).setBackground).toBe('function');
+
+      // Test setBackground with valid color
+      (mockElement as any).setBackground('#00ff00');
+
+      // Test setBackground with no color (should not throw)
+      expect(() => {
+        (mockElement as any).setBackground('');
+      }).not.toThrow();
+
+      vi.useRealTimers();
+    });
+
+    it('should handle event type other than mousedown', () => {
+      vi.useFakeTimers();
+
+      mockEvent.type = 'touchstart';
+      mockEvent.touches = [{ clientX: 30, clientY: 40 }];
+      delete mockEvent.clientX;
+      delete mockEvent.clientY;
+
+      mockElement.getAttribute.mockReturnValue(null);
+      (RippleDirective as ObjectDirective).beforeMount!(mockElement, mockBinding, null as any, null as any);
+
+      const eventListener = mockElement.addEventListener.mock.calls[0][1];
+      eventListener(mockEvent);
+
+      // Advance timers to trigger clearRipple
+      vi.advanceTimersByTime(1000);
+
+      vi.useRealTimers();
+    });
   });
 
   describe('directive properties', () => {

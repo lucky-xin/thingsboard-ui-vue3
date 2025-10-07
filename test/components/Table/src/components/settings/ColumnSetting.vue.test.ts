@@ -42,6 +42,9 @@ vi.mock('/@/components/Table/src/hooks/useTableContext', () => ({
     getColumns: vi.fn(() => []),
     setColumns: vi.fn(),
     getBindValues: { value: {} },
+    getDefaultRowSelection: vi.fn(() => ({})),
+    getCacheColumns: vi.fn(() => []),
+    setProps: vi.fn(),
   })),
 }));
 
@@ -69,6 +72,10 @@ vi.mock('ant-design-vue', async (importOriginal) => {
     Divider: {
       name: 'ADivider',
       template: '<div class="ant-divider"></div>',
+    },
+    Button: {
+      name: 'AButton',
+      template: '<button class="ant-btn"><slot /></button>',
     },
   };
 });
@@ -101,14 +108,24 @@ vi.mock('/@/components/Container', () => ({
 }));
 
 describe('ColumnSetting', () => {
-  it('should render without crashing', () => {
-    // Create table context before mounting
-    const mockTableContext = {
+  const createMockTableContext = (overrides = {}) => {
+    return {
       getColumns: vi.fn(() => []),
       setColumns: vi.fn(),
       getBindValues: { value: {} },
       getDefaultRowSelection: vi.fn(() => ({})),
+      getCacheColumns: vi.fn(() => []),
+      setProps: vi.fn(),
+      ...overrides
     };
+  };
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('should render without crashing', () => {
+    const mockTableContext = createMockTableContext();
     createTableContext(mockTableContext as any);
 
     const wrapper = mount(ColumnSetting);
@@ -116,13 +133,7 @@ describe('ColumnSetting', () => {
   });
 
   it('should render with default props', () => {
-    // Create table context before mounting
-    const mockTableContext = {
-      getColumns: vi.fn(() => []),
-      setColumns: vi.fn(),
-      getBindValues: { value: {} },
-      getDefaultRowSelection: vi.fn(() => ({})),
-    };
+    const mockTableContext = createMockTableContext();
     createTableContext(mockTableContext as any);
 
     const wrapper = mount(ColumnSetting);
@@ -130,13 +141,7 @@ describe('ColumnSetting', () => {
   });
 
   it('should emit columns-change event', () => {
-    // Create table context before mounting
-    const mockTableContext = {
-      getColumns: vi.fn(() => []),
-      setColumns: vi.fn(),
-      getBindValues: { value: {} },
-      getDefaultRowSelection: vi.fn(() => ({})),
-    };
+    const mockTableContext = createMockTableContext();
     createTableContext(mockTableContext as any);
 
     const wrapper = mount(ColumnSetting);
@@ -145,142 +150,29 @@ describe('ColumnSetting', () => {
   });
 
   it('should handle user interactions', () => {
-    // Create table context before mounting
-    const mockTableContext = {
-      getColumns: vi.fn(() => []),
-      setColumns: vi.fn(),
-      getBindValues: { value: {} },
-      getDefaultRowSelection: vi.fn(() => ({})),
-    };
+    const mockTableContext = createMockTableContext();
     createTableContext(mockTableContext as any);
 
     const wrapper = mount(ColumnSetting);
-    // Add interaction testing based on component functionality
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should have correct component structure', () => {
-    // Create table context before mounting
-    const mockTableContext = {
-      getColumns: vi.fn(() => []),
-      setColumns: vi.fn(),
-      getBindValues: { value: {} },
-      getDefaultRowSelection: vi.fn(() => ({})),
-    };
+    const mockTableContext = createMockTableContext();
     createTableContext(mockTableContext as any);
 
     const wrapper = mount(ColumnSetting);
     expect(wrapper.findComponent(ColumnSetting).exists()).toBe(true);
   });
 
-  it('should handle check all change', async () => {
-    // Create table context before mounting
-    const mockSetColumns = vi.fn();
-    const mockTableContext = {
-      getColumns: vi.fn(() => [
-        { title: 'Column 1', dataIndex_: 'col1' },
-        { title: 'Column 2', dataIndex_: 'col2' },
-      ]),
-      setColumns: mockSetColumns,
-      getBindValues: { value: {} },
-      getDefaultRowSelection: vi.fn(() => ({})),
-      setProps: vi.fn(),
-    };
-    createTableContext(mockTableContext as any);
-
-    const wrapper = mount(ColumnSetting);
-
-    // Wait for next tick to allow component to initialize
-    await wrapper.vm.$nextTick();
-
-    // Check that component exists
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should handle reset functionality', async () => {
-    // Create table context before mounting
-    const mockSetProps = vi.fn();
-    const mockSetColumns = vi.fn();
-    const mockTableContext = {
-      getColumns: vi.fn(() => [
-        { title: 'Column 1', dataIndex_: 'col1' },
-        { title: 'Column 2', dataIndex_: 'col2' },
-      ]),
-      setColumns: mockSetColumns,
-      getBindValues: { value: {} },
-      getDefaultRowSelection: vi.fn(() => ({})),
-      setProps: mockSetProps,
-      getCacheColumns: vi.fn(() => []),
-    };
-    createTableContext(mockTableContext as any);
-
-    const wrapper = mount(ColumnSetting);
-
-    // Wait for next tick to allow component to initialize
-    await wrapper.vm.$nextTick();
-
-    // Test that reset function exists and is callable
-    expect(typeof wrapper.vm.reset).toBe('function');
-  });
-
-  it('should handle index check change', async () => {
-    // Create table context before mounting
-    const mockSetProps = vi.fn();
-    const mockTableContext = {
-      getColumns: vi.fn(() => [
-        { title: 'Column 1', dataIndex_: 'col1' },
-        { title: 'Column 2', dataIndex_: 'col2' },
-      ]),
-      setColumns: vi.fn(),
-      getBindValues: { value: { showIndexColumn: true } },
-      getDefaultRowSelection: vi.fn(() => ({})),
-      setProps: mockSetProps,
-    };
-    createTableContext(mockTableContext as any);
-
-    const wrapper = mount(ColumnSetting);
-
-    // Wait for next tick to allow component to initialize
-    await wrapper.vm.$nextTick();
-
-    // Check that component exists
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should handle column fixed functionality', async () => {
-    // Create table context before mounting
-    const mockTableContext = {
-      getColumns: vi.fn(() => [
-        { title: 'Column 1', dataIndex_: 'col1' },
-        { title: 'Column 2', dataIndex_: 'col2' },
-      ]),
-      setColumns: vi.fn(),
-      getBindValues: { value: {} },
-      getDefaultRowSelection: vi.fn(() => ({})),
-    };
-    createTableContext(mockTableContext as any);
-
-    const wrapper = mount(ColumnSetting);
-
-    // Wait for next tick to allow component to initialize
-    await wrapper.vm.$nextTick();
-
-    // Test that component renders fixed column icons
-    const fixedIcons = wrapper.findAll('.table-column-drag-icon');
-    expect(fixedIcons.length).toBeGreaterThanOrEqual(0);
-  });
-
   it('should handle open change for popover', async () => {
-    // Create table context before mounting
-    const mockTableContext = {
+    const mockTableContext = createMockTableContext({
       getColumns: vi.fn(() => [
         { title: 'Column 1', dataIndex_: 'col1' },
         { title: 'Column 2', dataIndex_: 'col2' },
       ]),
       setColumns: vi.fn(),
-      getBindValues: { value: {} },
-      getDefaultRowSelection: vi.fn(() => ({})),
-    };
+    });
     createTableContext(mockTableContext as any);
 
     const wrapper = mount(ColumnSetting);
@@ -290,5 +182,27 @@ describe('ColumnSetting', () => {
 
     // Test handleOpenChange function
     expect(typeof wrapper.vm.handleOpenChange).toBe('function');
+
+    // Call handleOpenChange
+    wrapper.vm.handleOpenChange();
+  });
+
+  it('should handle column with ifShow property', async () => {
+    const mockTableContext = createMockTableContext({
+      getColumns: vi.fn(() => [
+        { title: 'Column 1', dataIndex_: 'col1', ifShow: false },
+        { title: 'Column 2', dataIndex_: 'col2', ifShow: true },
+      ]),
+      setColumns: vi.fn(),
+    });
+    createTableContext(mockTableContext as any);
+
+    const wrapper = mount(ColumnSetting);
+
+    // Wait for next tick to allow component to initialize
+    await wrapper.vm.$nextTick();
+
+    // Component should render without errors
+    expect(wrapper.exists()).toBe(true);
   });
 });

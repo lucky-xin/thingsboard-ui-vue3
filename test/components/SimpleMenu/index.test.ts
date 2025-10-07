@@ -1,26 +1,8 @@
-import { describe, it, expect, vi } from 'vitest';
-
-// Mock the components
-vi.mock('./src/SimpleMenu.vue', () => ({
-  default: {
-    __name: 'SimpleMenu',
-    setup() {
-      return {};
-    },
-  },
-}));
-
-vi.mock('./src/SimpleMenuTag.vue', () => ({
-  default: {
-    __name: 'SimpleMenuTag',
-    setup() {
-      return {};
-    },
-  },
-}));
+import { describe, it, expect } from 'vitest';
 
 describe('SimpleMenu/index', () => {
   it('should export SimpleMenu component', async () => {
+    // Dynamically import the module to ensure code execution
     const module = await import('/@/components/SimpleMenu/index');
 
     expect(module).toBeDefined();
@@ -63,5 +45,29 @@ describe('SimpleMenu/index', () => {
 
     expect(SimpleMenu).toBeDefined();
     expect(SimpleMenuTag).toBeDefined();
+  });
+
+  // Execute the actual import to ensure file coverage
+  it('should execute index file', async () => {
+    // This test ensures that the index.ts file is executed
+    const module = await import('/@/components/SimpleMenu/index');
+
+    // Verify that the module exports the expected components
+    expect(module).toHaveProperty('SimpleMenu');
+    expect(module).toHaveProperty('SimpleMenuTag');
+
+    // Check that the components are not undefined
+    expect(module.SimpleMenu).not.toBeUndefined();
+    expect(module.SimpleMenuTag).not.toBeUndefined();
+  });
+
+  it('should have correct export structure', async () => {
+    const module = await import('/@/components/SimpleMenu/index');
+
+    // Check the exact export structure
+    const keys = Object.keys(module);
+    expect(keys).toContain('SimpleMenu');
+    expect(keys).toContain('SimpleMenuTag');
+    expect(keys).toHaveLength(2);
   });
 });

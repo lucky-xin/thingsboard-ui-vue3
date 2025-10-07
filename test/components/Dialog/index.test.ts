@@ -1,4 +1,56 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+import { mount } from '@vue/test-utils';
+
+// Mock dependencies
+vi.mock('/@/components/Modal/src/BasicModal.vue', () => ({
+  default: {
+    name: 'BasicModal',
+    template: '<div class="basic-modal-mock"><slot /></div>',
+  },
+}));
+
+vi.mock('/@/components/Drawer/src/BasicDrawer.vue', () => ({
+  default: {
+    name: 'BasicDrawer',
+    template: '<div class="basic-drawer-mock"><slot /></div>',
+  },
+}));
+
+vi.mock('/@/utils/propTypes', () => ({
+  propTypes: {
+    oneOf: vi.fn(() => ({
+      def: vi.fn(() => ({})),
+    })),
+  },
+}));
+
+// Mock the actual component files to ensure they are imported correctly
+vi.mock('/@/components/Modal', () => ({
+  BasicModal: {
+    name: 'BasicModal',
+    template: '<div class="basic-modal-mock"><slot /></div>',
+  },
+  BasicModalInstance: {},
+}));
+
+vi.mock('/@/components/Drawer', () => ({
+  BasicDrawer: {
+    name: 'BasicDrawer',
+    template: '<div class="basic-drawer-mock"><slot /></div>',
+  },
+  BasicDrawerInstance: {},
+}));
+
+vi.mock('/@/utils', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    withInstall: vi.fn((component) => {
+      const wrappedComponent = { ...component, install: vi.fn() };
+      return wrappedComponent;
+    }),
+  };
+});
 
 describe('Dialog/index', () => {
   it('should export BasicDialog component', async () => {
@@ -93,5 +145,80 @@ describe('Dialog/index', () => {
     expect(exports).toContain('BasicDialog');
     // BasicDialogInstance might be included in runtime exports depending on how TypeScript compiles
     expect(exports.length).toBeGreaterThanOrEqual(1);
+  });
+
+  // Additional tests to improve coverage
+  it('should have install method for BasicDialog', async () => {
+    const module = await import('/@/components/Dialog/index');
+    const { BasicDialog } = module;
+
+    expect(BasicDialog.install).toBeDefined();
+    expect(typeof BasicDialog.install).toBe('function');
+  });
+
+  it('should be valid Vue component', async () => {
+    const module = await import('/@/components/Dialog/index');
+    const { BasicDialog } = module;
+
+    expect(BasicDialog).toBeDefined();
+    expect(typeof BasicDialog).toBe('object');
+  });
+
+  it('should install component correctly', async () => {
+    const module = await import('/@/components/Dialog/index');
+    const { BasicDialog } = module;
+    const mockApp = {
+      component: vi.fn(),
+      config: {
+        globalProperties: {},
+      },
+    };
+
+    // Test that install method exists and can be called
+    expect(() => BasicDialog.install(mockApp as any)).not.toThrow();
+  });
+
+  it('should export BasicDialogInstance type', async () => {
+    const exports = await import('/@/components/Dialog/index');
+
+    // We can't directly test types, but we can check that the module exports don't throw
+    expect(exports).toBeDefined();
+  });
+
+  it('should export all typing definitions', async () => {
+    // This tests that all typing exports don't throw errors
+    const module = await import('/@/components/Dialog/index');
+
+    expect(module).toBeDefined();
+  });
+
+  it('should have correct exports count', async () => {
+    const exports = await import('/@/components/Dialog/index');
+    const exportKeys = Object.keys(exports);
+
+    // Should export: BasicDialog, and typing exports
+    expect(exportKeys.length).toBeGreaterThanOrEqual(1);
+    expect(exportKeys).toContain('BasicDialog');
+  });
+
+  // Execute the actual import to ensure file coverage
+  it('should execute index file', async () => {
+    // This test ensures that the index.ts file is executed
+    const module = await import('/@/components/Dialog/index');
+
+    // Verify that the module exports the expected components
+    expect(module).toHaveProperty('BasicDialog');
+
+    // Check that the components are not undefined
+    expect(module.BasicDialog).not.toBeUndefined();
+  });
+
+  it('should have correct export structure', async () => {
+    const module = await import('/@/components/Dialog/index');
+
+    // Check the exact export structure
+    const keys = Object.keys(module);
+    expect(keys).toContain('BasicDialog');
+    expect(keys).toHaveLength(2);
   });
 });

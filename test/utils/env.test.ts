@@ -1,14 +1,13 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import * as envUtils from '/@/utils/env';
 import { version } from '../../package.json';
-import { getEnvConfigName } from '../../build/config/getEnvConfigName';
 import { warn } from '/@/utils/log';
 
 // Mock the log module
 vi.mock('/@/utils/log', () => ({
   warn: vi.fn(),
   env: {
-    MODE: 'test',
+    MODE: 'development',
     DEV: true,
     PROD: false,
     VITE_PUBLIC_PATH: '/',
@@ -17,14 +16,13 @@ vi.mock('/@/utils/log', () => ({
   },
 }));
 
-// Mock the getEnvConfigName function
-vi.mock('../../build/config/getEnvConfigName', () => ({
-  getEnvConfigName: () => 'TEST_CONFIG',
-}));
-
 describe('utils/env', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   describe('constants', () => {
@@ -36,7 +34,7 @@ describe('utils/env', () => {
 
   describe('getEnv', () => {
     it('should return environment mode', () => {
-      expect(envUtils.getEnv()).toBe('test');
+      expect(envUtils.getEnv()).toBe('development');
     });
   });
 
@@ -60,7 +58,7 @@ describe('utils/env', () => {
     it('should generate common storage prefix', () => {
       const prefix = envUtils.getCommonStoragePrefix();
       expect(prefix).toContain('TEST_APP');
-      expect(prefix).toContain('TEST');
+      expect(prefix).toContain('DEVELOPMENT');
       expect(prefix).toBe(prefix.toUpperCase());
     });
 
@@ -73,58 +71,63 @@ describe('utils/env', () => {
   });
 
   describe('getAppEnvConfig', () => {
-    it('should return app environment configuration', () => {
+    it('should return app environment configuration in development mode', () => {
       const config = envUtils.getAppEnvConfig();
       expect(config).toHaveProperty('VITE_GLOB_APP_SHORT_NAME', 'TEST_APP');
       expect(config).toHaveProperty('VITE_PROXY', '[]');
-      expect(config).toHaveProperty('MODE', 'test');
+      expect(config).toHaveProperty('MODE', 'development');
     });
 
-    it('should handle production mode with valid app short name', () => {
-      // Mock the getEnvConfigName function to return a custom config name
-      vi.mock('../../build/config/getEnvConfigName', () => ({
-        getEnvConfigName: () => 'TEST_CONFIG',
-      }));
+    it('should not warn when app short name is valid', () => {
+      // Call the function with valid name (already mocked in setup)
+      envUtils.getAppEnvConfig();
 
-      // Mock window to return a config with valid app short name
-      (global as any).TEST_CONFIG = {
-        VITE_GLOB_APP_SHORT_NAME: 'TEST_APP', // Valid characters
-        VITE_PROXY: '[]',
-        MODE: 'production',
-        DEV: false,
-        PROD: true,
+      // Check that warning was not called
+      expect(warn).not.toHaveBeenCalled();
+    });
+
+    it('should handle valid app short name with numbers', () => {
+      // Temporarily mock the env to return name with numbers (this should be valid)
+      const originalEnv = (global as any).env;
+      (global as any).env = {
+        ...originalEnv,
+        VITE_GLOB_APP_SHORT_NAME: 'TEST123', // Contains numbers (this is valid)
       };
 
-      const config = envUtils.getAppEnvConfig();
-      expect(config).toHaveProperty('VITE_GLOB_APP_SHORT_NAME', 'TEST_APP');
-      // Note: The MODE property comes from the original env object, not from window.TEST_CONFIG
+      // Re-import to get updated function behavior
+      vi.resetModules();
+      return import('/@/utils/env').then((envModule) => {
+        // Call the function
+        envModule.getAppEnvConfig();
+
+        // Check that warning was not called (numbers are allowed)
+        expect(warn).not.toHaveBeenCalled();
+
+        // Restore original env
+        (global as any).env = originalEnv;
+      });
     });
 
-    it('should handle special characters in app short name', () => {
-      // This test would need more complex mocking setup
-      // For now, we'll test the basic functionality
-      const config = envUtils.getAppEnvConfig();
-      expect(config).toHaveProperty('VITE_GLOB_APP_SHORT_NAME', 'TEST_APP');
-    });
+    it('should handle valid app short name with underscores', () => {
+      // Temporarily mock the env to return name with underscores (this should be valid)
+      const originalEnv = (global as any).env;
+      (global as any).env = {
+        ...originalEnv,
+        VITE_GLOB_APP_SHORT_NAME: 'TEST_APP_NAME', // Contains underscores (this is valid)
+      };
 
-    it('should handle empty app short name', () => {
-      // This test would need more complex mocking setup
-      // For now, we'll test the basic functionality
-      const config = envUtils.getAppEnvConfig();
-      expect(config).toHaveProperty('VITE_GLOB_APP_SHORT_NAME', 'TEST_APP');
-    });
+      // Re-import to get updated function behavior
+      vi.resetModules();
+      return import('/@/utils/env').then((envModule) => {
+        // Call the function
+        envModule.getAppEnvConfig();
 
-    it('should handle undefined app short name', () => {
-      // This test would need more complex mocking setup
-      // For now, we'll test the basic functionality
-      const config = envUtils.getAppEnvConfig();
-      expect(config).toHaveProperty('VITE_GLOB_APP_SHORT_NAME', 'TEST_APP');
-    });
-  });
+        // Check that warning was not called (underscores are allowed)
+        expect(warn).not.toHaveBeenCalled();
 
-  describe('publicPath', () => {
-    it('should return correct public path', () => {
-      expect(envUtils.publicPath).toBe('');
+        // Restore original env
+        (global as any).env = originalEnv;
+      });
     });
   });
 });

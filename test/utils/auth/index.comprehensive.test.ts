@@ -1,67 +1,77 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
-// Mock localStorage
-const mockLocalStorage = {
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  removeItem: vi.fn(),
-};
+// Mock the cache module
+vi.mock('/@/utils/cache/persistent', () => ({
+  Persistent: {
+    getSession: vi.fn(),
+    getLocal: vi.fn(),
+    setSession: vi.fn(),
+    setLocal: vi.fn(),
+    removeSession: vi.fn(),
+    removeLocal: vi.fn(),
+    clearSession: vi.fn(),
+    clearLocal: vi.fn(),
+    clearAll: vi.fn(),
+  },
+  BasicKeys: {},
+}));
 
-Object.defineProperty(window, 'localStorage', {
-  value: mockLocalStorage,
-  writable: true,
-});
+// Mock project settings
+vi.mock('/@/settings/projectSetting', () => ({
+  default: {
+    permissionCacheType: 'SESSION', // Use session storage by default
+  },
+}));
 
-import { getToken, setToken, clearToken, getRefreshToken, setRefreshToken, clearRefreshToken } from '/@/utils/auth';
+// Mock cache enums
+vi.mock('/@/enums/cacheEnum', () => ({
+  CacheTypeEnum: {
+    LOCAL: 'LOCAL',
+    SESSION: 'SESSION',
+  },
+  TOKEN_KEY: 'ACCESS_TOKEN',
+  REFRESH_TOKEN_KEY: 'REFRESH_TOKEN',
+}));
 
-describe.skipIf(false, 'auth comprehensive tests', () => {
+import { getToken, getRefreshToken } from '/@/utils/auth';
+import * as persistentModule from '/@/utils/cache/persistent';
+
+describe('auth comprehensive tests', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('should get token from localStorage', () => {
-    mockLocalStorage.getItem.mockReturnValue('test-token');
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('should get token from cache', () => {
+    vi.mocked(persistentModule.Persistent.getSession).mockReturnValue('test-token');
+
     const token = getToken();
-    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('ACCESS_TOKEN');
+    expect(persistentModule.Persistent.getSession).toHaveBeenCalledWith('ACCESS_TOKEN');
     expect(token).toBe('test-token');
   });
 
-  it('should set token to localStorage', () => {
-    setToken('new-token');
-    expect(mockLocalStorage.setItem).toHaveBeenCalledWith('ACCESS_TOKEN', 'new-token');
-  });
+  it('should get refresh token from cache', () => {
+    vi.mocked(persistentModule.Persistent.getSession).mockReturnValue('refresh-token');
 
-  it('should clear token from localStorage', () => {
-    clearToken();
-    expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('ACCESS_TOKEN');
-  });
-
-  it('should get refresh token from localStorage', () => {
-    mockLocalStorage.getItem.mockReturnValue('refresh-token');
     const token = getRefreshToken();
-    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('REFRESH_TOKEN');
+    expect(persistentModule.Persistent.getSession).toHaveBeenCalledWith('REFRESH_TOKEN');
     expect(token).toBe('refresh-token');
   });
 
-  it('should set refresh token to localStorage', () => {
-    setRefreshToken('new-refresh-token');
-    expect(mockLocalStorage.setItem).toHaveBeenCalledWith('REFRESH_TOKEN', 'new-refresh-token');
-  });
+  it('should return undefined when token not found', () => {
+    vi.mocked(persistentModule.Persistent.getSession).mockReturnValue(undefined);
 
-  it('should clear refresh token from localStorage', () => {
-    clearRefreshToken();
-    expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('REFRESH_TOKEN');
-  });
-
-  it('should return null when token not found', () => {
-    mockLocalStorage.getItem.mockReturnValue(null);
     const token = getToken();
-    expect(token).toBeNull();
+    expect(token).toBeUndefined();
   });
 
-  it('should return null when refresh token not found', () => {
-    mockLocalStorage.getItem.mockReturnValue(null);
+  it('should return undefined when refresh token not found', () => {
+    vi.mocked(persistentModule.Persistent.getSession).mockReturnValue(undefined);
+
     const token = getRefreshToken();
-    expect(token).toBeNull();
+    expect(token).toBeUndefined();
   });
 });

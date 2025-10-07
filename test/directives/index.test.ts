@@ -54,3 +54,46 @@ describe('directives/index', () => {
     expect(() => setupGlobDirectives(app)).not.toThrow();
   });
 });
+
+// Additional tests to improve coverage
+describe('directives/index - additional coverage', () => {
+  let app: any;
+
+  beforeEach(() => {
+    app = createApp({});
+    vi.clearAllMocks();
+  });
+
+  it('should call setupPermissionDirective with correct app instance', async () => {
+    const { setupPermissionDirective } = await import('/@/directives/permission');
+
+    setupGlobDirectives(app);
+
+    expect(setupPermissionDirective).toHaveBeenCalledWith(app);
+    expect(setupPermissionDirective).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call setupLoadingDirective with correct app instance', async () => {
+    const { setupLoadingDirective } = await import('/@/directives/loading');
+
+    setupGlobDirectives(app);
+
+    expect(setupLoadingDirective).toHaveBeenCalledWith(app);
+    expect(setupLoadingDirective).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not throw error when app is valid', () => {
+    expect(() => setupGlobDirectives(app)).not.toThrow();
+  });
+
+  it('should call both directive setup functions in correct order', async () => {
+    const { setupPermissionDirective } = await import('/@/directives/permission');
+    const { setupLoadingDirective } = await import('/@/directives/loading');
+
+    setupGlobDirectives(app);
+
+    // Check that both functions are called
+    expect(setupPermissionDirective).toHaveBeenCalled();
+    expect(setupLoadingDirective).toHaveBeenCalled();
+  });
+});

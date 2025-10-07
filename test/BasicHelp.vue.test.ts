@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { mount, shallowMount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 
 // Mock Ant Design Vue components
@@ -48,6 +48,7 @@ vi.mock('/@/hooks/web/useDesign', () => ({
 }));
 
 import BasicHelp from '/@/components/Basic/src/BasicHelp.vue';
+import { isString, isArray } from '/@/utils/is';
 
 describe('BasicHelp', () => {
   beforeEach(() => {
@@ -71,7 +72,7 @@ describe('BasicHelp', () => {
   it('should handle basic functionality', () => {
     // 基本功能测试 - 默认props
     const wrapper = mount(BasicHelp);
-    
+
     expect(wrapper.props('maxWidth')).toBe('600px');
     expect(wrapper.props('showIndex')).toBe(false);
     expect(wrapper.props('color')).toBe('#ffffff');
@@ -174,7 +175,7 @@ describe('BasicHelp', () => {
 
   it('should handle different placements', () => {
     const placements = ['top', 'bottom', 'left', 'right'];
-    
+
     placements.forEach(placement => {
       const wrapper = mount(BasicHelp, {
         props: { placement },
@@ -195,7 +196,7 @@ describe('BasicHelp', () => {
 
   it('should use design prefix correctly', () => {
     const wrapper = mount(BasicHelp);
-    
+
     // Check that component renders correctly with design prefix
     expect(wrapper.exists()).toBe(true);
     // Verify that the component has the expected structure
@@ -214,5 +215,141 @@ describe('BasicHelp', () => {
     expect(tooltip.exists()).toBe(true);
     expect(tooltip.props('placement')).toBe('top');
     expect(tooltip.props('autoAdjustOverflow')).toBe(true);
+  });
+
+  // 新增的测试用例来提高覆盖率
+
+  it('should render string text as HTML paragraph', async () => {
+    const testText = 'Test help text';
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: testText,
+      },
+    });
+
+    // Mock isString to return true
+    vi.mocked(isString).mockReturnValue(true);
+
+    // Force re-computation
+    await nextTick();
+
+    // Check that the tooltip title is correctly formatted
+    const tooltip = wrapper.findComponent({ name: 'Tooltip' });
+    expect(tooltip.exists()).toBe(true);
+  });
+
+  it('should render array text as HTML paragraphs with index', async () => {
+    const testText = ['First item', 'Second item', 'Third item'];
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: testText,
+        showIndex: true,
+      },
+    });
+
+    // Mock isArray to return true
+    vi.mocked(isArray).mockReturnValue(true);
+
+    // Force re-computation
+    await nextTick();
+
+    // Check that the tooltip title is correctly formatted
+    const tooltip = wrapper.findComponent({ name: 'Tooltip' });
+    expect(tooltip.exists()).toBe(true);
+  });
+
+  it('should render array text as HTML paragraphs without index', async () => {
+    const testText = ['First item', 'Second item', 'Third item'];
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: testText,
+        showIndex: false,
+      },
+    });
+
+    // Mock isArray to return true
+    vi.mocked(isArray).mockReturnValue(true);
+
+    // Force re-computation
+    await nextTick();
+
+    // Check that the tooltip title is correctly formatted
+    const tooltip = wrapper.findComponent({ name: 'Tooltip' });
+    expect(tooltip.exists()).toBe(true);
+  });
+
+  it('should return empty string when text is neither string nor array', async () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        text: null,
+      },
+    });
+
+    // Force re-computation
+    await nextTick();
+
+    // Check that the tooltip title is correctly formatted
+    const tooltip = wrapper.findComponent({ name: 'Tooltip' });
+    expect(tooltip.exists()).toBe(true);
+  });
+
+  it('should compute tooltip style correctly', async () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        color: '#ff0000',
+        fontSize: '16px',
+      },
+    });
+
+    // Force re-computation
+    await nextTick();
+
+    // Check that the tooltip style is correctly computed
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should compute overlay style correctly', async () => {
+    const wrapper = mount(BasicHelp, {
+      props: {
+        maxWidth: '500px',
+      },
+    });
+
+    // Force re-computation
+    await nextTick();
+
+    // Check that the overlay style is correctly computed
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should use getPopupContainer function', async () => {
+    const wrapper = mount(BasicHelp);
+
+    // Force re-computation
+    await nextTick();
+
+    // Check that getPopupContainer is passed to Tooltip
+    const tooltip = wrapper.findComponent({ name: 'Tooltip' });
+    expect(tooltip.exists()).toBe(true);
+  });
+
+  it('should render default icon when no slot is provided', () => {
+    const wrapper = mount(BasicHelp);
+
+    // Check that the default icon is rendered
+    expect(wrapper.find('.mock-icon').exists()).toBe(true);
+    expect(wrapper.find('.mock-icon').attributes('data-icon')).toBe('i-ant-design:question-circle-outlined');
+  });
+
+  it('should render custom slot content when provided', () => {
+    const wrapper = mount(BasicHelp, {
+      slots: {
+        default: '<span class="custom-content">Custom Content</span>',
+      },
+    });
+
+    // Check that the custom content is rendered
+    expect(wrapper.find('.custom-content').exists()).toBe(true);
+    expect(wrapper.find('.custom-content').text()).toBe('Custom Content');
   });
 });

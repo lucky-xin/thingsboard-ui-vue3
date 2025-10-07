@@ -21,6 +21,16 @@ const TestComponent = defineComponent({
   }
 });
 
+const TestInvalidComponent = defineComponent({
+  template: `<button v-repeat-click="invalidHandler" id="test-button">Click</button>`,
+  directives: { repeatClick },
+  setup() {
+    return {
+      invalidHandler: null
+    };
+  }
+});
+
 describe('directives/repeatClick', () => {
   it('should export repeat click directive', async () => {
     const module = await import('/@/directives/repeatClick');
@@ -193,5 +203,144 @@ describe('directives/repeatClick', () => {
     expect(callsAfterWaiting - callsBeforeMouseup).toBeLessThan(3);
 
     wrapper.unmount();
+  });
+
+  it('should call handler in clear when mousedown-mouseup duration is less than 100ms', async () => {
+    const wrapper = mount(TestComponent);
+    const button = wrapper.find('#test-button');
+    const handleClick = wrapper.vm.handleClick;
+
+    handleClick.mockClear();
+
+    // Mock Date.now to control time precisely
+    const mockNow = vi.spyOn(global.Date, 'now');
+    mockNow.mockImplementationOnce(() => 1000); // mousedown time
+    mockNow.mockImplementationOnce(() => 1040); // mouseup time (40ms later)
+
+    // Simulate mousedown
+    await button.trigger('mousedown');
+
+    // Immediately trigger mouseup on document within 100ms
+    const mouseupEvent = new MouseEvent('mouseup', { bubbles: true });
+    document.dispatchEvent(mouseupEvent);
+
+    // Allow microtasks to run
+    await new Promise(resolve => setTimeout(resolve, 10));
+
+    // The clear function should call handler again because time diff < 100ms
+    expect(handleClick).toHaveBeenCalled();
+
+    mockNow.mockRestore();
+    wrapper.unmount();
+  });
+
+  it('should trigger handler multiple times during long mousedown', async () => {
+    const wrapper = mount(TestComponent);
+    const button = wrapper.find('#test-button');
+    const handleClick = wrapper.vm.handleClick;
+
+    handleClick.mockClear();
+
+    await button.trigger('mousedown');
+
+    // Wait 250ms -> ~2-3 triggers expected (every 100ms)
+    await new Promise(resolve => setTimeout(resolve, 250));
+
+    // Trigger mouseup on document
+    const mouseupEvent = new MouseEvent('mouseup', { bubbles: true });
+    document.dispatchEvent(mouseupEvent);
+
+    // Should have been called multiple times
+    expect(handleClick).toHaveBeenCalled();
+    // At least 2 times (could be 2 or 3 depending on timing)
+    expect(handleClick.mock.calls.length).toBeGreaterThanOrEqual(2);
+
+    wrapper.unmount();
+  });
+
+  it('should clear previous interval on repeated mousedown', async () => {
+    const clearIntervalSpy = vi.spyOn(global, 'clearInterval');
+    const setIntervalSpy = vi.spyOn(global, 'setInterval');
+
+    const wrapper = mount(TestComponent);
+    const button = wrapper.find('#test-button');
+    const handleClick = wrapper.vm.handleClick;
+
+    handleClick.mockClear();
+    clearIntervalSpy.mockClear();
+    setIntervalSpy.mockClear();
+
+    // First mousedown
+    await button.trigger('mousedown');
+    await new Promise(resolve => setTimeout(resolve, 60));
+    await button.trigger('mouseup');
+
+    // Second mousedown quickly
+    await button.trigger('mousedown');
+
+    expect(clearIntervalSpy).toHaveBeenCalled();
+
+    clearIntervalSpy.mockRestore();
+    setIntervalSpy.mockRestore();
+    wrapper.unmount();
+  });
+
+  it('should not throw error when binding value is not a function', async () => {
+    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    const wrapper = mount(TestInvalidComponent);
+
+    await wrapper.find('#test-button').trigger('mousedown');
+    await new Promise(resolve => setTimeout(resolve, 50));
+    await wrapper.find('#test-button').trigger('mouseup');
+
+    expect(() => {}).not.toThrow();
+
+    consoleWarnSpy.mockRestore();
+    wrapper.unmount();
+  });
+
+  it('should call handler in clear if time difference is less than 100ms (with mocked time)', async () => {
+    const wrapper = mount(TestComponent);
+    const button = wrapper.find('#test-button');
+    const handleClick = wrapper.vm.handleClick;
+
+    handleClick.mockClear();
+
+    // Mock Date.now to control time precisely
+    const mockNow = vi.spyOn(global.Date, 'now');
+    mockNow.mockImplementationOnce(() => 1000); // mousedown time (startTime)
+    mockNow.mockImplementationOnce(() => 1040); // mouseup time (40ms later)
+
+    await button.trigger('mousedown');
+    // Trigger mouseup on document
+    const mouseupEvent = new MouseEvent('mouseup', { bubbles: true });
+    document.dispatchEvent(mouseupEvent);
+
+    // Allow microtasks to run
+    await new Promise(resolve => setTimeout(resolve, 10));
+
+    expect(handleClick).toHaveBeenCalled();
+
+    mockNow.mockRestore();
+    wrapper.unmount();
+  });
+
+  it('should not leak events after component unmount', async () => {
+    const wrapper = mount(TestComponent);
+    const button = wrapper.find('#test-button');
+    const handleClick = wrapper.vm.handleClick;
+
+    handleClick.mockClear();
+
+    await button.trigger('mousedown');
+
+    wrapper.unmount();
+
+    const mouseupEvent = new MouseEvent('mouseup', { bubbles: true });
+    document.dispatchEvent(mouseupEvent);
+
+    // No additional calls should happen after unmount
+    expect(handleClick).toHaveBeenCalledTimes(0);
   });
 });

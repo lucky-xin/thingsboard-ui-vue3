@@ -4,7 +4,7 @@ import { mount } from '@vue/test-utils';
 // Mock useDesign
 vi.mock('/@/hooks/web/useDesign', () => ({
   useDesign: vi.fn(() => ({
-    prefixCls: 'basic-preview',
+    prefixCls: 'jeesite-image-preview',
   })),
 }));
 
@@ -22,9 +22,19 @@ vi.mock('/@/hooks/web/useI18n', () => ({
   })),
 }));
 
+// Mock utils
+vi.mock('/@/utils/is', () => ({
+  isString: vi.fn((val) => typeof val === 'string'),
+}));
+
 // Mock ant-design-vue components
-vi.mock('ant-design-vue', () => ({
-  Image: {
+vi.mock('ant-design-vue', () => {
+  const mockPreviewGroup = {
+    name: 'APreviewGroup',
+    template: '<div class="ant-preview-group"><slot /></div>',
+  };
+
+  const mockImage = {
     name: 'AImage',
     props: {
       src: String,
@@ -32,27 +42,29 @@ vi.mock('ant-design-vue', () => ({
       preview: Boolean,
     },
     template: '<div class="ant-image"><img /></div>',
-  },
-  Button: {
-    name: 'AButton',
-    props: {
-      type: String,
-      size: String,
+    PreviewGroup: mockPreviewGroup,
+  };
+
+  return {
+    Image: mockImage,
+    Button: {
+      name: 'AButton',
+      props: {
+        type: String,
+        size: String,
+      },
+      template: '<button class="ant-btn">Button</button>',
     },
-    template: '<button class="ant-btn">Button</button>',
-  },
-  Tooltip: {
-    name: 'ATooltip',
-    props: {
-      title: String,
+    Tooltip: {
+      name: 'ATooltip',
+      props: {
+        title: String,
+      },
+      template: '<div class="ant-tooltip"><slot /></div>',
     },
-    template: '<div class="ant-tooltip"><slot /></div>',
-  },
-  PreviewGroup: {
-    name: 'APreviewGroup',
-    template: '<div class="ant-preview-group"><slot /></div>',
-  },
-}));
+    PreviewGroup: mockPreviewGroup,
+  };
+});
 
 import Preview from '/@/components/Preview/src/Preview';
 
@@ -84,6 +96,106 @@ describe('Preview', () => {
   it('should handle user interactions', () => {
     const wrapper = mount(Preview);
     // Add interaction testing
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should render with functional prop', () => {
+    const wrapper = mount(Preview, {
+      props: {
+        functional: true
+      }
+    });
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should render with imageList prop as strings', () => {
+    const wrapper = mount(Preview, {
+      props: {
+        imageList: [
+          'image1.jpg',
+          'image2.jpg'
+        ]
+      }
+    });
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should render with imageList prop as objects', () => {
+    const wrapper = mount(Preview, {
+      props: {
+        imageList: [
+          { src: 'image1.jpg', alt: 'Image 1' },
+          { src: 'image2.jpg', alt: 'Image 2', width: 200 }
+        ]
+      }
+    });
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should render with empty imageList', () => {
+    const wrapper = mount(Preview, {
+      props: {
+        imageList: []
+      }
+    });
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should handle null imageList', () => {
+    const wrapper = mount(Preview, {
+      props: {
+        imageList: null
+      }
+    });
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should render with undefined imageList', () => {
+    const wrapper = mount(Preview, {
+      props: {
+        imageList: undefined
+      }
+    });
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should render slot content', () => {
+    const wrapper = mount(Preview, {
+      slots: {
+        default: '<div class="test-content">Test content</div>'
+      }
+    });
+    expect(wrapper.find('.test-content').exists()).toBe(true);
+    expect(wrapper.text()).toContain('Test content');
+  });
+
+  it('should handle string items in getImageList', () => {
+    const wrapper = mount(Preview, {
+      props: {
+        imageList: ['image1.jpg']
+      }
+    });
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should handle object items in getImageList', () => {
+    const wrapper = mount(Preview, {
+      props: {
+        imageList: [{ src: 'image1.jpg' }]
+      }
+    });
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should handle mixed string and object items in getImageList', () => {
+    const wrapper = mount(Preview, {
+      props: {
+        imageList: [
+          'image1.jpg',
+          { src: 'image2.jpg', alt: 'Image 2' }
+        ]
+      }
+    });
     expect(wrapper.exists()).toBe(true);
   });
 });

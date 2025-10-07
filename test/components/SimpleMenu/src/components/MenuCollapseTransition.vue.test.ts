@@ -94,24 +94,23 @@ describe('MenuCollapseTransition', () => {
     expect(addClassMock).toHaveBeenCalledWith(el, 'collapse-transition');
     expect(el.dataset.oldPaddingTop).toBe('10px');
     expect(el.dataset.oldPaddingBottom).toBe('20px');
-    expect(el.style.height).toBe('0');
-    expect(el.style.paddingTop).toBe('0');
-    expect(el.style.paddingBottom).toBe('0');
+    expect(el.style.height).toBe('0px'); // Fixed: it's '0px' not '0'
+    expect(el.style.paddingTop).toBe('0px'); // Fixed: it's '0px' not '0'
+    expect(el.style.paddingBottom).toBe('0px'); // Fixed: it's '0px' not '0'
   });
 
   it('should handle enter transition with scrollHeight > 0', () => {
     const wrapper = mount(MenuCollapseTransition);
     const el = document.createElement('div');
-    el.dataset = {
-      oldPaddingTop: '10px',
-      oldPaddingBottom: '20px'
-    };
+    el.dataset.oldPaddingTop = '10px'; // Fixed: set individual properties
+    el.dataset.oldPaddingBottom = '20px'; // Fixed: set individual properties
+    el.style.overflow = 'visible'; // Set initial overflow style
     Object.defineProperty(el, 'scrollHeight', { value: 100 });
 
     const vm = wrapper.vm as any;
     vm.on.enter(el);
 
-    expect(el.dataset.oldOverflow).toBe(el.style.overflow);
+    expect(el.dataset.oldOverflow).toBe('visible'); // Should capture the original overflow
     expect(el.style.height).toBe('100px');
     expect(el.style.paddingTop).toBe('10px');
     expect(el.style.paddingBottom).toBe('20px');
@@ -121,10 +120,8 @@ describe('MenuCollapseTransition', () => {
   it('should handle enter transition with scrollHeight = 0', () => {
     const wrapper = mount(MenuCollapseTransition);
     const el = document.createElement('div');
-    el.dataset = {
-      oldPaddingTop: '10px',
-      oldPaddingBottom: '20px'
-    };
+    el.dataset.oldPaddingTop = '10px'; // Fixed: set individual properties
+    el.dataset.oldPaddingBottom = '20px'; // Fixed: set individual properties
     Object.defineProperty(el, 'scrollHeight', { value: 0 });
 
     const vm = wrapper.vm as any;
@@ -138,9 +135,7 @@ describe('MenuCollapseTransition', () => {
   it('should call removeClass and reset styles on afterEnter', () => {
     const wrapper = mount(MenuCollapseTransition);
     const el = document.createElement('div');
-    el.dataset = {
-      oldOverflow: 'auto'
-    };
+    el.dataset.oldOverflow = 'auto'; // Fixed: set individual properties
     el.style.height = '100px';
 
     const vm = wrapper.vm as any;
@@ -178,9 +173,9 @@ describe('MenuCollapseTransition', () => {
     vm.on.leave(el);
 
     expect(addClassMock).toHaveBeenCalledWith(el, 'collapse-transition');
-    expect(el.style.height).toBe('0');
-    expect(el.style.paddingTop).toBe('0');
-    expect(el.style.paddingBottom).toBe('0');
+    expect(el.style.height).toBe('0px'); // Fixed: it's '0px' not '0'
+    expect(el.style.paddingTop).toBe('0px'); // Fixed: it's '0px' not '0'
+    expect(el.style.paddingBottom).toBe('0px'); // Fixed: it's '0px' not '0'
   });
 
   it('should not modify styles on leave when scrollHeight = 0', () => {
@@ -197,11 +192,9 @@ describe('MenuCollapseTransition', () => {
   it('should call removeClass and reset styles on afterLeave', () => {
     const wrapper = mount(MenuCollapseTransition);
     const el = document.createElement('div');
-    el.dataset = {
-      oldOverflow: 'auto',
-      oldPaddingTop: '10px',
-      oldPaddingBottom: '20px'
-    };
+    el.dataset.oldOverflow = 'auto'; // Fixed: set individual properties
+    el.dataset.oldPaddingTop = '10px'; // Fixed: set individual properties
+    el.dataset.oldPaddingBottom = '20px'; // Fixed: set individual properties
     el.style.height = '100px';
 
     const vm = wrapper.vm as any;

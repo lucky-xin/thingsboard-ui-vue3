@@ -46,9 +46,12 @@ describe('AppLocalePicker coverage', () => {
     vi.clearAllMocks();
   });
 
-  it('should render with default props', () => {
+  it('should render with default props', async () => {
     const wrapper = mount(AppLocalePicker);
-    
+
+    // Wait for component to be mounted and rendered
+    await nextTick();
+
     expect(wrapper.find('[data-testid="icon"]').exists()).toBe(true);
     expect(wrapper.text()).toContain('简体中文');
   });
@@ -57,40 +60,40 @@ describe('AppLocalePicker coverage', () => {
     const wrapper = mount(AppLocalePicker, {
       props: { showText: false }
     });
-    
+
     expect(wrapper.find('[data-testid="icon"]').exists()).toBe(true);
     expect(wrapper.text()).not.toContain('简体中文');
   });
 
   it('should handle menu event correctly', async () => {
     const mockChangeLocale = vi.fn().mockResolvedValue(undefined);
-    const useLocale = await vi.importActual('/@/locales/useLocale');
-    vi.mocked(useLocale.useLocale).mockImplementation(() => ({
+    const useLocaleModule = await import('/@/locales/useLocale');
+    useLocaleModule.useLocale.mockImplementation(() => ({
       changeLocale: mockChangeLocale,
       getLocale: vi.fn().mockReturnValue('zh_CN')
     }));
 
     const wrapper = mount(AppLocalePicker);
-    
+
     // Simulate menu event
     await wrapper.vm.handleMenuEvent({ event: 'en_US' });
-    
+
     expect(mockChangeLocale).toHaveBeenCalledWith('en_US');
   });
 
   it('should not change locale if same language is selected', async () => {
     const mockChangeLocale = vi.fn().mockResolvedValue(undefined);
-    const useLocale = await vi.importActual('/@/locales/useLocale');
-    vi.mocked(useLocale.useLocale).mockImplementation(() => ({
+    const useLocaleModule = await import('/@/locales/useLocale');
+    useLocaleModule.useLocale.mockImplementation(() => ({
       changeLocale: mockChangeLocale,
       getLocale: vi.fn().mockReturnValue('zh_CN')
     }));
 
     const wrapper = mount(AppLocalePicker);
-    
+
     // Simulate menu event with same language
     await wrapper.vm.handleMenuEvent({ event: 'zh_CN' });
-    
+
     expect(mockChangeLocale).not.toHaveBeenCalled();
   });
 
@@ -102,8 +105,8 @@ describe('AppLocalePicker coverage', () => {
     });
 
     const mockChangeLocale = vi.fn().mockResolvedValue(undefined);
-    const useLocale = await import('/@/locales/useLocale');
-    vi.mocked(useLocale.useLocale).mockReturnValue({
+    const useLocaleModule = await import('/@/locales/useLocale');
+    useLocaleModule.useLocale.mockReturnValue({
       changeLocale: mockChangeLocale,
       getLocale: vi.fn().mockReturnValue('zh_CN')
     });
@@ -111,9 +114,9 @@ describe('AppLocalePicker coverage', () => {
     const wrapper = mount(AppLocalePicker, {
       props: { reload: true }
     });
-    
+
     await wrapper.vm.toggleLocale('en_US');
-    
+
     expect(mockChangeLocale).toHaveBeenCalledWith('en_US');
     expect(mockReload).toHaveBeenCalled();
   });
@@ -126,8 +129,8 @@ describe('AppLocalePicker coverage', () => {
     });
 
     const mockChangeLocale = vi.fn().mockResolvedValue(undefined);
-    const useLocale = await import('/@/locales/useLocale');
-    vi.mocked(useLocale.useLocale).mockReturnValue({
+    const useLocaleModule = await import('/@/locales/useLocale');
+    useLocaleModule.useLocale.mockReturnValue({
       changeLocale: mockChangeLocale,
       getLocale: vi.fn().mockReturnValue('zh_CN')
     });
@@ -135,41 +138,44 @@ describe('AppLocalePicker coverage', () => {
     const wrapper = mount(AppLocalePicker, {
       props: { reload: false }
     });
-    
+
     await wrapper.vm.toggleLocale('en_US');
-    
+
     expect(mockChangeLocale).toHaveBeenCalledWith('en_US');
     expect(mockReload).not.toHaveBeenCalled();
   });
 
   it('should handle empty locale text', async () => {
-    const useLocale = await import('/@/locales/useLocale');
-    vi.mocked(useLocale.useLocale).mockReturnValue({
+    const useLocaleModule = await import('/@/locales/useLocale');
+    useLocaleModule.useLocale.mockReturnValue({
       changeLocale: vi.fn(),
       getLocale: vi.fn().mockReturnValue('unknown')
     });
 
     const wrapper = mount(AppLocalePicker);
-    
+
     expect(wrapper.text()).toContain('');
   });
 
   it('should update selectedKeys when locale changes', async () => {
     const mockGetLocale = vi.fn().mockReturnValue('zh_CN');
-    const useLocale = await import('/@/locales/useLocale');
-    vi.mocked(useLocale.useLocale).mockReturnValue({
+    const useLocaleModule = await import('/@/locales/useLocale');
+    useLocaleModule.useLocale.mockReturnValue({
       changeLocale: vi.fn(),
       getLocale: mockGetLocale
     });
 
     const wrapper = mount(AppLocalePicker);
-    
+
+    // Wait for component to be mounted and computed properties to be updated
+    await nextTick();
+
     expect(wrapper.vm.selectedKeys).toEqual(['zh_CN']);
-    
+
     // Change locale
     mockGetLocale.mockReturnValue('en_US');
     await nextTick();
-    
+
     expect(wrapper.vm.selectedKeys).toEqual(['en_US']);
   });
 });

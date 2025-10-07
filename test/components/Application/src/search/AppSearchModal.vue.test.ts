@@ -52,40 +52,49 @@ vi.mock('/@/hooks/setting/useLocale', () => ({
 }))
 
 // Mock Ant Design Vue components
-vi.mock('ant-design-vue', () => ({
-  Modal: {
-    template: '<div class="ant-modal"><slot></slot></div>',
-    props: ['visible', 'title', 'open'],
-  },
-  Form: {
-    template: '<form class="ant-form"><slot></slot></form>',
-    props: ['model', 'rules'],
-  },
-  FormItem: {
-    template: '<div class="ant-form-item"><slot></slot></div>',
-    props: ['label', 'name'],
-  },
-  Input: {
-    template: '<input class="ant-input" />',
-    props: ['value', 'placeholder'],
-  },
-  Button: {
-    template: '<button class="ant-btn"><slot></slot></button>',
-    props: ['type', 'loading'],
-  },
-  Select: {
-    template: '<div class="ant-select"><slot></slot></div>',
-    props: ['value', 'options', 'mode'],
-  },
-  Option: {
-    template: '<option class="ant-select-option"><slot></slot></option>',
-    props: ['value', 'label'],
-  },
-  Tooltip: {
-    template: '<div class="ant-tooltip"><slot></slot></div>',
-    props: ['title', 'placement'],
-  },
-}))
+vi.mock('ant-design-vue', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    Modal: {
+      template: '<div class="ant-modal"><slot></slot></div>',
+      props: ['visible', 'title', 'open'],
+    },
+    Form: {
+      template: '<form class="ant-form"><slot></slot></form>',
+      props: ['model', 'rules'],
+    },
+    FormItem: {
+      template: '<div class="ant-form-item"><slot></slot></div>',
+      props: ['label', 'name'],
+    },
+    Input: {
+      template: '<input class="ant-input" />',
+      props: ['value', 'placeholder'],
+    },
+    Button: {
+      template: '<button class="ant-btn"><slot></slot></button>',
+      props: ['type', 'loading'],
+    },
+    Select: {
+      template: '<div class="ant-select"><slot></slot></div>',
+      props: ['value', 'options', 'mode'],
+    },
+    Option: {
+      template: '<option class="ant-select-option"><slot></slot></option>',
+      props: ['value', 'label'],
+    },
+    Tooltip: {
+      template: '<div class="ant-tooltip"><slot></slot></div>',
+      props: ['title', 'placement'],
+    },
+    theme: {
+      useToken: vi.fn(() => ({
+        token: {}
+      }))
+    }
+  };
+});
 
 describe('AppSearchModal', () => {
   beforeEach(() => {

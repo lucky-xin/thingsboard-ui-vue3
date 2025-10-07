@@ -18,7 +18,7 @@ describe('components/Authentication/index', () => {
 
   it('should export AuthenticationForgetPassword component', () => {
     expect(AuthenticationForgetPassword).toBeDefined();
-    expect(AuthenticationForgetPassword.name).toBe('ForgetPassword');
+    expect(AuthenticationForgetPassword.name).toBe('AuthenticationForgetPassword');
   });
 
   it('should export AuthenticationLogin component', () => {
@@ -33,7 +33,7 @@ describe('components/Authentication/index', () => {
 
   it('should export AuthenticationRegister component', () => {
     expect(AuthenticationRegister).toBeDefined();
-    expect(AuthenticationRegister.name).toBe('RegisterForm');
+    expect(AuthenticationRegister.name).toBe('AuthenticationRegister');
   });
 
   it('should export AuthenticationProps type', () => {

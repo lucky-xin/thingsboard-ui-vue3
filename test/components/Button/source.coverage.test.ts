@@ -38,8 +38,13 @@ vi.mock('/@/utils/helper/tsxHelper', () => ({
 
 vi.mock('lodash-es', () => ({
   omit: vi.fn((obj, keys) => {
+    if (!obj) return {};
     const result = { ...obj };
-    keys.forEach(key => delete result[key]);
+    if (Array.isArray(keys)) {
+      keys.forEach(key => delete result[key]);
+    } else if (keys) {
+      delete result[keys];
+    }
     return result;
   }),
 }));

@@ -3,14 +3,18 @@ import { mount } from '@vue/test-utils';
 import { ref } from 'vue';
 
 // Mock Ant Design Vue components
-vi.mock('ant-design-vue', () => ({
-  Input: {
-    name: 'AInput',
-    props: ['placeholder', 'allowClear'],
-    template: '<input class="ant-input jeesite-app-search-modal-input" />',
-    emits: ['change'],
-  },
-}));
+vi.mock('ant-design-vue', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    Input: {
+      name: 'AInput',
+      props: ['placeholder', 'allowClear'],
+      template: '<input class="ant-input jeesite-app-search-modal-input" />',
+      emits: ['change'],
+    },
+  };
+});
 
 // Mock dependencies
 vi.mock('/@/components/Icon', () => ({

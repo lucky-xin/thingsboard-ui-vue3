@@ -56,12 +56,36 @@ vi.mock('ant-design-vue', () => ({
 
 describe('CopperModal', () => {
   it('should render without crashing', () => {
-    const wrapper = mount(CopperModal);
+    const wrapper = mount(CopperModal, {
+      global: {
+        mocks: {
+          register: vi.fn(),
+          t: vi.fn((key) => key),
+          handleOk: vi.fn(),
+          prefixCls: 'jeesite-cropper-am',
+          src: '',
+          previewSource: '',
+          handleBeforeUpload: vi.fn(),
+        },
+      },
+    });
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should render with default props', () => {
-    const wrapper = mount(CopperModal);
+    const wrapper = mount(CopperModal, {
+      global: {
+        mocks: {
+          register: vi.fn(),
+          t: vi.fn((key) => key),
+          handleOk: vi.fn(),
+          prefixCls: 'jeesite-cropper-am',
+          src: '',
+          previewSource: '',
+          handleBeforeUpload: vi.fn(),
+        },
+      },
+    });
     expect(wrapper.exists()).toBe(true);
   });
 
@@ -69,18 +93,53 @@ describe('CopperModal', () => {
     const props = {};
     const wrapper = mount(CopperModal, {
       props,
+      global: {
+        mocks: {
+          register: vi.fn(),
+          t: vi.fn((key) => key),
+          handleOk: vi.fn(),
+          prefixCls: 'jeesite-cropper-am',
+          src: '',
+          previewSource: '',
+          handleBeforeUpload: vi.fn(),
+        },
+      },
     });
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should emit events when expected', () => {
-    const wrapper = mount(CopperModal);
+    const wrapper = mount(CopperModal, {
+      global: {
+        mocks: {
+          register: vi.fn(),
+          t: vi.fn((key) => key),
+          handleOk: vi.fn(),
+          prefixCls: 'jeesite-cropper-am',
+          src: '',
+          previewSource: '',
+          handleBeforeUpload: vi.fn(),
+        },
+      },
+    });
     // Add event testing based on component functionality
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should handle user interactions', () => {
-    const wrapper = mount(CopperModal);
+    const wrapper = mount(CopperModal, {
+      global: {
+        mocks: {
+          register: vi.fn(),
+          t: vi.fn((key) => key),
+          handleOk: vi.fn(),
+          prefixCls: 'jeesite-cropper-am',
+          src: '',
+          previewSource: '',
+          handleBeforeUpload: vi.fn(),
+        },
+      },
+    });
     // Add interaction testing
     expect(wrapper.exists()).toBe(true);
   });

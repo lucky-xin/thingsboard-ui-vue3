@@ -7,7 +7,12 @@ import BasicArrow from '/@/components/Basic/src/BasicArrow';
 // Mock router
 const router = createRouter({
   history: createWebHistory(),
-  routes: [],
+  routes: [
+    {
+      path: '/',
+      component: { template: '<div>Home</div>' }
+    }
+  ],
 });
 
 // Mock pinia
@@ -21,28 +26,32 @@ const globalMocks = {
 };
 
 // Mock Ant Design components
-vi.mock('ant-design-vue', () => ({
-  Button: {
-    name: 'Button',
-    props: ['type', 'onClick'],
-    template: '<button @click="$emit(\'click\')"><slot /></button>',
-  },
-  Input: {
-    name: 'Input',
-    props: ['value', 'placeholder'],
-    template: '<input :value="value" :placeholder="placeholder" />',
-  },
-  Tooltip: {
-    name: 'Tooltip',
-    props: ['placement'],
-    template: '<div><slot /></div>',
-  },
-  Modal: {
-    name: 'Modal',
-    props: ['open', 'onClose'],
-    template: '<div v-if="open"><slot /></div>',
-  },
-}));
+vi.mock('ant-design-vue', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    Button: {
+      name: 'Button',
+      props: ['type', 'onClick'],
+      template: '<button @click="$emit(\'click\')"><slot /></button>',
+    },
+    Input: {
+      name: 'Input',
+      props: ['value', 'placeholder'],
+      template: '<input :value="value" :placeholder="placeholder" />',
+    },
+    Tooltip: {
+      name: 'Tooltip',
+      props: ['placement'],
+      template: '<div><slot /></div>',
+    },
+    Modal: {
+      name: 'Modal',
+      props: ['open', 'onClose'],
+      template: '<div v-if="open"><slot /></div>',
+    },
+  };
+});
 
 describe('BasicArrow', () => {
   it('should render without crashing', () => {

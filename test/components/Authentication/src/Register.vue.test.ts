@@ -48,73 +48,6 @@ vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
   },
 }));
 
-// Mock Ant Design Vue components with proper install functions
-const mockButton = {
-  name: 'Button',
-  props: ['type', 'onClick', 'loading', 'size'],
-  template: '<button @click="$emit(\'click\')"><slot /></button>',
-  install: vi.fn((app) => {
-    app.component('Button', mockButton);
-  }),
-};
-
-const mockInput = {
-  name: 'Input',
-  props: ['value', 'placeholder'],
-  template: '<input :value="value" :placeholder="placeholder" />',
-  install: vi.fn((app) => {
-    app.component('Input', mockInput);
-  }),
-};
-
-const mockInputNumber = {
-  name: 'InputNumber',
-  props: ['value', 'placeholder'],
-  template: '<input type="number" :value="value" :placeholder="placeholder" />',
-  install: vi.fn((app) => {
-    app.component('InputNumber', mockInputNumber);
-  }),
-};
-
-const mockCheckbox = {
-  name: 'Checkbox',
-  props: ['checked', 'onChange'],
-  template: '<input type="checkbox" :checked="checked" @change="$emit(\'change\')" />',
-  install: vi.fn((app) => {
-    app.component('Checkbox', mockCheckbox);
-  }),
-};
-
-const mockTooltip = {
-  name: 'Tooltip',
-  props: ['placement'],
-  template: '<div><slot /></div>',
-  install: vi.fn((app) => {
-    app.component('Tooltip', mockTooltip);
-  }),
-};
-
-const mockModal = {
-  name: 'Modal',
-  props: ['open', 'onClose'],
-  template: '<div v-if="open"><slot /></div>',
-  install: vi.fn((app) => {
-    app.component('Modal', mockModal);
-  }),
-};
-
-vi.mock('ant-design-vue', async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...actual,
-    Button: mockButton,
-    Input: mockInput,
-    InputNumber: mockInputNumber,
-    Checkbox: mockCheckbox,
-    Tooltip: mockTooltip,
-    Modal: mockModal,
-  };
-});
 
 // Mock vue-router
 vi.mock('vue-router', async (importOriginal) => {
@@ -150,7 +83,6 @@ describe('Register', () => {
         formSchema: [],
       },
       global: {
-        plugins: [router, pinia],
         mocks: globalMocks,
       },
     });
@@ -163,7 +95,6 @@ describe('Register', () => {
         formSchema: [],
       },
       global: {
-        plugins: [router, pinia],
         mocks: globalMocks,
       },
     });
@@ -190,8 +121,14 @@ describe('Register', () => {
         submitButtonText: '<span>Custom Submit</span>',
       },
       global: {
-        plugins: [router, pinia],
         mocks: globalMocks,
+        components: {
+          Button: {
+            name: 'AButton',
+            props: ['type', 'onClick', 'loading', 'size'],
+            template: '<button @click="$emit(\'click\')"><slot /></button>',
+          },
+        },
       },
     });
     expect(wrapper.find('span').text()).toBe('Custom Title');
@@ -203,7 +140,6 @@ describe('Register', () => {
         formSchema: [],
       },
       global: {
-        plugins: [router, pinia],
         mocks: globalMocks,
       },
     });
@@ -230,7 +166,6 @@ describe('Register', () => {
         formSchema: [],
       },
       global: {
-        plugins: [router, pinia],
         mocks: globalMocks,
       },
     });
@@ -252,7 +187,6 @@ describe('Register', () => {
         formSchema: [],
       },
       global: {
-        plugins: [router, pinia],
         mocks: globalMocks,
       },
     });
@@ -267,7 +201,6 @@ describe('Register', () => {
         formSchema: [],
       },
       global: {
-        plugins: [router, pinia],
         mocks: globalMocks,
       },
     });
@@ -296,7 +229,6 @@ describe('Register', () => {
         formSchema: [],
       },
       global: {
-        plugins: [router, pinia],
         mocks: globalMocks,
       },
     });
@@ -323,7 +255,6 @@ describe('Register', () => {
         formSchema: [],
       },
       global: {
-        plugins: [router, pinia],
         mocks: globalMocks,
       },
     });
@@ -350,7 +281,6 @@ describe('Register', () => {
         formSchema: [],
       },
       global: {
-        plugins: [router, pinia],
         mocks: globalMocks,
       },
     });
@@ -386,7 +316,6 @@ describe('Register', () => {
         formSchema: [],
       },
       global: {
-        plugins: [router, pinia],
         mocks: globalMocks,
       },
     });
@@ -419,7 +348,6 @@ describe('Register', () => {
         loginPath: '/custom/login',
       },
       global: {
-        plugins: [router, pinia],
         mocks: globalMocks,
       },
     });

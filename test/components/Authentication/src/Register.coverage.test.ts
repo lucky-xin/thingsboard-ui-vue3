@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createRouter, createMemoryHistory } from 'vue-router';
-import { createPinia } from 'pinia';
+import { createPinia, setActivePinia } from 'pinia';
 
 // Mock dependencies
 vi.mock('/@/hooks/web/useI18n', () => ({
@@ -76,6 +76,7 @@ const router = createRouter({
 
 // Create pinia instance
 const pinia = createPinia();
+setActivePinia(pinia);
 
 describe('Register coverage', () => {
   it('should render the component', () => {

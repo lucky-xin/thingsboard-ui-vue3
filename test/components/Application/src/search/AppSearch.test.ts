@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { createPinia } from 'pinia';
+import { createPinia, setActivePinia } from 'pinia';
 import { createRouter, createWebHistory } from 'vue-router';
 
 // Mock hooks with proper exports
@@ -30,26 +30,32 @@ const AppSearchTestComponent = {
         <span class="search-icon">🔍</span>
         <span class="search-placeholder">Search...</span>
       </div>
-      <div 
-        v-if="showModal()" 
-        class="search-modal-overlay" 
+      <div
+        v-if="showModal()"
+        class="search-modal-overlay"
         @click="toggleModal"
       >
         <div class="search-modal-content">
-          <input 
-            class="search-input" 
-            :value="searchTerm()" 
+          <input
+            class="search-input"
+            :value="searchTerm()"
             placeholder="Type to search..."
           />
           <div class="search-results">Results</div>
         </div>
       </div>
     </div>
-  `
+  `,
+  install: vi.fn((app: any) => {
+    if (app?.component) {
+      app.component('AppSearchTest', AppSearchTestComponent);
+    }
+  })
 };
 
 // Setup test environment
 const pinia = createPinia();
+setActivePinia(pinia);
 const router = createRouter({
   history: createWebHistory(),
   routes: [{ path: '/', component: { template: '<div>Home</div>' } }]

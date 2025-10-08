@@ -26,13 +26,15 @@ describe('CollapseTransition Component', () => {
       }
     });
 
-    expect(wrapper.vm.$data.on).toBeDefined();
-    expect(wrapper.vm.$data.on.beforeEnter).toBeDefined();
-    expect(wrapper.vm.$data.on.enter).toBeDefined();
-    expect(wrapper.vm.$data.on.afterEnter).toBeDefined();
-    expect(wrapper.vm.$data.on.beforeLeave).toBeDefined();
-    expect(wrapper.vm.$data.on.leave).toBeDefined();
-    expect(wrapper.vm.$data.on.afterLeave).toBeDefined();
+    // Access the setup return value correctly
+    const componentInstance = wrapper.vm as any;
+    expect(componentInstance.on).toBeDefined();
+    expect(componentInstance.on.beforeEnter).toBeDefined();
+    expect(componentInstance.on.enter).toBeDefined();
+    expect(componentInstance.on.afterEnter).toBeDefined();
+    expect(componentInstance.on.beforeLeave).toBeDefined();
+    expect(componentInstance.on.leave).toBeDefined();
+    expect(componentInstance.on.afterLeave).toBeDefined();
   });
 
   it('should call beforeEnter hook', () => {
@@ -50,8 +52,9 @@ describe('CollapseTransition Component', () => {
     (addClass as any).mockClear();
 
     // Call beforeEnter directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.beforeEnter) {
-      wrapper.vm.$data.on.beforeEnter(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.beforeEnter) {
+      componentInstance.on.beforeEnter(el);
     }
 
     // Check that addClass was called
@@ -69,8 +72,9 @@ describe('CollapseTransition Component', () => {
     Object.defineProperty(el, 'scrollHeight', { value: 100 });
 
     // Call enter directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.enter) {
-      wrapper.vm.$data.on.enter(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.enter) {
+      componentInstance.on.enter(el);
     }
 
     // Check that the hook was called (no specific assertions about behavior)
@@ -90,8 +94,9 @@ describe('CollapseTransition Component', () => {
     (removeClass as any).mockClear();
 
     // Call afterEnter directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.afterEnter) {
-      wrapper.vm.$data.on.afterEnter(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.afterEnter) {
+      componentInstance.on.afterEnter(el);
     }
 
     // Check that removeClass was called
@@ -109,8 +114,9 @@ describe('CollapseTransition Component', () => {
     Object.defineProperty(el, 'scrollHeight', { value: 100 });
 
     // Call beforeLeave directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.beforeLeave) {
-      wrapper.vm.$data.on.beforeLeave(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.beforeLeave) {
+      componentInstance.on.beforeLeave(el);
     }
 
     // Check that the hook was called (no specific assertions about behavior)
@@ -131,8 +137,9 @@ describe('CollapseTransition Component', () => {
     (addClass as any).mockClear();
 
     // Call leave directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.leave) {
-      wrapper.vm.$data.on.leave(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.leave) {
+      componentInstance.on.leave(el);
     }
 
     // Check that addClass was called
@@ -152,8 +159,9 @@ describe('CollapseTransition Component', () => {
     (removeClass as any).mockClear();
 
     // Call afterLeave directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.afterLeave) {
-      wrapper.vm.$data.on.afterLeave(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.afterLeave) {
+      componentInstance.on.afterLeave(el);
     }
 
     // Check that removeClass was called

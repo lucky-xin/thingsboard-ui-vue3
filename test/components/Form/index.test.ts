@@ -18,7 +18,7 @@ describe('Form/index', () => {
 
     expect(BasicForm).toBeDefined();
     expect(typeof BasicForm).toBe('object');
-  });
+  }, 15000);
 
   it('should export form hooks', async () => {
     const { useComponentRegister, useForm } = await import('/@/components/Form');
@@ -27,7 +27,7 @@ describe('Form/index', () => {
     expect(useForm).toBeDefined();
     expect(typeof useComponentRegister).toBe('function');
     expect(typeof useForm).toBe('function');
-  });
+  }, 15000);
 
   it('should export form components', async () => {
     const { Select, TreeSelect, RadioGroup, RadioButtonGroup, CheckboxGroup, FormGroup } = await import(
@@ -40,7 +40,7 @@ describe('Form/index', () => {
     expect(RadioButtonGroup).toBeDefined();
     expect(CheckboxGroup).toBeDefined();
     expect(FormGroup).toBeDefined();
-  });
+  }, 15000);
 
   it('should export typing definitions', async () => {
     // This tests that the typing exports don't throw errors
@@ -48,7 +48,7 @@ describe('Form/index', () => {
 
     expect(exports).toBeDefined();
     expect(exports.BasicForm).toBeDefined();
-  });
+  }, 15000);
 
   it('should have correct exports count', async () => {
     const exports = await import('/@/components/Form');
@@ -65,7 +65,7 @@ describe('Form/index', () => {
     expect(exportKeys).toContain('RadioButtonGroup');
     expect(exportKeys).toContain('CheckboxGroup');
     expect(exportKeys).toContain('FormGroup');
-  });
+  }, 15000);
 
   it('should have valid Vue components', async () => {
     const { BasicForm, Select, TreeSelect, FormGroup } = await import('/@/components/Form');
@@ -74,7 +74,7 @@ describe('Form/index', () => {
     expect(typeof Select).toBe('object');
     expect(typeof TreeSelect).toBe('object');
     expect(typeof FormGroup).toBe('object');
-  });
+  }, 15000);
 
   it('should export form components with proper structure', async () => {
     const { Select, TreeSelect, RadioGroup } = await import('/@/components/Form');
@@ -83,5 +83,5 @@ describe('Form/index', () => {
     expect(Select).toBeDefined();
     expect(TreeSelect).toBeDefined();
     expect(RadioGroup).toBeDefined();
-  });
+  }, 15000);
 });

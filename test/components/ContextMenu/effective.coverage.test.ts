@@ -16,14 +16,14 @@ vi.mock('/@/components/Icon', () => ({
 vi.mock('ant-design-vue', () => ({
   Menu: {
     template: '<div class="mock-menu"><slot /></div>',
-    props: ['mode', 'inlineIndent'],
+    props: ['mode', 'inlineIndent', 'class', 'style'],
     Item: {
       template: '<div class="mock-menu-item"><slot /></div>',
-      props: ['disabled'],
+      props: ['disabled', 'class', 'key'],
     },
     SubMenu: {
       template: '<div class="mock-sub-menu"><slot name="title" /><slot /></div>',
-      props: ['disabled', 'popupClassName'],
+      props: ['disabled', 'popupClassName', 'key'],
     },
   },
   Divider: {
@@ -48,6 +48,11 @@ Object.defineProperty(document, 'body', {
   },
   writable: true,
 });
+
+// Mock isClient utility
+vi.mock('/@/utils/is', () => ({
+  isClient: true,
+}));
 
 describe('ContextMenu effective coverage', () => {
   beforeEach(() => {

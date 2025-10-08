@@ -37,9 +37,45 @@ vi.mock("ant-design-vue", async (importOriginal) => {
     Skeleton: {
       template: "<div class=\"ant-skeleton\">Skeleton</div>",
       props: ["active", "loading"]
+    },
+    Row: {
+      template: "<div class=\"ant-row\"><slot></slot></div>",
+      props: []
+    },
+    Col: {
+      template: "<div class=\"ant-col\"><slot></slot></div>",
+      props: []
     }
   };
 });
+
+// Mock BasicModal and BasicForm components
+vi.mock('/@/components/Modal/src/BasicModal.vue', () => ({
+  default: {
+    name: 'BasicModal',
+    template: '<div class="basic-modal"><slot></slot></div>',
+    props: ['title', 'visible', 'width'],
+    emits: ['ok', 'register']
+  }
+}));
+
+vi.mock('/@/components/Form/src/BasicForm.vue', () => ({
+  default: {
+    name: 'BasicForm',
+    template: '<div class="basic-form"><slot></slot></div>',
+    props: ['labelWidth', 'schemas', 'showActionButtonGroup'],
+    emits: ['register']
+  }
+}));
+
+// Mock FormItem component
+vi.mock('/@/components/Form/src/components/FormItem.vue', () => ({
+  default: {
+    name: 'JeeSiteFormItem',
+    template: '<div class="form-item"><slot></slot></div>',
+    props: ['schema', 'formProps', 'allDefaultValues', 'formModel', 'setFormModel', 'tableAction', 'formActionType']
+  }
+}));
 
 // Mock Vue Router
 vi.mock('vue-router', () => ({
@@ -86,6 +122,26 @@ vi.mock('/@/hooks/web/useI18n', () => ({
     t: vi.fn((key: string) => key)
   })),
   t: vi.fn((key: string) => key)
+}));
+
+// Mock modal hooks
+vi.mock('/@/components/Modal/src/hooks/useModal', () => ({
+  useModalInner: vi.fn(() => [
+    vi.fn(), // registerModal
+    {
+      closeModal: vi.fn()
+    }
+  ])
+}));
+
+// Mock form hooks
+vi.mock('/@/components/Form/src/hooks/useForm', () => ({
+  useForm: vi.fn(() => [
+    vi.fn(), // registerForm
+    {
+      validateFields: vi.fn(() => Promise.resolve({}))
+    }
+  ])
 }));
 
 // Mock Excel utilities

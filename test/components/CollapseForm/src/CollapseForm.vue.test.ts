@@ -7,10 +7,10 @@ vi.mock('ant-design-vue', () => ({
   Collapse: {
     template: '<div class="ant-collapse"><slot></slot></div>',
     props: ['activeKey', 'accordion', 'bordered', 'destroyInactivePanel'],
-  },
-  CollapsePanel: {
-    template: '<div class="ant-collapse-panel"><slot></slot></div>',
-    props: ['key', 'header', 'disabled', 'showArrow', 'forceRender'],
+    Panel: {
+      template: '<div class="ant-collapse-panel"><slot></slot></div>',
+      props: ['key', 'header', 'disabled', 'showArrow', 'forceRender'],
+    },
   },
   Button: {
     template: '<button class="ant-btn"><slot></slot></button>',
@@ -28,12 +28,24 @@ vi.mock('ant-design-vue', () => ({
     template: '<div class="ant-skeleton"><slot></slot></div>',
     props: ['active', 'loading'],
   },
+  theme: {
+    useToken: vi.fn(() => ({
+      token: {
+        colorPrimary: '#1890ff',
+      },
+    })),
+  },
 }));
 
 // Mock other dependencies
-vi.mock('/@/hooks/web/useI18n', () => ({
-  useI18n: () => ({ t: (key: string) => key }),
-}));
+vi.mock('/@/hooks/web/useI18n', async () => {
+  const actual = await vi.importActual('/@/hooks/web/useI18n');
+  return {
+    ...actual,
+    useI18n: () => ({ t: vi.fn((key) => key) }),
+    t: vi.fn((key) => key), // Add the missing 't' export
+  };
+});
 
 vi.mock('/@/hooks/event/useWindowSizeFn', () => ({
   useWindowSizeFn: vi.fn(),

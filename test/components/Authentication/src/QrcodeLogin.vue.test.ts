@@ -14,6 +14,7 @@ vi.mock('/@/components/Qrcode', () => ({
   QrCode: {
     name: 'QrCode',
     template: '<div class="qrcode"></div>',
+    props: ['value'],
   },
 }));
 
@@ -28,22 +29,37 @@ vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
 vi.mock('ant-design-vue', () => ({
   Button: {
     name: 'Button',
-    template: '<button class="ant-btn"><slot></slot></button>',
+    template: '<button class="ant-btn" @click="$emit(\'click\')"><slot></slot></button>',
     props: ['type', 'size', 'loading'],
   },
 }));
 
+// Mock vue-router with proper setup
+const mockRouter = {
+  push: vi.fn(),
+  replace: vi.fn(),
+  currentRoute: {
+    value: {
+      path: '/',
+      params: {},
+      query: {}
+    }
+  }
+};
+
+vi.mock('vue-router', async () => {
+  const actual = await vi.importActual('vue-router');
+  return {
+    ...actual,
+    createRouter: vi.fn(() => mockRouter),
+    createMemoryHistory: vi.fn(),
+    useRouter: () => mockRouter,
+    useRoute: () => mockRouter.currentRoute,
+  };
+});
+
 // Import the component
 import QrcodeLogin from '/@/components/Authentication/src/QrcodeLogin';
-
-// Create a simple router for testing
-const router = createRouter({
-  history: createMemoryHistory(),
-  routes: [
-    { path: '/', component: { template: '<div>Home</div>' } },
-    { path: '/auth/login', component: { template: '<div>Login</div>' } },
-  ],
-});
 
 describe('QrcodeLogin', () => {
   beforeEach(() => {
@@ -52,23 +68,13 @@ describe('QrcodeLogin', () => {
   });
 
   it('should render the component', () => {
-    const wrapper = mount(QrcodeLogin, {
-      global: {
-        plugins: [router],
-      },
-    });
-
+    const wrapper = mount(QrcodeLogin);
     expect(wrapper.find('.auth-title').exists()).toBe(true);
     expect(wrapper.find('.qrcode').exists()).toBe(true);
   });
 
   it('should render with default props', () => {
-    const wrapper = mount(QrcodeLogin, {
-      global: {
-        plugins: [router],
-      },
-    });
-
+    const wrapper = mount(QrcodeLogin);
     expect(wrapper.props().description).toBe('');
     expect(wrapper.props().loading).toBe(false);
     expect(wrapper.props().loginPath).toBe('/auth/login');
@@ -88,20 +94,13 @@ describe('QrcodeLogin', () => {
         subTitle: '<span>Custom Subtitle</span>',
         description: '<span>Custom Description</span>',
       },
-      global: {
-        plugins: [router],
-      },
     });
 
     expect(wrapper.find('span').text()).toBe('Custom Title');
   });
 
   it('should navigate to login page when back button is clicked', async () => {
-    const wrapper = mount(QrcodeLogin, {
-      global: {
-        plugins: [router],
-      },
-    });
+    const wrapper = mount(QrcodeLogin);
 
     // Wait for next tick to ensure DOM is updated
     await wrapper.vm.$nextTick();
@@ -110,14 +109,11 @@ describe('QrcodeLogin', () => {
     expect(backButton.exists()).toBe(true);
 
     await backButton.trigger('click');
+    expect(mockRouter.push).toHaveBeenCalledWith('/auth/login');
   });
 
   it('should display correct QR code text', () => {
-    const wrapper = mount(QrcodeLogin, {
-      global: {
-        plugins: [router],
-      },
-    });
+    const wrapper = mount(QrcodeLogin);
 
     // The component should have a ref with the QR code text
     expect(wrapper.vm.text).toBe('https://vben.vvbin.cn');
@@ -135,9 +131,6 @@ describe('QrcodeLogin', () => {
 
     const wrapper = mount(QrcodeLogin, {
       props: customProps,
-      global: {
-        plugins: [router],
-      },
     });
 
     expect(wrapper.props().title).toBe('Custom QR Login');
@@ -153,22 +146,15 @@ describe('QrcodeLogin', () => {
       props: {
         loginPath: '/custom/login',
       },
-      global: {
-        plugins: [router],
-      },
     });
 
     // Test the goToLogin function
     await wrapper.vm.goToLogin();
-    expect(wrapper.exists()).toBe(true);
+    expect(mockRouter.push).toHaveBeenCalledWith('/custom/login');
   });
 
   it('should render QR code with correct value', () => {
-    const wrapper = mount(QrcodeLogin, {
-      global: {
-        plugins: [router],
-      },
-    });
+    const wrapper = mount(QrcodeLogin);
 
     // Check that QrCode component receives the correct value
     const qrCodeComponent = wrapper.findComponent({ name: 'QrCode' });
@@ -180,9 +166,6 @@ describe('QrcodeLogin', () => {
       props: {
         loading: true,
       },
-      global: {
-        plugins: [router],
-      },
     });
 
     expect(wrapper.props().loading).toBe(true);
@@ -191,9 +174,6 @@ describe('QrcodeLogin', () => {
   it('should handle empty props', () => {
     const wrapper = mount(QrcodeLogin, {
       props: {},
-      global: {
-        plugins: [router],
-      },
     });
 
     expect(wrapper.exists()).toBe(true);

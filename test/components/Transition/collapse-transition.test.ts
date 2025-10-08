@@ -31,14 +31,15 @@ describe('CollapseTransition Component', () => {
     el.style.paddingBottom = '10px';
 
     // Call beforeEnter directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.beforeEnter) {
-      wrapper.vm.$data.on.beforeEnter(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.beforeEnter) {
+      componentInstance.on.beforeEnter(el);
     }
 
     // The hooks are called, but we need to check the actual behavior
-    expect(el.style.height).toBe('0');
-    expect(el.style.paddingTop).toBe('0');
-    expect(el.style.paddingBottom).toBe('0');
+    expect(el.style.height).toBe('0px');
+    expect(el.style.paddingTop).toBe('0px');
+    expect(el.style.paddingBottom).toBe('0px');
   });
 
   it('should call beforeEnter hook without dataset', () => {
@@ -54,15 +55,16 @@ describe('CollapseTransition Component', () => {
     // Do not set dataset to test the if (!el.dataset) condition
 
     // Call beforeEnter directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.beforeEnter) {
-      wrapper.vm.$data.on.beforeEnter(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.beforeEnter) {
+      componentInstance.on.beforeEnter(el);
     }
 
     // The hooks are called, but we need to check the actual behavior
     expect(el.dataset).toBeDefined();
-    expect(el.style.height).toBe('0');
-    expect(el.style.paddingTop).toBe('0');
-    expect(el.style.paddingBottom).toBe('0');
+    expect(el.style.height).toBe('0px');
+    expect(el.style.paddingTop).toBe('0px');
+    expect(el.style.paddingBottom).toBe('0px');
   });
 
   it('should call enter hook with scrollHeight > 0', () => {
@@ -79,8 +81,9 @@ describe('CollapseTransition Component', () => {
     Object.defineProperty(el, 'scrollHeight', { value: 100 });
 
     // Call enter directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.enter) {
-      wrapper.vm.$data.on.enter(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.enter) {
+      componentInstance.on.enter(el);
     }
 
     // Check the actual behavior
@@ -101,8 +104,9 @@ describe('CollapseTransition Component', () => {
     Object.defineProperty(el, 'scrollHeight', { value: 0 });
 
     // Call enter directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.enter) {
-      wrapper.vm.$data.on.enter(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.enter) {
+      componentInstance.on.enter(el);
     }
 
     // Check the actual behavior
@@ -123,8 +127,9 @@ describe('CollapseTransition Component', () => {
     el.dataset.oldOverflow = 'visible';
 
     // Call afterEnter directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.afterEnter) {
-      wrapper.vm.$data.on.afterEnter(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.afterEnter) {
+      componentInstance.on.afterEnter(el);
     }
 
     // Check the actual behavior
@@ -146,8 +151,9 @@ describe('CollapseTransition Component', () => {
     Object.defineProperty(el, 'scrollHeight', { value: 100 });
 
     // Call beforeLeave directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.beforeLeave) {
-      wrapper.vm.$data.on.beforeLeave(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.beforeLeave) {
+      componentInstance.on.beforeLeave(el);
     }
 
     // Check the actual behavior
@@ -170,8 +176,9 @@ describe('CollapseTransition Component', () => {
     // Do not set dataset to test the if (!el.dataset) condition
 
     // Call beforeLeave directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.beforeLeave) {
-      wrapper.vm.$data.on.beforeLeave(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.beforeLeave) {
+      componentInstance.on.beforeLeave(el);
     }
 
     // Check the actual behavior
@@ -192,15 +199,20 @@ describe('CollapseTransition Component', () => {
     el.style.paddingBottom = '10px';
     Object.defineProperty(el, 'scrollHeight', { value: 100 });
 
+    // Reset mock
+    (addClass as any).mockClear();
+
     // Call leave directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.leave) {
-      wrapper.vm.$data.on.leave(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.leave) {
+      componentInstance.on.leave(el);
     }
 
     // The hooks are called, but we need to check the actual behavior
-    expect(el.style.height).toBe('0');
-    expect(el.style.paddingTop).toBe('0');
-    expect(el.style.paddingBottom).toBe('0');
+    expect(el.style.height).toBe('0px');
+    expect(el.style.paddingTop).toBe('0px');
+    expect(el.style.paddingBottom).toBe('0px');
+    expect(addClass).toHaveBeenCalled();
   });
 
   it('should call leave hook with scrollHeight = 0', () => {
@@ -215,9 +227,13 @@ describe('CollapseTransition Component', () => {
     el.style.paddingBottom = '10px';
     Object.defineProperty(el, 'scrollHeight', { value: 0 });
 
+    // Reset mock
+    (addClass as any).mockClear();
+
     // Call leave directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.leave) {
-      wrapper.vm.$data.on.leave(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.leave) {
+      componentInstance.on.leave(el);
     }
 
     // When scrollHeight is 0, it should not add collapse-transition class
@@ -242,8 +258,9 @@ describe('CollapseTransition Component', () => {
     el.dataset.oldPaddingBottom = '10px';
 
     // Call afterLeave directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.afterLeave) {
-      wrapper.vm.$data.on.afterLeave(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.afterLeave) {
+      componentInstance.on.afterLeave(el);
     }
 
     // Check the actual behavior
@@ -268,8 +285,9 @@ describe('CollapseTransition Component', () => {
     // Do not set dataset to test the behavior
 
     // Call afterLeave directly
-    if (wrapper.vm.$data.on && wrapper.vm.$data.on.afterLeave) {
-      wrapper.vm.$data.on.afterLeave(el);
+    const componentInstance = wrapper.vm as any;
+    if (componentInstance.on && componentInstance.on.afterLeave) {
+      componentInstance.on.afterLeave(el);
     }
 
     // Check the actual behavior

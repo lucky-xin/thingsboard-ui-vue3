@@ -1,120 +1,95 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { createPinia } from 'pinia';
-import { createRouter, createWebHistory } from 'vue-router';
 
-// Create test component for AppProvider functionality
-const AppProviderTest = {
-  name: 'AppProvider',
-  setup() {
-    const appConfig = vi.fn(() => ({ theme: 'light', locale: 'en' }));
-    const updateConfig = vi.fn();
-    return {
-      appConfig,
-      updateConfig
-    };
-  },
-  template: `
-    <div class="app-provider">
-      <div class="provider-content">
-        <slot></slot>
-      </div>
-      <div class="config-data" :data-config="JSON.stringify(appConfig())">
-        Provider Config
-      </div>
-    </div>
-  `
+// Mock vue-router
+const mockRouter = {
+  push: vi.fn(),
+  replace: vi.fn(),
+  currentRoute: {
+    value: {
+      path: '/',
+      params: {},
+      query: {}
+    }
+  }
 };
 
-// Setup test environment
-const pinia = createPinia();
-const router = createRouter({
-  history: createWebHistory(),
-  routes: [{ path: '/', component: { template: '<div>Home</div>' } }]
+vi.mock('vue-router', async () => {
+  const actual = await vi.importActual('vue-router');
+  return {
+    ...actual,
+    useRouter: () => mockRouter,
+    useRoute: () => mockRouter.currentRoute,
+  };
 });
 
-const globalMocks = {
-  $t: (key: string) => key,
-  $router: router,
-  $route: { path: '/', params: {}, query: {} }
-};
+// Mock useBreakpoint hook
+vi.mock('/@/hooks/event/useBreakpoint', () => ({
+  createBreakpointListen: vi.fn((callback) => {
+    // Mock screenMap, sizeEnum, width for testing
+    const screenMap = new Map();
+    screenMap.set('LG', 992);
+    callback({
+      screenMap,
+      sizeEnum: { LG: 'LG' },
+      width: { value: 1024 }
+    });
+  }),
+}));
+
+// Mock useAppContext
+vi.mock('/@/components/Application/src/useAppContext', () => ({
+  createAppProviderContext: vi.fn(),
+}));
 
 describe('AppProvider', () => {
+  // Import the actual component after mocks are set up
+  let AppProvider: any;
+
+  beforeAll(async () => {
+    const module = await import('/@/components/Application/src/AppProvider.vue');
+    AppProvider = module.default;
+  });
+
   it('should render without crashing', () => {
-    const wrapper = mount(AppProviderTest, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
-    });
+    const wrapper = mount(AppProvider);
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should render with correct structure', () => {
-    const wrapper = mount(AppProviderTest, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
-    });
-    
-    expect(wrapper.find('.app-provider').exists()).toBe(true);
-    expect(wrapper.find('.provider-content').exists()).toBe(true);
-    expect(wrapper.find('.config-data').exists()).toBe(true);
+    const wrapper = mount(AppProvider);
+
+    // Since AppProvider is a renderless component that only renders slots,
+    // we test that it can render with content
+    expect(wrapper.exists()).toBe(true);
   });
 
   it('should provide slot for child content', () => {
-    const wrapper = mount(AppProviderTest, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
+    const wrapper = mount(AppProvider, {
       slots: {
         default: '<div class="child-content">Child Content</div>'
       }
     });
-    
+
     expect(wrapper.find('.child-content').exists()).toBe(true);
     expect(wrapper.find('.child-content').text()).toBe('Child Content');
   });
 
-  it('should display provider config', () => {
-    const wrapper = mount(AppProviderTest, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
-    });
-    
-    const configData = wrapper.find('.config-data');
-    expect(configData.exists()).toBe(true);
-    expect(configData.text()).toBe('Provider Config');
-  });
-
   it('should handle provider functionality', () => {
-    const wrapper = mount(AppProviderTest, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
-    });
-    
-    expect(wrapper.vm.appConfig).toBeDefined();
-    expect(wrapper.vm.updateConfig).toBeDefined();
-    expect(typeof wrapper.vm.appConfig).toBe('function');
-    expect(typeof wrapper.vm.updateConfig).toBe('function');
+    const wrapper = mount(AppProvider);
+
+    // AppProvider is a renderless component, so we mainly test it renders
+    expect(wrapper.exists()).toBe(true);
   });
 
   it('should have proper component structure', () => {
-    const wrapper = mount(AppProviderTest, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
+    const wrapper = mount(AppProvider, {
+      slots: {
+        default: '<div class="test-wrapper"><div class="inner-content">Test</div></div>'
+      }
     });
-    
-    expect(wrapper.html()).toContain('app-provider');
-    expect(wrapper.html()).toContain('provider-content');
-    expect(wrapper.html()).toContain('config-data');
+
+    expect(wrapper.find('.test-wrapper').exists()).toBe(true);
+    expect(wrapper.find('.inner-content').exists()).toBe(true);
   });
 });

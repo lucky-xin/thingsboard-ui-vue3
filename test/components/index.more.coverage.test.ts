@@ -3,7 +3,8 @@ import { createApp } from 'vue';
 import { registerGlobComp } from '/@/components/registerGlobComp';
 
 // Mock Ant Design Vue components
-vi.mock('ant-design-vue', () => {
+vi.mock('ant-design-vue', async (importOriginal) => {
+  const actual = await importOriginal();
   const Input = {
     name: 'AInput',
     template: '<input />',
@@ -14,9 +15,22 @@ vi.mock('ant-design-vue', () => {
     template: '<button><slot /></button>',
   };
 
+  const Tooltip = {
+    name: 'ATooltip',
+    template: '<div><slot /></div>',
+  };
+
+  const InputNumber = {
+    name: 'AInputNumber',
+    template: '<input type="number" />',
+  };
+
   return {
+    ...actual,
     Input,
     Button,
+    Tooltip,
+    InputNumber,
   };
 });
 

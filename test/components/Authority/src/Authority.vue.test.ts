@@ -1,26 +1,31 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from 'vue-router';
-import { createPinia } from 'pinia';
 import Authority from '/@/components/Authority/src/Authority';
 
-// Mock router
-const router = createRouter({
-  history: createWebHistory(),
-  routes: [],
-});
-
-// Mock pinia
-const pinia = createPinia();
-
-// Mock global properties
-const globalMocks = {
-  $t: (key: string) => key,
-  $router: router,
-  $route: router.currentRoute.value,
+// Mock router with proper setup
+const mockRouter = {
+  push: vi.fn(),
+  replace: vi.fn(),
+  currentRoute: {
+    value: {
+      path: '/',
+      params: {},
+      query: {}
+    }
+  }
 };
 
-// Mock usePermission hook
+vi.mock('vue-router', async () => {
+  const actual = await vi.importActual('vue-router');
+  return {
+    ...actual,
+    useRouter: () => mockRouter,
+    useRoute: () => mockRouter.currentRoute,
+  };
+});
+
+// Mock usePermission hook to avoid router dependencies
 vi.mock('/@/hooks/web/usePermission', () => ({
   usePermission: () => ({
     hasPermission: vi.fn((value) => {
@@ -54,24 +59,24 @@ vi.mock('ant-design-vue', () => ({
   },
 }));
 
+// Mock tsxHelper
+vi.mock('/@/utils/helper/tsxHelper', () => ({
+  getSlot: (slots: any) => {
+    if (slots && slots.default) {
+      return slots.default();
+    }
+    return null;
+  },
+}));
+
 describe('Authority', () => {
   it('should render without crashing', () => {
-    const wrapper = mount(Authority, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
-    });
+    const wrapper = mount(Authority);
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should render with default props', () => {
-    const wrapper = mount(Authority, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
-    });
+    const wrapper = mount(Authority);
     expect(wrapper.props().value).toBe('');
   });
 
@@ -81,10 +86,6 @@ describe('Authority', () => {
     };
     const wrapper = mount(Authority, {
       props,
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
     });
     expect(wrapper.props().value).toBe('admin');
   });
@@ -97,10 +98,6 @@ describe('Authority', () => {
       slots: {
         default: '<div class="test-content">Test Content</div>',
       },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
     });
     expect(wrapper.find('.test-content').exists()).toBe(true);
   });
@@ -109,10 +106,6 @@ describe('Authority', () => {
     const wrapper = mount(Authority, {
       slots: {
         default: '<div class="test-content">Test Content</div>',
-      },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
       },
     });
     expect(wrapper.find('.test-content').exists()).toBe(true);
@@ -123,10 +116,6 @@ describe('Authority', () => {
       props: {
         value: ['admin', 'user'],
       },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
     });
     expect(wrapper.props().value).toEqual(['admin', 'user']);
   });
@@ -135,10 +124,6 @@ describe('Authority', () => {
     const wrapper = mount(Authority, {
       props: {
         value: 'user',
-      },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
       },
     });
     expect(wrapper.props().value).toBe('user');
@@ -149,10 +134,6 @@ describe('Authority', () => {
       props: {
         value: 1,
       },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
     });
     expect(wrapper.props().value).toBe(1);
   });
@@ -161,10 +142,6 @@ describe('Authority', () => {
     const wrapper = mount(Authority, {
       props: {
         value: '',
-      },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
       },
     });
     expect(wrapper.props().value).toBe('');
@@ -175,10 +152,6 @@ describe('Authority', () => {
       props: {
         value: null,
       },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
     });
     expect(wrapper.props().value).toBeNull();
   });
@@ -187,10 +160,6 @@ describe('Authority', () => {
     const wrapper = mount(Authority, {
       props: {
         value: undefined,
-      },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
       },
     });
     // Vue converts undefined to empty string for props with default values
@@ -206,10 +175,6 @@ describe('Authority', () => {
         default: '<div class="main-content">Main Content</div>',
         fallback: '<div class="fallback-content">Fallback Content</div>',
       },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
     });
     expect(wrapper.find('.main-content').exists()).toBe(true);
   });
@@ -219,19 +184,15 @@ describe('Authority', () => {
       props: {
         value: 'admin',
       },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
     });
-    
+
     // Test component mounting
     expect(wrapper.exists()).toBe(true);
-    
+
     // Test prop changes
     await wrapper.setProps({ value: 'user' });
     expect(wrapper.props().value).toBe('user');
-    
+
     // Test component unmounting
     await wrapper.unmount();
     expect(wrapper.exists()).toBe(false);
@@ -241,10 +202,6 @@ describe('Authority', () => {
     const wrapper = mount(Authority, {
       props: {
         value: 'super-admin',
-      },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
       },
     });
     expect(wrapper.exists()).toBe(true);
@@ -263,10 +220,6 @@ describe('Authority', () => {
             <button>Action</button>
           </div>
         `,
-      },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
       },
     });
     expect(wrapper.find('.complex-content').exists()).toBe(true);

@@ -19,7 +19,9 @@ vi.mock('/@/components/SimpleMenu/src/components/useSimpleMenuContext', () => ({
       off: vi.fn(),
       emit: vi.fn(),
     },
-    activeName: null,
+    activeName: {
+      value: null
+    },
   }),
 }));
 
@@ -27,8 +29,12 @@ vi.mock('/@/components/SimpleMenu/src/components/useSimpleMenuContext', () => ({
 vi.mock('/@/components/SimpleMenu/src/components/useMenu', () => ({
   useMenuItem: () => ({
     getItemStyle: {},
-    getParentList: [],
-    getParentMenu: {},
+    getParentList: () => ({ list: [], uidList: [] }),
+    getParentMenu: {
+      type: {
+        name: 'MenuItem'
+      }
+    },
     getParentRootMenu: {
       props: {
         collapse: false,

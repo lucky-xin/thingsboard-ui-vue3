@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
+import ForgetPassword from '/@/components/Authentication/src/ForgetPassword.vue';
 
 describe('ForgetPassword', () => {
   it('should render correctly', () => {
-    // TODO: Add your tests here
     const wrapper = mount(ForgetPassword);
     expect(wrapper.exists()).toBe(true);
   });

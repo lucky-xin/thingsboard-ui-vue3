@@ -1,16 +1,24 @@
 // Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
+import { createPinia } from 'pinia';
+
+const pinia = createPinia();
+
+vi.mock('/@/store', () => {
+  const pinia = createPinia();
+  return {
+    store: pinia,
+    useAppStore: () => ({
+      getTheme: vi.fn(() => "light"),
+      setTheme: vi.fn(),
+      locale: "en",
+      setLocale: vi.fn()
+    }),
+    useUserStore: () => ({
+      userInfo: { name: "Test User" },
+      isLoggedIn: true
+    })
+  };
+});
 
 vi.mock("/@/hooks/setting/useLocale", () => ({
   useLocale: () => ({

@@ -42,7 +42,25 @@ vi.mock('/@/components/Form/src/BasicForm.vue', () => ({
   default: {
     name: 'BasicForm',
     template: '<div class="basic-form"><slot></slot></div>',
-    props: ["schemas", "labelWidth", "autoSubmitOnEnter", "showActionButtonGroup", "showResetButton", "showSubmitButton", "submitButtonOptions"]
+    props: ["schemas", "labelWidth", "autoSubmitOnEnter", "showActionButtonGroup", "showResetButton", "showSubmitButton", "submitButtonOptions"],
+    setup: () => {
+      // Mock all the form methods that are exposed
+      return {
+        updateSchema: vi.fn(),
+        resetSchema: vi.fn(),
+        appendSchemaByField: vi.fn(),
+        removeSchemaByFiled: vi.fn(),
+        getFieldsValue: vi.fn(() => ({})),
+        validateFields: vi.fn(() => Promise.resolve({})),
+        clearValidate: vi.fn(),
+        scrollToField: vi.fn(),
+        setFieldsValue: vi.fn(),
+        resetFields: vi.fn(),
+        setProps: vi.fn(),
+        validate: vi.fn(() => Promise.resolve({})),
+        submit: vi.fn(),
+      };
+    }
   }
 }));
 

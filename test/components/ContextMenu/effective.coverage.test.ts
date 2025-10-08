@@ -49,6 +49,10 @@ Object.defineProperty(document, 'body', {
   writable: true,
 });
 
+// Mock document createElement
+const mockContainer = document.createElement('div');
+vi.spyOn(document, 'createElement').mockReturnValue(mockContainer);
+
 // Mock isClient utility
 vi.mock('/@/utils/is', () => ({
   isClient: true,

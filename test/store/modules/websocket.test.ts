@@ -25,32 +25,26 @@ import { useWebsocketStore, useWebsocketStoreWithOut } from '/@/store/modules/we
 import { createPinia, setActivePinia } from 'pinia';
 
 // Mock the store with proper Pinia instance
-vi.mock('/@/store', () => ({
-  store: { 
-    // Mock the Pinia instance methods that might be used
-    use: vi.fn(),
-    _s: new Map(), // Mock the stores map
-    _p: [], // Mock the plugins array
-    install: vi.fn(),
-    state: {
-      value: {}
-    },
-    _e: {
-      active: true,
-      run: vi.fn((fn) => fn())
-    }
-  },
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
+import { createPinia } from 'pinia';
+
+const pinia = createPinia();
+
+vi.mock('/@/store', () => {
+  const pinia = createPinia();
+  return {
+    store: pinia,
+    useAppStore: () => ({
+      getTheme: vi.fn(() => "light"),
+      setTheme: vi.fn(),
+      locale: "en",
+      setLocale: vi.fn()
+    }),
+    useUserStore: () => ({
+      userInfo: { name: "Test User" },
+      isLoggedIn: true
+    })
+  };
+});
 
 // Mock the vueuse core
 vi.mock('@vueuse/core', () => ({

@@ -34,6 +34,10 @@ vi.mock('ant-design-vue', () => ({
       preview: Boolean,
     },
     template: '<div class="ant-image"><img /></div>',
+    PreviewGroup: {
+      name: 'APreviewGroup',
+      template: '<div class="ant-image-preview-group"><slot /></div>',
+    },
   },
   Button: {
     name: 'AButton',

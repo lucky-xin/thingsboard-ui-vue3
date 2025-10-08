@@ -1,28 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { createRouter, createWebHistory } from 'vue-router';
-import { createPinia } from 'pinia';
 import BasicArrow from '/@/components/Basic/src/BasicArrow';
-
-// Mock router
-const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    {
-      path: '/',
-      component: { template: '<div>Home</div>' }
-    }
-  ],
-});
-
-// Mock pinia
-const pinia = createPinia();
 
 // Mock global properties
 const globalMocks = {
   $t: (key: string) => key,
-  $router: router,
-  $route: router.currentRoute.value,
 };
 
 // Mock Ant Design components
@@ -30,47 +12,31 @@ vi.mock('ant-design-vue', async (importOriginal) => {
   const actual = await importOriginal();
   return {
     ...actual,
-    Button: {
-      name: 'Button',
-      props: ['type', 'onClick'],
-      template: '<button @click="$emit(\'click\')"><slot /></button>',
-    },
-    Input: {
-      name: 'Input',
-      props: ['value', 'placeholder'],
-      template: '<input :value="value" :placeholder="placeholder" />',
-    },
-    Tooltip: {
-      name: 'Tooltip',
-      props: ['placement'],
-      template: '<div><slot /></div>',
-    },
-    Modal: {
-      name: 'Modal',
-      props: ['open', 'onClose'],
-      template: '<div v-if="open"><slot /></div>',
+    Spin: {
+      name: 'ASpin',
+      template: '<div class="ant-spin">Loading...</div>',
+      props: ['size', 'style'],
     },
   };
 });
 
+// Mock Icon component
+vi.mock('/@/components/Icon', () => ({
+  Icon: {
+    name: 'Icon',
+    template: '<i class="mock-icon"></i>',
+    props: ['icon', 'style'],
+  },
+}));
+
 describe('BasicArrow', () => {
   it('should render without crashing', () => {
-    const wrapper = mount(BasicArrow, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
-    });
+    const wrapper = mount(BasicArrow);
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should render with default props', () => {
-    const wrapper = mount(BasicArrow, {
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
-    });
+    const wrapper = mount(BasicArrow);
     // Vue converts undefined to false for boolean props
     expect(wrapper.props().expand).toBe(false);
     expect(wrapper.props().up).toBe(false);
@@ -83,10 +49,6 @@ describe('BasicArrow', () => {
     };
     const wrapper = mount(BasicArrow, {
       props,
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
     });
     expect(wrapper.props().expand).toBe(false);
     expect(wrapper.props().up).toBe(true);
@@ -97,10 +59,6 @@ describe('BasicArrow', () => {
       props: {
         expand: true,
       },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
     });
     expect(wrapper.props().expand).toBe(true);
   });
@@ -109,10 +67,6 @@ describe('BasicArrow', () => {
     const wrapper = mount(BasicArrow, {
       props: {
         expand: false,
-      },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
       },
     });
     expect(wrapper.props().expand).toBe(false);
@@ -123,10 +77,6 @@ describe('BasicArrow', () => {
       props: {
         up: true,
       },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
     });
     expect(wrapper.props().up).toBe(true);
   });
@@ -135,10 +85,6 @@ describe('BasicArrow', () => {
     const wrapper = mount(BasicArrow, {
       props: {
         up: false,
-      },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
       },
     });
     expect(wrapper.props().up).toBe(false);
@@ -149,10 +95,6 @@ describe('BasicArrow', () => {
       props: {
         expand: false,
         up: true,
-      },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
       },
     });
     expect(wrapper.props().expand).toBe(false);
@@ -165,20 +107,16 @@ describe('BasicArrow', () => {
         expand: true,
         up: false,
       },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
     });
-    
+
     // Test component mounting
     expect(wrapper.exists()).toBe(true);
-    
+
     // Test prop changes
     await wrapper.setProps({ expand: false, up: true });
     expect(wrapper.props().expand).toBe(false);
     expect(wrapper.props().up).toBe(true);
-    
+
     // Test component unmounting
     await wrapper.unmount();
     expect(wrapper.exists()).toBe(false);
@@ -190,12 +128,8 @@ describe('BasicArrow', () => {
         expand: true,
         up: false,
       },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
     });
-    
+
     // Test click event
     await wrapper.trigger('click');
     expect(wrapper.exists()).toBe(true);
@@ -212,10 +146,6 @@ describe('BasicArrow', () => {
     combinations.forEach((combo) => {
       const wrapper = mount(BasicArrow, {
         props: combo,
-        global: {
-          plugins: [router, pinia],
-          mocks: globalMocks,
-        },
       });
       expect(wrapper.props().expand).toBe(combo.expand);
       expect(wrapper.props().up).toBe(combo.up);
@@ -229,10 +159,6 @@ describe('BasicArrow', () => {
         expand: true,
         up: false,
       },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
-      },
     });
     expect(wrapper.exists()).toBe(true);
   });
@@ -242,10 +168,6 @@ describe('BasicArrow', () => {
       props: {
         expand: true,
         up: false,
-      },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
       },
     });
 
@@ -268,10 +190,6 @@ describe('BasicArrow', () => {
       props: {
         expand: true,
         up: false,
-      },
-      global: {
-        plugins: [router, pinia],
-        mocks: globalMocks,
       },
     });
     expect(wrapper.exists()).toBe(true);

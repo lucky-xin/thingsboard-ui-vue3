@@ -1,14 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { createRouter, createWebHistory } from 'vue-router';
 import { createPinia } from 'pinia';
 import BasicTitle from '/@/components/Basic/src/BasicTitle';
-
-// Mock router
-const router = createRouter({
-  history: createWebHistory(),
-  routes: [],
-});
 
 // Mock pinia
 const pinia = createPinia();
@@ -16,8 +9,6 @@ const pinia = createPinia();
 // Mock global properties
 const globalMocks = {
   $t: (key: string) => key,
-  $router: router,
-  $route: router.currentRoute.value,
 };
 
 // Mock useDesign hook
@@ -53,7 +44,7 @@ describe('BasicTitle', () => {
   it('should render without crashing', () => {
     const wrapper = mount(BasicTitle, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
@@ -63,7 +54,7 @@ describe('BasicTitle', () => {
   it('should render with default props', () => {
     const wrapper = mount(BasicTitle, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
@@ -81,7 +72,7 @@ describe('BasicTitle', () => {
     const wrapper = mount(BasicTitle, {
       props,
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
@@ -96,7 +87,7 @@ describe('BasicTitle', () => {
         helpMessage: 'This is a help message',
       },
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
@@ -109,7 +100,7 @@ describe('BasicTitle', () => {
         span: true,
       },
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
@@ -122,7 +113,7 @@ describe('BasicTitle', () => {
         normal: true,
       },
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
@@ -137,7 +128,7 @@ describe('BasicTitle', () => {
         normal: true,
       },
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
@@ -152,7 +143,7 @@ describe('BasicTitle', () => {
         default: '<span class="custom-title">Custom Title</span>',
       },
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
@@ -161,12 +152,12 @@ describe('BasicTitle', () => {
 
   it('should handle different span values', () => {
     const spanValues = [true, false];
-    
+
     spanValues.forEach((span) => {
       const wrapper = mount(BasicTitle, {
         props: { span },
         global: {
-          plugins: [router, pinia],
+          plugins: [pinia],
           mocks: globalMocks,
         },
       });
@@ -183,18 +174,18 @@ describe('BasicTitle', () => {
         normal: true,
       },
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
-    
+
     // Test component mounting
     expect(wrapper.exists()).toBe(true);
-    
+
     // Test prop changes
     await wrapper.setProps({ span: false });
     expect(wrapper.props().span).toBe(false);
-    
+
     // Test component unmounting
     await wrapper.unmount();
     expect(wrapper.exists()).toBe(false);
@@ -208,7 +199,7 @@ describe('BasicTitle', () => {
         normal: false,
       },
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
@@ -221,7 +212,7 @@ describe('BasicTitle', () => {
         helpMessage: 'Help message',
       },
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
@@ -236,7 +227,7 @@ describe('BasicTitle', () => {
         normal: true,
       },
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
@@ -253,7 +244,7 @@ describe('BasicTitle', () => {
         normal: undefined,
       },
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });

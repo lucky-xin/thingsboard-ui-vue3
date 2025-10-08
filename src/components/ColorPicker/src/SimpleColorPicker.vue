@@ -1,6 +1,6 @@
 <template>
   <Popover
-    v-model:visible="showPicker"
+    v-model:open="showPicker"
     placement="bottomRight"
     trigger="click"
     class="ant3-color-picker"
@@ -16,11 +16,11 @@
       <preDefine v-if="predefine.length" ref="predefine" :color="color" :colors="predefine" />
       <div class="ant-color-dropdown__btns">
         <span class="ant-color-dropdown__value">
-          <a-input v-model:value="customInput" size="small" @pressEnter="handleConfirm" @blur="handleConfirm" />
+          <Input v-model:value="customInput" size="small" @pressEnter="handleConfirm" @blur="handleConfirm" />
         </span>
         <div class="ant-dropdown__btns">
-          <a-button size="small" class="ant-cancel-button" @click="clear">取消</a-button>
-          <a-button type="primary" size="small" @click="confirmValue">确定</a-button>
+          <Button size="small" class="ant-cancel-button" @click="clear">取消</Button>
+          <Button type="primary" size="small" @click="confirmValue">确定</Button>
         </div>
       </div>
     </template>
@@ -41,7 +41,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, reactive, computed, provide, ref, watch, nextTick, onMounted } from 'vue';
-  import { Popover } from 'ant-design-vue';
+  import { Popover, Input, Button } from 'ant-design-vue';
   import { DownOutlined, CloseOutlined } from '@ant-design/icons-vue';
   import HueSlider from './components/hueSlider.vue';
   import SvPanel from './components/svPanel.vue';
@@ -61,6 +61,8 @@
     name: 'ColorPicker',
     components: {
       Popover,
+      Input,
+      Button,
       HueSlider,
       SvPanel,
       preDefine,

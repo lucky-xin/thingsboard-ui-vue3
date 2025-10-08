@@ -63,13 +63,17 @@ vi.mock('ant-design-vue', () => ({
       items: Array,
     },
     template: '<div class="ant-menu"><slot /></div>',
-  },
-  'Menu.Item': {
-    name: 'AMenuItem',
-    props: {
-      itemKey: String,
+    Item: {
+      name: 'AMenuItem',
+      props: {
+        itemKey: String,
+      },
+      template: '<div class="ant-menu-item"><slot /></div>',
     },
-    template: '<div class="ant-menu-item"><slot /></div>',
+    Divider: {
+      name: 'AMenuDivider',
+      template: '<div class="ant-menu-divider"></div>',
+    },
   },
   Input: {
     name: 'AInput',

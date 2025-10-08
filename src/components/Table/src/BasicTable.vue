@@ -388,6 +388,8 @@
 
   const formShow = ref(unref(getProps).showSearchForm);
 
+  const showSelectionBar = computed(() => unref(getProps).showSelectionBar);
+
   function handleFormShowToggle() {
     formShow.value = !formShow.value;
     redoHeight();

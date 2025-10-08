@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createPinia } from 'pinia';
-import { createRouter, createWebHistory } from 'vue-router';
 
 // Mock state management and global dependencies
 vi.mock("/@/store", () => ({
@@ -50,22 +49,16 @@ const AppLogoTest = {
 
 // Setup test environment
 const pinia = createPinia();
-const router = createRouter({
-  history: createWebHistory(),
-  routes: [{ path: '/', component: { template: '<div>Home</div>' } }]
-});
 
 const globalMocks = {
   $t: (key: string) => key,
-  $router: router,
-  $route: { path: '/', params: {}, query: {} }
 };
 
 describe('AppLogo', () => {
   it('should render without crashing', () => {
     const wrapper = mount(AppLogoTest, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
@@ -75,11 +68,11 @@ describe('AppLogo', () => {
   it('should render with correct structure', () => {
     const wrapper = mount(AppLogoTest, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
-    
+
     expect(wrapper.find('.app-logo').exists()).toBe(true);
     expect(wrapper.find('.logo-container').exists()).toBe(true);
     expect(wrapper.find('.logo-image').exists()).toBe(true);
@@ -88,11 +81,11 @@ describe('AppLogo', () => {
   it('should display logo image', () => {
     const wrapper = mount(AppLogoTest, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
-    
+
     const logoImage = wrapper.find('.logo-image');
     expect(logoImage.exists()).toBe(true);
     expect(logoImage.attributes('src')).toBe('/logo.png');
@@ -102,11 +95,11 @@ describe('AppLogo', () => {
   it('should display title when showTitle is true', () => {
     const wrapper = mount(AppLogoTest, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
-    
+
     // showTitle() returns true by default
     expect(wrapper.find('.logo-title').exists()).toBe(true);
     expect(wrapper.find('.logo-title').text()).toBe('App Title');
@@ -115,11 +108,11 @@ describe('AppLogo', () => {
   it('should handle logo functionality', () => {
     const wrapper = mount(AppLogoTest, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
-    
+
     expect(wrapper.vm.showTitle).toBeDefined();
     expect(wrapper.vm.alwaysShowTitle).toBeDefined();
     expect(typeof wrapper.vm.showTitle).toBe('function');
@@ -129,11 +122,11 @@ describe('AppLogo', () => {
   it('should have proper component structure', () => {
     const wrapper = mount(AppLogoTest, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
-    
+
     expect(wrapper.html()).toContain('app-logo');
     expect(wrapper.html()).toContain('logo-container');
     expect(wrapper.html()).toContain('logo-image');
@@ -142,11 +135,11 @@ describe('AppLogo', () => {
   it('should render logo with all required elements', () => {
     const wrapper = mount(AppLogoTest, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
-    
+
     // Check all main elements exist
     expect(wrapper.find('.app-logo').exists()).toBe(true);
     expect(wrapper.find('.logo-container').exists()).toBe(true);

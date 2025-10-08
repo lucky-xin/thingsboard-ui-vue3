@@ -48,51 +48,100 @@ vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
   },
 }));
 
-// Mock Ant Design Vue components
-vi.mock('ant-design-vue', () => ({
-  Button: {
-    name: 'Button',
-    props: ['type', 'onClick'],
-    template: '<button @click="$emit(\'click\')"><slot /></button>',
-  },
-  Input: {
-    name: 'Input',
-    props: ['value', 'placeholder'],
-    template: '<input :value="value" :placeholder="placeholder" />',
-  },
-  InputNumber: {
-    name: 'InputNumber',
-    props: ['value', 'placeholder'],
-    template: '<input type="number" :value="value" :placeholder="placeholder" />',
-  },
-  Checkbox: {
-    name: 'Checkbox',
-    props: ['checked', 'onChange'],
-    template: '<input type="checkbox" :checked="checked" @change="$emit(\'change\')" />',
-  },
-  Tooltip: {
-    name: 'Tooltip',
-    props: ['placement'],
-    template: '<div><slot /></div>',
-  },
-  Modal: {
-    name: 'Modal',
-    props: ['open', 'onClose'],
-    template: '<div v-if="open"><slot /></div>',
-  },
-}));
+// Mock Ant Design Vue components with proper install functions
+const mockButton = {
+  name: 'Button',
+  props: ['type', 'onClick', 'loading', 'size'],
+  template: '<button @click="$emit(\'click\')"><slot /></button>',
+  install: vi.fn((app) => {
+    app.component('Button', mockButton);
+  }),
+};
+
+const mockInput = {
+  name: 'Input',
+  props: ['value', 'placeholder'],
+  template: '<input :value="value" :placeholder="placeholder" />',
+  install: vi.fn((app) => {
+    app.component('Input', mockInput);
+  }),
+};
+
+const mockInputNumber = {
+  name: 'InputNumber',
+  props: ['value', 'placeholder'],
+  template: '<input type="number" :value="value" :placeholder="placeholder" />',
+  install: vi.fn((app) => {
+    app.component('InputNumber', mockInputNumber);
+  }),
+};
+
+const mockCheckbox = {
+  name: 'Checkbox',
+  props: ['checked', 'onChange'],
+  template: '<input type="checkbox" :checked="checked" @change="$emit(\'change\')" />',
+  install: vi.fn((app) => {
+    app.component('Checkbox', mockCheckbox);
+  }),
+};
+
+const mockTooltip = {
+  name: 'Tooltip',
+  props: ['placement'],
+  template: '<div><slot /></div>',
+  install: vi.fn((app) => {
+    app.component('Tooltip', mockTooltip);
+  }),
+};
+
+const mockModal = {
+  name: 'Modal',
+  props: ['open', 'onClose'],
+  template: '<div v-if="open"><slot /></div>',
+  install: vi.fn((app) => {
+    app.component('Modal', mockModal);
+  }),
+};
+
+vi.mock('ant-design-vue', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    Button: mockButton,
+    Input: mockInput,
+    InputNumber: mockInputNumber,
+    Checkbox: mockCheckbox,
+    Tooltip: mockTooltip,
+    Modal: mockModal,
+  };
+});
 
 // Mock vue-router
-vi.mock('vue-router', () => ({
-  createRouter: vi.fn(() => ({
-    push: vi.fn(),
-    currentRoute: { value: { path: '/', params: {}, query: {} } },
-  })),
-  createWebHistory: vi.fn(),
-  useRouter: () => ({
-    push: vi.fn(),
-  }),
-}));
+vi.mock('vue-router', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    createRouter: vi.fn(() => ({
+      push: vi.fn(),
+      replace: vi.fn(),
+      go: vi.fn(),
+      back: vi.fn(),
+      forward: vi.fn(),
+      currentRoute: { value: { path: '/', params: {}, query: {} } },
+    })),
+    createWebHistory: vi.fn(),
+    createWebHashHistory: vi.fn(),
+    useRouter: () => ({
+      push: vi.fn(),
+      replace: vi.fn(),
+    }),
+    useRoute: () => ({
+      path: '/',
+      params: {},
+      query: {},
+    }),
+  };
+});
 
 describe('Register', () => {
   it('should render without crashing', () => {

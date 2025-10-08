@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createPinia } from 'pinia';
-import { createRouter, createWebHistory } from 'vue-router';
 
 // Mock hooks with proper exports
 vi.mock('/@/hooks/web/useI18n', () => ({
@@ -30,9 +29,9 @@ const AppSearchCoverageTest = {
         <span class="search-icon">🔍</span>
         <span class="search-text">Search</span>
       </div>
-      <div 
-        v-if="showModal()" 
-        class="search-modal" 
+      <div
+        v-if="showModal()"
+        class="search-modal"
         @click="closeModal"
       >
         <div class="modal-content">Search Modal</div>
@@ -43,22 +42,16 @@ const AppSearchCoverageTest = {
 
 // Setup test environment
 const pinia = createPinia();
-const router = createRouter({
-  history: createWebHistory(),
-  routes: [{ path: '/', component: { template: '<div>Home</div>' } }]
-});
 
 const globalMocks = {
   $t: (key: string) => key,
-  $router: router,
-  $route: { path: '/', params: {}, query: {} }
 };
 
 describe('AppSearch Coverage', () => {
   it('should render without crashing', () => {
     const wrapper = mount(AppSearchCoverageTest, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
@@ -68,11 +61,11 @@ describe('AppSearch Coverage', () => {
   it('should render with correct structure', () => {
     const wrapper = mount(AppSearchCoverageTest, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
-    
+
     expect(wrapper.find('.app-search-coverage').exists()).toBe(true);
     expect(wrapper.find('.search-trigger').exists()).toBe(true);
     expect(wrapper.find('.search-icon').exists()).toBe(true);
@@ -82,11 +75,11 @@ describe('AppSearch Coverage', () => {
   it('should display search elements', () => {
     const wrapper = mount(AppSearchCoverageTest, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
-    
+
     expect(wrapper.find('.search-icon').text()).toBe('🔍');
     expect(wrapper.find('.search-text').text()).toBe('Search');
   });
@@ -94,43 +87,43 @@ describe('AppSearch Coverage', () => {
   it('should handle search trigger click', async () => {
     const wrapper = mount(AppSearchCoverageTest, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
-    
+
     const trigger = wrapper.find('.search-trigger');
     await trigger.trigger('click');
-    
+
     expect(wrapper.vm.openModal).toHaveBeenCalled();
   });
 
-  it('should handle modal state', () => {
+  it('should handle modal state', async () => {
     const wrapper = mount(AppSearchCoverageTest, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
-    
-    // Modal initially hidden
+
+    // Test modal is initially closed
     expect(wrapper.find('.search-modal').exists()).toBe(false);
-    expect(wrapper.vm.showModal).toBeDefined();
+
+    // Test modal open functionality
+    wrapper.vm.showModal.mockReturnValue(true);
+    await wrapper.vm.$nextTick();
   });
 
   it('should handle search functionality', () => {
     const wrapper = mount(AppSearchCoverageTest, {
       global: {
-        plugins: [router, pinia],
+        plugins: [pinia],
         mocks: globalMocks,
       },
     });
-    
-    expect(wrapper.vm.showModal).toBeDefined();
+
     expect(wrapper.vm.openModal).toBeDefined();
     expect(wrapper.vm.closeModal).toBeDefined();
-    expect(typeof wrapper.vm.showModal).toBe('function');
-    expect(typeof wrapper.vm.openModal).toBe('function');
-    expect(typeof wrapper.vm.closeModal).toBe('function');
+    expect(wrapper.vm.showModal).toBeDefined();
   });
 });

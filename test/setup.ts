@@ -173,6 +173,11 @@ vi.mock('ant-design-vue', async (importOriginal) => {
     ...actual,
     message,
     notification,
+    Tooltip: addInstall({
+      name: 'ATooltip',
+      template: '<div class="ant-tooltip"><slot /><slot name="title" /></div>',
+      props: ['title', 'placement'],
+    }),
   };
 });
 
@@ -688,6 +693,43 @@ config.global.directives = {
 
 // Mock router guard setup
 vi.mock('/@/router/guard/index', () => ({ setupRouterGuard: vi.fn(() => {}) }));
+
+// Mock vue-router to prevent DOMException errors
+vi.mock('vue-router', () => {
+  const mockRouter = {
+    push: vi.fn().mockResolvedValue({}),
+    replace: vi.fn().mockResolvedValue({}),
+    go: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+    addRoute: vi.fn(),
+    removeRoute: vi.fn(),
+    getRoutes: vi.fn(() => []),
+    currentRoute: {
+      value: {
+        path: '/',
+        params: {},
+        query: {},
+        meta: {},
+        name: 'Home',
+      },
+    },
+  };
+
+  return {
+    createRouter: vi.fn(() => mockRouter),
+    createWebHistory: vi.fn(() => ({})),
+    createWebHashHistory: vi.fn(() => ({})),
+    createMemoryHistory: vi.fn(() => ({})),
+    useRouter: vi.fn(() => mockRouter),
+    useRoute: vi.fn(() => mockRouter.currentRoute.value),
+    RouterLink: {
+      name: 'RouterLink',
+      template: '<a><slot /></a>',
+      props: ['to'],
+    },
+  };
+});
 
 // Mock useMessage hook to prevent ant-design-vue import errors
 vi.mock('/@/hooks/web/useMessage', () => ({

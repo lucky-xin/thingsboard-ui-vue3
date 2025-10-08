@@ -29,8 +29,19 @@ export function createSimpleTransition(name: string, origin = 'top center 0', mo
 
       return () => {
         const Tag = !props.group ? Transition : TransitionGroup;
+        const transitionProps = {
+          name,
+          ...attrs,
+          onBeforeEnter,
+        };
+
+        // Only pass mode to Transition, not TransitionGroup
+        if (!props.group && props.mode) {
+          transitionProps.mode = props.mode;
+        }
+
         return (
-          <Tag name={name} mode={props.mode} {...attrs} onBeforeEnter={onBeforeEnter}>
+          <Tag {...transitionProps}>
             {() => getSlot(slots)}
           </Tag>
         );
@@ -49,17 +60,23 @@ export function createJavascriptTransition(name: string, functions: Recordable, 
     },
     setup(props, { attrs, slots }) {
       return () => {
+        const transitionProps = {
+          name,
+          ...attrs,
+          onBeforeEnter: functions.beforeEnter,
+          onEnter: functions.enter,
+          onLeave: functions.leave,
+          onAfterLeave: functions.afterLeave,
+          onLeaveCancelled: functions.afterLeave,
+        };
+
+        // Only pass mode if it exists
+        if (props.mode) {
+          transitionProps.mode = props.mode;
+        }
+
         return (
-          <Transition
-            name={name}
-            mode={props.mode}
-            {...attrs}
-            onBeforeEnter={functions.beforeEnter}
-            onEnter={functions.enter}
-            onLeave={functions.leave}
-            onAfterLeave={functions.afterLeave}
-            onLeaveCancelled={functions.afterLeave}
-          >
+          <Transition {...transitionProps}>
             {() => getSlot(slots)}
           </Transition>
         );

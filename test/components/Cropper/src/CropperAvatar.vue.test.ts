@@ -10,7 +10,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -42,7 +42,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -74,7 +74,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -106,7 +106,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -138,7 +138,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -170,7 +170,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -202,7 +202,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -234,7 +234,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -266,7 +266,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -298,7 +298,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -330,7 +330,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -362,7 +362,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -394,7 +394,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -426,7 +426,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -458,7 +458,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -490,7 +490,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -522,7 +522,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -554,7 +554,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -586,7 +586,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -618,7 +618,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -650,7 +650,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -682,7 +682,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -714,7 +714,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -746,7 +746,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -778,7 +778,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -810,7 +810,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -842,7 +842,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -874,7 +874,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -906,7 +906,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -938,7 +938,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -970,7 +970,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -1002,7 +1002,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -1034,7 +1034,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -1066,7 +1066,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -1098,7 +1098,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -1130,7 +1130,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -1162,7 +1162,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",
@@ -1194,7 +1194,7 @@ vi.mock("ant-design-vue", () => ({
   },
   Modal: {
     template: "<div class=\"ant-modal\"><slot></slot></div>",
-    props: ["visible", "title"]
+    props: ["open", "title"]
   },
   Form: {
     template: "<form class=\"ant-form\"><slot></slot></form>",

@@ -59,7 +59,7 @@ describe('Transition/index', () => {
 
     const wrapper = mount(FadeTransition, {
       slots: {
-        default: '<div>Fade content</div>',
+        default: '<div key="fade-content">Fade content</div>',
       },
     });
 
@@ -72,7 +72,7 @@ describe('Transition/index', () => {
 
     const wrapper = mount(ScaleTransition, {
       slots: {
-        default: '<div>Scale content</div>',
+        default: '<div key="scale-content">Scale content</div>',
       },
     });
 
@@ -85,7 +85,7 @@ describe('Transition/index', () => {
 
     const wrapper = mount(CollapseTransition, {
       slots: {
-        default: '<div>Collapse content</div>',
+        default: '<div key="collapse-content">Collapse content</div>',
       },
     });
 
@@ -98,7 +98,7 @@ describe('Transition/index', () => {
 
     const wrapper = mount(ExpandTransition, {
       slots: {
-        default: '<div>Expand content</div>',
+        default: '<div key="expand-content">Expand content</div>',
       },
     });
 
@@ -116,7 +116,7 @@ describe('Transition/index', () => {
         origin: 'center center 0',
       },
       slots: {
-        default: '<div>Props test content</div>',
+        default: '<div key="test-content">Props test content</div>',
       },
     });
 
@@ -135,7 +135,7 @@ describe('Transition/index', () => {
           mode,
         },
         slots: {
-          default: '<div>Mode test content</div>',
+          default: '<div key="mode-test-content">Mode test content</div>',
         },
       });
 
@@ -153,8 +153,8 @@ describe('Transition/index', () => {
       },
       slots: {
         default: [
-          '<div>Child 1</div>',
-          '<div>Child 2</div>',
+          '<div key="child-1">Child 1</div>',
+          '<div key="child-2">Child 2</div>',
         ],
       },
     });

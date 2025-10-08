@@ -45,15 +45,28 @@ vi.mock('/@/hooks/web/usePermission', () => ({
   })),
 }));
 
-vi.mock('/@/hooks/web/useI18n', () => ({
-  useI18n: vi.fn(() => ({
+vi.mock('/@/hooks/web/useI18n', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    useI18n: vi.fn(() => ({
+      t: vi.fn((key) => key),
+    })),
     t: vi.fn((key) => key),
-  })),
-}));
+  };
+});
 
-vi.mock('/@/components/Icon', () => ({
-  Icon: vi.fn(),
-}));
+vi.mock('/@/components/Icon', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    Icon: vi.fn(),
+    IconPicker: {
+      name: 'IconPicker',
+      template: '<div class="icon-picker"><slot /></div>',
+    },
+  };
+});
 
 vi.mock('/@/components/Table/src/const', () => ({
   ACTION_COLUMN_FLAG: 'action',

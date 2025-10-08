@@ -9,6 +9,11 @@ vi.mock('ant-design-vue', () => ({
     template: '<input data-testid="a-input" />',
     props: ['style', 'placeholder', 'class', 'value'],
   },
+  Button: {
+    name: 'AButton',
+    template: '<button data-testid="a-button"><slot></slot></button>',
+    props: ['type', 'size', 'disabled'],
+  },
   Popover: {
     name: 'APopover',
     template: '<div data-testid="a-popover"><slot></slot></div>',

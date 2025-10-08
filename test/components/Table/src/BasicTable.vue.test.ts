@@ -99,6 +99,15 @@ vi.mock('/@/components/Table/src/hooks/useTableContext', () => ({
   })),
 }));
 
+// Mock TableSelectionBar component
+vi.mock('/@/components/Table/src/components/TableSelectionBar.vue', () => ({
+  default: {
+    name: 'TableSelectionBar',
+    template: '<div class="table-selection-bar"><slot /></div>',
+    props: ['clearSelectedRowKeys', 'count'],
+  },
+}));
+
 // Mock useDesign hook
 vi.mock('/@/hooks/web/useDesign', () => ({
   useDesign: vi.fn(() => ({
@@ -241,6 +250,7 @@ vi.mock('/@/components/Table/src/components/TableHeader.vue', () => ({
   default: {
     name: 'TableHeader',
     template: '<div class="table-header"><slot /></div>',
+    props: ['title', 'tableSetting', 'showTableSetting', 'titleHelpMessage', 'showSelectionBar', 'clearSelectedRowKeys', 'count'],
   },
 }));
 

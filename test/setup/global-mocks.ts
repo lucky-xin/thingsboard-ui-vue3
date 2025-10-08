@@ -368,7 +368,7 @@ vi.mock('ant-design-vue', async () => {
     MenuItem: {
       name: 'AMenuItem',
       props: {
-        key: String,
+        itemKey: String,
         disabled: Boolean,
       },
       template: '<div class="ant-menu-item"><slot /></div>',
@@ -376,7 +376,7 @@ vi.mock('ant-design-vue', async () => {
     SubMenu: {
       name: 'ASubMenu',
       props: {
-        key: String,
+        subKey: String,
         title: String,
         disabled: Boolean,
       },
@@ -430,7 +430,7 @@ vi.mock('ant-design-vue', async () => {
     Drawer: {
       name: 'ADrawer',
       props: {
-        visible: Boolean,
+        open: Boolean,
         title: String,
         width: [String, Number],
         height: [String, Number],
@@ -440,7 +440,7 @@ vi.mock('ant-design-vue', async () => {
         closable: Boolean,
         destroyOnClose: Boolean,
       },
-      emits: ['close', 'update:visible'],
+      emits: ['close', 'update:open'],
       template: '<div class="ant-drawer"><slot /></div>',
     },
     Collapse: {
@@ -458,7 +458,7 @@ vi.mock('ant-design-vue', async () => {
     CollapsePanel: {
       name: 'ACollapsePanel',
       props: {
-        key: [String, Number],
+        panelKey: [String, Number],
         header: String,
         disabled: Boolean,
         showArrow: Boolean,

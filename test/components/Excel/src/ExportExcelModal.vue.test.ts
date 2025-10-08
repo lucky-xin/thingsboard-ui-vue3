@@ -8,7 +8,7 @@ vi.mock("ant-design-vue", async (importOriginal) => {
     ...actual,
     Modal: {
       template: "<div class=\"ant-modal\"><slot></slot></div>",
-      props: ["visible", "title", "width", "footer"]
+      props: ["open", "title", "width", "footer"]
     },
     Form: {
       template: "<form class=\"ant-form\"><slot></slot></form>",

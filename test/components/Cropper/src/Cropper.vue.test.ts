@@ -4,17 +4,27 @@ import Cropper from '/@/components/Cropper/src/Cropper';
 
 describe('Cropper', () => {
   it('should render without crashing', () => {
-    const wrapper = mount(Cropper);
+    const wrapper = mount(Cropper, {
+      props: {
+        src: 'test-image.jpg'
+      }
+    });
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should render with default props', () => {
-    const wrapper = mount(Cropper);
+    const wrapper = mount(Cropper, {
+      props: {
+        src: 'test-image.jpg'
+      }
+    });
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should handle props correctly', () => {
-    const props = {};
+    const props = {
+      src: 'test-image.jpg'
+    };
     const wrapper = mount(Cropper, {
       props,
     });
@@ -22,13 +32,21 @@ describe('Cropper', () => {
   });
 
   it('should emit events when expected', () => {
-    const wrapper = mount(Cropper);
+    const wrapper = mount(Cropper, {
+      props: {
+        src: 'test-image.jpg'
+      }
+    });
     // Add event testing based on component functionality
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should handle user interactions', () => {
-    const wrapper = mount(Cropper);
+    const wrapper = mount(Cropper, {
+      props: {
+        src: 'test-image.jpg'
+      }
+    });
     // Add interaction testing
     expect(wrapper.exists()).toBe(true);
   });

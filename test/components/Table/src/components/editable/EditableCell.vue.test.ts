@@ -127,8 +127,8 @@ vi.mock('/@/components/Table/src/componentMap', () => ({
   componentMap: {
     get: vi.fn((key) => {
       const components: Record<string, any> = {
-        Input: { name: 'AInput' },
-        InputNumber: { name: 'AInputNumber' },
+        Input: { name: 'AInput', template: '<input class="ant-input" />' },
+        InputNumber: { name: 'AInputNumber', template: '<input class="ant-input-number" />' },
         Select: { name: 'ASelect' },
         AutoComplete: { name: 'AAutoComplete' },
         Switch: { name: 'ASwitch' },

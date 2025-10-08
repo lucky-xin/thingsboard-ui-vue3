@@ -15,6 +15,7 @@ vi.mock('/@/settings/projectSetting', () => ({
   default: {
     useErrorHandle: true,
   },
+  t: vi.fn((key) => key),
 }));
 
 // Mock global window properties

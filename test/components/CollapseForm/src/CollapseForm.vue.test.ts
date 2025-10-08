@@ -9,7 +9,7 @@ vi.mock('ant-design-vue', () => ({
     props: ['activeKey', 'accordion', 'bordered', 'destroyInactivePanel'],
     Panel: {
       template: '<div class="ant-collapse-panel"><slot></slot></div>',
-      props: ['key', 'header', 'disabled', 'showArrow', 'forceRender'],
+      props: ['panelKey', 'header', 'disabled', 'showArrow', 'forceRender'],
     },
   },
   Button: {

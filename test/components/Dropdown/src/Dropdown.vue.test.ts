@@ -12,7 +12,7 @@ vi.mock("ant-design-vue", () => ({
     props: ["mode", "selectedKeys"],
     Item: {
       template: "<div class=\"ant-menu-item\"><slot></slot></div>",
-      props: ["key", "disabled"]
+      props: ["itemKey", "disabled"]
     },
     Divider: {
       template: "<div class=\"ant-menu-divider\"></div>"

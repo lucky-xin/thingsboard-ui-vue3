@@ -9,6 +9,7 @@ vi.mock('/@/utils/is', () => ({
 vi.mock('/@/components/ContextMenu/src/ContextMenu.vue', () => ({
   default: {
     name: 'ContextMenu',
+    template: '<div class="mock-context-menu"><slot /></div>',
   },
 }));
 

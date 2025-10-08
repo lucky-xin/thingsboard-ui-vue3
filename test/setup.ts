@@ -714,6 +714,7 @@ vi.mock('vue-router', () => {
         name: 'Home',
       },
     },
+    install: vi.fn(), // Add install method to prevent Vue warnings
   };
 
   return {
@@ -759,3 +760,59 @@ vi.mock('/@/hooks/web/useMessage', () => ({
     showMessage: vi.fn(),
   }),
 }));
+
+// Mock Ant Design Vue components globally to prevent component resolution warnings
+vi.mock('ant-design-vue', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    Input: {
+      name: 'AInput',
+      template: '<input class="ant-input"><slot name="addonAfter" /></input>',
+      props: ['disabled', 'style', 'placeholder', 'class', 'value'],
+    },
+    'a-input': {
+      name: 'AInput',
+      template: '<input class="ant-input"><slot name="addonAfter" /></input>',
+      props: ['disabled', 'style', 'placeholder', 'class', 'value'],
+    },
+    Popover: {
+      name: 'APopover',
+      template: '<div class="ant-popover"><slot /><slot name="title" /><slot name="content" /></div>',
+      props: ['placement', 'trigger', 'value', 'overlayClassName'],
+    },
+    'a-popover': {
+      name: 'APopover',
+      template: '<div class="ant-popover"><slot /><slot name="title" /><slot name="content" /></div>',
+      props: ['placement', 'trigger', 'value', 'overlayClassName'],
+    },
+    Pagination: {
+      name: 'APagination',
+      template: '<div class="ant-pagination"><slot /></div>',
+      props: ['size', 'pageSize', 'total', 'showLessItems', 'showSizeChanger'],
+    },
+    'a-pagination': {
+      name: 'APagination',
+      template: '<div class="ant-pagination"><slot /></div>',
+      props: ['size', 'pageSize', 'total', 'showLessItems', 'showSizeChanger'],
+    },
+    Empty: {
+      name: 'AEmpty',
+      template: '<div class="ant-empty"><slot /></div>',
+    },
+    'a-empty': {
+      name: 'AEmpty',
+      template: '<div class="ant-empty"><slot /></div>',
+    },
+    Tooltip: {
+      name: 'ATooltip',
+      template: '<div class="ant-tooltip"><slot /><slot name="title" /></div>',
+      props: ['title', 'placement'],
+    },
+    'a-tooltip': {
+      name: 'ATooltip',
+      template: '<div class="ant-tooltip"><slot /><slot name="title" /></div>',
+      props: ['title', 'placement'],
+    },
+  };
+});

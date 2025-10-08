@@ -27,13 +27,15 @@ vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
 import QrcodeLogin from '/@/components/Authentication/src/QrcodeLogin';
 
 // Create a simple router for testing
-const router = createRouter({
+const router: any = createRouter({
   history: createMemoryHistory(),
   routes: [
     { path: '/', component: { template: '<div>Home</div>' } },
     { path: '/auth/login', component: { template: '<div>Login</div>' } },
   ],
 });
+// Add install method to prevent Vue warnings
+router.install = vi.fn();
 
 describe('QrcodeLogin coverage', () => {
   it('should render the component', () => {

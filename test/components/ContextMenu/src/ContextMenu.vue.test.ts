@@ -14,13 +14,16 @@ vi.mock('ant-design-vue', () => ({
   Menu: {
     name: 'Menu',
     template: '<div class="mock-menu"><slot /></div>',
+    props: ['inlineIndent', 'mode', 'class', 'style'],
     Item: {
       name: 'MenuItem',
       template: '<div class="mock-menu-item"><slot /></div>',
+      props: ['disabled', 'class', 'itemKey'],
     },
     SubMenu: {
       name: 'SubMenu',
-      template: '<div class="mock-sub-menu"><slot /></div>',
+      template: '<div class="mock-sub-menu"><slot name="title" /><slot /></div>',
+      props: ['disabled', 'popupClassName', 'subKey'],
     },
   },
   Divider: {

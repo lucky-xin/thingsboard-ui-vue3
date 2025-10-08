@@ -66,13 +66,15 @@ const mockT = vi.fn((key) => key);
 import Register from '/@/components/Authentication/src/Register';
 
 // Create a simple router for testing
-const router = createRouter({
+const router: any = createRouter({
   history: createMemoryHistory(),
   routes: [
     { path: '/', component: { template: '<div>Home</div>' } },
     { path: '/auth/login', component: { template: '<div>Login</div>' } },
   ],
 });
+// Add install method to prevent Vue warnings
+router.install = vi.fn();
 
 // Create pinia instance
 const pinia = createPinia();

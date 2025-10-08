@@ -45,21 +45,18 @@ const AppSearchTestComponent = {
         </div>
       </div>
     </div>
-  `,
-  install: vi.fn((app: any) => {
-    if (app?.component) {
-      app.component('AppSearchTest', AppSearchTestComponent);
-    }
-  })
+  `
 };
 
 // Setup test environment
 const pinia = createPinia();
 setActivePinia(pinia);
-const router = createRouter({
+const router: any = createRouter({
   history: createWebHistory(),
   routes: [{ path: '/', component: { template: '<div>Home</div>' } }]
 });
+// Add install method to prevent Vue warnings
+router.install = vi.fn();
 
 const globalMocks = {
   $t: (key: string) => key,

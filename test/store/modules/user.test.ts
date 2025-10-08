@@ -1,24 +1,14 @@
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
-  }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
-}));
+// Mock localStorage
+const localStorageMock = {
+  setItem: vi.fn(),
+  getItem: vi.fn(),
+  removeItem: vi.fn(),
+  clear: vi.fn(),
+};
 
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
-}));
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
+});
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useUserStore, useUserStoreWithOut, useEmitter } from '/@/store/modules/user';
@@ -27,34 +17,11 @@ import { TOKEN_KEY, USER_INFO_KEY, SESSION_TIMEOUT_KEY, REFRESH_TOKEN_KEY, AUTHO
 import { createPinia, setActivePinia } from 'pinia';
 
 // Mock the store with proper Pinia instance
-vi.mock('/@/store', async (importOriginal) => {
-  const actual = await importOriginal();
+vi.mock('/@/store', async () => {
+  const pinia = createPinia();
   return {
-    ...actual,
-    store: { 
-      // Mock the Pinia instance methods that might be used
-      use: vi.fn(),
-      _s: new Map(), // Mock the stores map
-      _p: [], // Mock the plugins array
-      install: vi.fn(),
-      state: {
-        value: {}
-      },
-      _e: {
-        active: true,
-        run: vi.fn((fn) => fn())
-      }
-    },
-    useAppStore: () => ({
-      getTheme: vi.fn(() => "light"),
-      setTheme: vi.fn(),
-      locale: "en",
-      setLocale: vi.fn()
-    }),
-    useUserStore: () => ({
-      userInfo: { name: "Test User" },
-      isLoggedIn: true
-    })
+    store: pinia,
+    setupStore: vi.fn(),
   };
 });
 

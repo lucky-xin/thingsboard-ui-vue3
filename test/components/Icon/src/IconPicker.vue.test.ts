@@ -2,32 +2,6 @@ import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import IconPicker from '/@/components/Icon/src/IconPicker';
 
-// Mock Ant Design Vue components
-vi.mock('ant-design-vue', async () => {
-  const actual = await vi.importActual('ant-design-vue');
-  return {
-    ...actual,
-    Input: {
-      name: 'AInput',
-      template: '<input class="ant-input"><slot name="addonAfter" /></input>',
-      props: ['disabled', 'style', 'placeholder', 'class', 'value'],
-    },
-    Popover: {
-      name: 'APopover',
-      template: '<div class="ant-popover"><slot /><slot name="title" /><slot name="content" /></div>',
-      props: ['placement', 'trigger', 'value', 'overlayClassName'],
-    },
-    Pagination: {
-      name: 'APagination',
-      template: '<div class="ant-pagination"><slot /></div>',
-      props: ['size', 'pageSize', 'total', 'showLessItems', 'showSizeChanger'],
-    },
-    Empty: {
-      name: 'AEmpty',
-      template: '<div class="ant-empty"><slot /></div>',
-    },
-  };
-});
 
 // Mock Icon component
 vi.mock('/@/components/Icon/src/Icon.vue', () => ({
@@ -92,22 +66,43 @@ vi.mock('/@/hooks/web/useMessage', () => ({
 
 describe('IconPicker', () => {
   it('should render without crashing', () => {
-    const wrapper = mount(IconPicker);
+    const wrapper = mount(IconPicker, {
+      ...mountOptions,
+    });
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should render with default props', () => {
-    const wrapper = mount(IconPicker);
+    const wrapper = mount(IconPicker, {
+      ...mountOptions,
+    });
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should handle user interactions', () => {
-    const wrapper = mount(IconPicker);
+    const wrapper = mount(IconPicker, {
+      ...mountOptions,
+    });
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should have correct component structure', () => {
-    const wrapper = mount(IconPicker);
+    const wrapper = mount(IconPicker, {
+      ...mountOptions,
+    });
     expect(wrapper.exists()).toBe(true);
   });
 });
+
+const mountOptions = {
+  global: {
+    stubs: {
+      'a-input': { template: '<input />' },
+    },
+    config: {
+      compilerOptions: {
+        isCustomElement: (tag: string) => tag.startsWith('a-'),
+      },
+    },
+  },
+};

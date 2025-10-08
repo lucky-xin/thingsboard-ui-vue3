@@ -67,7 +67,7 @@ vi.mock('vue-router', async (importOriginal) => {
 import Login from '/@/components/Authentication/src/Login';
 
 // Create a simple router for testing
-const router = createRouter({
+const router: any = createRouter({
   history: createMemoryHistory(),
   routes: [
     { path: '/', component: { template: '<div>Home</div>' } },
@@ -77,6 +77,8 @@ const router = createRouter({
     { path: '/auth/register', component: { template: '<div>Register</div>' } },
   ],
 });
+// Add install method to prevent Vue warnings
+router.install = vi.fn();
 
 describe('Login coverage', () => {
   it('should render without crashing', () => {

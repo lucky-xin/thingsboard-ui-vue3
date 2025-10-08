@@ -5,10 +5,12 @@ import { createPinia } from 'pinia';
 import Register from '/@/components/Authentication/src/Register';
 
 // Mock router
-const router = createRouter({
+const router: any = createRouter({
   history: createWebHistory(),
   routes: [],
 });
+// Add install method to prevent Vue warnings
+router.install = vi.fn();
 
 // Mock pinia
 const pinia = createPinia();

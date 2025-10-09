@@ -70,7 +70,23 @@ vi.mock('/@/hooks/core/useAttrs', () => ({
 }));
 
 vi.mock('/@/components/Drawer/src/props', () => ({
-  basicProps: {},
+  basicProps: {
+    isDetail: { type: Boolean },
+    title: { type: String, default: '' },
+    loadingText: { type: String },
+    showDetailBack: { type: Boolean, default: true },
+    open: { type: Boolean },
+    loading: { type: Boolean },
+    maskClosable: { type: Boolean, default: true },
+    getContainer: { type: [Object, String] },
+    closeFunc: { type: [Function, Object], default: null },
+    destroyOnClose: { type: Boolean },
+    wrapClassName: { type: String },
+    widthResize: { type: Boolean, default: true },
+    width: { type: [Number, String] },
+    mask: { type: Boolean, default: true },
+    maskStyle: { type: Object },
+  },
 }));
 
 describe('components/Drawer/src/BasicDrawer', () => {

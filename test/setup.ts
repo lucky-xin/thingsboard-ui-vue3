@@ -5,6 +5,11 @@ import { config } from '@vue/test-utils';
 import { defineComponent } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 
+// Mock CSS imports globally
+vi.mock('virtual:uno.css', () => ({}));
+vi.mock('ant-design-vue/dist/reset.css', () => ({}));
+vi.mock('/@/design/index.less', () => ({}));
+
 // helper: attach install method to mocked components and return SAME reference
 function addInstall<T extends any>(comp: T & Record<string, any>, name?: string) {
   if (!comp.__name && (comp.name || name)) comp.__name = comp.name || name;
@@ -733,6 +738,7 @@ vi.mock('vue-router', () => {
 });
 
 // Mock useMessage hook to prevent ant-design-vue import errors
+// Note: This mock is overridden in individual test files
 vi.mock('/@/hooks/web/useMessage', () => ({
   useMessage: () => ({
     createMessage: {
@@ -762,6 +768,7 @@ vi.mock('/@/hooks/web/useMessage', () => ({
 }));
 
 // Mock Ant Design Vue components globally to prevent component resolution warnings
+// Note: This mock is overridden in individual test files
 vi.mock('ant-design-vue', async (importOriginal) => {
   const actual = await importOriginal();
   return {

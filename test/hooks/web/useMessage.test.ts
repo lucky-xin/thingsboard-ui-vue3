@@ -1,27 +1,27 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useMessage } from '/@/hooks/web/useMessage';
 
-// Mock external dependencies
+// Mock external dependencies minimally
 vi.mock('/@/hooks/web/useI18n', () => ({
-  useI18n: vi.fn(() => ({
-    t: vi.fn((key) => {
-      const translations = {
+  useI18n: () => ({
+    t: (key: string) => {
+      const translations: Record<string, string> = {
         'common.okText': 'OK',
         'sys.message.error': 'error',
         'sys.message.warning': 'warning',
         'sys.message.success': 'success',
       };
       return translations[key] || key;
-    }),
-  })),
+    },
+  }),
 }));
 
 vi.mock('/@/utils/is', () => ({
-  isString: vi.fn((value) => typeof value === 'string'),
+  isString: (value: any) => typeof value === 'string',
 }));
 
 vi.mock('/@/components/Icon', () => ({
-  Icon: vi.fn((props) => props),
+  Icon: (props: any) => props,
 }));
 
 vi.mock('ant-design-vue', () => ({
@@ -51,9 +51,9 @@ vi.mock('ant-design-vue', () => ({
 }));
 
 vi.mock('@ant-design/icons-vue', () => ({
-  InfoCircleFilled: vi.fn(),
-  CheckCircleFilled: vi.fn(),
-  CloseCircleFilled: vi.fn(),
+  InfoCircleFilled: () => 'InfoCircleFilled',
+  CheckCircleFilled: () => 'CheckCircleFilled',
+  CloseCircleFilled: () => 'CloseCircleFilled',
 }));
 
 describe('hooks/web/useMessage', () => {

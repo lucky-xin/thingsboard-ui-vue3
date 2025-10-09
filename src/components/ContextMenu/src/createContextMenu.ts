@@ -71,7 +71,6 @@ export const createContextMenu = function (options: CreateContextOptions) {
       remove();
       resolve(arg);
     };
-    remove();
     body.appendChild(container);
     body.addEventListener('click', handleClick);
     body.addEventListener('scroll', handleClick);

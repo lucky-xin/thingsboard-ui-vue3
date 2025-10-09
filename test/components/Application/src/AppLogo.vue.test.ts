@@ -1,149 +1,247 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { createPinia } from 'pinia';
+import { createPinia, setActivePinia } from 'pinia';
+import AppLogo from '/@/components/Application/src/AppLogo.vue';
 
-// Mock state management and global dependencies
-vi.mock("/@/store", () => ({
-  useAppStore: () => ({
-    getTheme: vi.fn(() => "light"),
-    setTheme: vi.fn(),
-    locale: "en",
-    setLocale: vi.fn()
+// Mock dependencies
+vi.mock('/@/hooks/setting', () => ({
+  useGlobSetting: () => ({
+    title: 'Test App',
   }),
-  useUserStore: () => ({
-    userInfo: { name: "Test User" },
-    isLoggedIn: true
-  })
 }));
 
-vi.mock("/@/hooks/setting/useLocale", () => ({
-  useLocale: () => ({
-    getLocale: vi.fn(() => ({ lang: "en" })),
-    changeLocale: vi.fn(),
-    t: vi.fn((key) => key)
-  })
+// Mock useGo hook
+const mockGo = vi.fn();
+vi.mock('/@/hooks/web/usePage', () => ({
+  useGo: () => mockGo,
 }));
 
-// Create test component for AppLogo functionality
-const AppLogoTest = {
-  name: 'AppLogo',
-  setup() {
-    const showTitle = vi.fn(() => true);
-    const alwaysShowTitle = vi.fn(() => false);
-    return {
-      showTitle,
-      alwaysShowTitle
-    };
+vi.mock('/@/hooks/setting/useMenuSetting', () => ({
+  useMenuSetting: () => ({
+    getCollapsedShowTitle: vi.fn(() => false),
+  }),
+}));
+
+vi.mock('/@/hooks/web/useDesign', () => ({
+  useDesign: () => ({
+    prefixCls: 'jeesite-app-logo',
+  }),
+}));
+
+vi.mock('/@/enums/pageEnum', () => ({
+  PageEnum: {
+    BASE_HOME: '/dashboard',
   },
-  template: `
-    <div class="app-logo">
-      <div class="logo-container">
-        <img class="logo-image" src="/logo.png" alt="Logo" />
-        <span v-if="showTitle() || alwaysShowTitle()" class="logo-title">
-          App Title
-        </span>
-      </div>
-    </div>
-  `
-};
+}));
 
-// Setup test environment
-const pinia = createPinia();
-
-const globalMocks = {
-  $t: (key: string) => key,
-};
+vi.mock('/@/store/modules/user', () => ({
+  useUserStore: () => ({
+    getPageCacheByKey: vi.fn((key, defaultValue) => defaultValue),
+    getUserInfo: {
+      homePath: '/custom-home',
+    },
+  }),
+}));
 
 describe('AppLogo', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+  });
+
   it('should render without crashing', () => {
-    const wrapper = mount(AppLogoTest, {
-      global: {
-        plugins: [pinia],
-        mocks: globalMocks,
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: true,
       },
     });
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should render with correct structure', () => {
-    const wrapper = mount(AppLogoTest, {
-      global: {
-        plugins: [pinia],
-        mocks: globalMocks,
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: true,
       },
     });
 
-    expect(wrapper.find('.app-logo').exists()).toBe(true);
-    expect(wrapper.find('.logo-container').exists()).toBe(true);
-    expect(wrapper.find('.logo-image').exists()).toBe(true);
-  });
-
-  it('should display logo image', () => {
-    const wrapper = mount(AppLogoTest, {
-      global: {
-        plugins: [pinia],
-        mocks: globalMocks,
-      },
-    });
-
-    const logoImage = wrapper.find('.logo-image');
-    expect(logoImage.exists()).toBe(true);
-    expect(logoImage.attributes('src')).toBe('/logo.png');
-    expect(logoImage.attributes('alt')).toBe('Logo');
+    expect(wrapper.find('.anticon').exists()).toBe(true);
+    expect(wrapper.find('.jeesite-app-logo').exists()).toBe(true);
   });
 
   it('should display title when showTitle is true', () => {
-    const wrapper = mount(AppLogoTest, {
-      global: {
-        plugins: [pinia],
-        mocks: globalMocks,
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: true,
       },
     });
 
-    // showTitle() returns true by default
-    expect(wrapper.find('.logo-title').exists()).toBe(true);
-    expect(wrapper.find('.logo-title').text()).toBe('App Title');
+    expect(wrapper.find('.jeesite-app-logo__title').exists()).toBe(true);
+    expect(wrapper.find('.jeesite-app-logo__title').text()).toBe('Test App');
   });
 
-  it('should handle logo functionality', () => {
-    const wrapper = mount(AppLogoTest, {
-      global: {
-        plugins: [pinia],
-        mocks: globalMocks,
+  it('should hide title when showTitle is false', () => {
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: false,
       },
     });
 
-    expect(wrapper.vm.showTitle).toBeDefined();
-    expect(wrapper.vm.alwaysShowTitle).toBeDefined();
-    expect(typeof wrapper.vm.showTitle).toBe('function');
-    expect(typeof wrapper.vm.alwaysShowTitle).toBe('function');
+    // When showTitle is false, the title div should not be visible but may still exist in DOM
+    const titleDiv = wrapper.find('.jeesite-app-logo__title');
+    expect(titleDiv.exists()).toBe(true);
+    expect(titleDiv.isVisible()).toBe(false);
+    expect(wrapper.find('img').exists()).toBe(true);
   });
 
-  it('should have proper component structure', () => {
-    const wrapper = mount(AppLogoTest, {
-      global: {
-        plugins: [pinia],
-        mocks: globalMocks,
+  it('should display logo image when showTitle is false', () => {
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: false,
       },
     });
 
-    expect(wrapper.html()).toContain('app-logo');
-    expect(wrapper.html()).toContain('logo-container');
-    expect(wrapper.html()).toContain('logo-image');
+    const logoImage = wrapper.find('img');
+    expect(logoImage.exists()).toBe(true);
+    // The src attribute will be transformed by Vite, so we check if it contains the logo path
+    expect(logoImage.attributes('src')).toContain('logo.png');
+    expect(logoImage.attributes('alt')).toBe('Application Logo - Click to go home');
   });
 
-  it('should render logo with all required elements', () => {
-    const wrapper = mount(AppLogoTest, {
-      global: {
-        plugins: [pinia],
-        mocks: globalMocks,
+  it('should apply theme class', () => {
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: true,
+        theme: 'dark',
       },
     });
 
-    // Check all main elements exist
-    expect(wrapper.find('.app-logo').exists()).toBe(true);
-    expect(wrapper.find('.logo-container').exists()).toBe(true);
-    expect(wrapper.find('.logo-image').exists()).toBe(true);
-    expect(wrapper.find('.logo-title').exists()).toBe(true);
+    expect(wrapper.find('.jeesite-app-logo.dark').exists()).toBe(true);
+  });
+
+  it('should apply light theme class', () => {
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: true,
+        theme: 'light',
+      },
+    });
+
+    expect(wrapper.find('.jeesite-app-logo.light').exists()).toBe(true);
+  });
+
+  it('should handle alwaysShowTitle prop', () => {
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: true,
+        alwaysShowTitle: true,
+      },
+    });
+
+    expect(wrapper.find('.jeesite-app-logo__title').exists()).toBe(true);
+    expect(wrapper.find('.jeesite-app-logo__title').classes()).not.toContain('xs:opacity-0');
+  });
+
+  it('should handle alwaysShowTitle false', () => {
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: true,
+        alwaysShowTitle: false,
+      },
+    });
+
+    expect(wrapper.find('.jeesite-app-logo__title').exists()).toBe(true);
+    expect(wrapper.find('.jeesite-app-logo__title').classes()).toContain('xs:opacity-0');
+  });
+
+  it('should handle click event', async () => {
+    const mockGo = vi.fn();
+    // Mock the useGo hook directly
+    vi.doMock('/@/hooks/web/usePage', () => ({
+      useGo: () => mockGo,
+    }));
+
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: true,
+      },
+    });
+
+    await wrapper.find('.anticon').trigger('click');
+    expect(mockGo).toHaveBeenCalledWith('/custom-home');
+  });
+
+  it('should use default home path when user info is not available', async () => {
+    // Mock user store with null getUserInfo
+    vi.doMock('/@/store/modules/user', () => ({
+      useUserStore: () => ({
+        getPageCacheByKey: vi.fn((key, defaultValue) => defaultValue),
+        getUserInfo: null,
+      }),
+    }));
+
+    const mockGo = vi.fn();
+    vi.doMock('/@/hooks/web/usePage', () => ({
+      useGo: () => mockGo,
+    }));
+
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: true,
+      },
+    });
+
+    await wrapper.find('.anticon').trigger('click');
+    expect(mockGo).toHaveBeenCalledWith('/dashboard');
+  });
+
+  it('should validate theme prop', () => {
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: true,
+        theme: 'invalid',
+      },
+    });
+
+    // Invalid theme should not be applied as a class
+    expect(wrapper.find('.jeesite-app-logo.invalid').exists()).toBe(false);
+    // But the component should still render
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should handle collapsed show title', () => {
+    // Mock useMenuSetting to return true for getCollapsedShowTitle
+    vi.doMock('/@/hooks/setting/useMenuSetting', () => ({
+      useMenuSetting: () => ({
+        getCollapsedShowTitle: vi.fn(() => true),
+      }),
+    }));
+
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: true,
+      },
+    });
+
+    expect(wrapper.find('.jeesite-app-logo.collapsed-show-title').exists()).toBe(true);
+  });
+
+  it('should get title from user store cache', () => {
+    const mockGetPageCacheByKey = vi.fn(() => 'Cached Title');
+    // Mock user store with cached title
+    vi.doMock('/@/store/modules/user', () => ({
+      useUserStore: () => ({
+        getPageCacheByKey: mockGetPageCacheByKey,
+        getUserInfo: { homePath: '/custom-home' },
+      }),
+    }));
+
+    const wrapper = mount(AppLogo, {
+      props: {
+        showTitle: true,
+      },
+    });
+
+    expect(mockGetPageCacheByKey).toHaveBeenCalledWith('title', 'Test App');
+    expect(wrapper.find('.jeesite-app-logo__title').text()).toBe('Cached Title');
   });
 });

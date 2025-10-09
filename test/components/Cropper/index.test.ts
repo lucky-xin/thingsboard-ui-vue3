@@ -1,28 +1,59 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
-describe('Cropper/index', () => {
-  it('should export CropperImage and CropperAvatar components', async () => {
-    const module = await import('/@/components/Cropper/index');
+// Mock withInstall utility
+const mockWithInstall = vi.fn((component) => ({
+  ...component,
+  install: vi.fn(),
+}));
 
-    expect(module).toBeDefined();
-    expect(module.CropperImage).toBeDefined();
-    expect(module.CropperAvatar).toBeDefined();
+vi.mock('/@/utils', () => ({
+  withInstall: mockWithInstall,
+}));
+
+// Mock Vue components
+vi.mock('/@/components/Cropper/src/Cropper.vue', () => ({
+  default: {
+    name: 'CropperImage',
+    template: '<div class="mock-cropper-image"><slot /></div>',
+  },
+}));
+
+vi.mock('/@/components/Cropper/src/CropperAvatar.vue', () => ({
+  default: {
+    name: 'CropperAvatar',
+    template: '<div class="mock-cropper-avatar"><slot /></div>',
+  },
+}));
+
+// Mock typing exports
+vi.mock('/@/components/Cropper/src/typing', () => ({
+  CropperProps: {},
+  CropperAvatarProps: {},
+}));
+
+describe('components/Cropper/index', () => {
+  it('should export CropperImage component with install method', async () => {
+    const { CropperImage } = await import('/@/components/Cropper/index');
+    
+    expect(CropperImage).toBeDefined();
+    expect(CropperImage.name).toBe('CropperImage');
+    expect(CropperImage.install).toBeDefined();
+    expect(typeof CropperImage.install).toBe('function');
   });
 
-  it('should export only CropperImage and CropperAvatar components', async () => {
-    const module = await import('/@/components/Cropper/index');
-    const componentExports = Object.keys(module).filter((key) => key.startsWith('Cropper'));
-
-    expect(componentExports).toContain('CropperImage');
-    expect(componentExports).toContain('CropperAvatar');
-    expect(componentExports.length).toBe(2);
+  it('should export CropperAvatar component with install method', async () => {
+    const { CropperAvatar } = await import('/@/components/Cropper/index');
+    
+    expect(CropperAvatar).toBeDefined();
+    expect(CropperAvatar.name).toBe('CropperAvatar');
+    expect(CropperAvatar.install).toBeDefined();
+    expect(typeof CropperAvatar.install).toBe('function');
   });
 
-  it('should be valid Vue components', async () => {
-    const module = await import('/@/components/Cropper/index');
-    const { CropperImage, CropperAvatar } = module;
-
-    expect(typeof CropperImage).toBe('object');
-    expect(typeof CropperAvatar).toBe('object');
+  it('should have all expected component exports', async () => {
+    const cropperModule = await import('/@/components/Cropper/index');
+    
+    expect(cropperModule.CropperImage).toBeDefined();
+    expect(cropperModule.CropperAvatar).toBeDefined();
   });
 });

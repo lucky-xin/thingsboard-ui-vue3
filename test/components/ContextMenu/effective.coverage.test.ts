@@ -50,8 +50,10 @@ Object.defineProperty(document, 'body', {
 });
 
 // Mock document createElement
-const mockContainer = document.createElement('div');
-vi.spyOn(document, 'createElement').mockReturnValue(mockContainer);
+const createElementSpy = vi.spyOn(document, 'createElement');
+createElementSpy.mockImplementation(function (tagName) {
+  return (document.constructor as any).prototype.createElement.call(document, tagName);
+});
 
 // Mock isClient utility
 vi.mock('/@/utils/is', () => ({
@@ -159,10 +161,6 @@ describe('ContextMenu effective coverage', () => {
   });
 
   it('should cover createContextMenu function completely', async () => {
-    // Mock DOM APIs for createContextMenu
-    const mockContainer = document.createElement('div');
-    vi.spyOn(document, 'createElement').mockReturnValue(mockContainer);
-
     const event = new MouseEvent('contextmenu', {
       clientX: 150,
       clientY: 200,
@@ -187,10 +185,6 @@ describe('ContextMenu effective coverage', () => {
   }, 10000); // Add timeout to prevent test from timing out
 
   it('should cover createContextMenu with various options', () => {
-    // Mock DOM APIs
-    const mockContainer = document.createElement('div');
-    vi.spyOn(document, 'createElement').mockReturnValue(mockContainer);
-
     // Test with styles
     createContextMenu({
       styles: { backgroundColor: 'red' },

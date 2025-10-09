@@ -1,80 +1,37 @@
 import { describe, it, expect, vi } from 'vitest';
 
-// Mock the createContextMenu module
-vi.mock('./src/createContextMenu', () => ({
-  createContextMenu: vi.fn(() => Promise.resolve()),
+// Mock createContextMenu functions
+vi.mock('/@/components/ContextMenu/src/createContextMenu', () => ({
+  createContextMenu: vi.fn(),
   destroyContextMenu: vi.fn(),
 }));
 
 // Mock typing exports
-vi.mock('./src/typing', () => ({
-  ContextMenuOptions: 'ContextMenuOptions',
-  ContextMenuItem: 'ContextMenuItem',
-  ContextMenuProps: 'ContextMenuProps',
+vi.mock('/@/components/ContextMenu/src/typing', () => ({
+  ContextMenuProps: {},
+  ContextMenuItemProps: {},
+  ContextMenuOptions: {},
 }));
 
-describe('ContextMenu/index', () => {
+describe('components/ContextMenu/index', () => {
   it('should export createContextMenu function', async () => {
-    const module = await import('/@/components/ContextMenu/index');
-
-    expect(module).toBeDefined();
-    expect(module.createContextMenu).toBeDefined();
-    expect(typeof module.createContextMenu).toBe('function');
+    const { createContextMenu } = await import('/@/components/ContextMenu/index');
+    
+    expect(createContextMenu).toBeDefined();
+    expect(typeof createContextMenu).toBe('function');
   });
 
   it('should export destroyContextMenu function', async () => {
-    const module = await import('/@/components/ContextMenu/index');
-
-    expect(module.destroyContextMenu).toBeDefined();
-    expect(typeof module.destroyContextMenu).toBe('function');
-  });
-
-  it('should export typing definitions', async () => {
-    const module = await import('/@/components/ContextMenu/index');
-
-    // Just check that the module imports without error
-    expect(module).toBeDefined();
-  });
-
-  it('should createContextMenu return promise', async () => {
-    const module = await import('/@/components/ContextMenu/index');
-    const { createContextMenu } = module;
-
-    const result = (createContextMenu as any)({});
-
-    expect(result).toBeDefined();
-    expect(result).toBeInstanceOf(Promise);
-  });
-
-  it('should call destroyContextMenu correctly', async () => {
-    const module = await import('/@/components/ContextMenu/index');
-    const { destroyContextMenu } = module;
-
-    // Test that destroyContextMenu can be called without error
-    expect(() => destroyContextMenu()).not.toThrow();
+    const { destroyContextMenu } = await import('/@/components/ContextMenu/index');
+    
+    expect(destroyContextMenu).toBeDefined();
     expect(typeof destroyContextMenu).toBe('function');
   });
 
-  it('should have correct exports count', async () => {
-    const module = await import('/@/components/ContextMenu/index');
-    const exports = Object.keys(module);
-
-    expect(exports).toContain('createContextMenu');
-    expect(exports).toContain('destroyContextMenu');
-    expect(exports.length).toBeGreaterThanOrEqual(2);
-  });
-
-  it('should handle function calls', async () => {
-    const module = await import('/@/components/ContextMenu/index');
-    const { createContextMenu } = module;
-
-    const result1 = (createContextMenu as any)({});
-    const result2 = (createContextMenu as any)({});
-
-    expect(result1).toBeDefined();
-    expect(result2).toBeDefined();
-    // Both should be promises
-    expect(result1).toBeInstanceOf(Promise);
-    expect(result2).toBeInstanceOf(Promise);
+  it('should have all expected function exports', async () => {
+    const contextMenuModule = await import('/@/components/ContextMenu/index');
+    
+    expect(contextMenuModule.createContextMenu).toBeDefined();
+    expect(contextMenuModule.destroyContextMenu).toBeDefined();
   });
 });

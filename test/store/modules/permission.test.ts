@@ -338,6 +338,10 @@ describe('store/modules/permission', () => {
 
   describe('usePermissionStoreWithOut', () => {
     it('should return permission store', () => {
+      // Create a new Pinia instance for this test
+      const pinia = createPinia();
+      setActivePinia(pinia);
+
       const store = usePermissionStoreWithOut();
       expect(store).toBeDefined();
     });

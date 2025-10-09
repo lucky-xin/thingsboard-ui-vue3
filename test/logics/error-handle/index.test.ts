@@ -136,18 +136,16 @@ describe('logics/error-handle/index', () => {
   describe('setupErrorHandle', () => {
     it('should set up error handlers when useErrorHandle is true', async () => {
       const app = createApp({});
-      const mockConfig = { errorHandler: null };
-      app.config = mockConfig as any;
-      
+
       setupErrorHandle(app);
-      
+
       // Check that Vue error handler is set
       expect(app.config.errorHandler).toBeDefined();
       expect(typeof app.config.errorHandler).toBe('function');
-      
+
       // Check that window.onerror is set
       expect(window.onerror).toBe(scriptErrorHandler);
-      
+
       // Check that event listeners are registered
       expect(window.addEventListener).toHaveBeenCalledWith(
         'unhandledrejection',

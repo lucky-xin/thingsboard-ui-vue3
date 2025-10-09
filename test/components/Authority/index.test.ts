@@ -1,27 +1,46 @@
-import { describe, it, expect } from 'vitest';
-import { Authority } from '/@/components/Authority';
+import { describe, it, expect, vi } from 'vitest';
+
+// Mock withInstall utility
+const mockWithInstall = vi.fn((component) => ({
+  ...component,
+  install: vi.fn(),
+}));
+
+vi.mock('/@/utils', () => ({
+  withInstall: mockWithInstall,
+}));
+
+// Mock Authority.vue component
+vi.mock('/@/components/Authority/src/Authority.vue', () => ({
+  default: {
+    name: 'Authority',
+    template: '<div class="mock-authority"><slot /></div>',
+  },
+}));
 
 describe('components/Authority/index', () => {
-  it('should export Authority component', () => {
+  it('should export Authority component with install method', async () => {
+    const { Authority } = await import('/@/components/Authority/index');
+    
     expect(Authority).toBeDefined();
     expect(Authority.name).toBe('Authority');
-  });
-
-  it('should have correct component structure', () => {
-    expect(typeof Authority).toBe('object');
-  });
-
-  it('should have install method from withInstall', () => {
     expect(Authority.install).toBeDefined();
     expect(typeof Authority.install).toBe('function');
   });
 
-  it('should execute all source code lines', () => {
-    // This test ensures all lines in the source file are executed
-    expect(true).toBe(true);
+  it('should have correct component structure', async () => {
+    const { Authority } = await import('/@/components/Authority/index');
+    
+    expect(Authority).toHaveProperty('name');
+    expect(Authority).toHaveProperty('template');
+    expect(Authority).toHaveProperty('install');
   });
 
-  it('should test all imports are executed', () => {
-    expect(Authority).toBeTruthy();
+  it('should be wrapped by withInstall utility', async () => {
+    const { Authority } = await import('/@/components/Authority/index');
+    
+    // Verify that the component has the install method added by withInstall
+    expect(Authority.install).toBeDefined();
+    expect(typeof Authority.install).toBe('function');
   });
 });

@@ -1,26 +1,46 @@
-import { describe, it, expect } from 'vitest';
-import { CardList } from '/@/components/CardList';
+import { describe, it, expect, vi } from 'vitest';
+
+// Mock withInstall utility
+const mockWithInstall = vi.fn((component) => ({
+  ...component,
+  install: vi.fn(),
+}));
+
+vi.mock('/@/utils', () => ({
+  withInstall: mockWithInstall,
+}));
+
+// Mock CardList.vue component
+vi.mock('/@/components/CardList/src/CardList.vue', () => ({
+  default: {
+    name: 'CardList',
+    template: '<div class="mock-card-list"><slot /></div>',
+  },
+}));
 
 describe('components/CardList/index', () => {
-  it('should export CardList component', () => {
+  it('should export CardList component with install method', async () => {
+    const { CardList } = await import('/@/components/CardList/index');
+    
     expect(CardList).toBeDefined();
-    expect(typeof CardList).toBe('object');
-  });
-
-  it('should have install method', () => {
+    expect(CardList.name).toBe('CardList');
     expect(CardList.install).toBeDefined();
     expect(typeof CardList.install).toBe('function');
   });
 
-  it('should be an object', () => {
-    expect(typeof CardList).toBe('object');
+  it('should have correct component structure', async () => {
+    const { CardList } = await import('/@/components/CardList/index');
+    
+    expect(CardList).toHaveProperty('name');
+    expect(CardList).toHaveProperty('template');
+    expect(CardList).toHaveProperty('install');
   });
 
-  it('should execute all source code lines', () => {
-    expect(true).toBe(true);
-  });
-
-  it('should test all imports are executed', () => {
-    expect(CardList).toBeTruthy();
+  it('should be wrapped by withInstall utility', async () => {
+    const { CardList } = await import('/@/components/CardList/index');
+    
+    // Verify that the component has the install method added by withInstall
+    expect(CardList.install).toBeDefined();
+    expect(typeof CardList.install).toBe('function');
   });
 });

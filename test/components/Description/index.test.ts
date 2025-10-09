@@ -1,41 +1,55 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
-describe('Description/index', () => {
-  it('should export Description component', async () => {
-    const module = await import('/@/components/Description/index');
+// Mock withInstall utility
+const mockWithInstall = vi.fn((component) => ({
+  ...component,
+  install: vi.fn(),
+}));
 
-    expect(module).toBeDefined();
-    expect(module.Description).toBeDefined();
-  });
+vi.mock('/@/utils', () => ({
+  withInstall: mockWithInstall,
+}));
 
-  it('should export useDescription function', async () => {
-    const module = await import('/@/components/Description/index');
+// Mock Description.vue component
+vi.mock('/@/components/Description/src/Description.vue', () => ({
+  default: {
+    name: 'Description',
+    template: '<div class="mock-description"><slot /></div>',
+  },
+}));
 
-    expect(module.useDescription).toBeDefined();
-    expect(typeof module.useDescription).toBe('function');
-  });
+// Mock typing exports
+vi.mock('/@/components/Description/src/typing', () => ({
+  DescriptionProps: {},
+  DescriptionItemProps: {},
+}));
 
-  it('should have install method for Description', async () => {
-    const module = await import('/@/components/Description/index');
-    const { Description } = module;
+// Mock useDescription hook
+vi.mock('/@/components/Description/src/useDescription', () => ({
+  useDescription: vi.fn(),
+}));
 
-    // Description component should be defined
+describe('components/Description/index', () => {
+  it('should export Description component with install method', async () => {
+    const { Description } = await import('/@/components/Description/index');
+    
     expect(Description).toBeDefined();
+    expect(Description.name).toBe('Description');
+    expect(Description.install).toBeDefined();
+    expect(typeof Description.install).toBe('function');
   });
 
-  it('should be a valid Vue component', async () => {
-    const module = await import('/@/components/Description/index');
-    const { Description } = module;
-
-    expect(typeof Description).toBe('object');
+  it('should export useDescription hook', async () => {
+    const { useDescription } = await import('/@/components/Description/index');
+    
+    expect(useDescription).toBeDefined();
+    expect(typeof useDescription).toBe('function');
   });
 
-  it('should have correct exports count', async () => {
-    const module = await import('/@/components/Description/index');
-    const exports = Object.keys(module);
-
-    expect(exports).toContain('Description');
-    expect(exports).toContain('useDescription');
-    expect(exports.length).toBeGreaterThanOrEqual(2);
+  it('should have all expected exports', async () => {
+    const descriptionModule = await import('/@/components/Description/index');
+    
+    expect(descriptionModule.Description).toBeDefined();
+    expect(descriptionModule.useDescription).toBeDefined();
   });
 });

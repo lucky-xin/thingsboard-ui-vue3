@@ -4,7 +4,20 @@ import ForgetPassword from '/@/components/Authentication/src/ForgetPassword.vue'
 
 describe('ForgetPassword', () => {
   it('should render correctly', () => {
-    const wrapper = mount(ForgetPassword);
+    const formSchema = [
+      {
+        field: 'email',
+        component: 'Input',
+        label: 'Email',
+        required: true,
+      }
+    ];
+
+    const wrapper = mount(ForgetPassword, {
+      props: {
+        formSchema
+      }
+    });
     expect(wrapper.exists()).toBe(true);
   });
 });

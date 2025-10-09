@@ -1,21 +1,32 @@
-import { describe, it, expect } from 'vitest';
-import { CollapseForm } from '/@/components/CollapseForm';
+import { describe, it, expect, vi } from 'vitest';
+
+// Mock CollapseForm.vue component
+vi.mock('/@/components/CollapseForm/src/CollapseForm.vue', () => ({
+  default: {
+    name: 'CollapseForm',
+    template: '<div class="mock-collapse-form"><slot /></div>',
+  },
+}));
 
 describe('components/CollapseForm/index', () => {
-  it('should export CollapseForm component', () => {
+  it('should export CollapseForm component', async () => {
+    const { CollapseForm } = await import('/@/components/CollapseForm/index');
+    
     expect(CollapseForm).toBeDefined();
-    expect(typeof CollapseForm).toBe('object');
+    expect(CollapseForm.name).toBe('CollapseForm');
   });
 
-  it('should be an object', () => {
-    expect(typeof CollapseForm).toBe('object');
+  it('should have correct component structure', async () => {
+    const { CollapseForm } = await import('/@/components/CollapseForm/index');
+    
+    expect(CollapseForm).toHaveProperty('name');
+    expect(CollapseForm).toHaveProperty('template');
   });
 
-  it('should execute all source code lines', () => {
-    expect(true).toBe(true);
-  });
-
-  it('should test all imports are executed', () => {
-    expect(CollapseForm).toBeTruthy();
+  it('should export CollapseForm as named export', async () => {
+    const collapseFormModule = await import('/@/components/CollapseForm/index');
+    
+    expect(collapseFormModule.CollapseForm).toBeDefined();
+    expect(collapseFormModule.CollapseForm.name).toBe('CollapseForm');
   });
 });

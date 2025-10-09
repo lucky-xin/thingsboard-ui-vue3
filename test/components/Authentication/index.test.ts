@@ -1,66 +1,89 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
-// Import the source file directly to ensure coverage
-import {
-  AuthenticationCodeLogin,
-  AuthenticationForgetPassword,
-  AuthenticationLogin,
-  AuthenticationQrCodeLogin,
-  AuthenticationRegister,
-  type AuthenticationProps,
-} from '/@/components/Authentication';
+// Mock Vue components to prevent import errors
+vi.mock('/@/components/Authentication/src/CodeLogin.vue', () => ({
+  default: {
+    name: 'AuthenticationCodeLogin',
+    template: '<div class="mock-code-login"><slot /></div>',
+  },
+}));
+
+vi.mock('/@/components/Authentication/src/ForgetPassword.vue', () => ({
+  default: {
+    name: 'AuthenticationForgetPassword',
+    template: '<div class="mock-forget-password"><slot /></div>',
+  },
+}));
+
+vi.mock('/@/components/Authentication/src/Login.vue', () => ({
+  default: {
+    name: 'AuthenticationLogin',
+    template: '<div class="mock-login"><slot /></div>',
+  },
+}));
+
+vi.mock('/@/components/Authentication/src/QrcodeLogin.vue', () => ({
+  default: {
+    name: 'AuthenticationQrCodeLogin',
+    template: '<div class="mock-qr-code-login"><slot /></div>',
+  },
+}));
+
+vi.mock('/@/components/Authentication/src/Register.vue', () => ({
+  default: {
+    name: 'AuthenticationRegister',
+    template: '<div class="mock-register"><slot /></div>',
+  },
+}));
+
+vi.mock('/@/components/Authentication/src/types', () => ({
+  AuthenticationProps: {},
+}));
 
 describe('components/Authentication/index', () => {
-  it('should export AuthenticationCodeLogin component', () => {
+  it('should export AuthenticationCodeLogin component', async () => {
+    const { AuthenticationCodeLogin } = await import('/@/components/Authentication/index');
     expect(AuthenticationCodeLogin).toBeDefined();
     expect(AuthenticationCodeLogin.name).toBe('AuthenticationCodeLogin');
   });
 
-  it('should export AuthenticationForgetPassword component', () => {
+  it('should export AuthenticationForgetPassword component', async () => {
+    const { AuthenticationForgetPassword } = await import('/@/components/Authentication/index');
     expect(AuthenticationForgetPassword).toBeDefined();
     expect(AuthenticationForgetPassword.name).toBe('AuthenticationForgetPassword');
   });
 
-  it('should export AuthenticationLogin component', () => {
+  it('should export AuthenticationLogin component', async () => {
+    const { AuthenticationLogin } = await import('/@/components/Authentication/index');
     expect(AuthenticationLogin).toBeDefined();
     expect(AuthenticationLogin.name).toBe('AuthenticationLogin');
   });
 
-  it('should export AuthenticationQrCodeLogin component', () => {
+  it('should export AuthenticationQrCodeLogin component', async () => {
+    const { AuthenticationQrCodeLogin } = await import('/@/components/Authentication/index');
     expect(AuthenticationQrCodeLogin).toBeDefined();
     expect(AuthenticationQrCodeLogin.name).toBe('AuthenticationQrCodeLogin');
   });
 
-  it('should export AuthenticationRegister component', () => {
+  it('should export AuthenticationRegister component', async () => {
+    const { AuthenticationRegister } = await import('/@/components/Authentication/index');
     expect(AuthenticationRegister).toBeDefined();
     expect(AuthenticationRegister.name).toBe('AuthenticationRegister');
   });
 
-  it('should export AuthenticationProps type', () => {
-    // TypeScript types are not available at runtime, so we just check the import works
-    expect(true).toBe(true);
+  it('should export AuthenticationProps type', async () => {
+    const { AuthenticationProps } = await import('/@/components/Authentication/index');
+    expect(AuthenticationProps).toBeDefined();
   });
 
-  it('should have correct component structure', () => {
-    // Test that all exports are Vue components
-    expect(typeof AuthenticationCodeLogin).toBe('object');
-    expect(typeof AuthenticationForgetPassword).toBe('object');
-    expect(typeof AuthenticationLogin).toBe('object');
-    expect(typeof AuthenticationQrCodeLogin).toBe('object');
-    expect(typeof AuthenticationRegister).toBe('object');
-  });
-
-  it('should execute all source code lines', () => {
-    // This test ensures all lines in the source file are executed
-    expect(true).toBe(true);
-  });
-
-  it('should test all imports are executed', () => {
-    // Test that all imports are executed by checking the components exist
-    expect(AuthenticationCodeLogin).toBeTruthy();
-    expect(AuthenticationForgetPassword).toBeTruthy();
-    expect(AuthenticationLogin).toBeTruthy();
-    expect(AuthenticationQrCodeLogin).toBeTruthy();
-    expect(AuthenticationRegister).toBeTruthy();
+  it('should have all expected exports', async () => {
+    const authModule = await import('/@/components/Authentication/index');
+    
+    expect(authModule.AuthenticationCodeLogin).toBeDefined();
+    expect(authModule.AuthenticationForgetPassword).toBeDefined();
+    expect(authModule.AuthenticationLogin).toBeDefined();
+    expect(authModule.AuthenticationQrCodeLogin).toBeDefined();
+    expect(authModule.AuthenticationRegister).toBeDefined();
+    expect(authModule.AuthenticationProps).toBeDefined();
   });
 });

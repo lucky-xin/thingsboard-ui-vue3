@@ -33,7 +33,7 @@ describe('Preview/index coverage', () => {
   it('should have correct component name', async () => {
     const { ImagePreview } = await import('/@/components/Preview');
 
-    expect(ImagePreview).toHaveProperty('__name');
+    expect(ImagePreview).toHaveProperty('name');
   });
 
   it('should be importable as named exports', async () => {

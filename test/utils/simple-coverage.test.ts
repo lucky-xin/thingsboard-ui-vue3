@@ -13,15 +13,15 @@ describe('Simple Coverage Tests', () => {
   });
 
   it('should test color utility functions', async () => {
-    const { hexToRgb, rgbToHex } = await import('/@/utils/color');
-    expect(typeof hexToRgb).toBe('function');
+    const { hexToRGB, rgbToHex } = await import('/@/utils/color');
+    expect(typeof hexToRGB).toBe('function');
     expect(typeof rgbToHex).toBe('function');
   });
 
   it('should test cipher utility functions', async () => {
-    const { encrypt, decrypt } = await import('/@/utils/cipher');
-    expect(typeof encrypt).toBe('function');
-    expect(typeof decrypt).toBe('function');
+    const { encryptByBase64, decryptByBase64 } = await import('/@/utils/cipher');
+    expect(typeof encryptByBase64).toBe('function');
+    expect(typeof decryptByBase64).toBe('function');
   });
 
   it('should test uuid utility functions', async () => {
@@ -30,13 +30,12 @@ describe('Simple Coverage Tests', () => {
   });
 
   it('should test propTypes utility functions', async () => {
-    const { PropTypes } = await import('/@/utils/propTypes');
-    expect(PropTypes).toBeDefined();
+    const { propTypes } = await import('/@/utils/propTypes');
+    expect(propTypes).toBeDefined();
   });
 
   it('should test log utility functions', async () => {
-    const { log, warn, error } = await import('/@/utils/log');
-    expect(typeof log).toBe('function');
+    const { warn, error } = await import('/@/utils/log');
     expect(typeof warn).toBe('function');
     expect(typeof error).toBe('function');
   });
@@ -47,9 +46,9 @@ describe('Simple Coverage Tests', () => {
   });
 
   it('should test jwt utility functions', async () => {
-    const { jwtDecode, jwtEncode } = await import('/@/utils/jwt');
-    expect(typeof jwtDecode).toBe('function');
-    expect(typeof jwtEncode).toBe('function');
+    const { decode, isExpired } = await import('/@/utils/jwt');
+    expect(typeof decode).toBe('function');
+    expect(typeof isExpired).toBe('function');
   });
 
   it('should test cache utility functions', async () => {
@@ -58,19 +57,19 @@ describe('Simple Coverage Tests', () => {
   });
 
   it('should test file utility functions', async () => {
-    const { downloadByData, downloadByUrl } = await import('/@/utils/file');
+    const { downloadByData, downloadByUrl } = await import('/@/utils/file/download');
     expect(typeof downloadByData).toBe('function');
     expect(typeof downloadByUrl).toBe('function');
   });
 
   it('should test helper utility functions', async () => {
-    const { treeMap, treeToList } = await import('/@/utils/helper');
+    const { treeMap, treeToList } = await import('/@/utils/helper/treeHelper');
     expect(typeof treeMap).toBe('function');
     expect(typeof treeToList).toBe('function');
   });
 
   it('should test lib utility functions', async () => {
-    const { getEChartsOption } = await import('/@/utils/lib');
-    expect(typeof getEChartsOption).toBe('function');
+    const echarts = await import('/@/utils/lib/echarts');
+    expect(echarts.default).toBeDefined();
   });
 });

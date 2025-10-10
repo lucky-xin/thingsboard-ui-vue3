@@ -46,10 +46,12 @@ try {
   });
 } catch {}
 
+// Minimal mock for Container to allow coverage testing while providing required components
 vi.mock('/@/components/Container', () => ({
   CollapseContainer: addInstall({
     name: 'CollapseContainer',
     template: '<div class="tb-collapse-container"><slot /></div>',
+    props: ['title', 'canExpand', 'expand', 'helpMessage'],
   }),
   ScrollContainer: addInstall({ name: 'ScrollContainer', template: '<div class="tb-scroll-container"><slot /></div>' }),
   LazyContainer: addInstall({ name: 'LazyContainer', template: '<div class="tb-lazy-container"><slot /></div>' }),
@@ -242,7 +244,8 @@ vi.mock('/@/components/Modal', () => ({
 }));
 vi.mock('/@/components/Popover', () => ({ Popover: simpleComponent('Popover') }));
 vi.mock('/@/components/Resizer', () => ({ Resizer: simpleComponent('Resizer') }));
-vi.mock('/@/components/VirtualScroll', () => ({ VScroll: simpleComponent('VScroll') }));
+// Remove global mock for VirtualScroll to allow coverage testing
+// vi.mock('/@/components/VirtualScroll', () => ({ VScroll: simpleComponent('VScroll') }));
 
 // 全局最小 mock useMessage，避免 axios/checkStatus 等处调用时报错
 vi.mock('hooks/web/useMessage', () => {
@@ -581,11 +584,11 @@ vi.mock('components/Table', () => {
 // Mock demo view for router types test
 vi.mock('../src/views/demo/index.vue', () => ({ default: addInstall({ name: 'DemoIndex', template: '<div />' }) }));
 
-// Mock ContextMenu index to expose spies
-vi.mock('/@/components/ContextMenu/index', () => ({
-  createContextMenu: vi.fn(async () => {}),
-  destroyContextMenu: vi.fn(() => {}),
-}));
+// Remove global mock for ContextMenu to allow coverage testing
+// vi.mock('/@/components/ContextMenu/index', () => ({
+//   createContextMenu: vi.fn(async () => {}),
+//   destroyContextMenu: vi.fn(() => {}),
+// }));
 
 // Menus helpers: spies for isUrl and pathToRegexp
 vi.mock('/@/utils/is', async (importOriginal) => {
@@ -618,10 +621,11 @@ vi.mock('/@/components/Authentication', () => ({
   AuthenticationProps: {},
 }));
 vi.mock('/@/components/ColorPicker', () => ({ ColorPicker: addInstall({ name: 'ColorPicker', template: '<div />' }) }));
-vi.mock('/@/components/Description', () => ({
-  Description: addInstall({ name: 'Description', template: '<div />' }),
-  useDescription: vi.fn(),
-}));
+// Remove global mock for Description to allow coverage testing
+// vi.mock('/@/components/Description', () => ({
+//   Description: addInstall({ name: 'Description', template: '<div />' }),
+//   useDescription: vi.fn(),
+// }));
 vi.mock('/@/components/Excel', () => ({
   ImpExcel: addInstall({ name: 'ImpExcel', template: '<div />' }),
   ExpExcelModal: addInstall({ name: 'ExpExcelModal', template: '<div />' }),
@@ -660,18 +664,20 @@ vi.mock('components/Form', () => {
     useForm: vi.fn(() => [vi.fn(), vi.fn()]),
   };
 });
-vi.mock('/@/components/Preview', () => ({
-  ImagePreview: addInstall({ name: 'ImagePreview', template: '<div />' }),
-  createImgPreview: vi.fn(),
-}));
+// Remove global mock for Preview to allow coverage testing
+// vi.mock('/@/components/Preview', () => ({
+//   ImagePreview: addInstall({ name: 'ImagePreview', template: '<div />' }),
+//   createImgPreview: vi.fn(),
+// }));
 vi.mock('/@/components/SimpleMenu', () => ({
   SimpleMenu: addInstall({ name: 'SimpleMenu', template: '<div />' }),
   SimpleMenuTag: addInstall({ name: 'SimpleMenuTag', template: '<div />' }),
 }));
-vi.mock('/@/components/Tree', () => ({
-  BasicTree: addInstall({ name: 'BasicTree', template: '<div />' }),
-  ContextMenuItem: {},
-}));
+// Remove global mock for Tree to allow coverage testing
+// vi.mock('/@/components/Tree', () => ({
+//   BasicTree: addInstall({ name: 'BasicTree', template: '<div />' }),
+//   ContextMenuItem: {},
+// }));
 
 // Mock loading directive module
 vi.mock('directives/loading', () => {
@@ -769,57 +775,4 @@ vi.mock('/@/hooks/web/useMessage', () => ({
 
 // Mock Ant Design Vue components globally to prevent component resolution warnings
 // Note: This mock is overridden in individual test files
-vi.mock('ant-design-vue', async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...actual,
-    Input: {
-      name: 'AInput',
-      template: '<input class="ant-input"><slot name="addonAfter" /></input>',
-      props: ['disabled', 'style', 'placeholder', 'class', 'value'],
-    },
-    'a-input': {
-      name: 'AInput',
-      template: '<input class="ant-input"><slot name="addonAfter" /></input>',
-      props: ['disabled', 'style', 'placeholder', 'class', 'value'],
-    },
-    Popover: {
-      name: 'APopover',
-      template: '<div class="ant-popover"><slot /><slot name="title" /><slot name="content" /></div>',
-      props: ['placement', 'trigger', 'value', 'overlayClassName'],
-    },
-    'a-popover': {
-      name: 'APopover',
-      template: '<div class="ant-popover"><slot /><slot name="title" /><slot name="content" /></div>',
-      props: ['placement', 'trigger', 'value', 'overlayClassName'],
-    },
-    Pagination: {
-      name: 'APagination',
-      template: '<div class="ant-pagination"><slot /></div>',
-      props: ['size', 'pageSize', 'total', 'showLessItems', 'showSizeChanger'],
-    },
-    'a-pagination': {
-      name: 'APagination',
-      template: '<div class="ant-pagination"><slot /></div>',
-      props: ['size', 'pageSize', 'total', 'showLessItems', 'showSizeChanger'],
-    },
-    Empty: {
-      name: 'AEmpty',
-      template: '<div class="ant-empty"><slot /></div>',
-    },
-    'a-empty': {
-      name: 'AEmpty',
-      template: '<div class="ant-empty"><slot /></div>',
-    },
-    Tooltip: {
-      name: 'ATooltip',
-      template: '<div class="ant-tooltip"><slot /><slot name="title" /></div>',
-      props: ['title', 'placement'],
-    },
-    'a-tooltip': {
-      name: 'ATooltip',
-      template: '<div class="ant-tooltip"><slot /><slot name="title" /></div>',
-      props: ['title', 'placement'],
-    },
-  };
-});
+// Removed duplicate ant-design-vue mock to allow full component coverage

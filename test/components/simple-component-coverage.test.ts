@@ -14,10 +14,10 @@ describe('Simple Component Coverage Tests', () => {
   });
 
   it('should test Authentication components', async () => {
-    const { Login, Register, ForgetPassword } = await import('/@/components/Authentication');
-    expect(Login).toBeDefined();
-    expect(Register).toBeDefined();
-    expect(ForgetPassword).toBeDefined();
+    const { AuthenticationLogin, AuthenticationRegister, AuthenticationForgetPassword } = await import('/@/components/Authentication');
+    expect(AuthenticationLogin).toBeDefined();
+    expect(AuthenticationRegister).toBeDefined();
+    expect(AuthenticationForgetPassword).toBeDefined();
   });
 
   it('should test Basic components', async () => {
@@ -28,8 +28,8 @@ describe('Simple Component Coverage Tests', () => {
   });
 
   it('should test Button components', async () => {
-    const { BasicButton, PopConfirmButton } = await import('/@/components/Button');
-    expect(BasicButton).toBeDefined();
+    const { Button, PopConfirmButton } = await import('/@/components/Button');
+    expect(Button).toBeDefined();
     expect(PopConfirmButton).toBeDefined();
   });
 
@@ -40,9 +40,8 @@ describe('Simple Component Coverage Tests', () => {
   });
 
   it('should test ColorPicker components', async () => {
-    const { ColorPicker, SimpleColorPicker } = await import('/@/components/ColorPicker');
+    const { ColorPicker } = await import('/@/components/ColorPicker');
     expect(ColorPicker).toBeDefined();
-    expect(SimpleColorPicker).toBeDefined();
   });
 
   it('should test CountDown components', async () => {
@@ -57,8 +56,8 @@ describe('Simple Component Coverage Tests', () => {
   });
 
   it('should test Cropper components', async () => {
-    const { Cropper, CropperAvatar } = await import('/@/components/Cropper');
-    expect(Cropper).toBeDefined();
+    const { CropperImage, CropperAvatar } = await import('/@/components/Cropper');
+    expect(CropperImage).toBeDefined();
     expect(CropperAvatar).toBeDefined();
   });
 
@@ -83,9 +82,9 @@ describe('Simple Component Coverage Tests', () => {
   });
 
   it('should test Excel components', async () => {
-    const { ImportExcel, ExportExcelModal } = await import('/@/components/Excel');
-    expect(ImportExcel).toBeDefined();
-    expect(ExportExcelModal).toBeDefined();
+    const { ImpExcel, ExpExcelModal } = await import('/@/components/Excel');
+    expect(ImpExcel).toBeDefined();
+    expect(ExpExcelModal).toBeDefined();
   });
 
   it('should test Form components', async () => {
@@ -132,8 +131,8 @@ describe('Simple Component Coverage Tests', () => {
   });
 
   it('should test Preview components', async () => {
-    const { Preview } = await import('/@/components/Preview');
-    expect(Preview).toBeDefined();
+    const { ImagePreview } = await import('/@/components/Preview');
+    expect(ImagePreview).toBeDefined();
   });
 
   it('should test Qrcode components', async () => {
@@ -177,8 +176,8 @@ describe('Simple Component Coverage Tests', () => {
   });
 
   it('should test Tree components', async () => {
-    const { Tree } = await import('/@/components/Tree');
-    expect(Tree).toBeDefined();
+    const { BasicTree } = await import('/@/components/Tree');
+    expect(BasicTree).toBeDefined();
   });
 
   it('should test ValidCode components', async () => {
@@ -187,14 +186,14 @@ describe('Simple Component Coverage Tests', () => {
   });
 
   it('should test Verify components', async () => {
-    const { DragVerify, ImgRotate } = await import('/@/components/Verify');
-    expect(DragVerify).toBeDefined();
-    expect(ImgRotate).toBeDefined();
+    const { BasicDragVerify, RotateDragVerify } = await import('/@/components/Verify');
+    expect(BasicDragVerify).toBeDefined();
+    expect(RotateDragVerify).toBeDefined();
   });
 
   it('should test VirtualScroll components', async () => {
-    const { VirtualScroll } = await import('/@/components/VirtualScroll');
-    expect(VirtualScroll).toBeDefined();
+    const { VScroll } = await import('/@/components/VirtualScroll');
+    expect(VScroll).toBeDefined();
   });
 
   it('should test WangEditor components', async () => {

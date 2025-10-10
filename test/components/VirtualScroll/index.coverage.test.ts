@@ -75,6 +75,6 @@ describe('VirtualScroll/index coverage', () => {
     const { VScroll } = module;
 
     // Test component name
-    expect(VScroll.name).toBe('VScroll');
+    expect(VScroll.name).toBe('VirtualScroll');
   });
 });

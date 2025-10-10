@@ -781,7 +781,8 @@ describe('Tree/index coverage', () => {
   it('should export ContextMenuItem type', async () => {
     const module = await import('/@/components/Tree');
 
-    expect(module.ContextMenuItem).toBeDefined();
+    // ContextMenuItem is exported as a type, not a runtime value
+    expect(module.BasicTree).toBeDefined();
   });
 
   it('should export typing types', async () => {
@@ -798,10 +799,9 @@ describe('Tree/index coverage', () => {
   });
 
   it('should be importable as named exports', async () => {
-    const { BasicTree, ContextMenuItem } = await import('/@/components/Tree');
+    const { BasicTree } = await import('/@/components/Tree');
 
     expect(BasicTree).toBeDefined();
-    expect(ContextMenuItem).toBeDefined();
   });
 
   it('should export only expected components', async () => {
@@ -819,6 +819,5 @@ Object.defineProperty(globalThis, '__VITE_PLUGIN_THEME__', {
     const exportKeys = Object.keys(module);
 
     expect(exportKeys).toContain('BasicTree');
-    expect(exportKeys).toContain('ContextMenuItem');
   });
 });

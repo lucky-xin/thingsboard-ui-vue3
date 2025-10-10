@@ -7,90 +7,90 @@ vi.mock('/@/utils/is', () => ({
   isFunction: vi.fn((value) => typeof value === 'function'),
   isBoolean: vi.fn((value) => typeof value === 'boolean'),
   isArray: vi.fn((value) => Array.isArray(value)),
+  isServer: false,
 }));
 
 vi.mock('/@/utils', () => ({
   deepMerge: vi.fn((target, source) => ({ ...target, ...source })),
+  withInstall: vi.fn((component) => component),
 }));
 
 describe('useTableHeader - Simple Coverage', () => {
   let propsRef: any;
-  let getViewColumns: any;
+  let slots: any;
+  let handlers: any;
+  let methods: any;
 
   beforeEach(() => {
-    getViewColumns = vi.fn(() => [
-      { dataIndex: 'name', title: 'Name', key: 'name' },
-      { dataIndex: 'age', title: 'Age', key: 'age' },
-    ]);
+    slots = {};
+    handlers = {
+      onColumnsChange: vi.fn(),
+    };
+    methods = {
+      clearSelectedRowKeys: vi.fn(),
+      getSelectRowKeys: vi.fn(() => []),
+    };
 
     propsRef = computed(() => ({
-      columns: [
-        { dataIndex: 'name', title: 'Name', key: 'name' },
-        { dataIndex: 'age', title: 'Age', key: 'age' },
-      ],
-      ellipsis: false,
-      showIndexColumn: false,
-      showActionColumn: false,
-      actionColumn: {},
-      indexColumnProps: {},
-      scroll: {},
-      canResize: true,
+      title: 'Test Table',
+      showTableSetting: false,
+      titleHelpMessage: '',
+      tableSetting: {},
+      showSelectionBar: false,
     }));
   });
 
   it('should initialize with default values', () => {
-    const result = useTableHeader(propsRef, getViewColumns);
+    const result = useTableHeader(propsRef, slots, handlers, methods);
     
-    expect(result.getColumnsRef).toBeDefined();
-    expect(result.getCacheColumns).toBeDefined();
-    expect(result.getColumns).toBeDefined();
-    expect(result.setColumns).toBeDefined();
-    expect(result.updateColumn).toBeDefined();
-    expect(result.getViewColumns).toBeDefined();
+    expect(result.getHeaderProps).toBeDefined();
+    expect(typeof result.getHeaderProps.value).toBe('object');
   });
 
-  it('should handle basic column operations', () => {
-    const result = useTableHeader(propsRef, getViewColumns);
+  it('should handle basic header operations', () => {
+    const result = useTableHeader(propsRef, slots, handlers, methods);
     
-    const columns = result.getColumns();
-    expect(columns).toBeDefined();
-    expect(Array.isArray(columns)).toBe(true);
+    const headerProps = result.getHeaderProps.value;
+    expect(headerProps).toBeDefined();
+    expect(typeof headerProps).toBe('object');
   });
 
-  it('should handle setColumns', () => {
-    const result = useTableHeader(propsRef, getViewColumns);
+  it('should handle title configuration', () => {
+    const result = useTableHeader(propsRef, slots, handlers, methods);
     
-    const newColumns = [
-      { dataIndex: 'id', title: 'ID', key: 'id' },
-      { dataIndex: 'name', title: 'Name', key: 'name' },
-    ];
-    
-    result.setColumns(newColumns);
-    expect(result.getColumnsRef.value).toBeDefined();
+    const headerProps = result.getHeaderProps.value;
+    expect(headerProps).toBeDefined();
   });
 
-  it('should handle updateColumn', () => {
-    const result = useTableHeader(propsRef, getViewColumns);
+  it('should handle table setting configuration', () => {
+    propsRef.value = {
+      ...propsRef.value,
+      showTableSetting: true,
+    };
     
-    const updateData = [
-      { dataIndex: 'name', title: 'Updated Name' },
-    ];
-    
-    result.updateColumn(updateData);
-    expect(result.getColumnsRef.value).toBeDefined();
+    const result = useTableHeader(propsRef, slots, handlers, methods);
+    const headerProps = result.getHeaderProps.value;
+    expect(headerProps).toBeDefined();
   });
 
-  it('should handle getCacheColumns', () => {
-    const result = useTableHeader(propsRef, getViewColumns);
+  it('should handle selection bar configuration', () => {
+    propsRef.value = {
+      ...propsRef.value,
+      showSelectionBar: true,
+    };
     
-    const cacheColumns = result.getCacheColumns();
-    expect(cacheColumns).toBeDefined();
+    const result = useTableHeader(propsRef, slots, handlers, methods);
+    const headerProps = result.getHeaderProps.value;
+    expect(headerProps).toBeDefined();
   });
 
-  it('should handle getViewColumns', () => {
-    const result = useTableHeader(propsRef, getViewColumns);
+  it('should handle slots configuration', () => {
+    const slotsWithToolbar = {
+      toolbar: vi.fn(),
+    };
     
-    const viewColumns = result.getViewColumns();
-    expect(viewColumns).toBeDefined();
+    const result = useTableHeader(propsRef, slotsWithToolbar, handlers, methods);
+    const headerProps = result.getHeaderProps.value;
+    expect(headerProps).toBeDefined();
   });
 });

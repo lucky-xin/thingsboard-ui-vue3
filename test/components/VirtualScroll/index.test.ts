@@ -69,7 +69,7 @@ describe('VirtualScroll/index', () => {
     const { VScroll } = module;
 
     // Test component name
-    expect(VScroll.name).toBe('VScroll');
+    expect(VScroll.name).toBe('VirtualScroll');
   });
 
   it('should test component installation with alias', async () => {

@@ -208,40 +208,40 @@ describe('useColumns', () => {
   });
 
   it('should handle columns with ellipsis', () => {
-    propsRef.value = {
+    const newPropsRef = computed(() => ({
       ...propsRef.value,
       ellipsis: true,
-    };
+    }));
     
-    const result = useColumns(propsRef, getViewColumns);
+    const result = useColumns(newPropsRef, getViewColumns);
     
     expect(result.getColumnsRef.value).toBeDefined();
   });
 
   it('should handle columns with showIndexColumn', () => {
-    propsRef.value = {
+    const newPropsRef = computed(() => ({
       ...propsRef.value,
       showIndexColumn: true,
-    };
+    }));
     
-    const result = useColumns(propsRef, getViewColumns);
+    const result = useColumns(newPropsRef, getViewColumns);
     
     expect(result.getColumnsRef.value).toBeDefined();
   });
 
   it('should handle columns with showActionColumn', () => {
-    propsRef.value = {
+    const newPropsRef = computed(() => ({
       ...propsRef.value,
       showActionColumn: true,
-    };
+    }));
     
-    const result = useColumns(propsRef, getViewColumns);
+    const result = useColumns(newPropsRef, getViewColumns);
     
     expect(result.getColumnsRef.value).toBeDefined();
   });
 
   it('should handle columns with children', () => {
-    propsRef.value = {
+    const newPropsRef = computed(() => ({
       ...propsRef.value,
       columns: [
         {
@@ -253,65 +253,65 @@ describe('useColumns', () => {
           ],
         },
       ],
-    };
+    }));
     
-    const result = useColumns(propsRef, getViewColumns);
+    const result = useColumns(newPropsRef, getViewColumns);
     
     expect(result.getColumnsRef.value).toBeDefined();
   });
 
   it('should handle columns with nested dataIndex', () => {
-    propsRef.value = {
+    const newPropsRef = computed(() => ({
       ...propsRef.value,
       columns: [
         { dataIndex: 'user.name', title: 'User Name' },
         { dataIndex: 'user.profile.age', title: 'Age' },
       ],
-    };
+    }));
     
-    const result = useColumns(propsRef, getViewColumns);
+    const result = useColumns(newPropsRef, getViewColumns);
     
     expect(result.getColumnsRef.value).toBeDefined();
   });
 
   it('should handle columns with array dataIndex', () => {
-    propsRef.value = {
+    const newPropsRef = computed(() => ({
       ...propsRef.value,
       columns: [
         { dataIndex: ['user', 'name'], title: 'User Name' },
         { dataIndex: ['user', 'profile', 'age'], title: 'Age' },
       ],
-    };
+    }));
     
-    const result = useColumns(propsRef, getViewColumns);
+    const result = useColumns(newPropsRef, getViewColumns);
     
     expect(result.getColumnsRef.value).toBeDefined();
   });
 
   it('should handle columns with custom align', () => {
-    propsRef.value = {
+    const newPropsRef = computed(() => ({
       ...propsRef.value,
       columns: [
         { dataIndex: 'name', title: 'Name', align: 'center' },
         { dataIndex: 'age', title: 'Age', align: 'right' },
       ],
-    };
+    }));
     
-    const result = useColumns(propsRef, getViewColumns);
+    const result = useColumns(newPropsRef, getViewColumns);
     
     expect(result.getColumnsRef.value).toBeDefined();
   });
 
   it('should handle columns with width and resizable', () => {
-    propsRef.value = {
+    const newPropsRef = computed(() => ({
       ...propsRef.value,
       columns: [
         { dataIndex: 'name', title: 'Name', width: 200, resizable: true },
         { dataIndex: 'age', title: 'Age', width: 100, resizable: false },
       ],
-    };
+    }));
     
-    const result = useColumns(propsRef, getViewColumns);
+    const result = useColumns(newPropsRef, getViewColumns);
     
     expect(result.getColumnsRef.value).toBeDefined();
   });

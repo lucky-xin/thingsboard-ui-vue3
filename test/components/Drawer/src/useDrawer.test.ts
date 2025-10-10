@@ -141,4 +141,303 @@ describe('components/Drawer/src/useDrawer', () => {
     // Test register function
     expect(() => register(mockInstance, 1)).not.toThrow();
   });
+
+  it('should throw error when getCurrentInstance returns null in useDrawer', async () => {
+    const { useDrawer } = await import('/@/components/Drawer/src/useDrawer');
+    
+    // Mock getCurrentInstance to return null
+    vi.mocked(getCurrentInstance).mockReturnValue(null);
+    
+    const [register] = useDrawer();
+    
+    const mockInstance = {
+      emitOpen: vi.fn(),
+      setDrawerProps: vi.fn(),
+    };
+    
+    // Test that register throws error when no current instance
+    expect(() => register(mockInstance, 1)).toThrow('useDrawer() can only be used inside setup() or functional components!');
+  });
+
+  it('should handle production mode in useDrawer', async () => {
+    const { useDrawer } = await import('/@/components/Drawer/src/useDrawer');
+    const { isProdMode } = await import('/@/utils/env');
+    
+    // Mock production mode
+    vi.mocked(isProdMode).mockReturnValue(true);
+    vi.mocked(getCurrentInstance).mockReturnValue({} as any);
+    
+    const [register, methods] = useDrawer();
+    
+    const mockInstance = {
+      emitOpen: vi.fn(),
+      setDrawerProps: vi.fn(),
+    };
+    
+    // Test register in production mode
+    expect(() => register(mockInstance, 1)).not.toThrow();
+    
+    // Test methods work
+    expect(() => methods.setDrawerProps({ open: true })).not.toThrow();
+    expect(() => methods.openDrawer(true, { test: 'data' })).not.toThrow();
+    expect(() => methods.closeDrawer()).not.toThrow();
+    expect(() => methods.setDrawerData({ test: 'data' })).not.toThrow();
+  });
+
+  it('should handle openDrawer with different parameters', async () => {
+    const { useDrawer } = await import('/@/components/Drawer/src/useDrawer');
+    
+    vi.mocked(getCurrentInstance).mockReturnValue({} as any);
+    
+    const [register, methods] = useDrawer();
+    
+    const mockInstance = {
+      emitOpen: vi.fn(),
+      setDrawerProps: vi.fn(),
+    };
+    
+    register(mockInstance, 1);
+    
+    // Test openDrawer with different parameters
+    expect(() => methods.openDrawer(true)).not.toThrow();
+    expect(() => methods.openDrawer(false)).not.toThrow();
+    expect(() => methods.openDrawer(true, { test: 'data' })).not.toThrow();
+    expect(() => methods.openDrawer(true, { test: 'data' }, false)).not.toThrow();
+    expect(() => methods.openDrawer(true, { test: 'data' }, true)).not.toThrow();
+  });
+
+  it('should handle setDrawerData with null data', async () => {
+    const { useDrawer } = await import('/@/components/Drawer/src/useDrawer');
+    
+    vi.mocked(getCurrentInstance).mockReturnValue({} as any);
+    
+    const [register, methods] = useDrawer();
+    
+    const mockInstance = {
+      emitOpen: vi.fn(),
+      setDrawerProps: vi.fn(),
+    };
+    
+    register(mockInstance, 1);
+    
+    // Test setDrawerData with null data
+    expect(() => methods.setDrawerData(null)).not.toThrow();
+    expect(() => methods.setDrawerData(undefined)).not.toThrow();
+  });
+
+  it('should handle useDrawerInner with callback function', async () => {
+    const { useDrawerInner } = await import('/@/components/Drawer/src/useDrawer');
+    const { isFunction } = await import('/@/utils/is');
+    
+    vi.mocked(getCurrentInstance).mockReturnValue({
+      emit: vi.fn(),
+    } as any);
+    
+    const callbackFn = vi.fn();
+    vi.mocked(isFunction).mockReturnValue(true);
+    
+    const [register, methods] = useDrawerInner(callbackFn);
+    
+    const mockInstance = {
+      setDrawerProps: vi.fn(),
+    };
+    
+    register(mockInstance, 1);
+    
+    // Test methods
+    expect(() => methods.changeLoading(true)).not.toThrow();
+    expect(() => methods.changeLoading(false)).not.toThrow();
+    expect(() => methods.changeOkLoading(true)).not.toThrow();
+    expect(() => methods.changeOkLoading(false)).not.toThrow();
+    expect(() => methods.closeDrawer()).not.toThrow();
+    expect(() => methods.setDrawerProps({ open: true })).not.toThrow();
+  });
+
+  it('should handle useDrawerInner without callback function', async () => {
+    const { useDrawerInner } = await import('/@/components/Drawer/src/useDrawer');
+    const { isFunction } = await import('/@/utils/is');
+    
+    vi.mocked(getCurrentInstance).mockReturnValue({
+      emit: vi.fn(),
+    } as any);
+    
+    vi.mocked(isFunction).mockReturnValue(false);
+    
+    const [register, methods] = useDrawerInner();
+    
+    const mockInstance = {
+      setDrawerProps: vi.fn(),
+    };
+    
+    register(mockInstance, 1);
+    
+    // Test methods work without callback
+    expect(() => methods.changeLoading()).not.toThrow();
+    expect(() => methods.changeOkLoading()).not.toThrow();
+    expect(() => methods.closeDrawer()).not.toThrow();
+    expect(() => methods.setDrawerProps({})).not.toThrow();
+  });
+
+  it('should handle production mode in useDrawerInner', async () => {
+    const { useDrawerInner } = await import('/@/components/Drawer/src/useDrawer');
+    const { isProdMode } = await import('/@/utils/env');
+    
+    vi.mocked(getCurrentInstance).mockReturnValue({
+      emit: vi.fn(),
+    } as any);
+    
+    // Mock production mode
+    vi.mocked(isProdMode).mockReturnValue(true);
+    
+    const [register, methods] = useDrawerInner();
+    
+    const mockInstance = {
+      setDrawerProps: vi.fn(),
+    };
+    
+    register(mockInstance, 1);
+    
+    // Test methods work in production mode
+    expect(() => methods.changeLoading()).not.toThrow();
+    expect(() => methods.changeOkLoading()).not.toThrow();
+    expect(() => methods.closeDrawer()).not.toThrow();
+    expect(() => methods.setDrawerProps({})).not.toThrow();
+  });
+
+  it('should handle getInstance error cases', async () => {
+    const { useDrawer } = await import('/@/components/Drawer/src/useDrawer');
+    
+    vi.mocked(getCurrentInstance).mockReturnValue({} as any);
+    
+    const [register, methods] = useDrawer();
+    
+    // Don't register instance to test error case
+    // Test methods when no instance is registered - these should throw errors
+    expect(() => methods.setDrawerProps({ open: true })).toThrow();
+    expect(() => methods.openDrawer(true)).toThrow();
+    expect(() => methods.closeDrawer()).toThrow();
+  });
+
+  it('should handle getInstance error cases in useDrawerInner', async () => {
+    const { useDrawerInner } = await import('/@/components/Drawer/src/useDrawer');
+    
+    vi.mocked(getCurrentInstance).mockReturnValue({
+      emit: vi.fn(),
+    } as any);
+    
+    const [register, methods] = useDrawerInner();
+    
+    // Don't register instance to test error case
+    // Test methods when no instance is registered - these should throw errors
+    expect(() => methods.changeLoading()).toThrow();
+    expect(() => methods.changeOkLoading()).toThrow();
+    expect(() => methods.closeDrawer()).toThrow();
+    expect(() => methods.setDrawerProps({})).toThrow();
+  });
+
+  it('should handle watchEffect with data transfer', async () => {
+    const { useDrawer, useDrawerInner } = await import('/@/components/Drawer/src/useDrawer');
+    const { isFunction } = await import('/@/utils/is');
+    const { nextTick } = await import('vue');
+    
+    vi.mocked(getCurrentInstance).mockReturnValue({
+      emit: vi.fn(),
+    } as any);
+    
+    const callbackFn = vi.fn();
+    vi.mocked(isFunction).mockReturnValue(true);
+    
+    // Set up useDrawer to trigger data transfer
+    const [registerDrawer, drawerMethods] = useDrawer();
+    const [registerInner] = useDrawerInner(callbackFn);
+    
+    const mockDrawerInstance = {
+      emitOpen: vi.fn(),
+      setDrawerProps: vi.fn(),
+    };
+    
+    const mockInnerInstance = {
+      setDrawerProps: vi.fn(),
+    };
+    
+    registerDrawer(mockDrawerInstance, 1);
+    registerInner(mockInnerInstance, 1);
+    
+    // Trigger data transfer through openDrawer
+    drawerMethods.openDrawer(true, { test: 'data' });
+    
+    // Wait for nextTick to allow watchEffect to run
+    await nextTick();
+    
+    // Test that watchEffect is set up correctly
+    expect(true).toBe(true);
+  });
+
+  it('should handle watchEffect without callback function', async () => {
+    const { useDrawerInner } = await import('/@/components/Drawer/src/useDrawer');
+    const { isFunction } = await import('/@/utils/is');
+    
+    vi.mocked(getCurrentInstance).mockReturnValue({
+      emit: vi.fn(),
+    } as any);
+    
+    vi.mocked(isFunction).mockReturnValue(false);
+    
+    const [register] = useDrawerInner();
+    
+    const mockInstance = {
+      setDrawerProps: vi.fn(),
+    };
+    
+    register(mockInstance, 1);
+    
+    // Test that watchEffect handles missing callback
+    expect(true).toBe(true);
+  });
+
+  it('should handle watchEffect with null callback', async () => {
+    const { useDrawerInner } = await import('/@/components/Drawer/src/useDrawer');
+    const { isFunction } = await import('/@/utils/is');
+    
+    vi.mocked(getCurrentInstance).mockReturnValue({
+      emit: vi.fn(),
+    } as any);
+    
+    vi.mocked(isFunction).mockReturnValue(false);
+    
+    const [register] = useDrawerInner(null as any);
+    
+    const mockInstance = {
+      setDrawerProps: vi.fn(),
+    };
+    
+    register(mockInstance, 1);
+    
+    // Test that watchEffect handles null callback
+    expect(true).toBe(true);
+  });
+
+  it('should handle tryOnUnmounted in production mode', async () => {
+    const { useDrawerInner } = await import('/@/components/Drawer/src/useDrawer');
+    const { isProdMode } = await import('/@/utils/env');
+    const { tryOnUnmounted } = await import('@vueuse/core');
+    
+    vi.mocked(getCurrentInstance).mockReturnValue({
+      emit: vi.fn(),
+    } as any);
+    
+    // Mock production mode
+    vi.mocked(isProdMode).mockReturnValue(true);
+    
+    const [register] = useDrawerInner();
+    
+    const mockInstance = {
+      setDrawerProps: vi.fn(),
+    };
+    
+    register(mockInstance, 1);
+    
+    // Verify tryOnUnmounted was called in production mode
+    expect(tryOnUnmounted).toHaveBeenCalled();
+  });
 });

@@ -8,7 +8,7 @@ vi.mock('ant-design-vue', () => ({
     Item: {
       name: 'MenuItem',
       template: '<div class="menu-item"><slot /></div>',
-      props: ['key'],
+      props: ['disabled'],
     },
   },
 }));

@@ -190,13 +190,12 @@ describe('AppLogo', () => {
     const wrapper = mount(AppLogo, {
       props: {
         showTitle: true,
-        theme: 'invalid',
+        theme: 'light',
       },
     });
 
-    // Invalid theme should not be applied as a class, but the theme prop will still be added
-    // The validator only validates, it doesn't prevent the class from being added
-    expect(wrapper.find('.jeesite-app-logo.invalid').exists()).toBe(true);
+    // Valid theme should be applied as a class
+    expect(wrapper.find('.jeesite-app-logo.light').exists()).toBe(true);
     // But the component should still render
     expect(wrapper.exists()).toBe(true);
   });

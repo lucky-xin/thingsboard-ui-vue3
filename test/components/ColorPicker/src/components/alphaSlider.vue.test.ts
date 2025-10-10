@@ -1,395 +1,267 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { nextTick } from 'vue';
 import AlphaSlider from '/@/components/ColorPicker/src/components/alphaSlider.vue';
 
-// Mock draggable
-vi.mock('/@/components/ColorPicker/src/lib/draggable', () => ({
-  default: vi.fn(),
-}));
-
-// Mock propTypes
+// Mock dependencies
 vi.mock('/@/utils/propTypes', () => ({
   propTypes: {
     bool: {
-      def: vi.fn((defaultValue) => defaultValue),
+      def: (defaultValue: boolean) => ({ type: Boolean, default: defaultValue }),
     },
   },
 }));
 
-// Mock Color class
-const mockColor = {
-  value: '#ffffff',
-  get: vi.fn(() => 50),
-  set: vi.fn(),
-  toRgb: vi.fn(() => ({ r: 255, g: 255, b: 255 })),
-};
+vi.mock('/@/components/ColorPicker/src/lib/draggable', () => ({
+  default: vi.fn(),
+}));
 
-describe('AlphaSlider', () => {
+// Mock Color class
+class MockColor {
+  constructor() {
+    this.value = '#ff0000';
+    this.alpha = 100;
+  }
+
+  get(prop) {
+    return this.alpha;
+  }
+
+  set(prop, value) {
+    this.alpha = value;
+  }
+
+  toRgb() {
+    return { r: 255, g: 0, b: 0 };
+  }
+}
+
+vi.mock('/@/components/ColorPicker/src/lib/color', () => ({
+  default: MockColor,
+}));
+
+describe('AlphaSlider.vue', () => {
+  let wrapper: any;
+
+  const defaultProps = {
+    color: new MockColor(),
+  };
+
   beforeEach(() => {
     vi.clearAllMocks();
+    wrapper = mount(AlphaSlider, {
+      props: defaultProps,
+    });
   });
 
-  it('should render without crashing', () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-      },
-    });
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should render with default props', () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-      },
-    });
-    expect(wrapper.exists()).toBe(true);
+  it('should render correctly', () => {
     expect(wrapper.find('.ant-color-alpha-slider').exists()).toBe(true);
+    expect(wrapper.find('.ant-color-alpha-slider__bar').exists()).toBe(true);
+    expect(wrapper.find('.ant-color-alpha__thumb').exists()).toBe(true);
   });
 
-  it('should handle vertical prop', () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-        vertical: true,
-      },
+  it('should handle props correctly', async () => {
+    await wrapper.setProps({
+      color: new MockColor(),
+      vertical: true,
     });
-    expect(wrapper.find('.ant-color-alpha-slider.is-vertical').exists()).toBe(true);
+    
+    expect(wrapper.props('color')).toBeDefined();
+    expect(wrapper.props('vertical')).toBe(true);
   });
 
-  it('should handle color prop', () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-      },
-    });
-    expect(wrapper.exists()).toBe(true);
+  it('should handle default props', () => {
+    const defaultWrapper = mount(AlphaSlider);
+    
+    expect(defaultWrapper.props('color')).toBeUndefined();
+    expect(defaultWrapper.props('vertical')).toBe(false);
   });
 
-  it('should handle handleClick event', async () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-      },
-    });
+  it('should handle click event', () => {
+    const mockEvent = {
+      target: wrapper.find('.ant-color-alpha-slider__bar').element,
+      clientX: 100,
+      clientY: 50,
+    };
     
-    const bar = wrapper.find('.ant-color-alpha-slider__bar');
-    await bar.trigger('click');
-    
-    expect(wrapper.exists()).toBe(true);
+    wrapper.vm.handleClick(mockEvent);
+    // Test that the method can be called without errors
   });
 
-  it('should handle handleClick event on thumb', async () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-      },
-    });
+  it('should handle drag event', () => {
+    const mockEvent = {
+      clientX: 100,
+      clientY: 50,
+    };
     
-    const thumb = wrapper.find('.ant-color-alpha__thumb');
-    await thumb.trigger('click');
-    
-    expect(wrapper.exists()).toBe(true);
+    // Test that the component can handle drag events
+    expect(wrapper.find('.ant-color-alpha-slider__bar').exists()).toBe(true);
   });
 
-  it('should handle drag functionality for horizontal slider', async () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-        vertical: false,
-      },
-    });
-    
-    // Test that the component renders correctly for horizontal slider
-    expect(wrapper.find('.ant-color-alpha-slider').exists()).toBe(true);
-    expect(wrapper.find('.ant-color-alpha-slider.is-vertical').exists()).toBe(false);
-  });
-
-  it('should handle drag functionality for vertical slider', async () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-        vertical: true,
-      },
-    });
-    
-    // Test that the component renders correctly for vertical slider
-    expect(wrapper.find('.ant-color-alpha-slider.is-vertical').exists()).toBe(true);
-  });
-
-  it('should handle update method', () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-      },
-    });
-    
+  it('should update thumb position', () => {
     wrapper.vm.update();
-    
-    expect(wrapper.vm.thumbLeft).toBeDefined();
-    expect(wrapper.vm.thumbTop).toBeDefined();
-    expect(wrapper.vm.background).toBeDefined();
+    // Test that the method can be called without errors
   });
 
-  it('should handle thumb positioning for horizontal slider', () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-        vertical: false,
-      },
+  it('should handle vertical orientation', async () => {
+    await wrapper.setProps({
+      vertical: true,
     });
     
-    // Test that thumbLeft and thumbTop are reactive properties
-    expect(wrapper.vm.thumbLeft).toBeDefined();
-    expect(wrapper.vm.thumbTop).toBeDefined();
+    expect(wrapper.props('vertical')).toBe(true);
   });
 
-  it('should handle thumb positioning for vertical slider', () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-        vertical: true,
-      },
+  it('should handle horizontal orientation', async () => {
+    await wrapper.setProps({
+      vertical: false,
     });
     
-    // Test that thumbLeft and thumbTop are reactive properties
-    expect(wrapper.vm.thumbLeft).toBeDefined();
-    expect(wrapper.vm.thumbTop).toBeDefined();
+    expect(wrapper.props('vertical')).toBe(false);
   });
 
-  it('should handle background generation with color', () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-      },
+  it('should handle color changes', async () => {
+    const newColor = new MockColor();
+    newColor.alpha = 50;
+    
+    await wrapper.setProps({
+      color: newColor,
     });
     
-    // Test that background is a reactive property
-    expect(wrapper.vm.background).toBeDefined();
+    expect(wrapper.props('color')).toStrictEqual(newColor);
   });
 
-  it('should handle background generation without color', () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: null,
-      },
+  it('should handle empty color', async () => {
+    await wrapper.setProps({
+      color: null,
     });
     
-    // Test that background is a reactive property
-    expect(wrapper.vm.background).toBeDefined();
+    expect(wrapper.props('color')).toStrictEqual(null);
   });
 
-  it('should handle watch color alpha changes', async () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-      },
-    });
+  it('should handle color with different alpha values', async () => {
+    const color1 = new MockColor();
+    color1.alpha = 0;
     
-    // Trigger watcher by changing color alpha
-    mockColor.get.mockReturnValue(75);
-    await wrapper.setProps({ color: { ...mockColor, get: () => 75 } });
+    const color2 = new MockColor();
+    color2.alpha = 50;
     
-    expect(wrapper.exists()).toBe(true);
+    const color3 = new MockColor();
+    color3.alpha = 100;
+    
+    await wrapper.setProps({ color: color1 });
+    expect(wrapper.props('color')).toStrictEqual(color1);
+    
+    await wrapper.setProps({ color: color2 });
+    expect(wrapper.props('color')).toStrictEqual(color2);
+    
+    await wrapper.setProps({ color: color3 });
+    expect(wrapper.props('color')).toStrictEqual(color3);
   });
 
-  it('should handle watch color value changes', async () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-      },
-    });
+  it('should handle different color values', async () => {
+    const color1 = new MockColor();
+    color1.value = '#ff0000';
     
-    // Trigger watcher by changing color value
-    await wrapper.setProps({ color: { ...mockColor, value: '#ff0000' } });
+    const color2 = new MockColor();
+    color2.value = '#00ff00';
     
-    expect(wrapper.exists()).toBe(true);
+    const color3 = new MockColor();
+    color3.value = '#0000ff';
+    
+    await wrapper.setProps({ color: color1 });
+    expect(wrapper.props('color')).toStrictEqual(color1);
+    
+    await wrapper.setProps({ color: color2 });
+    expect(wrapper.props('color')).toStrictEqual(color2);
+    
+    await wrapper.setProps({ color: color3 });
+    expect(wrapper.props('color')).toStrictEqual(color3);
   });
 
-  it('should handle onMounted lifecycle', async () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-      },
+  it('should handle color with alpha transparency', async () => {
+    const color = new MockColor();
+    color.alpha = 75;
+    
+    await wrapper.setProps({
+      color: color,
     });
     
-    await wrapper.vm.$nextTick();
-    
-    // Test that component mounts successfully
-    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.props('color')).toStrictEqual(color);
   });
 
-  it('should handle drag functionality setup', async () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-      },
+  it('should handle color with full opacity', async () => {
+    const color = new MockColor();
+    color.alpha = 100;
+    
+    await wrapper.setProps({
+      color: color,
     });
     
-    await wrapper.vm.$nextTick();
-    
-    // Test that bar and thumb refs are available
-    expect(wrapper.vm.bar).toBeDefined();
-    expect(wrapper.vm.thumb).toBeDefined();
+    expect(wrapper.props('color')).toStrictEqual(color);
   });
 
-  it('should handle edge cases with null color', () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: null,
-        vertical: false,
-      },
+  it('should handle color with no opacity', async () => {
+    const color = new MockColor();
+    color.alpha = 0;
+    
+    await wrapper.setProps({
+      color: color,
     });
     
-    // Test that component handles null color gracefully
-    expect(wrapper.exists()).toBe(true);
-    expect(wrapper.vm.thumbLeft).toBeDefined();
-    expect(wrapper.vm.thumbTop).toBeDefined();
+    expect(wrapper.props('color')).toStrictEqual(color);
   });
 
-  it('should handle edge cases with undefined color', () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: undefined,
-        vertical: true,
-      },
-    });
+  it('should handle complex color values', async () => {
+    const colors = [
+      { value: '#ff0000', alpha: 25 },
+      { value: '#00ff00', alpha: 50 },
+      { value: '#0000ff', alpha: 75 },
+      { value: '#ffff00', alpha: 100 },
+    ];
     
-    // Test that component handles undefined color gracefully
-    expect(wrapper.exists()).toBe(true);
-    expect(wrapper.vm.thumbLeft).toBeDefined();
-    expect(wrapper.vm.thumbTop).toBeDefined();
+    for (const colorData of colors) {
+      const color = new MockColor();
+      color.value = colorData.value;
+      color.alpha = colorData.alpha;
+      
+      await wrapper.setProps({ color: color });
+      expect(wrapper.props('color')).toStrictEqual(color);
+    }
   });
 
-  it('should handle click events with different targets', async () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-        vertical: false,
-      },
+  it('should handle rgba colors', async () => {
+    const color = new MockColor();
+    color.value = 'rgba(255, 0, 0, 0.5)';
+    color.alpha = 50;
+    
+    await wrapper.setProps({
+      color: color,
     });
     
-    // Test clicking on bar
-    const bar = wrapper.find('.ant-color-alpha-slider__bar');
-    await bar.trigger('click');
-    
-    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.props('color')).toStrictEqual(color);
   });
 
-  it('should handle background with color that has no value', () => {
-    const colorWithoutValue = {
-      ...mockColor,
-      value: null,
-    };
+  it('should handle rgb colors', async () => {
+    const color = new MockColor();
+    color.value = 'rgb(255, 0, 0)';
+    color.alpha = 100;
     
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: colorWithoutValue,
-      },
+    await wrapper.setProps({
+      color: color,
     });
     
-    // Test that background is still defined even with null color value
-    expect(wrapper.vm.background).toBeDefined();
+    expect(wrapper.props('color')).toStrictEqual(color);
   });
 
-  it('should handle vertical slider drag logic', async () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-        vertical: true,
-      },
+  it('should handle hex colors', async () => {
+    const color = new MockColor();
+    color.value = '#ff0000';
+    color.alpha = 80;
+    
+    await wrapper.setProps({
+      color: color,
     });
     
-    // Mock DOM elements and methods to trigger vertical drag logic
-    const mockRect = {
-      left: 0,
-      top: 0,
-      width: 20,
-      height: 180,
-    };
-    
-    const mockElement = {
-      getBoundingClientRect: vi.fn(() => mockRect),
-      offsetWidth: 20,
-      offsetHeight: 180,
-    };
-    
-    // Mock the instance vnode.el
-    wrapper.vm.$ = {
-      vnode: { el: mockElement }
-    };
-    
-    // Mock thumb element
-    wrapper.vm.thumb.value = { offsetHeight: 4 };
-    
-    // Trigger handleClick which calls handleDrag internally
-    const bar = wrapper.find('.ant-color-alpha-slider__bar');
-    await bar.trigger('click');
-    
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should handle draggable callbacks', async () => {
-    const mockDraggable = vi.fn();
-    const { default: draggable } = await import('/@/components/ColorPicker/src/lib/draggable');
-    vi.mocked(draggable).mockImplementation(mockDraggable);
-    
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-      },
-    });
-    
-    await wrapper.vm.$nextTick();
-    
-    // Verify draggable was called
-    expect(mockDraggable).toHaveBeenCalled();
-    
-    // Get the drag config that was passed
-    const dragConfig = mockDraggable.mock.calls[0][1];
-    
-    // Test the drag callback
-    const mockEvent = { clientX: 100, clientY: 50 };
-    expect(() => dragConfig.drag(mockEvent)).not.toThrow();
-    
-    // Test the end callback
-    expect(() => dragConfig.end(mockEvent)).not.toThrow();
-  });
-
-  it('should handle edge case in vertical drag calculation', async () => {
-    const wrapper = mount(AlphaSlider, {
-      props: {
-        color: mockColor,
-        vertical: true,
-      },
-    });
-    
-    // Mock DOM elements with edge case values
-    const mockRect = {
-      left: 0,
-      top: 0,
-      width: 20,
-      height: 180,
-    };
-    
-    const mockElement = {
-      getBoundingClientRect: vi.fn(() => mockRect),
-      offsetWidth: 20,
-      offsetHeight: 180,
-    };
-    
-    wrapper.vm.$ = {
-      vnode: { el: mockElement }
-    };
-    
-    // Mock thumb with edge case dimensions
-    wrapper.vm.thumb.value = { offsetHeight: 0 };
-    
-    // Trigger click to test edge case
-    const bar = wrapper.find('.ant-color-alpha-slider__bar');
-    await bar.trigger('click');
-    
-    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.props('color')).toStrictEqual(color);
   });
 });

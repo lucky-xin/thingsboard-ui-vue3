@@ -1,9 +1,22 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { mount } from '@vue/test-utils';
+import { nextTick } from 'vue';
+import Login from '/@/components/Authentication/src/Login.vue';
 
-// Mock all dependencies
+// Mock localStorage
+const localStorageMock = {
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  removeItem: vi.fn(),
+  clear: vi.fn(),
+};
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
+});
+
 vi.mock('/@/hooks/web/useI18n', () => ({
   useI18n: () => ({
-    t: vi.fn((key: string) => key),
+    t: (key: string) => key,
   }),
 }));
 
@@ -23,12 +36,12 @@ vi.mock('/@/router', () => ({
 vi.mock('/@/components/Form', () => ({
   BasicForm: {
     name: 'BasicForm',
-    template: '<div>BasicForm</div>',
+    template: '<div data-testid="basic-form"></div>',
   },
   useForm: vi.fn(() => [
-    vi.fn(),
+    'registerForm',
     {
-      validate: vi.fn(() => Promise.resolve({ username: 'test', password: 'test' })),
+      validate: vi.fn(),
       setFieldsValue: vi.fn(),
     },
   ]),
@@ -37,166 +50,183 @@ vi.mock('/@/components/Form', () => ({
 vi.mock('/@/components/Authentication/src/AuthTitle.vue', () => ({
   default: {
     name: 'Title',
-    template: '<div><slot /><template #desc><slot name="desc" /></template></div>',
+    template: '<div data-testid="auth-title"><slot name="title"></slot><slot name="desc"></slot></div>',
   },
 }));
 
 vi.mock('/@/components/Authentication/src/ThirdPartyLogin.vue', () => ({
   default: {
     name: 'ThirdPartyLogin',
-    template: '<div>ThirdPartyLogin</div>',
+    template: '<div data-testid="third-party-login"></div>',
   },
 }));
 
 vi.mock('ant-design-vue', () => ({
   Button: {
     name: 'Button',
-    template: '<button><slot /></button>',
+    template: '<button><slot></slot></button>',
+    props: ['type', 'size', 'loading', 'class', 'variant'],
   },
   Checkbox: {
     name: 'Checkbox',
-    template: '<input type="checkbox" />',
+    template: '<input type="checkbox" /><slot></slot>',
+    props: ['checked', 'name'],
   },
 }));
 
-vi.mock('vue', async () => {
-  const actual = await vi.importActual('vue');
-  return {
-    ...actual,
-    computed: vi.fn((fn) => ({ value: fn() })),
-    reactive: vi.fn((obj) => obj),
-    ref: vi.fn((val) => ({ value: val })),
-    onMounted: vi.fn((fn) => fn()),
+describe('Login.vue', () => {
+  let wrapper: any;
+
+  const defaultProps = {
+    formSchema: [
+      {
+        field: 'username',
+        label: '用户名',
+        component: 'Input',
+        required: true,
+      },
+      {
+        field: 'password',
+        label: '密码',
+        component: 'InputPassword',
+        required: true,
+      },
+    ],
   };
-});
 
-// Mock localStorage
-const localStorageMock = {
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  removeItem: vi.fn(),
-  clear: vi.fn(),
-};
-Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock,
-});
-
-describe('Login', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorageMock.getItem.mockReturnValue('');
+    wrapper = mount(Login, {
+      props: defaultProps,
+    });
   });
 
-  it('should be tested', () => {
-    // Basic test to ensure the component can be imported and tested
-    expect(true).toBe(true);
+  it('should render correctly', () => {
+    expect(wrapper.find('[data-testid="auth-title"]').exists()).toBe(true);
+    expect(wrapper.find('[data-testid="basic-form"]').exists()).toBe(true);
+    expect(wrapper.find('button').exists()).toBe(true);
   });
 
-  it('should have correct component name', async () => {
-    const Login = await import('/@/components/Authentication/src/Login.vue');
-    expect(Login.default).toBeDefined();
-  });
-
-  it('should handle form submission logic', async () => {
-    const { useForm } = await import('/@/components/Form');
-    const mockFormApi = {
-      validate: vi.fn(() => Promise.resolve({ username: 'test', password: 'test' })),
-      setFieldsValue: vi.fn(),
-    };
-    vi.mocked(useForm).mockImplementation(() => [vi.fn(), mockFormApi]);
-
-    // Test the form validation logic
-    const result = await mockFormApi.validate();
-    expect(result).toEqual({ username: 'test', password: 'test' });
-  });
-
-  it('should handle form validation error', async () => {
-    const { useForm } = await import('/@/components/Form');
-    const mockFormApi = {
-      validate: vi.fn(() => Promise.reject({ errorFields: ['username'] })),
-      setFieldsValue: vi.fn(),
-    };
-    vi.mocked(useForm).mockImplementation(() => [vi.fn(), mockFormApi]);
-
-    // Test the error handling logic
-    try {
-      await mockFormApi.validate();
-    } catch (error: any) {
-      expect(error.errorFields).toEqual(['username']);
-    }
-  });
-
-  it('should handle router navigation', async () => {
-    const { router } = await import('/@/router');
+  it('should handle form submission successfully', async () => {
+    const formApi = wrapper.vm.getFormApi();
+    formApi.validate = vi.fn(() => Promise.resolve({ username: 'test', password: '123456' }));
     
-    // Test router navigation logic
-    router.push('/auth/code-login');
-    expect(router.push).toHaveBeenCalledWith('/auth/code-login');
+    await wrapper.vm.handleSubmit();
+    
+    expect(formApi.validate).toHaveBeenCalled();
+    expect(wrapper.emitted('submit')).toBeTruthy();
+    expect(wrapper.emitted('submit')[0]).toEqual([{ username: 'test', password: '123456' }]);
   });
 
-  it('should handle i18n translation', async () => {
-    const { useI18n } = await import('/@/hooks/web/useI18n');
-    const mockI18n = useI18n();
+  it('should handle form validation errors', async () => {
+    const formApi = wrapper.vm.getFormApi();
+    formApi.validate = vi.fn(() => Promise.reject({ errorFields: ['username'] }));
     
-    // Test i18n translation logic
-    const result = mockI18n.t('sys.login.welcomeBack');
-    expect(result).toBe('sys.login.welcomeBack');
+    await wrapper.vm.handleSubmit();
+    
+    expect(formApi.validate).toHaveBeenCalled();
   });
 
-  it('should handle message display', async () => {
-    const { useMessage } = await import('/@/hooks/web/useMessage');
-    const mockMessage = useMessage();
-    
-    // Test message display logic
-    mockMessage.showMessage('test message');
-    expect(mockMessage.showMessage).toHaveBeenCalledWith('test message');
+  it('should handle navigation to different paths', () => {
+    wrapper.vm.handleGo('/auth/forget-password');
+    wrapper.vm.handleGo('/auth/register');
   });
 
-  it('should handle localStorage operations', () => {
-    const key = 'REMEMBER_ME_USERNAME_test.com';
-    const value = 'testuser';
-    
-    // Test localStorage operations
-    localStorageMock.getItem.mockReturnValue(value);
-    expect(localStorageMock.getItem(key)).toBe(value);
-    
-    localStorageMock.setItem(key, value);
-    expect(localStorageMock.setItem).toHaveBeenCalledWith(key, value);
+  it('should expose getFormApi method', () => {
+    expect(wrapper.vm.getFormApi).toBeDefined();
+    expect(typeof wrapper.vm.getFormApi).toBe('function');
   });
 
-  it('should handle remember me functionality', () => {
-    const key = 'REMEMBER_ME_USERNAME_test.com';
-    const username = 'testuser';
+  it('should handle remember me functionality', async () => {
+    wrapper.vm.rememberMe = true;
+    const formApi = wrapper.vm.getFormApi();
+    formApi.validate = vi.fn(() => Promise.resolve({ username: 'test', password: '123456' }));
     
-    // Test remember me logic
-    localStorageMock.getItem.mockReturnValue(username);
-    const rememberMe = !!localStorageMock.getItem(key);
-    expect(rememberMe).toBe(true);
+    await wrapper.vm.handleSubmit();
     
-    // Test clearing remember me
-    localStorageMock.setItem(key, '');
-    expect(localStorageMock.setItem).toHaveBeenCalledWith(key, '');
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('REMEMBER_ME_USERNAME_localhost', 'test');
   });
 
-  it('should handle form field setting', async () => {
-    const { useForm } = await import('/@/components/Form');
-    const mockFormApi = {
-      validate: vi.fn(() => Promise.resolve({ username: 'test', password: 'test' })),
-      setFieldsValue: vi.fn(),
-    };
-    vi.mocked(useForm).mockImplementation(() => [vi.fn(), mockFormApi]);
-
-    // Test setting form fields
-    mockFormApi.setFieldsValue({ username: 'testuser' });
-    expect(mockFormApi.setFieldsValue).toHaveBeenCalledWith({ username: 'testuser' });
+  it('should handle remember me when unchecked', async () => {
+    wrapper.vm.rememberMe = false;
+    const formApi = wrapper.vm.getFormApi();
+    formApi.validate = vi.fn(() => Promise.resolve({ username: 'test', password: '123456' }));
+    
+    await wrapper.vm.handleSubmit();
+    
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('REMEMBER_ME_USERNAME_localhost', '');
   });
 
-  it('should handle component mounting', async () => {
-    const { onMounted } = await import('vue');
+  it('should set username from localStorage on mount', () => {
+    localStorageMock.getItem.mockReturnValue('saved-username');
     
-    // Test onMounted hook
-    const mockCallback = vi.fn();
-    onMounted(mockCallback);
-    expect(mockCallback).toHaveBeenCalled();
+    const newWrapper = mount(Login, {
+      props: defaultProps,
+    });
+    
+    const formApi = newWrapper.vm.getFormApi();
+    expect(formApi.setFieldsValue).toHaveBeenCalledWith({ username: 'saved-username' });
+  });
+
+  it('should handle props correctly', async () => {
+    await wrapper.setProps({
+      title: 'Custom Title',
+      subTitle: 'Custom Subtitle',
+      submitButtonText: 'Custom Submit',
+      loading: true,
+      showRememberMe: false,
+      showForgetPassword: false,
+      showCodeLogin: false,
+      showQrcodeLogin: false,
+      showRegister: false,
+      showThirdPartyLogin: false,
+    });
+    
+    expect(wrapper.props('title')).toBe('Custom Title');
+    expect(wrapper.props('subTitle')).toBe('Custom Subtitle');
+    expect(wrapper.props('submitButtonText')).toBe('Custom Submit');
+    expect(wrapper.props('loading')).toBe(true);
+    expect(wrapper.props('showRememberMe')).toBe(false);
+    expect(wrapper.props('showForgetPassword')).toBe(false);
+    expect(wrapper.props('showCodeLogin')).toBe(false);
+    expect(wrapper.props('showQrcodeLogin')).toBe(false);
+    expect(wrapper.props('showRegister')).toBe(false);
+    expect(wrapper.props('showThirdPartyLogin')).toBe(false);
+  });
+
+  it('should handle form schema changes', async () => {
+    const newSchema = [
+      {
+        field: 'newField',
+        label: 'New Field',
+        component: 'Input',
+        required: true,
+      },
+    ];
+    
+    await wrapper.setProps({
+      formSchema: newSchema,
+    });
+    
+    expect(wrapper.props('formSchema')).toEqual(newSchema);
+  });
+
+  it('should handle error without errorFields', async () => {
+    const formApi = wrapper.vm.getFormApi();
+    formApi.validate = vi.fn(() => Promise.reject({ message: 'Some error' }));
+    
+    await wrapper.vm.handleSubmit();
+    
+    expect(formApi.validate).toHaveBeenCalled();
+  });
+
+  it('should handle keydown.enter event', async () => {
+    const formApi = wrapper.vm.getFormApi();
+    formApi.validate = vi.fn(() => Promise.resolve({ username: 'test', password: '123456' }));
+    
+    await wrapper.trigger('keydown.enter');
+    
+    expect(formApi.validate).toHaveBeenCalled();
   });
 });

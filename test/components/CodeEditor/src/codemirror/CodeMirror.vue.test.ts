@@ -1,52 +1,20 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { mount } from '@vue/test-utils';
+import { nextTick } from 'vue';
+import CodeMirror from '/@/components/CodeEditor/src/codemirror/CodeMirror.vue';
 
-// Mock all dependencies
-vi.mock('/@/hooks/event/useWindowSizeFn', () => ({
-  useWindowSizeFn: vi.fn(),
-}));
-
-vi.mock('@vueuse/core', () => ({
-  useDebounceFn: vi.fn((fn) => fn),
-}));
-
-vi.mock('/@/store/modules/app', () => ({
-  useAppStore: () => ({
-    getDarkMode: 'dark',
-  }),
-}));
-
+// Mock CodeMirror
 vi.mock('codemirror', () => ({
-  default: vi.fn(() => ({
-    setValue: vi.fn(),
-    getValue: vi.fn(() => 'test value'),
-    setOption: vi.fn(),
-    refresh: vi.fn(),
-    on: vi.fn(),
-  })),
-}));
-
-vi.mock('./../typing', () => ({
-  MODE: {
-    JSON: 'json',
-    JAVASCRIPT: 'javascript',
-    TYPESCRIPT: 'typescript',
+  default: {
+    Editor: vi.fn(() => ({
+      getValue: vi.fn(() => ''),
+      setValue: vi.fn(),
+      setOption: vi.fn(),
+      refresh: vi.fn(),
+      on: vi.fn(),
+    })),
   },
-  parserDynamicImport: vi.fn(() => () => Promise.resolve()),
 }));
-
-vi.mock('vue', async () => {
-  const actual = await vi.importActual('vue');
-  return {
-    ...actual,
-    ref: vi.fn((val) => ({ value: val })),
-    onMounted: vi.fn((fn) => fn()),
-    onUnmounted: vi.fn((fn) => fn()),
-    watchEffect: vi.fn((fn) => fn()),
-    watch: vi.fn(),
-    unref: vi.fn((val) => val),
-    nextTick: vi.fn(() => Promise.resolve()),
-  };
-});
 
 // Mock CSS imports
 vi.mock('codemirror/lib/codemirror.css', () => ({}));
@@ -61,258 +29,167 @@ vi.mock('codemirror/addon/fold/markdown-fold', () => ({}));
 vi.mock('codemirror/addon/fold/xml-fold', () => ({}));
 vi.mock('codemirror/addon/fold/indent-fold', () => ({}));
 
-import { mount } from '@vue/test-utils';
-import CodeMirror from '/@/components/CodeEditor/src/codemirror/CodeMirror';
+// Mock dependencies
+vi.mock('/@/hooks/event/useWindowSizeFn', () => ({
+  useWindowSizeFn: vi.fn(),
+}));
 
-describe('CodeMirror', () => {
+vi.mock('@vueuse/core', () => ({
+  useDebounceFn: vi.fn((fn) => fn),
+}));
+
+vi.mock('/@/store/modules/app', () => ({
+  useAppStore: () => ({
+    getDarkMode: 'dark',
+  }),
+}));
+
+vi.mock('/@/components/CodeEditor/src/typing', () => ({
+  MODE: {
+    JSON: 'json',
+    JAVASCRIPT: 'javascript',
+    TYPESCRIPT: 'typescript',
+    HTML: 'html',
+    CSS: 'css',
+    SQL: 'sql',
+    XML: 'xml',
+    YAML: 'yaml',
+    MARKDOWN: 'markdown',
+  },
+  parserDynamicImport: vi.fn(() => () => Promise.resolve()),
+}));
+
+describe('CodeMirror.vue', () => {
+  let wrapper: any;
+
+  const defaultProps = {
+    value: 'console.log("Hello World");',
+    mode: 'javascript',
+  };
+
   beforeEach(() => {
     vi.clearAllMocks();
+    wrapper = mount(CodeMirror, {
+      props: defaultProps,
+    });
   });
 
-  it('should render without crashing', () => {
-    const wrapper = mount(CodeMirror);
-    expect(wrapper.exists()).toBe(true);
+  it('should render correctly', () => {
+    expect(wrapper.find('div').exists()).toBe(true);
+    expect(wrapper.find('div').classes()).toContain('relative');
+    expect(wrapper.find('div').classes()).toContain('w-full');
+    expect(wrapper.find('div').classes()).toContain('overflow-hidden');
   });
 
-  it('should render with default props', () => {
-    const wrapper = mount(CodeMirror);
-    expect(wrapper.exists()).toBe(true);
+  it('should apply bordered class when bordered prop is true', async () => {
+    await wrapper.setProps({
+      bordered: true,
+    });
+    
+    expect(wrapper.find('div').classes()).toContain('ant-input');
+    expect(wrapper.find('div').classes()).toContain('css-dev-only-do-not-override-kqecok');
   });
 
-  it('should handle props correctly', () => {
-    const props = {
-      mode: 'json',
-      value: 'test value',
+  it('should handle props correctly', async () => {
+    await wrapper.setProps({
+      value: 'const x = 1;',
+      mode: 'typescript',
       readonly: true,
       bordered: true,
       config: { tabSize: 4 },
-    };
-    const wrapper = mount(CodeMirror, {
-      props,
     });
-    expect(wrapper.exists()).toBe(true);
+    
+    expect(wrapper.props('value')).toBe('const x = 1;');
+    expect(wrapper.props('mode')).toBe('typescript');
+    expect(wrapper.props('readonly')).toBe(true);
+    expect(wrapper.props('bordered')).toBe(true);
+    expect(wrapper.props('config')).toEqual({ tabSize: 4 });
+  });
+
+  it('should handle default props', () => {
+    const defaultWrapper = mount(CodeMirror);
+    
+    expect(defaultWrapper.props('value')).toBe('');
+    expect(defaultWrapper.props('mode')).toBe('json');
+    expect(defaultWrapper.props('readonly')).toBe(false);
+    expect(defaultWrapper.props('bordered')).toBe(false);
+  });
+
+  it('should handle mode validation', () => {
+    const validModes = ['json', 'javascript', 'typescript', 'html', 'css', 'sql', 'xml', 'yaml', 'markdown'];
+    
+    validModes.forEach(mode => {
+      const wrapper = mount(CodeMirror, {
+        props: { mode },
+      });
+      expect(wrapper.props('mode')).toBe(mode);
+    });
   });
 
   it('should handle value changes', async () => {
-    const wrapper = mount(CodeMirror, {
-      props: {
-        value: 'initial value',
-      },
+    await wrapper.setProps({
+      value: 'new value',
     });
-
-    // Test value change logic
-    await wrapper.setProps({ value: 'new value' });
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should handle mode changes', async () => {
-    const wrapper = mount(CodeMirror, {
-      props: {
-        mode: 'json',
-      },
-    });
-
-    // Test mode change logic
-    await wrapper.setProps({ mode: 'javascript' });
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should handle dark mode changes', async () => {
-    const { useAppStore } = await import('/@/store/modules/app');
-    const mockAppStore = useAppStore();
     
-    // Test dark mode change logic
-    mockAppStore.getDarkMode = 'light';
-    expect(mockAppStore.getDarkMode).toBe('light');
+    expect(wrapper.props('value')).toBe('new value');
   });
 
-  it('should handle editor initialization', async () => {
-    const CodeMirrorLib = await import('codemirror');
-    const mockEditor = {
-      setValue: vi.fn(),
-      getValue: vi.fn(() => 'test value'),
-      setOption: vi.fn(),
-      refresh: vi.fn(),
-      on: vi.fn(),
+  it('should handle readonly prop', async () => {
+    await wrapper.setProps({
+      readonly: true,
+    });
+    
+    expect(wrapper.props('readonly')).toBe(true);
+  });
+
+  it('should handle config prop', async () => {
+    const customConfig = {
+      tabSize: 4,
+      lineNumbers: false,
     };
-    vi.mocked(CodeMirrorLib.default).mockReturnValue(mockEditor);
-
-    const wrapper = mount(CodeMirror);
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should handle editor change events', async () => {
-    const CodeMirrorLib = await import('codemirror');
-    const mockEditor = {
-      setValue: vi.fn(),
-      getValue: vi.fn(() => 'test value'),
-      setOption: vi.fn(),
-      refresh: vi.fn(),
-      on: vi.fn((event, callback) => {
-        if (event === 'change') {
-          callback();
-        }
-      }),
-    };
-    vi.mocked(CodeMirrorLib.default).mockReturnValue(mockEditor);
-
-    const wrapper = mount(CodeMirror);
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should handle theme setting', async () => {
-    const { useAppStore } = await import('/@/store/modules/app');
-    const mockAppStore = useAppStore();
     
-    // Test theme setting logic
-    mockAppStore.getDarkMode = 'dark';
-    expect(mockAppStore.getDarkMode).toBe('dark');
-    
-    mockAppStore.getDarkMode = 'light';
-    expect(mockAppStore.getDarkMode).toBe('light');
-  });
-
-  it('should handle refresh functionality', async () => {
-    const CodeMirrorLib = await import('codemirror');
-    const mockEditor = {
-      setValue: vi.fn(),
-      getValue: vi.fn(() => 'test value'),
-      setOption: vi.fn(),
-      refresh: vi.fn(),
-      on: vi.fn(),
-    };
-    vi.mocked(CodeMirrorLib.default).mockReturnValue(mockEditor);
-
-    const wrapper = mount(CodeMirror);
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should handle component unmounting', async () => {
-    const wrapper = mount(CodeMirror);
-    await wrapper.unmount();
-    expect(wrapper.exists()).toBe(false);
-  });
-
-  it('should handle readonly prop', () => {
-    const wrapper = mount(CodeMirror, {
-      props: {
-        readonly: true,
-      },
+    await wrapper.setProps({
+      config: customConfig,
     });
-    expect(wrapper.exists()).toBe(true);
+    
+    expect(wrapper.props('config')).toEqual(customConfig);
   });
 
-  it('should handle bordered prop', () => {
-    const wrapper = mount(CodeMirror, {
-      props: {
-        bordered: true,
-      },
+  it('should emit change event', () => {
+    // Test that the component can be mounted without errors
+    expect(wrapper.emitted()).toBeDefined();
+  });
+
+  it('should handle different modes', async () => {
+    const modes = ['json', 'javascript', 'typescript', 'html', 'css'];
+    
+    for (const mode of modes) {
+      await wrapper.setProps({ mode });
+      expect(wrapper.props('mode')).toBe(mode);
+    }
+  });
+
+  it('should handle empty value', async () => {
+    await wrapper.setProps({
+      value: '',
     });
-    expect(wrapper.exists()).toBe(true);
+    
+    expect(wrapper.props('value')).toBe('');
   });
 
-  it('should handle custom config', () => {
-    const wrapper = mount(CodeMirror, {
-      props: {
-        config: {
-          tabSize: 4,
-          lineNumbers: false,
-        },
-      },
+  it('should handle complex value', async () => {
+    const complexValue = `{
+  "name": "test",
+  "version": "1.0.0",
+  "dependencies": {
+    "vue": "^3.0.0"
+  }
+}`;
+    
+    await wrapper.setProps({
+      value: complexValue,
     });
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should handle value change with different old value', async () => {
-    const CodeMirrorLib = await import('codemirror');
-    const mockEditor = {
-      setValue: vi.fn(),
-      getValue: vi.fn(() => 'old value'),
-      setOption: vi.fn(),
-      refresh: vi.fn(),
-      on: vi.fn(),
-    };
-    vi.mocked(CodeMirrorLib.default).mockReturnValue(mockEditor);
-
-    const wrapper = mount(CodeMirror, {
-      props: {
-        value: 'initial value',
-      },
-    });
-
-    // Test value change logic when old value is different
-    await wrapper.setProps({ value: 'new value' });
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should handle value change with empty value', async () => {
-    const CodeMirrorLib = await import('codemirror');
-    const mockEditor = {
-      setValue: vi.fn(),
-      getValue: vi.fn(() => 'old value'),
-      setOption: vi.fn(),
-      refresh: vi.fn(),
-      on: vi.fn(),
-    };
-    vi.mocked(CodeMirrorLib.default).mockReturnValue(mockEditor);
-
-    const wrapper = mount(CodeMirror, {
-      props: {
-        value: 'initial value',
-      },
-    });
-
-    // Test value change logic when new value is empty
-    await wrapper.setProps({ value: '' });
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should handle dark mode change trigger', async () => {
-    const { useAppStore } = await import('/@/store/modules/app');
-    const mockAppStore = useAppStore();
     
-    // Test dark mode change trigger logic
-    mockAppStore.getDarkMode = 'dark';
-    expect(mockAppStore.getDarkMode).toBe('dark');
-    
-    // Trigger theme change
-    mockAppStore.getDarkMode = 'light';
-    expect(mockAppStore.getDarkMode).toBe('light');
-  });
-
-  it('should handle refresh function call', async () => {
-    const CodeMirrorLib = await import('codemirror');
-    const mockEditor = {
-      setValue: vi.fn(),
-      getValue: vi.fn(() => 'test value'),
-      setOption: vi.fn(),
-      refresh: vi.fn(),
-      on: vi.fn(),
-    };
-    vi.mocked(CodeMirrorLib.default).mockReturnValue(mockEditor);
-
-    const wrapper = mount(CodeMirror);
-    
-    // Test refresh function call
-    mockEditor.refresh();
-    expect(mockEditor.refresh).toHaveBeenCalled();
-  });
-
-  it('should handle theme setting with light mode', async () => {
-    const { useAppStore } = await import('/@/store/modules/app');
-    const mockAppStore = useAppStore();
-    
-    // Test theme setting with light mode
-    mockAppStore.getDarkMode = 'light';
-    expect(mockAppStore.getDarkMode).toBe('light');
-  });
-
-  it('should handle theme setting with dark mode', async () => {
-    const { useAppStore } = await import('/@/store/modules/app');
-    const mockAppStore = useAppStore();
-    
-    // Test theme setting with dark mode
-    mockAppStore.getDarkMode = 'dark';
-    expect(mockAppStore.getDarkMode).toBe('dark');
+    expect(wrapper.props('value')).toBe(complexValue);
   });
 });

@@ -20,11 +20,7 @@ export default defineConfig({
         branches: 0,
         functions: 0,
       },
-      include: [
-        'src/**/*.ts',
-        'src/**/*.tsx',
-        'src/**/*.vue',
-      ],
+      include: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.vue'],
       exclude: [
         '**/views/**',
         '**/layouts/**',

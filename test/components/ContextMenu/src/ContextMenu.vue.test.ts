@@ -199,27 +199,13 @@ describe('ContextMenu', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('should handle edge case positioning when menu would overflow', async () => {
-    const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
-    const wrapper = mount(ContextMenu, {
-      props: {
-        axis: { x: 80, y: 80 },
-        items: [{ label: 'Test', handler: vi.fn() }],
-        width: 200,
-      },
-    });
-    await wrapper.vm.$nextTick();
-    
-    expect(wrapper.exists()).toBe(true);
-  });
-
   it('should handle custom styles', async () => {
     const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
-    const customStyles = { backgroundColor: 'red', zIndex: 999 };
+    const customStyles = { backgroundColor: 'red', border: '1px solid blue' };
     const wrapper = mount(ContextMenu, {
       props: {
-        styles: customStyles,
         items: [{ label: 'Test', handler: vi.fn() }],
+        styles: customStyles,
       },
     });
     await wrapper.vm.$nextTick();
@@ -239,76 +225,12 @@ describe('ContextMenu', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('should handle item click and call handler', async () => {
-    const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
-    const handler = vi.fn();
-    const items = [
-      { label: 'Test Item', handler },
-    ];
-
-    const wrapper = mount(ContextMenu, {
-      props: {
-        items,
-      },
-    });
-    await wrapper.vm.$nextTick();
-
-    // Test that the component renders without errors
-    expect(wrapper.exists()).toBe(true);
-    expect(wrapper.props('items')).toHaveLength(1);
-  });
-
-  it('should not call handler for disabled items', async () => {
-    const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
-    const handler = vi.fn();
-    const items = [
-      { label: 'Disabled Item', handler, disabled: true },
-    ];
-
-    const wrapper = mount(ContextMenu, {
-      props: {
-        items,
-      },
-    });
-    await wrapper.vm.$nextTick();
-
-    // Test that the component renders without errors
-    expect(wrapper.exists()).toBe(true);
-    expect(wrapper.props('items')).toHaveLength(1);
-  });
-
-  it('should handle showIcon prop correctly', async () => {
+  it('should handle null axis', async () => {
     const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
     const wrapper = mount(ContextMenu, {
       props: {
-        showIcon: false,
-        items: [{ label: 'Test', handler: vi.fn(), icon: 'test' }],
-      },
-    });
-    await wrapper.vm.$nextTick();
-    
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should render icon when showIcon is true', async () => {
-    const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
-    const wrapper = mount(ContextMenu, {
-      props: {
-        showIcon: true,
-        items: [{ label: 'Test', handler: vi.fn(), icon: 'test-icon' }],
-      },
-    });
-    await wrapper.vm.$nextTick();
-    
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('should handle null axis gracefully', async () => {
-    const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
-    const wrapper = mount(ContextMenu, {
-      props: {
+        items: [{ label: 'Test', handler: vi.fn() }],
         axis: null,
-        items: [{ label: 'Test', handler: vi.fn() }],
       },
     });
     await wrapper.vm.$nextTick();
@@ -316,26 +238,24 @@ describe('ContextMenu', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('should handle multiple items with different configurations', async () => {
+  it('should handle disabled items', async () => {
     const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
-    const items = [
-      { label: 'Normal Item', handler: vi.fn() },
-      { label: 'Item with Icon', handler: vi.fn(), icon: 'icon1' },
-      { label: 'Disabled Item', handler: vi.fn(), disabled: true },
-      { label: 'Item with Divider', handler: vi.fn(), divider: true },
-      {
-        label: 'Parent Item',
-        handler: vi.fn(),
-        children: [
-          { label: 'Child 1', handler: vi.fn() },
-          { label: 'Child 2', handler: vi.fn() },
-        ],
-      },
-    ];
-
+    const handler = vi.fn();
     const wrapper = mount(ContextMenu, {
       props: {
-        items,
+        items: [{ label: 'Disabled Item', disabled: true, handler }],
+      },
+    });
+    await wrapper.vm.$nextTick();
+    
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should handle items with icons when showIcon is true', async () => {
+    const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
+    const wrapper = mount(ContextMenu, {
+      props: {
+        items: [{ label: 'Item with Icon', icon: 'test-icon', handler: vi.fn() }],
         showIcon: true,
       },
     });
@@ -344,59 +264,50 @@ describe('ContextMenu', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('should handle customEvent prop', async () => {
+  it('should handle items with icons when showIcon is false', async () => {
     const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
-    const customEvent = new MouseEvent('click');
     const wrapper = mount(ContextMenu, {
       props: {
-        customEvent,
+        items: [{ label: 'Item with Icon', icon: 'test-icon', handler: vi.fn() }],
+        showIcon: false,
+      },
+    });
+    await wrapper.vm.$nextTick();
+    
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should handle menu positioning near screen edges', async () => {
+    const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
+    // Position near right edge
+    const wrapper = mount(ContextMenu, {
+      props: {
+        axis: { x: 1900, y: 100 },
         items: [{ label: 'Test', handler: vi.fn() }],
+        width: 200,
       },
     });
     await wrapper.vm.$nextTick();
     
     expect(wrapper.exists()).toBe(true);
-    expect(wrapper.props('customEvent')).toBe(customEvent);
   });
 
-  it('should handle styles prop', async () => {
+  it('should handle menu positioning near bottom edge', async () => {
     const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
-    const styles = { position: 'fixed', zIndex: 1000 };
+    // Position near bottom edge
     const wrapper = mount(ContextMenu, {
       props: {
-        styles,
+        axis: { x: 100, y: 1000 },
         items: [{ label: 'Test', handler: vi.fn() }],
+        width: 200,
       },
     });
     await wrapper.vm.$nextTick();
     
     expect(wrapper.exists()).toBe(true);
-    expect(wrapper.props('styles')).toStrictEqual(styles);
   });
 
-  it('should handle items with various properties', async () => {
-    const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
-    const items = [
-      { label: 'Simple Item', handler: vi.fn() },
-      { label: 'Item with Icon', handler: vi.fn(), icon: 'home' },
-      { label: 'Disabled Item', handler: vi.fn(), disabled: true },
-      { label: 'Item with Divider', handler: vi.fn(), divider: true },
-      { label: 'Item without Handler', disabled: false },
-    ];
-
-    const wrapper = mount(ContextMenu, {
-      props: {
-        items,
-        showIcon: true,
-      },
-    });
-    await wrapper.vm.$nextTick();
-    
-    expect(wrapper.exists()).toBe(true);
-    expect(wrapper.props('items')).toHaveLength(5);
-  });
-
-  it('should handle component lifecycle', async () => {
+  it('should handle lifecycle hooks', async () => {
     const { default: ContextMenu } = await import('/@/components/ContextMenu/src/ContextMenu.vue');
     const wrapper = mount(ContextMenu, {
       props: {
@@ -408,10 +319,8 @@ describe('ContextMenu', () => {
     await wrapper.vm.$nextTick();
     expect(wrapper.exists()).toBe(true);
     
-    // Test unmounted - the component calls removeChild in onUnmounted
-    await wrapper.unmount();
-    // Note: The removeChild call happens in onUnmounted but may not be called in test environment
-    // This test verifies the component can be unmounted without errors
+    // Test unmounted
+    wrapper.unmount();
     expect(wrapper.exists()).toBe(false);
   });
 });

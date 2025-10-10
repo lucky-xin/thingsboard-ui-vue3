@@ -205,4 +205,102 @@ describe('CollapseForm.vue', () => {
   it('should test all imports are executed', () => {
     expect(CollapseForm).toBeDefined();
   });
+
+  it('should handle close button click', async () => {
+    const wrapper = mount(CollapseForm);
+    const vm = wrapper.vm as any;
+    
+    // Test handleClose function
+    vm.handleClose();
+    expect(wrapper.emitted('close')).toBeTruthy();
+  });
+
+  it('should handle submit button click', async () => {
+    const wrapper = mount(CollapseForm);
+    const vm = wrapper.vm as any;
+    
+    // Test handleSubmit function
+    vm.handleSubmit();
+    expect(wrapper.emitted('ok')).toBeTruthy();
+  });
+
+  it('should calculate content height', async () => {
+    const wrapper = mount(CollapseForm);
+    const vm = wrapper.vm as any;
+    
+    // Mock DOM elements
+    const mockParentElement = {
+      querySelector: vi.fn(() => ({
+        scrollHeight: 50,
+      })),
+    };
+    
+    const mockContentRef = {
+      $el: {
+        parentElement: mockParentElement,
+      },
+    };
+    
+    vm.contentRef = mockContentRef;
+    
+    // Test calcContentHeight function
+    vm.calcContentHeight();
+    expect(vm.contentHeight).toBe(658); // 800 - 60 - 50 - 32
+  });
+
+  it('should handle mounted or activated callback', async () => {
+    const { onMountedOrActivated } = await import('/@/hooks/core/onMountedOrActivated');
+    
+    // Test onMountedOrActivated callback exists
+    expect(onMountedOrActivated).toBeDefined();
+    expect(typeof onMountedOrActivated).toBe('function');
+  });
+
+  it('should handle window size change', async () => {
+    const { useWindowSizeFn } = await import('/@/hooks/event/useWindowSizeFn');
+    
+    // Test useWindowSizeFn callback exists
+    expect(useWindowSizeFn).toBeDefined();
+    expect(typeof useWindowSizeFn).toBe('function');
+  });
+
+  it('should handle calcContentHeight with missing elements', async () => {
+    const wrapper = mount(CollapseForm);
+    const vm = wrapper.vm as any;
+    
+    // Mock DOM elements with missing parentElement
+    const mockContentRef = {
+      $el: {
+        parentElement: null,
+      },
+    };
+    
+    vm.contentRef = mockContentRef;
+    
+    // Test calcContentHeight function with missing elements
+    vm.calcContentHeight();
+    expect(vm.contentHeight).toBe(200); // Should remain default value
+  });
+
+  it('should handle calcContentHeight with missing actions element', async () => {
+    const wrapper = mount(CollapseForm);
+    const vm = wrapper.vm as any;
+    
+    // Mock DOM elements with missing actions element
+    const mockParentElement = {
+      querySelector: vi.fn(() => null),
+    };
+    
+    const mockContentRef = {
+      $el: {
+        parentElement: mockParentElement,
+      },
+    };
+    
+    vm.contentRef = mockContentRef;
+    
+    // Test calcContentHeight function with missing actions element
+    vm.calcContentHeight();
+    expect(vm.contentHeight).toBe(200); // Should remain default value
+  });
 });

@@ -1,33 +1,78 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 
-// Mock the ContextMenu component to avoid CSS-in-JS issues
-const MockContextMenu = {
-  name: 'ContextMenu',
-  template: '<div class="context-menu"><slot /></div>',
-  props: {
-    width: { type: Number, default: 156 },
-    customEvent: { type: Object, default: null },
-    styles: { type: Object },
-    showIcon: { type: Boolean, default: true },
-    axis: { type: Object, default: () => ({ x: 0, y: 0 }) },
-    items: { type: Array, default: () => [] },
+// Mock DOM APIs required by ant-design-vue CSS-in-JS
+Object.defineProperty(document, 'body', {
+  value: {
+    clientWidth: 1920,
+    clientHeight: 1080,
+    appendChild: vi.fn(),
+    removeChild: vi.fn(),
+    querySelectorAll: vi.fn(() => []),
+    querySelector: vi.fn(() => null),
   },
-  setup(props) {
-    return {
-      getStyle: () => ({
-        width: `${props.width}px`,
-        left: `${(props.axis?.x || 0) + 1}px`,
-        top: `${(props.axis?.y || 0) + 1}px`,
-        ...props.styles,
-      }),
-    };
-  },
-};
+  writable: true,
+});
 
-vi.mock('/@/components/ContextMenu/src/ContextMenu.vue', () => ({
-  default: MockContextMenu,
-}));
+Object.defineProperty(document, 'querySelectorAll', {
+  value: vi.fn(() => []),
+  writable: true,
+});
+
+Object.defineProperty(document, 'querySelector', {
+  value: vi.fn(() => null),
+  writable: true,
+});
+
+Object.defineProperty(document, 'head', {
+  value: {
+    appendChild: vi.fn(),
+    removeChild: vi.fn(),
+    querySelectorAll: vi.fn(() => []),
+    querySelector: vi.fn(() => null),
+  },
+  writable: true,
+});
+
+Object.defineProperty(document, 'createElement', {
+  value: vi.fn(() => ({
+    tagName: 'div',
+    appendChild: vi.fn(),
+    removeChild: vi.fn(),
+    insertBefore: vi.fn(),
+    setAttribute: vi.fn(),
+    getAttribute: vi.fn(),
+    style: {},
+    textContent: '',
+    innerHTML: '',
+    parentNode: null,
+    nextSibling: null,
+    previousSibling: null,
+  })),
+  writable: true,
+});
+
+Object.defineProperty(document, 'createTextNode', {
+  value: vi.fn(() => ({
+    nodeType: 3,
+    textContent: '',
+    parentNode: null,
+    nextSibling: null,
+    previousSibling: null,
+  })),
+  writable: true,
+});
+
+Object.defineProperty(document, 'createComment', {
+  value: vi.fn(() => ({
+    nodeType: 8,
+    textContent: '',
+    parentNode: null,
+    nextSibling: null,
+    previousSibling: null,
+  })),
+  writable: true,
+});
 
 describe('ContextMenu', () => {
   beforeEach(() => {

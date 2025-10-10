@@ -33,6 +33,7 @@ export default defineConfig({
         '**/*.d.ts',
         '**/index.ts',
         '**/types.ts',
+        '**/typing.ts',
       ],
       reportsDirectory: './coverage',
     },

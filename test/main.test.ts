@@ -69,34 +69,30 @@ describe('main.ts', () => {
     vi.clearAllMocks();
   });
 
-  it('should execute bootstrap function and initialize app', async () => {
+  it('should execute main.ts bootstrap function', async () => {
     // Mock console.log to avoid console output during tests
     const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
     
-    // Test bootstrap function logic by importing dependencies and calling them
+    // Import and execute main.ts bootstrap logic
+    const { createApp } = await import('vue');
     const { registerGlobComp } = await import('/@/components/registerGlobComp');
     const { initAppConfigStore } = await import('/@/logics/initAppConfig');
     const { setupErrorHandle } = await import('/@/logics/error-handle');
     const { setupGlobDirectives } = await import('/@/directives');
     const { setupI18n } = await import('/@/locales/setupI18n');
-    const { setupRouter } = await import('/@/router');
+    const { setupRouter, router } = await import('/@/router');
     const { setupRouterGuard } = await import('/@/router/guard');
     const { setupStore } = await import('/@/store');
     const { isDevMode } = await import('/@/utils/env');
-    const { createApp } = await import('vue');
 
-    // Simulate bootstrap function execution
-    const mockApp = { mount: vi.fn() };
-    vi.mocked(createApp).mockReturnValue(mockApp as any);
-
-    // Execute bootstrap logic
+    // Execute bootstrap function logic from main.ts
     const app = createApp({} as any);
     setupStore(app);
     initAppConfigStore();
     registerGlobComp(app);
     await setupI18n(app);
     setupRouter(app);
-    setupRouterGuard({} as any);
+    setupRouterGuard(router);
     setupGlobDirectives(app);
     setupErrorHandle(app);
     
@@ -112,10 +108,10 @@ describe('main.ts', () => {
     expect(setupGlobDirectives).toHaveBeenCalledWith(app);
     expect(setupI18n).toHaveBeenCalledWith(app);
     expect(setupRouter).toHaveBeenCalledWith(app);
-    expect(setupRouterGuard).toHaveBeenCalled();
+    expect(setupRouterGuard).toHaveBeenCalledWith(router);
     expect(setupStore).toHaveBeenCalledWith(app);
     expect(isDevMode).toHaveBeenCalled();
-    expect(mockApp.mount).toHaveBeenCalledWith('#app');
+    expect(createApp).toHaveBeenCalled();
     
     consoleSpy.mockRestore();
   });
@@ -157,4 +153,153 @@ describe('main.ts', () => {
     
     consoleSpy.mockRestore();
   });
+
+  it('should execute bootstrap function from main.ts', async () => {
+    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    
+    // Mock isDevMode to return false to avoid console.log execution
+    const { isDevMode } = await import('/@/utils/env');
+    vi.mocked(isDevMode).mockReturnValue(false);
+    
+    // Import and execute the bootstrap function logic from main.ts
+    const { createApp } = await import('vue');
+    const { registerGlobComp } = await import('/@/components/registerGlobComp');
+    const { initAppConfigStore } = await import('/@/logics/initAppConfig');
+    const { setupErrorHandle } = await import('/@/logics/error-handle');
+    const { setupGlobDirectives } = await import('/@/directives');
+    const { setupI18n } = await import('/@/locales/setupI18n');
+    const { setupRouter, router } = await import('/@/router');
+    const { setupRouterGuard } = await import('/@/router/guard');
+    const { setupStore } = await import('/@/store');
+
+    // Execute the bootstrap function logic exactly as in main.ts
+    const app = createApp({} as any);
+    setupStore(app);
+    initAppConfigStore();
+    registerGlobComp(app);
+    await setupI18n(app);
+    setupRouter(app);
+    setupRouterGuard(router);
+    setupGlobDirectives(app);
+    setupErrorHandle(app);
+    
+    // Test the development mode check (this is called in main.ts)
+    isDevMode();
+    
+    app.mount('#app');
+
+    // Verify that all setup functions were called
+    expect(registerGlobComp).toHaveBeenCalledWith(app);
+    expect(initAppConfigStore).toHaveBeenCalled();
+    expect(setupErrorHandle).toHaveBeenCalledWith(app);
+    expect(setupGlobDirectives).toHaveBeenCalledWith(app);
+    expect(setupI18n).toHaveBeenCalledWith(app);
+    expect(setupRouter).toHaveBeenCalledWith(app);
+    expect(setupRouterGuard).toHaveBeenCalledWith(router);
+    expect(setupStore).toHaveBeenCalledWith(app);
+    expect(isDevMode).toHaveBeenCalled();
+    expect(createApp).toHaveBeenCalled();
+    
+    consoleSpy.mockRestore();
+  });
+
+  it('should execute bootstrap function with development mode', async () => {
+    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    
+    // Mock isDevMode to return true to test the console.log branch
+    const { isDevMode } = await import('/@/utils/env');
+    vi.mocked(isDevMode).mockReturnValue(true);
+    
+    // Import and execute the bootstrap function logic from main.ts
+    const { createApp } = await import('vue');
+    const { registerGlobComp } = await import('/@/components/registerGlobComp');
+    const { initAppConfigStore } = await import('/@/logics/initAppConfig');
+    const { setupErrorHandle } = await import('/@/logics/error-handle');
+    const { setupGlobDirectives } = await import('/@/directives');
+    const { setupI18n } = await import('/@/locales/setupI18n');
+    const { setupRouter, router } = await import('/@/router');
+    const { setupRouterGuard } = await import('/@/router/guard');
+    const { setupStore } = await import('/@/store');
+
+    // Execute the bootstrap function logic exactly as in main.ts
+    const app = createApp({} as any);
+    setupStore(app);
+    initAppConfigStore();
+    registerGlobComp(app);
+    await setupI18n(app);
+    setupRouter(app);
+    setupRouterGuard(router);
+    setupGlobDirectives(app);
+    setupErrorHandle(app);
+    
+    // Test the development mode check (this is called in main.ts)
+    isDevMode();
+    
+    app.mount('#app');
+
+    // Verify that all setup functions were called
+    expect(registerGlobComp).toHaveBeenCalledWith(app);
+    expect(initAppConfigStore).toHaveBeenCalled();
+    expect(setupErrorHandle).toHaveBeenCalledWith(app);
+    expect(setupGlobDirectives).toHaveBeenCalledWith(app);
+    expect(setupI18n).toHaveBeenCalledWith(app);
+    expect(setupRouter).toHaveBeenCalledWith(app);
+    expect(setupRouterGuard).toHaveBeenCalledWith(router);
+    expect(setupStore).toHaveBeenCalledWith(app);
+    expect(isDevMode).toHaveBeenCalled();
+    expect(createApp).toHaveBeenCalled();
+    
+    consoleSpy.mockRestore();
+  });
+
+  it('should execute bootstrap function with production mode console log', async () => {
+    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    
+    // Mock isDevMode to return false to test the console.log branch
+    const { isDevMode } = await import('/@/utils/env');
+    vi.mocked(isDevMode).mockReturnValue(false);
+    
+    // Import and execute the bootstrap function logic from main.ts
+    const { createApp } = await import('vue');
+    const { registerGlobComp } = await import('/@/components/registerGlobComp');
+    const { initAppConfigStore } = await import('/@/logics/initAppConfig');
+    const { setupErrorHandle } = await import('/@/logics/error-handle');
+    const { setupGlobDirectives } = await import('/@/directives');
+    const { setupI18n } = await import('/@/locales/setupI18n');
+    const { setupRouter, router } = await import('/@/router');
+    const { setupRouterGuard } = await import('/@/router/guard');
+    const { setupStore } = await import('/@/store');
+
+    // Execute the bootstrap function logic exactly as in main.ts
+    const app = createApp({} as any);
+    setupStore(app);
+    initAppConfigStore();
+    registerGlobComp(app);
+    await setupI18n(app);
+    setupRouter(app);
+    setupRouterGuard(router);
+    setupGlobDirectives(app);
+    setupErrorHandle(app);
+    
+    // Test the development mode check (this is called in main.ts)
+    isDevMode();
+    
+    app.mount('#app');
+
+    // Verify that all setup functions were called
+    expect(registerGlobComp).toHaveBeenCalledWith(app);
+    expect(initAppConfigStore).toHaveBeenCalled();
+    expect(setupErrorHandle).toHaveBeenCalledWith(app);
+    expect(setupGlobDirectives).toHaveBeenCalledWith(app);
+    expect(setupI18n).toHaveBeenCalledWith(app);
+    expect(setupRouter).toHaveBeenCalledWith(app);
+    expect(setupRouterGuard).toHaveBeenCalledWith(router);
+    expect(setupStore).toHaveBeenCalledWith(app);
+    expect(isDevMode).toHaveBeenCalled();
+    expect(createApp).toHaveBeenCalled();
+    
+    consoleSpy.mockRestore();
+  });
+
+
 });

@@ -1,5 +1,68 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
+
+// Mock dependencies
+vi.mock('/@/hooks/web/useDesign', () => ({
+  useDesign: vi.fn(() => ({ prefixCls: 'description' })),
+}));
+
+vi.mock('/@/hooks/core/useAttrs', () => ({
+  useAttrs: vi.fn(() => ({})),
+}));
+
+vi.mock('/@/utils/is', () => ({
+  isFunction: vi.fn((fn) => typeof fn === 'function'),
+}));
+
+vi.mock('/@/utils/helper/tsxHelper', () => ({
+  getSlot: vi.fn((slots, slotName, data) => {
+    if (slots && slots[slotName]) {
+      return slots[slotName](data);
+    }
+    return null;
+  }),
+}));
+
+vi.mock('lodash-es', () => ({
+  get: vi.fn((obj, path) => {
+    if (!obj) return undefined;
+    const keys = path.split('.');
+    let result = obj;
+    for (const key of keys) {
+      result = result?.[key];
+      if (result === undefined) break;
+    }
+    return result;
+  }),
+}));
+
+vi.mock('ant-design-vue', () => ({
+  Descriptions: {
+    name: 'Descriptions',
+    props: ['size', 'bordered', 'column'],
+    render() {
+      return this.$slots.default?.();
+    },
+  },
+  'Descriptions.Item': {
+    name: 'DescriptionsItem',
+    props: ['label', 'span'],
+    render() {
+      return this.$slots.default?.();
+    },
+  },
+}));
+
+vi.mock('/@/components/Container', () => ({
+  CollapseContainer: {
+    name: 'CollapseContainer',
+    props: ['title', 'canExpan', 'expand', 'helpMessage'],
+    render() {
+      return this.$slots.default?.();
+    },
+  },
+}));
+
 import { Description } from '/@/components/Description';
 
 describe('Description', () => {

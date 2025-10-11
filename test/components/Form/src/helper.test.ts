@@ -271,5 +271,105 @@ describe('components/Form/src/helper', () => {
       // For non-date components, should return the original value
       expect(result).toEqual(value);
     });
+
+    it('should handle array value without valueFormat', () => {
+      const mockDateInstance = {
+        format: vi.fn(() => '2023-09-27'),
+      };
+      dateUtil.mockReturnValue(mockDateInstance);
+
+      const value = [new Date('2023-09-27'), new Date('2023-09-28')];
+      const component = 'RangePicker';
+      const result = processDateValue(value, component);
+      
+      expect(dateUtil).toHaveBeenCalledTimes(2);
+      expect(result).toEqual([mockDateInstance, mockDateInstance]);
+    });
+
+    it('should handle single value without valueFormat', () => {
+      const mockDateInstance = {
+        format: vi.fn(() => '2023-09-27'),
+      };
+      dateUtil.mockReturnValue(mockDateInstance);
+
+      const value = new Date('2023-09-27');
+      const component = 'DatePicker';
+      const result = processDateValue(value, component);
+      
+      expect(dateUtil).toHaveBeenCalledWith(value);
+      expect(result).toBe(mockDateInstance);
+    });
+
+    it('should handle array value with null values', () => {
+      const mockDateInstance = {
+        format: vi.fn(() => '2023-09-27'),
+      };
+      dateUtil.mockReturnValue(mockDateInstance);
+
+      const value = [new Date('2023-09-27'), null, new Date('2023-09-28')];
+      const component = 'RangePicker';
+      const result = processDateValue(value, component);
+      
+      expect(dateUtil).toHaveBeenCalledTimes(2);
+      expect(result).toEqual([mockDateInstance, null, mockDateInstance]);
+    });
+  });
+
+  describe('processNumberValue', () => {
+    it('should return original value for non-input components', () => {
+      const value = 123;
+      const component = 'Select';
+      const result = processNumberValue(value, component);
+      expect(result).toBe(value);
+    });
+
+    it('should return original value when value is null', () => {
+      const value = null;
+      const component = 'Input';
+      const result = processNumberValue(value, component);
+      expect(result).toBe(value);
+    });
+
+    it('should return original value when component is null', () => {
+      const value = 123;
+      const component = null;
+      const result = processNumberValue(value, component);
+      expect(result).toBe(value);
+    });
+
+    it('should convert number to string for Input components', () => {
+      const value = 123;
+      const component = 'Input';
+      const result = processNumberValue(value, component);
+      expect(result).toBe('123');
+    });
+
+    it('should convert number to string for InputPassword components', () => {
+      const value = 456;
+      const component = 'InputPassword';
+      const result = processNumberValue(value, component);
+      expect(result).toBe('456');
+    });
+
+    it('should convert number to string for InputSearch components', () => {
+      const value = 789;
+      const component = 'InputSearch';
+      const result = processNumberValue(value, component);
+      expect(result).toBe('789');
+    });
+
+    it('should convert number to string for InputTextArea components', () => {
+      const value = 999;
+      const component = 'InputTextArea';
+      const result = processNumberValue(value, component);
+      expect(result).toBe('999');
+    });
+
+    it('should return original value for non-number input', () => {
+      const value = 'not a number';
+      const component = 'Input';
+      const result = processNumberValue(value, component);
+      expect(result).toBe(value);
+    });
   });
 });

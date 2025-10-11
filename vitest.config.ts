@@ -1,9 +1,16 @@
 import { defineConfig } from 'vitest/config';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import UnoCSS from 'unocss/vite';
+import UnoCSSConfig from './uno.config';
 
 export default defineConfig({
-  plugins: [vue() as any, vueJsx() as any],
+  plugins: [vue() as any, vueJsx() as any, UnoCSS(UnoCSSConfig)],
+  server: {
+    deps: {
+      inline: ['virtual:uno.css'],
+    },
+  },
   test: {
     environment: 'jsdom',
     globals: true,
@@ -11,6 +18,19 @@ export default defineConfig({
     setupFiles: ['./test/setup.ts'],
     reporters: ['default'],
     testTimeout: 30000,
+    css: {
+      modules: {
+        classNameStrategy: 'stable',
+      },
+    },
+    cssPreprocessOptions: {
+      less: {
+        modifyVars: {
+          '@header-light-bottom-border-color': '#e8e8e8',
+          '@primary-color': '#1890ff',
+        },
+      },
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],

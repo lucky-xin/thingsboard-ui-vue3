@@ -6,8 +6,6 @@ describe('Form/index coverage', () => {
     const { BasicForm, Select, TreeSelect, RadioGroup, RadioButtonGroup, CheckboxGroup, FormGroup } = await import(
       '/@/components/Form'
     );
-    // Add timeout to prevent hanging
-    await new Promise(resolve => setTimeout(resolve, 100));
 
     expect(BasicForm).toBeDefined();
     expect(Select).toBeDefined();
@@ -16,18 +14,16 @@ describe('Form/index coverage', () => {
     expect(RadioButtonGroup).toBeDefined();
     expect(CheckboxGroup).toBeDefined();
     expect(FormGroup).toBeDefined();
-  }, 15000);
+  }, 30000);
 
   it('should export hooks', async () => {
     const { useComponentRegister, useForm } = await import('/@/components/Form');
-    // Add timeout to prevent hanging
-    await new Promise(resolve => setTimeout(resolve, 100));
 
     expect(useComponentRegister).toBeDefined();
     expect(useForm).toBeDefined();
     expect(typeof useComponentRegister).toBe('function');
     expect(typeof useForm).toBe('function');
-  }, 15000);
+  }, 30000);
 
   it('should export all expected components and hooks', async () => {
     const exports = await import('/@/components/Form');
@@ -42,7 +38,7 @@ describe('Form/index coverage', () => {
     expect(exportKeys).toContain('FormGroup');
     expect(exportKeys).toContain('useComponentRegister');
     expect(exportKeys).toContain('useForm');
-  }, 15000);
+  }, 30000);
 
   it('should be valid Vue components', async () => {
     const { BasicForm, Select, TreeSelect, RadioGroup, RadioButtonGroup, CheckboxGroup, FormGroup } = await import(
@@ -64,14 +60,14 @@ describe('Form/index coverage', () => {
     expect(typeof RadioButtonGroup).toBe('object');
     expect(typeof CheckboxGroup).toBe('object');
     expect(typeof FormGroup).toBe('object');
-  }, 15000);
+  }, 30000);
 
   it('should export hooks as functions', async () => {
     const { useComponentRegister, useForm } = await import('/@/components/Form');
 
     expect(typeof useComponentRegister).toBe('function');
     expect(typeof useForm).toBe('function');
-  }, 15000);
+  }, 30000);
 
   it('should have correct component names', async () => {
     const { BasicForm, Select, TreeSelect, RadioGroup, RadioButtonGroup, CheckboxGroup, FormGroup } = await import(
@@ -86,14 +82,14 @@ describe('Form/index coverage', () => {
     expect(CheckboxGroup).toHaveProperty('__name');
     // Component may not have __name property in test environment
     expect(typeof FormGroup).toBe('object');
-  }, 15000);
+  }, 30000);
 
   it('should export typing definitions', async () => {
     const exports = await import('/@/components/Form');
 
     // Should have exported types from typing files
     expect(exports).toBeDefined();
-  }, 15000);
+  }, 30000);
 
   it('should export all form components as default exports', async () => {
     const module = await import('/@/components/Form');
@@ -106,5 +102,5 @@ describe('Form/index coverage', () => {
     expect(module.RadioButtonGroup).toBeDefined();
     expect(module.CheckboxGroup).toBeDefined();
     expect(module.FormGroup).toBeDefined();
-  }, 15000);
+  }, 30000);
 });

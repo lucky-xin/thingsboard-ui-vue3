@@ -24,13 +24,16 @@ vi.mock('/@/utils/is', () => ({
 }));
 
 vi.mock('/@/utils/dateUtil', () => ({
-  dateUtil: {
-    formatDate: vi.fn(),
-  },
+  dateUtil: vi.fn(() => ({
+    format: vi.fn((format) => `formatted-${format}`),
+  })),
 }));
 
 vi.mock('lodash-es', () => ({
-  set: vi.fn(),
+  set: vi.fn((obj, path, value) => {
+    obj[path] = value;
+    return obj;
+  }),
 }));
 
 describe('components/Form/src/hooks/useFormValues', () => {
@@ -241,6 +244,101 @@ describe('components/Form/src/hooks/useFormValues', () => {
           name: 'John',
           age: 30,
           active: true,
+        });
+
+        expect(res).toBeDefined();
+      });
+    });
+
+    describe('handleRangeTimeValue', () => {
+      it('should handle fieldMapToTime with valid data', () => {
+        mockContext.getProps.value.fieldMapToTime = [
+          ['dateRange', ['startDate', 'endDate'], 'YYYY-MM-DD'],
+        ];
+        const result = useFormValues(mockContext);
+
+        // Mock isObject to return true for the main object
+        vi.mocked(isObject).mockImplementation((val) => {
+          return val !== null && typeof val === 'object' && !Array.isArray(val);
+        });
+        
+        // Mock isArray to return true for our test array
+        vi.mocked(isArray).mockImplementation((val) => {
+          return Array.isArray(val);
+        });
+        
+        const res = result.handleFormValues({
+          dateRange: ['2023-01-01', '2023-01-31'],
+        });
+
+        expect(res).toBeDefined();
+        expect(res).toHaveProperty('startDate');
+        expect(res).toHaveProperty('endDate');
+        expect(res).not.toHaveProperty('dateRange');
+      });
+
+      it('should handle fieldMapToTime with default format', () => {
+        mockContext.getProps.value.fieldMapToTime = [
+          ['dateRange', ['startDate', 'endDate']],
+        ];
+        const result = useFormValues(mockContext);
+
+        // Mock isObject to return true for the main object
+        vi.mocked(isObject).mockImplementation((val) => {
+          return val !== null && typeof val === 'object' && !Array.isArray(val);
+        });
+        
+        // Mock isArray to return true for our test array
+        vi.mocked(isArray).mockImplementation((val) => {
+          return Array.isArray(val);
+        });
+        
+        const res = result.handleFormValues({
+          dateRange: ['2023-01-01', '2023-01-31'],
+        });
+
+        expect(res).toBeDefined();
+        expect(res).toHaveProperty('startDate');
+        expect(res).toHaveProperty('endDate');
+        expect(res).not.toHaveProperty('dateRange');
+      });
+
+      it('should skip invalid fieldMapToTime entries', () => {
+        mockContext.getProps.value.fieldMapToTime = [
+          ['', ['startDate', 'endDate']], // empty field
+          ['dateRange', ['', 'endDate']], // empty startTimeKey
+          ['dateRange', ['startDate', '']], // empty endTimeKey
+          ['dateRange', ['startDate', 'endDate']], // no values[field]
+        ];
+        const result = useFormValues(mockContext);
+
+        vi.mocked(isObject).mockReturnValue(true);
+        const res = result.handleFormValues({
+          otherField: 'value',
+        });
+
+        expect(res).toBeDefined();
+      });
+
+      it('should handle non-array fieldMapToTime', () => {
+        mockContext.getProps.value.fieldMapToTime = 'not-an-array';
+        const result = useFormValues(mockContext);
+
+        vi.mocked(isObject).mockReturnValue(true);
+        const res = result.handleFormValues({
+          name: 'John',
+        });
+
+        expect(res).toBeDefined();
+      });
+
+      it('should handle null fieldMapToTime', () => {
+        mockContext.getProps.value.fieldMapToTime = null;
+        const result = useFormValues(mockContext);
+
+        vi.mocked(isObject).mockReturnValue(true);
+        const res = result.handleFormValues({
+          name: 'John',
         });
 
         expect(res).toBeDefined();

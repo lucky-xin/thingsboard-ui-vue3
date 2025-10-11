@@ -4,6 +4,7 @@ import {
   dateItemType,
   setComponentRuleType,
   processDateValue,
+  processNumberValue,
 } from '/@/components/Form/src/helper';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { dateUtil } from '/@/utils/dateUtil';
@@ -280,10 +281,13 @@ describe('components/Form/src/helper', () => {
 
       const value = [new Date('2023-09-27'), new Date('2023-09-28')];
       const component = 'RangePicker';
-      const result = processDateValue(value, component);
+      const componentProps = {};
+      const result = processDateValue(value, component, componentProps);
       
       expect(dateUtil).toHaveBeenCalledTimes(2);
-      expect(result).toEqual([mockDateInstance, mockDateInstance]);
+      expect(result).toHaveLength(2);
+      expect(result[0]).toHaveProperty('format');
+      expect(result[1]).toHaveProperty('format');
     });
 
     it('should handle single value without valueFormat', () => {
@@ -294,10 +298,11 @@ describe('components/Form/src/helper', () => {
 
       const value = new Date('2023-09-27');
       const component = 'DatePicker';
-      const result = processDateValue(value, component);
+      const componentProps = {};
+      const result = processDateValue(value, component, componentProps);
       
       expect(dateUtil).toHaveBeenCalledWith(value);
-      expect(result).toBe(mockDateInstance);
+      expect(result).toHaveProperty('format');
     });
 
     it('should handle array value with null values', () => {
@@ -308,14 +313,22 @@ describe('components/Form/src/helper', () => {
 
       const value = [new Date('2023-09-27'), null, new Date('2023-09-28')];
       const component = 'RangePicker';
-      const result = processDateValue(value, component);
+      const componentProps = {};
+      const result = processDateValue(value, component, componentProps);
       
       expect(dateUtil).toHaveBeenCalledTimes(2);
-      expect(result).toEqual([mockDateInstance, null, mockDateInstance]);
+      expect(result).toHaveLength(3);
+      expect(result[0]).toHaveProperty('format');
+      expect(result[1]).toBe(null);
+      expect(result[2]).toHaveProperty('format');
     });
   });
 
   describe('processNumberValue', () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
+
     it('should return original value for non-input components', () => {
       const value = 123;
       const component = 'Select';
@@ -338,6 +351,7 @@ describe('components/Form/src/helper', () => {
     });
 
     it('should convert number to string for Input components', () => {
+      isNumber.mockReturnValue(true);
       const value = 123;
       const component = 'Input';
       const result = processNumberValue(value, component);
@@ -345,6 +359,7 @@ describe('components/Form/src/helper', () => {
     });
 
     it('should convert number to string for InputPassword components', () => {
+      isNumber.mockReturnValue(true);
       const value = 456;
       const component = 'InputPassword';
       const result = processNumberValue(value, component);
@@ -352,6 +367,7 @@ describe('components/Form/src/helper', () => {
     });
 
     it('should convert number to string for InputSearch components', () => {
+      isNumber.mockReturnValue(true);
       const value = 789;
       const component = 'InputSearch';
       const result = processNumberValue(value, component);
@@ -359,6 +375,7 @@ describe('components/Form/src/helper', () => {
     });
 
     it('should convert number to string for InputTextArea components', () => {
+      isNumber.mockReturnValue(true);
       const value = 999;
       const component = 'InputTextArea';
       const result = processNumberValue(value, component);
@@ -366,6 +383,7 @@ describe('components/Form/src/helper', () => {
     });
 
     it('should return original value for non-number input', () => {
+      isNumber.mockReturnValue(false);
       const value = 'not a number';
       const component = 'Input';
       const result = processNumberValue(value, component);

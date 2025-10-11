@@ -6,9 +6,9 @@ import { defineComponent } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 
 // Mock CSS imports globally
-vi.mock('virtual:uno.css', () => ({}));
-vi.mock('ant-design-vue/dist/reset.css', () => ({}));
-vi.mock('/@/design/index.less', () => ({}));
+vi.mock('virtual:uno.css', () => ({}), { virtual: true });
+vi.mock('ant-design-vue/dist/reset.css', () => ({}), { virtual: true });
+vi.mock('/@/design/index.less', () => ({}), { virtual: true });
 
 // helper: attach install method to mocked components and return SAME reference
 function addInstall<T extends any>(comp: T & Record<string, any>, name?: string) {

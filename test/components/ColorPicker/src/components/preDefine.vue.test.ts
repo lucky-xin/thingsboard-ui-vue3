@@ -35,7 +35,10 @@ describe('PreDefine.vue', () => {
 
   const defaultProps = {
     colors: ['#ff0000', '#00ff00', '#0000ff'],
-    color: {},
+    color: {
+      fromString: vi.fn(),
+      value: '#000000',
+    },
   };
 
   beforeEach(() => {
@@ -53,7 +56,10 @@ describe('PreDefine.vue', () => {
 
   it('should handle props correctly', async () => {
     const newColors = ['#ffff00', '#ff00ff', '#00ffff'];
-    const newColor = {};
+    const newColor = {
+      fromString: vi.fn(),
+      value: '#ffff00',
+    };
     
     await wrapper.setProps({
       colors: newColors,

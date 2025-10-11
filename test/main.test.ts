@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock all dependencies before any imports
+// Mock CSS imports to prevent resolution errors
 vi.mock('virtual:uno.css', () => ({}));
 vi.mock('ant-design-vue/dist/reset.css', () => ({}));
 vi.mock('/@/design/index.less', () => ({}));

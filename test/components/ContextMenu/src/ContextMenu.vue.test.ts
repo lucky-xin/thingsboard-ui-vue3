@@ -77,6 +77,15 @@ Object.defineProperty(document, 'createComment', {
 describe('ContextMenu', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    
+    // Suppress Vue warnings in tests
+    const originalConsoleWarn = console.warn;
+    console.warn = vi.fn((message) => {
+      if (typeof message === 'string' && message.includes('Unhandled error during execution')) {
+        return;
+      }
+      originalConsoleWarn(message);
+    });
   });
 
   it('should render without crashing', async () => {

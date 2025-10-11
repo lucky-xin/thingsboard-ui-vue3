@@ -28,7 +28,7 @@ vi.mock('/@/components/Form', () => ({
     template: '<div data-testid="basic-form"></div>',
   },
   useForm: vi.fn(() => [
-    'registerForm',
+    vi.fn(), // registerForm function
     {
       validate: vi.fn(),
     },

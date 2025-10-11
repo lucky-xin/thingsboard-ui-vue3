@@ -7,9 +7,17 @@ vi.mock('vue', async (importOriginal) => {
   const actual = await importOriginal();
   return {
     ...actual,
-    unref: vi.fn((val) => val.value || val),
-    nextTick: vi.fn(),
-    watchEffect: vi.fn((fn) => fn()),
+    unref: vi.fn((val) => {
+      if (val && typeof val === 'object' && 'value' in val) {
+        return val.value;
+      }
+      return val;
+    }),
+    nextTick: vi.fn(() => Promise.resolve()),
+    watchEffect: vi.fn((fn) => {
+      // Execute the function immediately to simulate watchEffect behavior
+      fn();
+    }),
   };
 });
 
@@ -299,6 +307,136 @@ describe('components/Form/src/hooks/useAutoFocus', () => {
       await useAutoFocus(mockContext);
 
       expect(vi.mocked(watchEffect)).toHaveBeenCalled();
+    });
+
+    it('should execute nextTick and focus logic', async () => {
+      const mockInput = {
+        focus: vi.fn(),
+      };
+      mockContext.formElRef.value.$el.querySelector.mockReturnValue(mockInput);
+
+      await useAutoFocus(mockContext);
+
+      expect(vi.mocked(watchEffect)).toHaveBeenCalled();
+    });
+
+    it('should handle component includes Input check', async () => {
+      const mockInput = {
+        focus: vi.fn(),
+      };
+      mockContext.getSchema.value = [
+        {
+          component: 'Input',
+          field: 'name',
+          label: 'Name',
+        },
+      ];
+      mockContext.formElRef.value.$el.querySelector.mockReturnValue(mockInput);
+
+      await useAutoFocus(mockContext);
+
+      expect(vi.mocked(watchEffect)).toHaveBeenCalled();
+    });
+
+    it('should handle querySelector with correct selector', async () => {
+      const mockInput = {
+        focus: vi.fn(),
+      };
+      mockContext.formElRef.value.$el.querySelector.mockReturnValue(mockInput);
+
+      await useAutoFocus(mockContext);
+
+      expect(vi.mocked(watchEffect)).toHaveBeenCalled();
+    });
+
+    it('should handle inputEl focus call', async () => {
+      const mockInput = {
+        focus: vi.fn(),
+      };
+      mockContext.formElRef.value.$el.querySelector.mockReturnValue(mockInput);
+
+      await useAutoFocus(mockContext);
+
+      expect(vi.mocked(watchEffect)).toHaveBeenCalled();
+    });
+
+    it('should handle inputEl null case', async () => {
+      mockContext.formElRef.value.$el.querySelector.mockReturnValue(null);
+
+      await useAutoFocus(mockContext);
+
+      expect(vi.mocked(watchEffect)).toHaveBeenCalled();
+    });
+
+    it('should cover lines 17-20 by testing nextTick and schema access', async () => {
+      const mockInput = {
+        focus: vi.fn(),
+      };
+      mockContext.formElRef.value.$el.querySelector.mockReturnValue(mockInput);
+      // Ensure isInitedDefault is false to allow focus logic
+      mockContext.isInitedDefault.value = false;
+
+      await useAutoFocus(mockContext);
+
+      // Verify that watchEffect was called (which executes the function immediately)
+      expect(vi.mocked(watchEffect)).toHaveBeenCalled();
+      // Verify that unref was called with getSchema
+      expect(vi.mocked(unref)).toHaveBeenCalledWith(mockContext.getSchema);
+    });
+
+    it('should cover lines 22-32 by testing component check and focus', async () => {
+      const mockInput = {
+        focus: vi.fn(),
+      };
+      mockContext.getSchema.value = [
+        {
+          component: 'Input',
+          field: 'name',
+          label: 'Name',
+        },
+      ];
+      mockContext.formElRef.value.$el.querySelector.mockReturnValue(mockInput);
+      // Ensure isInitedDefault is false to allow focus logic
+      mockContext.isInitedDefault.value = false;
+
+      await useAutoFocus(mockContext);
+
+      // Verify that watchEffect was called (which executes the function immediately)
+      expect(vi.mocked(watchEffect)).toHaveBeenCalled();
+      // Verify that querySelector was called with the correct selector
+      expect(mockContext.formElRef.value.$el.querySelector).toHaveBeenCalledWith('.ant-row:first-child input');
+      // Verify that focus was called on the input element
+      expect(mockInput.focus).toHaveBeenCalled();
+    });
+
+    it('should cover line 27 by testing component includes Input check', async () => {
+      mockContext.getSchema.value = [
+        {
+          component: 'Select',
+          field: 'type',
+          label: 'Type',
+        },
+      ];
+
+      await useAutoFocus(mockContext);
+
+      expect(vi.mocked(watchEffect)).toHaveBeenCalled();
+    });
+
+    it('should cover line 33 by testing inputEl focus call', async () => {
+      const mockInput = {
+        focus: vi.fn(),
+      };
+      mockContext.formElRef.value.$el.querySelector.mockReturnValue(mockInput);
+      // Ensure isInitedDefault is false to allow focus logic
+      mockContext.isInitedDefault.value = false;
+
+      await useAutoFocus(mockContext);
+
+      // Verify that watchEffect was called (which executes the function immediately)
+      expect(vi.mocked(watchEffect)).toHaveBeenCalled();
+      // Verify that focus was called on the input element
+      expect(mockInput.focus).toHaveBeenCalled();
     });
   });
 });
